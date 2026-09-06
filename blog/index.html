@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head> <meta charset="UTF-8"/> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <title>Blog | KARIA Gestão</title> <meta name="description" content="Artigos sobre Controladoria Jurídica para escritórios de advocacia."/> <meta name="robots" content="index, follow"/> <script async src="https://www.googletagmanager.com/gtag/js?id=G-YE6CYRG627"></script> <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YE6CYRG627');</script> <style>
+/* ============================================================ KARIA Gestão Design System Azul musgo #0D1F2D | Cobre #B87333 | Off-white #F8F6F3 Tipografia: Cinzel (títulos) + Poppins (corpo) ============================================================ */ @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&family=Montserrat:wght@400;500;600&display=swap'); /* --- Tokens --- */
+:root { --musgo: #0D1F2D; --musgo-mid: #162C3E; --musgo-soft: #1E3A50; --cobre: #B87333; --cobre-dark: #9A5F28; --off: #F8F6F3; --off-dim: #EDE9E3; --text-dark: #0D1F2D; --text-mid: #4A5568; --text-light: #C8D4DC; --text-pale: #8FA3B0; --font-title: 'Cormorant Garamond', Georgia, serif; --font-body: 'Poppins', system-ui, sans-serif; --font-data: 'Montserrat', system-ui, sans-serif; --space-xs: 0.5rem; --space-sm: 1rem; --space-md: 2rem; --space-lg: 4rem; --space-xl: 7rem; --radius-sm: 3px; --radius-md: 12px; --max-prose: 680px; --max-wide: 1100px;
+} /* --- Reset --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-dark); background: var(--off);
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font: inherit; } /* --- Tipografia base --- */
+h1, h2, h3, h4 { font-family: var(--font-title); line-height: 1.2; font-weight: 600; letter-spacing: -0.01em;
+}
+h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
+h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+p { max-width: var(--max-prose); } /* --- Layout helpers --- */
+.container { width: 100%; max-width: var(--max-wide); margin: 0 auto; padding: 0 var(--space-md);
+}
+.section { padding: var(--space-xl) 0; }
+.section--dark { background: var(--musgo); color: var(--off); }
+.section--mid { background: var(--musgo-mid); color: var(--off); }
+.section--off { background: var(--off); color: var(--text-dark); }
+.section--dim { background: var(--off-dim); color: var(--text-dark); } /* --- Botões --- */
+.btn { display: inline-block; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.03em; padding: 0.85rem 2rem; border-radius: var(--radius-sm); transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.btn:active { transform: translateY(1px); } .btn-primary { background: var(--cobre); color: #fff;
+}
+.btn-primary:hover { background: var(--cobre-dark); } .btn-outline { background: transparent; color: var(--off); border: 1.5px solid rgba(248,246,243,0.4);
+}
+.btn-outline:hover { border-color: var(--cobre); color: var(--cobre);
+} .btn-outline-dark { background: transparent; color: var(--musgo); border: 1.5px solid var(--musgo);
+}
+.btn-outline-dark:hover { background: var(--musgo); color: var(--off); } /* --- NAV --- */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--musgo); border-bottom: 1px solid rgba(184,115,51,0.2); transition: box-shadow 0.2s;
+}
+.nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.35); }
+.nav__inner { max-width: var(--max-wide); margin: 0 auto; padding: 0 var(--space-md); height: 68px; display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm);
+}
+.nav__logo { font-family: var(--font-title); font-size: 1.25rem; font-weight: 700; color: var(--off); letter-spacing: 0.08em; flex-shrink: 0;
+}
+.nav__logo span { color: var(--cobre); }
+.nav__links { display: flex; align-items: center; gap: 0.25rem; list-style: none;
+}
+.nav__links a { font-size: 0.875rem; font-weight: 400; color: var(--text-light); padding: 0.4rem 0.75rem; border-radius: var(--radius-sm); transition: color 0.15s;
+}
+.nav__links a:hover { color: var(--off); }
+.nav__links .has-dropdown { position: relative; }
+.nav__links .has-dropdown > a::after { content: '▾'; font-size: 0.7rem; margin-left: 4px; opacity: 0.6;
+}
+.nav__dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: var(--musgo-mid); border: 1px solid rgba(184,115,51,0.2); border-radius: var(--radius-md); padding: 0.5rem 0; min-width: 240px; list-style: none; box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.has-dropdown:hover .nav__dropdown { display: block; }
+.nav__dropdown a { display: block; padding: 0.6rem 1.25rem; color: var(--text-light); font-size: 0.875rem;
+}
+.nav__dropdown a:hover { color: var(--off); background: rgba(255,255,255,0.05); }
+.nav__cta { flex-shrink: 0; } /* Hamburger */
+.nav__burger { display: none; flex-direction: column; gap: 5px; padding: 4px; cursor: pointer;
+}
+.nav__burger span { display: block; width: 22px; height: 2px; background: var(--off); border-radius: 2px; transition: all 0.25s;
+}
+.nav__mobile { display: none; flex-direction: column; background: var(--musgo-mid); padding: var(--space-sm) var(--space-md); gap: 0.25rem; border-top: 1px solid rgba(184,115,51,0.15);
+}
+.nav__mobile a { color: var(--text-light); font-size: 0.95rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); display: block;
+}
+.nav__mobile a:last-child { border-bottom: none; }
+.nav__mobile a.btn-primary { margin-top: 0.5rem; text-align: center; border-bottom: none; padding: 0.75rem;
+} /* --- HERO --- */
+.hero { min-height: 100svh; background: var(--musgo); display: flex; align-items: center; padding-top: 68px; position: relative; overflow: hidden;
+}
+.hero::before { content: ''; position: absolute; top: -10%; right: -5%; width: 55%; height: 120%; background: radial-gradient(ellipse at 70% 40%, rgba(184,115,51,0.08) 0%, transparent 65%); pointer-events: none;
+}
+.hero__inner { max-width: var(--max-wide); margin: 0 auto; padding: var(--space-xl) var(--space-md); width: 100%;
+}
+.hero__pre { font-family: var(--font-data); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; color: var(--cobre); text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;
+}
+.hero__pre::before { display:none; }
+.hero__title { font-size: clamp(2.2rem, 5.5vw, 3.8rem); color: var(--off); max-width: 720px; margin-bottom: 1.5rem; font-weight: 700;
+}
+.hero__title em { font-style: normal; color: var(--cobre);
+}
+.hero__sub { font-size: 1.1rem; color: var(--text-light); max-width: 560px; line-height: 1.8; margin-bottom: 2.5rem;
+}
+.hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
+}
+.hero__scroll { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.4rem; color: var(--text-pale); font-size: 0.75rem; font-family: var(--font-data); letter-spacing: 0.08em; animation: scrollBounce 2s ease-in-out infinite;
+}
+.hero__scroll::after { content: ''; display: block; width: 1px; height: 36px; background: linear-gradient(to bottom, var(--cobre), transparent);
+}
+@keyframes scrollBounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(5px); }
+} /* --- PROBLEMA --- */
+.problema__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem;
+}
+.problema__item { border-left: 2px solid var(--cobre); padding-left: 1.25rem;
+}
+.problema__item h3 { font-size: 1rem; font-family: var(--font-body); font-weight: 600; color: var(--text-dark); margin-bottom: 0.4rem;
+}
+.problema__item p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.6; max-width: 100%;
+}
+.problema__closing { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--off-dim); max-width: var(--max-prose); font-size: 1.05rem; color: var(--text-mid);
+} /* --- FUNIL DE SERVIÇOS --- */
+.funil__intro { max-width: var(--max-prose); margin-bottom: 3.5rem; color: var(--text-light); font-size: 1.05rem; line-height: 1.8;
+}
+.funil__track { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0; align-items: start; margin-bottom: 3rem;
+}
+.funil__arrow { color: var(--cobre); font-size: 1.5rem; padding-top: 1.5rem; opacity: 0.5; align-self: start;
+}
+.funil__step { padding: 1.75rem; border: 1px solid rgba(184,115,51,0.2); border-radius: var(--radius-md); background: rgba(255,255,255,0.03); transition: border-color 0.2s, background 0.2s;
+}
+.funil__step:hover { border-color: rgba(184,115,51,0.5); background: rgba(255,255,255,0.06);
+}
+.funil__step-num { font-family: var(--font-data); font-size: 0.75rem; font-weight: 600; color: var(--cobre); letter-spacing: 0.1em; margin-bottom: 0.75rem; display: block;
+}
+.funil__step h3 { color: var(--off); font-size: 1.1rem; margin-bottom: 0.75rem;
+}
+.funil__step p { color: var(--text-light); font-size: 0.875rem; line-height: 1.65; max-width: 100%;
+}
+.funil__step a { display: inline-block; margin-top: 1rem; font-size: 0.85rem; font-weight: 500; color: var(--cobre); transition: color 0.15s;
+}
+.funil__step a:hover { color: #d49245; }
+.funil__cta { text-align: center; padding-top: 1rem; border-top: 1px solid rgba(184,115,51,0.15); color: var(--text-pale); font-size: 0.875rem;
+}
+.funil__cta a { color: var(--cobre); font-weight: 500; }
+.funil__cta a:hover { text-decoration: underline; } /* --- SOBRE --- */
+.sobre__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+}
+.sobre__img-wrap { position: relative;
+}
+.sobre__img { width: 100%; max-width: 380px; border-radius: var(--radius-md); filter: grayscale(15%);
+}
+.sobre__img-wrap::after { content: ''; position: absolute; bottom: -16px; right: -16px; width: 60%; height: 60%; border: 2px solid var(--cobre); border-radius: var(--radius-md); opacity: 0.35; z-index: -1;
+}
+.sobre__credential { font-family: var(--font-data); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; color: var(--cobre); text-transform: uppercase; margin-bottom: 1rem;
+}
+.sobre__text h2 { margin-bottom: 1.25rem; }
+.sobre__text p { color: var(--text-mid); margin-bottom: 1rem; font-size: 0.975rem;
+} /* --- GUIA / AUTO-AVALIAÇÃO --- */
+.guia { background: var(--musgo); color: var(--off); text-align: center; padding: 5rem 0;
+}
+.guia__inner { max-width: 620px; margin: 0 auto; padding: 0 var(--space-md);
+}
+.guia h2 { margin-bottom: 1rem; }
+.guia p { color: var(--text-light); margin: 0 auto 2rem; font-size: 1rem;
+}
+.guia__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; } /* --- BLOG PREVIEW --- */
+.blog-prev__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2.5rem;
+}
+.blog-card { background: var(--off); border: 1px solid var(--off-dim); border-radius: var(--radius-md); padding: 1.75rem; display: flex; flex-direction: column; gap: 0.75rem; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.blog-card:hover { border-color: var(--cobre); box-shadow: 0 4px 20px rgba(13,31,45,0.08);
+}
+.blog-card__date { font-family: var(--font-data); font-size: 0.75rem; font-weight: 500; color: var(--text-pale); letter-spacing: 0.06em;
+}
+.blog-card__title { font-family: var(--font-title); font-size: 1.05rem; font-weight: 600; color: var(--text-dark); line-height: 1.35;
+}
+.blog-card__excerpt { font-size: 0.875rem; color: var(--text-mid); line-height: 1.65; flex: 1; max-width: 100%;
+}
+.blog-card__link { font-size: 0.85rem; font-weight: 500; color: var(--cobre); margin-top: 0.25rem; transition: color 0.15s;
+}
+.blog-card:hover .blog-card__link { color: var(--cobre-dark); } /* --- FAQ --- */
+.faq__list { margin-top: 2.5rem; max-width: 760px;
+}
+.faq__item { border-bottom: 1px solid rgba(184,115,51,0.15);
+}
+.faq__question { width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.25rem 0; font-family: var(--font-body); font-size: 0.975rem; font-weight: 500; color: var(--off); transition: color 0.15s;
+}
+.faq__question:hover { color: var(--cobre); }
+.faq__icon { width: 20px; height: 20px; flex-shrink: 0; border: 1.5px solid rgba(184,115,51,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--cobre); transition: transform 0.25s;
+}
+.faq__item.open .faq__icon { transform: rotate(45deg); }
+.faq__answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease;
+}
+.faq__answer p { font-size: 0.9rem; color: var(--text-light); padding-bottom: 1.25rem; line-height: 1.75; max-width: 680px;
+} /* --- CTA FINAL --- */
+.cta-final { background: var(--cobre); color: #fff; text-align: center; padding: 5.5rem 0;
+}
+.cta-final__inner { max-width: 600px; margin: 0 auto; padding: 0 var(--space-md); }
+.cta-final h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: #fff; margin-bottom: 0.75rem;
+}
+.cta-final p { color: rgba(255,255,255,0.82); margin: 0 auto 2rem; font-size: 1rem;
+}
+.cta-final .btn-cta-wpp { display: inline-flex; align-items: center; gap: 0.6rem; background: #fff; color: var(--cobre-dark); font-weight: 600; font-size: 0.95rem; padding: 1rem 2.25rem; border-radius: var(--radius-sm); transition: background 0.2s;
+}
+.cta-final .btn-cta-wpp:hover { background: rgba(255,255,255,0.9); }
+.cta-final__note { margin-top: 1.25rem; font-size: 0.8rem; color: rgba(255,255,255,0.65);
+} /* --- FOOTER --- */
+.footer { background: var(--musgo); color: var(--text-light); padding: 4rem 0 2rem; border-top: 1px solid rgba(184,115,51,0.15);
+}
+.footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
+}
+.footer__brand-name { font-family: var(--font-title); font-size: 1.1rem; color: var(--off); letter-spacing: 0.06em; margin-bottom: 0.75rem;
+}
+.footer__brand-name span { color: var(--cobre); }
+.footer__slogan { font-size: 0.8rem; color: var(--text-pale); font-style: italic; margin-bottom: 1.25rem;
+}
+.footer__social { display: flex; gap: 0.75rem;
+}
+.footer__social a { width: 34px; height: 34px; border: 1px solid rgba(184,115,51,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-pale); font-size: 0.8rem; transition: border-color 0.15s, color 0.15s;
+}
+.footer__social a:hover { border-color: var(--cobre); color: var(--cobre); }
+.footer__col h4 { font-family: var(--font-data); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; color: var(--off); text-transform: uppercase; margin-bottom: 1rem;
+}
+.footer__col ul { list-style: none; }
+.footer__col ul li { margin-bottom: 0.5rem; }
+.footer__col ul a { font-size: 0.875rem; color: var(--text-pale); transition: color 0.15s;
+}
+.footer__col ul a:hover { color: var(--cobre); }
+.footer__bottom { border-top: 1px solid rgba(184,115,51,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+}
+.footer__bottom p { font-size: 0.78rem; color: var(--text-pale); max-width: 100%; } /* WhatsApp flutuante */
+.wpp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 99; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.35); transition: transform 0.2s;
+}
+.wpp-float:hover { transform: scale(1.08); }
+.wpp-float svg { width: 26px; height: 26px; fill: #fff; } /* --- Responsivo --- */
+@media (max-width: 900px) { .funil__track { grid-template-columns: 1fr; } .funil__arrow { display: none; } .sobre__inner { grid-template-columns: 1fr; gap: 2.5rem; } .sobre__img { max-width: 260px; } .footer__grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+@media (max-width: 640px) { :root { --space-xl: 4rem; } .nav__links, .nav__cta { display: none; } .nav__burger { display: flex; } .nav__mobile.open { display: flex; } .hero__title { font-size: clamp(1.8rem, 7vw, 2.8rem); } .footer__grid { grid-template-columns: 1fr; } .footer__bottom { flex-direction: column; text-align: center; } .sobre__img-wrap::after { display: none; }
+} @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; }
+} /* ── BLOG HERO ── */
+.blog-hero{background:var(--musgo);padding:140px 0 80px;position:relative;overflow:hidden;}
+.blog-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 75% 50%,rgba(184,115,51,0.1) 0%,transparent 60%);pointer-events:none;}
+.blog-hero__inner{max-width:1100px;margin:0 auto;padding:0 2rem;}
+.blog-hero__pre{font-family:'Montserrat',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.18em;color:var(--cobre);text-transform:uppercase;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem;}
+.blog-hero__pre::before { display:none; }
+.blog-hero h1{color:var(--off);margin-bottom:0.75rem;}
+.blog-hero__sub{color:var(--text-light);font-size:1.05rem;max-width:520px;line-height:1.75;} /* ── TOOLBAR ── */
+.blog-toolbar{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--off-dim);}
+.blog-search{flex:1;min-width:260px;position:relative;}
+.blog-search input{width:100%;padding:0.85rem 1rem 0.85rem 3rem;border:1.5px solid var(--off-dim);border-radius:12px;background:#fff;font-family:'Poppins',sans-serif;font-size:0.9rem;color:var(--text-dark);outline:none;transition:border-color 0.2s,box-shadow 0.2s;}
+.blog-search input:focus{border-color:var(--cobre);box-shadow:0 0 0 3px rgba(184,115,51,0.12);}
+.blog-search input::placeholder{color:var(--text-pale);}
+.blog-search__icon{position:absolute;left:1rem;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--text-pale);fill:none;stroke-width:2;pointer-events:none;}
+.blog-count{font-family:'Montserrat',sans-serif;font-size:0.78rem;font-weight:600;color:var(--text-pale);letter-spacing:0.06em;white-space:nowrap;} /* ── FEATURED ── */
+.blog-featured{display:grid;grid-template-columns:55% 1fr;border-radius:16px;overflow:hidden;border:1px solid var(--off-dim);margin-bottom:3.5rem;text-decoration:none;transition:box-shadow 0.3s,transform 0.3s;background:var(--off);}
+.blog-featured:hover{box-shadow:0 16px 56px rgba(13,31,45,0.13);transform:translateY(-2px);}
+.blog-featured__img{height:420px;overflow:hidden;position:relative;}
+.blog-featured__img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 70%,var(--off) 100%);}
+.blog-featured__img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
+.blog-featured:hover .blog-featured__img img{transform:scale(1.04);}
+.blog-featured__body{padding:3rem 2.5rem;display:flex;flex-direction:column;justify-content:center;}
+.blog-featured__badge{display:inline-flex;align-items:center;gap:0.4rem;font-family:'Montserrat',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--cobre);border:1px solid rgba(184,115,51,0.3);border-radius:100px;padding:0.3rem 0.9rem;margin-bottom:1.5rem;width:fit-content;}
+.blog-featured__badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cobre);flex-shrink:0;}
+.blog-featured__title{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1.35rem,2.5vw,1.85rem);font-weight:600;color:var(--text-dark);line-height:1.2;margin-bottom:1rem;letter-spacing:-0.01em;}
+.blog-featured__excerpt{font-size:0.9rem;color:var(--text-mid);line-height:1.75;margin-bottom:1.75rem;flex:1;}
+.blog-featured__meta{display:flex;gap:1.5rem;font-family:'Montserrat',sans-serif;font-size:0.73rem;color:var(--text-pale);margin-bottom:1.25rem;}
+.blog-featured__meta span{display:flex;align-items:center;gap:0.4rem;}
+.blog-featured__cta{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.875rem;font-weight:600;color:var(--cobre);transition:gap 0.2s;}
+.blog-featured:hover .blog-featured__cta{gap:0.75rem;} /* ── GRID ── */
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.75rem;}
+.blog-card{background:#fff;border:1px solid var(--off-dim);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:border-color 0.25s,box-shadow 0.25s,transform 0.25s;}
+.blog-card:hover{border-color:var(--cobre);box-shadow:0 8px 32px rgba(13,31,45,0.1);transform:translateY(-4px);}
+.blog-card__img{height:200px;overflow:hidden;position:relative;}
+.blog-card__img img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;}
+.blog-card:hover .blog-card__img img{transform:scale(1.06);}
+.blog-card__img::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,rgba(13,31,45,0.25),transparent);}
+.blog-card__body{padding:1.5rem;display:flex;flex-direction:column;flex:1;gap:0.5rem;}
+.blog-card__tag{font-family:'Montserrat',sans-serif;font-size:0.67rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--cobre);}
+.blog-card__title{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.08rem;font-weight:600;color:var(--text-dark);line-height:1.3;letter-spacing:-0.01em;}
+.blog-card__excerpt{font-size:0.82rem;color:var(--text-mid);line-height:1.65;flex:1;}
+.blog-card__footer{display:flex;justify-content:space-between;align-items:center;padding-top:0.85rem;margin-top:auto;border-top:1px solid var(--off-dim);font-family:'Montserrat',sans-serif;font-size:0.7rem;color:var(--text-pale);}
+.blog-card__link{font-size:0.78rem;font-weight:700;color:var(--cobre);display:flex;align-items:center;gap:0.25rem;transition:gap 0.15s;}
+.blog-card:hover .blog-card__link{gap:0.4rem;} /* ── EMPTY ── */
+.blog-empty{grid-column:1/-1;text-align:center;padding:5rem 0;color:var(--text-mid);}
+.blog-empty svg{margin:0 auto 1rem;opacity:0.3;} /* ── CTA STRIP ── */
+.blog-cta-strip{background:var(--musgo);padding:5rem 0;text-align:center;position:relative;overflow:hidden;}
+.blog-cta-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(184,115,51,0.12) 0%,transparent 65%);pointer-events:none;} @media(max-width:960px){.blog-featured{grid-template-columns:1fr;}.blog-featured__img{height:280px;}.blog-featured__img::after{background:linear-gradient(to top,var(--off) 0%,transparent 40%);}.blog-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.blog-grid{grid-template-columns:1fr;}} .cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--musgo);border-top:1px solid rgba(184,115,51,0.3);padding:1.25rem 2rem;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);box-shadow:0 -4px 32px rgba(0,0,0,0.3);}
+.cookie-banner.visible{transform:translateY(0);}
+.cookie-banner__inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;}
+.cookie-banner__text{display:flex;align-items:flex-start;gap:0.75rem;color:var(--text-light);flex:1;min-width:260px;}
+.cookie-banner__text p{font-size:0.84rem;line-height:1.6;margin:0;max-width:100%;}
+.cookie-banner__text a{color:var(--cobre);text-decoration:underline;text-underline-offset:3px;}
+.cookie-banner__actions{display:flex;gap:0.75rem;flex-shrink:0;}
+.cookie-btn{font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:500;padding:0.6rem 1.25rem;border-radius:4px;cursor:pointer;transition:all 0.15s;white-space:nowrap;border:none;}
+.cookie-btn--reject{background:transparent;color:var(--text-light);border:1px solid rgba(200,212,220,0.3);}
+.cookie-btn--reject:hover{border-color:rgba(200,212,220,0.7);color:var(--off);}
+.cookie-btn--accept{background:var(--cobre);color:#fff;}
+.cookie-btn--accept:hover{background:#9A5F28;}
+@media(max-width:600px){.cookie-banner__inner{flex-direction:column;}.cookie-banner__actions{width:100%;}.cookie-btn{flex:1;text-align:center;}} 
+/* ── FOOTER MODERNO ── */
+.footer__top { background: var(--musgo); padding: 5rem 0 3rem; border-top: 1px solid rgba(184,115,51,0.2); }
+.footer__top-inner { display: grid; grid-template-columns: 1.4fr 1.2fr 1fr; gap: 4rem; align-items: start; }
+.footer__brand-block .footer__brand-name { font-family: var(--font-title); font-size: 1.2rem; color: var(--off); letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+.footer__brand-block .footer__brand-name span { color: var(--cobre); }
+.footer__brand-block .footer__slogan { font-size: 0.8rem; color: var(--text-pale); font-style: italic; margin-bottom: 0.75rem; }
+.footer__brand-block .footer__desc { font-size: 0.83rem; color: var(--text-pale); line-height: 1.65; max-width: 280px; }
+.footer__social-label { font-family: var(--font-data); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cobre); margin-bottom: 1.25rem; }
+.footer__social-links { display: flex; flex-direction: column; gap: 0.85rem; }
+.footer__social-item { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03); transition: border-color 0.2s, background 0.2s, transform 0.2s; }
+.footer__social-item:hover { border-color: rgba(184,115,51,0.4); background: rgba(184,115,51,0.08); transform: translateX(4px); }
+.footer__social-item--wpp:hover { border-color: rgba(37,211,102,0.35); background: rgba(37,211,102,0.07); }
+.footer__social-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(184,115,51,0.15); display: flex; align-items: center; justify-content: center; color: var(--cobre); flex-shrink: 0; }
+.footer__social-icon--wpp { background: rgba(37,211,102,0.12); color: #25D366; }
+.footer__social-info { display: flex; flex-direction: column; gap: 0.1rem; }
+.footer__social-name { font-size: 0.85rem; font-weight: 600; color: var(--off); }
+.footer__social-handle { font-size: 0.75rem; color: var(--text-pale); }
+.footer__links-block { display: flex; gap: 2.5rem; }
+.footer__col h4 { font-family: var(--font-data); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--off); margin-bottom: 1rem; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.footer__col ul a { font-size: 0.83rem; color: var(--text-pale); text-decoration: none; transition: color 0.15s; }
+.footer__col ul a:hover { color: var(--cobre); }
+.footer__bottom { background: rgba(0,0,0,0.25); padding: 1.25rem 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.footer__bottom-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.footer__bottom p { font-size: 0.77rem; color: var(--text-pale); max-width: 100%; }
+.footer__bottom a { color: var(--text-pale); text-decoration: none; transition: color 0.15s; }
+.footer__bottom a:hover { color: var(--cobre); }
+@media(max-width:900px) {
+  .footer__top-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .footer__links-block { flex-wrap: wrap; gap: 2rem; }
+  .footer__bottom-inner { flex-direction: column; text-align: center; }
+  .footer__brand-block .footer__desc { max-width: 100%; }
+}
+
+
+/* ============================================================
+   MOBILE REFINEMENTS — adicionado na revisão
+   Cobre: < 400px (iPhone SE), touch targets, legibilidade
+   ============================================================ */
+
+/* Viewport meta já está em todas as páginas */
+
+/* Nav mobile */
+@media (max-width: 640px) {
+  .nav__inner { padding: 0 1rem; height: 60px; }
+  .nav__logo { font-size: 1.1rem; }
+  .nav__mobile { padding: 1rem; gap: 0; }
+  .nav__mobile a { padding: 0.85rem 0; font-size: 1rem; min-height: 44px; display: flex; align-items: center; }
+  .nav__mobile a.btn-primary { margin-top: 0.75rem; min-height: 48px; justify-content: center; }
+  .nav__burger { padding: 8px; }
+}
+
+/* Hero mobile */
+@media (max-width: 640px) {
+  .hero__pre { font-size: 0.7rem; letter-spacing: 0.1em; }
+  .hero__sub { font-size: 0.95rem; }
+  .hero__actions { flex-direction: column; }
+  .hero__actions .btn { width: 100%; text-align: center; min-height: 52px; display: flex; align-items: center; justify-content: center; }
+}
+
+/* Botões — touch targets mínimos de 44px */
+@media (max-width: 640px) {
+  .btn { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; padding: 0.85rem 1.5rem; font-size: 0.9rem; }
+}
+
+/* Seções */
+@media (max-width: 640px) {
+  .section { padding: 3rem 0; }
+  .container { padding: 0 1.25rem; }
+  .problema__grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .blog-prev__grid { grid-template-columns: 1fr; }
+  .faq__list { max-width: 100%; }
+  .faq__question { font-size: 0.9rem; padding: 1rem 0; gap: 0.75rem; }
+}
+
+/* Blog */
+@media (max-width: 640px) {
+  .blog-featured { grid-template-columns: 1fr; }
+  .blog-featured__img { height: 220px; }
+  .blog-featured__body { padding: 1.75rem 1.25rem; }
+  .blog-featured__title { font-size: 1.2rem; }
+  .blog-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .blog-toolbar { flex-direction: column; align-items: stretch; }
+  .blog-search { min-width: 100%; }
+}
+
+/* Artigos */
+@media (max-width: 640px) {
+  .article-hero__inner { padding: 0 1.25rem 2rem; }
+  .article-hero h1 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+  .article-body { padding: 2.5rem 1.25rem 4rem; }
+  .article-body p { font-size: 1rem; line-height: 1.8; }
+  .article-author-card { flex-direction: column; text-align: center; padding: 1.5rem 1rem; }
+  .article-author-card__photo { width: 64px; height: 64px; margin: 0 auto; }
+  .article-cta { padding: 2rem 1.25rem; border-radius: 12px; }
+  .article-cta h3 { font-size: 1.25rem; }
+}
+
+/* Sobre */
+@media (max-width: 640px) {
+  .sobre-hero__content { padding: 2rem 1.25rem 3rem; }
+  .sobre-hero h1 { font-size: clamp(2rem, 8vw, 3rem); }
+  .formacao-grid { gap: 0.5rem; }
+  .formacao-pill { font-size: 0.78rem; padding: 0.4rem 0.85rem; }
+  .livro-card { grid-template-columns: 1fr; gap: 1rem; }
+  .numeros__grid { grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+  .numero-item__val { font-size: clamp(1.8rem,6vw,2.5rem); }
+  .sobre-split { grid-template-columns: 1fr; }
+  .sobre-split__foto { height: 260px; }
+}
+
+/* Serviços */
+@media (max-width: 640px) {
+  .page-hero { padding: 100px 0 50px; }
+  .page-hero__inner { grid-template-columns: 1fr !important; }
+  .page-hero__visual { display: none; }
+  .page-hero h1 { font-size: clamp(1.7rem, 6vw, 2.4rem); }
+  .entregaveis { grid-template-columns: 1fr; }
+  .etapa { grid-template-columns: 44px 1fr; gap: 1rem; }
+  .nivel-card { padding: 1.5rem; }
+  .cta-inline { padding: 2rem 1.25rem; border-radius: 12px; }
+  .cta-inline h3 { font-size: 1.2rem; }
+}
+
+/* Funil home */
+@media (max-width: 640px) {
+  .funil__step { padding: 1.25rem; }
+  .guia__actions { flex-direction: column; }
+  .guia__actions .btn { width: 100%; text-align: center; }
+}
+
+/* Footer moderno */
+@media (max-width: 640px) {
+  .footer__top { padding: 3rem 0 2rem; }
+  .footer__top-inner { gap: 2rem; }
+  .footer__social-item { padding: 0.65rem 0.85rem; }
+  .footer__bottom p { font-size: 0.72rem; }
+}
+
+/* CTA final */
+@media (max-width: 640px) {
+  .cta-final { padding: 3.5rem 0; }
+  .cta-final h2 { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+  .btn-cta-wpp { width: 100%; justify-content: center; }
+}
+
+/* Cookie banner */
+@media (max-width: 480px) {
+  .cookie-banner { padding: 1rem; }
+  .cookie-banner__inner { gap: 1rem; }
+  .cookie-banner__text p { font-size: 0.8rem; }
+}
+
+/* Telas muito pequenas (iPhone SE = 375px) */
+@media (max-width: 380px) {
+  :root { --space-md: 1rem; }
+  .hero__title { font-size: 1.7rem; }
+  .nav__logo { font-size: 1rem; }
+}
+
+</style>
+</head>
+<body>
+<header class="nav"> <div class="nav__inner"> <a href="/" class="nav__logo">KARIA <span>Gestão</span></a> <nav><ul class="nav__links"> <li class="has-dropdown"><a href="/servicos/">Serviços</a> <ul class="nav__dropdown"> <li><a href="/servicos/diagnostico.html">Diagnóstico Estruturado</a></li> <li><a href="/servicos/implantacao.html">Consultoria de Implantação</a></li> <li><a href="/servicos/acompanhamento.html">Acompanhamento Estratégico</a></li> </ul></li> <li><a href="/sobre.html">Sobre</a></li> <li><a href="/blog/">Blog</a></li> <li><a href="/faq.html">FAQ</a></li> </ul></nav> <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="btn btn-primary nav__cta" target="_blank" rel="noopener">Agendar conversa</a> <button class="nav__burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button> </div> <nav class="nav__mobile"> <a href="/servicos/diagnostico.html">Diagnóstico Estruturado</a> <a href="/servicos/implantacao.html">Consultoria de Implantação</a> <a href="/servicos/acompanhamento.html">Acompanhamento Estratégico</a> <a href="/sobre.html">Sobre</a><a href="/blog/">Blog</a><a href="/faq.html">FAQ</a> <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="btn btn-primary" target="_blank" rel="noopener">Agendar conversa</a> </nav>
+</header>
+<main> <section class="blog-hero"> <div class="blog-hero__inner"> <p class="blog-hero__pre">Conteúdo estratégico</p> <h1>Gestão Jurídica na prática</h1> <p class="blog-hero__sub">Artigos sobre Controladoria Jurídica, estruturação operacional e gestão estratégica para escritórios de advocacia.</p> </div>
+</section> <section class="section section--off" style="padding-top:3rem;"> <div class="container"> <div class="blog-toolbar"> <div class="blog-search"> <svg class="blog-search__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> <input type="text" id="blogSearch" placeholder="Buscar artigo..." oninput="filterBlog()"/> </div> <span class="blog-count" id="blogCount">12 artigos</span> </div> <div id="featuredWrap"> <a class="blog-featured" id="featuredCard" href="#" target="_blank" rel="noopener"> <div class="blog-featured__img"><img id="featuredImg" src="" alt="" loading="lazy"/></div> <div class="blog-featured__body"> <span class="blog-featured__badge">Gestão Estratégica</span> <div class="blog-featured__title" id="featuredTitle"></div> <p class="blog-featured__excerpt" id="featuredExcerpt"></p> <div class="blog-featured__meta"> <span><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span id="featuredDate"></span></span> <span><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span id="featuredRead"></span> de leitura</span> </div> <div class="blog-featured__cta">Ler artigo completo <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div> </div> </a> </div> <div class="blog-grid" id="blogGrid"></div> </div>
+</section> <section class="blog-cta-strip"> <div style="max-width:560px;margin:0 auto;padding:0 2rem;position:relative;z-index:1;"> <h2 style="color:var(--off);font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:0.75rem;">Quer dar o próximo passo?</h2> <p style="color:var(--text-light);font-size:0.95rem;margin:0 auto 1.75rem;">30 minutos gratuitos para entender como a KARIA pode estruturar o seu escritório.</p> <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="btn btn-primary" target="_blank" rel="noopener">Agendar conversa gratuita</a> </div>
+</section>
+</main>
+<footer class="footer">
+  <div class="footer__top">
+    <div class="container">
+      <div class="footer__top-inner">
+        <div class="footer__brand-block">
+          <p class="footer__brand-name">KARIA <span>Gestão</span></p>
+          <p class="footer__slogan">Gestão que entrega. Estratégia que transforma.</p>
+          <p class="footer__desc">Consultoria em Controladoria Jurídica exclusiva para escritórios de advocacia. Atendimento em todo o Brasil.</p>
+        </div>
+        <div class="footer__social-block">
+          <p class="footer__social-label">Acompanhe a KARIA</p>
+          <div class="footer__social-links">
+            <a href="https://www.instagram.com/kariagestao" target="_blank" rel="noopener" class="footer__social-item" aria-label="Instagram">
+              <div class="footer__social-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </div>
+              <div class="footer__social-info">
+                <span class="footer__social-name">Instagram</span>
+                <span class="footer__social-handle">@kariagestao</span>
+              </div>
+            </a>
+            <a href="https://www.linkedin.com/company/kariagestao/" target="_blank" rel="noopener" class="footer__social-item" aria-label="LinkedIn">
+              <div class="footer__social-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </div>
+              <div class="footer__social-info">
+                <span class="footer__social-name">LinkedIn</span>
+                <span class="footer__social-handle">KARIA Gestão</span>
+              </div>
+            </a>
+            <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." target="_blank" rel="noopener" class="footer__social-item footer__social-item--wpp" aria-label="WhatsApp">
+              <div class="footer__social-icon footer__social-icon--wpp">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </div>
+              <div class="footer__social-info">
+                <span class="footer__social-name">WhatsApp</span>
+                <span class="footer__social-handle">Fale agora</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="footer__links-block">
+          <div class="footer__col">
+            <h4>Serviços</h4>
+            <ul>
+              <li><a href="/servicos/diagnostico.html">Diagnóstico Estruturado</a></li>
+              <li><a href="/servicos/implantacao.html">Consultoria de Implantação</a></li>
+              <li><a href="/servicos/acompanhamento.html">Acompanhamento Estratégico</a></li>
+            </ul>
+          </div>
+          <div class="footer__col">
+            <h4>Conteúdo</h4>
+            <ul>
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="https://guia.kariagestao.com" target="_blank" rel="noopener">Guia de Maturidade</a></li>
+              <li><a href="/faq.html">FAQ</a></li>
+              <li><a href="/sobre.html">Sobre</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container">
+      <div class="footer__bottom-inner">
+        <p>© 2025 KARIA Gestão. Todos os direitos reservados.</p>
+        <p><a href="/politica-de-privacidade.html">Política de Privacidade</a> · CNPJ 60.942.073/0001-24</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="wpp-float" target="_blank" rel="noopener" aria-label="WhatsApp"> <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+<div class="cookie-banner" id="cookieBanner" role="dialog"> <div class="cookie-banner__inner"> <div class="cookie-banner__text"> <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--cobre)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> <p>Utilizamos cookies para melhorar sua experiência e analisar o tráfego. Ao continuar, você concorda com nossa <a href="/politica-de-privacidade.html">Política de Privacidade</a>.</p> </div> <div class="cookie-banner__actions"> <button class="cookie-btn cookie-btn--reject" onclick="cookieReject()">Apenas essenciais</button> <button class="cookie-btn cookie-btn--accept" onclick="cookieAccept()">Aceitar todos</button> </div> </div>
+</div>
+<script>
+/* KARIA Gestão scripts globais */ document.addEventListener('DOMContentLoaded', () => { /* Nav scroll */ const nav = document.querySelector('.nav'); if (nav) { window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true }); } /* Hamburger mobile */ const burger = document.querySelector('.nav__burger'); const mobile = document.querySelector('.nav__mobile'); if (burger && mobile) { burger.addEventListener('click', () => { const open = mobile.classList.toggle('open'); burger.setAttribute('aria-expanded', open); }); } /* FAQ accordion */ document.querySelectorAll('.faq__question').forEach(btn => { btn.addEventListener('click', () => { const item = btn.closest('.faq__item'); const answer = item.querySelector('.faq__answer'); const open = item.classList.contains('open'); /* fecha todos */ document.querySelectorAll('.faq__item.open').forEach(el => { el.classList.remove('open'); el.querySelector('.faq__answer').style.maxHeight = '0'; }); if (!open) { item.classList.add('open'); answer.style.maxHeight = answer.scrollHeight + 'px'; } btn.setAttribute('aria-expanded', !open); }); }); }); var ARTS = [{"title": "Ordem não é controle: o que a gestão do seu escritório de advocacia realmente precisa", "date": "4 mai. 2025", "read": "3 min", "excerpt": "Ter tudo organizado não significa ter controle. Descubra a diferença entre aparência de gestão e estrutura real de Controladoria Jurídica.", "url": "https://www.kariagestao.com/post/ordem-nao-e-controle-gestao-escritorio-de-advocacia", "img": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80"}, {"title": "Quando os processos internos do escritório de advocacia dependem só de você", "date": "20 abr. 2025", "read": "4 min", "excerpt": "Se a operação para quando o sócio para, o escritório não tem processo. Tem dependência. Entenda como mudar isso.", "url": "https://www.kariagestao.com/post/processos-internos-escrit%C3%B3rio-de-advocacia-1", "img": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80"}, {"title": "Como delegar em escritório de advocacia sem abandonar o controle", "date": "17 abr. 2025", "read": "3 min", "excerpt": "Delegar sem estrutura é transferir o caos. Veja como criar um modelo de delegação que mantém o controle onde ele precisa estar.", "url": "https://www.kariagestao.com/post/como-delegar-em-escrit%C3%B3rio-de-advocacia", "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&q=80"}, {"title": "Seu escritório tem operação. O que está faltando é visão estratégica.", "date": "8 abr. 2025", "read": "3 min", "excerpt": "Operação funcionando não é o mesmo que escritório gerido. Entenda por que a visão estratégica é o que falta na maioria dos escritórios que crescem.", "url": "https://www.kariagestao.com/post/acompanhamento-estrategico-escritorio-de-advocacia", "img": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80"}, {"title": "O que é consultoria de gestão jurídica e quando o seu escritório precisa de uma", "date": "7 abr. 2025", "read": "3 min", "excerpt": "Não é coach, não é contador. Entenda o que é uma consultoria de gestão jurídica e qual o momento certo para contratar.", "url": "https://www.kariagestao.com/post/consultoria-de-gestao-juridica", "img": "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80"}, {"title": "Processos internos no escritório: como a liderança se multiplica sem depender da sua presença", "date": "6 abr. 2025", "read": "3 min", "excerpt": "Liderança que precisa estar presente em tudo não é liderança. É gargalo. Veja como os processos internos mudam isso.", "url": "https://www.kariagestao.com/post/processos-internos-escrit%C3%B3rio-de-advocacia", "img": "https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=800&q=80"}, {"title": "Controladoria Jurídica Estratégica não é terceirização: entenda a diferença", "date": "1 abr. 2025", "read": "3 min", "excerpt": "Muita gente confunde Controladoria Jurídica com terceirização do administrativo. A diferença é estratégica e muda completamente o que você contrata.", "url": "https://www.kariagestao.com/post/controladoria-juridica-estrategica-nao-e-terceirizacao", "img": "https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=800&q=80"}, {"title": "Faturamento alto não significa maturidade na advocacia", "date": "23 mar. 2025", "read": "2 min", "excerpt": "Um escritório pode faturar bem e ainda operar no improviso. Entenda por que maturidade operacional e faturamento são coisas diferentes.", "url": "https://www.kariagestao.com/post/faturamento-alto-na-advocacia", "img": "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80"}, {"title": "7 sinais de crescimento desorganizado em escritório de advocacia", "date": "16 mar. 2025", "read": "3 min", "excerpt": "Crescer sem estrutura é acumular passivo operacional. Veja os 7 sinais que indicam que o crescimento do seu escritório está desorganizado.", "url": "https://www.kariagestao.com/post/crescimento-desorganizado-em-escrit%C3%B3rio-de-advocacia", "img": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80"}, {"title": "Como estruturar o crescimento de um escritório de advocacia com método e previsibilidade", "date": "9 mar. 2025", "read": "3 min", "excerpt": "Crescimento previsível não acontece por acidente. É resultado de método, estrutura e indicadores que funcionam antes de o escritório precisar deles.", "url": "https://www.kariagestao.com/post/estruturar-o-crescimento-de-um-escrit%C3%B3rio-de-advocacia", "img": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&q=80"}, {"title": "Crescimento sem controle na advocacia: risco estrutural silencioso", "date": "2 mar. 2025", "read": "4 min", "excerpt": "O crescimento que não vem acompanhado de estrutura não é vitória. É risco acumulando em silêncio. Entenda como identificar e reverter esse cenário.", "url": "https://www.kariagestao.com/post/crescimento-sem-controle-na-advocacia", "img": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80"}, {"title": "Diagnóstico operacional: o primeiro passo para organizar um escritório de advocacia", "date": "26 jan. 2025", "read": "3 min", "excerpt": "O diagnóstico operacional jurídico é a base para organizar a gestão, reduzir riscos e estruturar a Controladoria Jurídica em escritórios de advocacia.", "url": "https://www.kariagestao.com/post/diagn%C3%B3stico-operacional-o-primeiro-passo-para-organizar-um-escrit%C3%B3rio-de-advocacia", "img": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80"}];
+var arrowSvg = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>'; function renderBlog(list) { var fw = document.getElementById('featuredWrap'); var grid = document.getElementById('blogGrid'); var cnt = document.getElementById('blogCount'); cnt.textContent = list.length + (list.length === 1 ? ' artigo' : ' artigos'); if (!list.length) { fw.style.display = 'none'; grid.innerHTML = '<div class="blog-empty">' + '<svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' + '<strong>Nenhum artigo encontrado.</strong><p style="margin-top:0.5rem;">Tente outro termo de busca.</p></div>'; return; } fw.style.display = ''; var f = list[0]; document.getElementById('featuredCard').href = f.url; document.getElementById('featuredImg').src = f.img; document.getElementById('featuredImg').alt = f.title; document.getElementById('featuredTitle').textContent = f.title; document.getElementById('featuredExcerpt').textContent = f.excerpt; document.getElementById('featuredDate').textContent = f.date; document.getElementById('featuredRead').textContent = f.read; var rest = list.slice(1); grid.innerHTML = rest.map(function(a) { return '<a class="blog-card" href="' + a.url + '" target="_blank" rel="noopener">' + '<div class="blog-card__img"><img src="' + a.img + '" alt="" loading="lazy"/></div>' + '<div class="blog-card__body">' + '<span class="blog-card__tag">Gestão Estratégica</span>' + '<div class="blog-card__title">' + a.title + '</div>' + '<p class="blog-card__excerpt">' + a.excerpt + '</p>' + '<div class="blog-card__footer">' + '<span>' + a.date + ' · ' + a.read + '</span>' + '<span class="blog-card__link">Ler ' + arrowSvg + '</span>' + '</div>' + '</div></a>'; }).join('');
+} function filterBlog() { var q = document.getElementById('blogSearch').value.toLowerCase().trim(); renderBlog(q ? ARTS.filter(function(a){ return a.title.toLowerCase().indexOf(q) > -1 || a.excerpt.toLowerCase().indexOf(q) > -1; }) : ARTS);
+} renderBlog(ARTS); (function(){ var b = document.getElementById('cookieBanner'); if (!b) return; if (!localStorage.getItem('karia_cookies')) { setTimeout(function(){ b.classList.add('visible'); }, 1000); }
+})();
+function cookieAccept(){ localStorage.setItem('karia_cookies','all'); document.getElementById('cookieBanner').classList.remove('visible'); }
+function cookieReject(){ localStorage.setItem('karia_cookies','essential'); document.getElementById('cookieBanner').classList.remove('visible'); } </script>
+</body>
+</html>
