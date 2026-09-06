@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head> <meta charset="UTF-8"/> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <title>Acompanhamento Estratégico em Gestão Jurídica | KARIA Gestão | KARIA Gestão</title> <meta name="description" content="Ciclo mensal de governança para escritórios de advocacia. Painel de indicadores, reunião estratégica e visão de gestão todo mês."/> <meta name="robots" content="index, follow"/> <script async src="https://www.googletagmanager.com/gtag/js?id=G-YE6CYRG627"></script> <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YE6CYRG627');</script> <style>
+/* ============================================================ KARIA Gestão Design System Azul musgo #0D1F2D | Cobre #B87333 | Off-white #F8F6F3 Tipografia: Cinzel (títulos) + Poppins (corpo) ============================================================ */ @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&family=Montserrat:wght@400;500;600&display=swap'); /* --- Tokens --- */
+:root { --musgo: #0D1F2D; --musgo-mid: #162C3E; --musgo-soft: #1E3A50; --cobre: #B87333; --cobre-dark: #9A5F28; --off: #F8F6F3; --off-dim: #EDE9E3; --text-dark: #0D1F2D; --text-mid: #4A5568; --text-light: #C8D4DC; --text-pale: #8FA3B0; --font-title: 'Cormorant Garamond', Georgia, serif; --font-body: 'Poppins', system-ui, sans-serif; --font-data: 'Montserrat', system-ui, sans-serif; --space-xs: 0.5rem; --space-sm: 1rem; --space-md: 2rem; --space-lg: 4rem; --space-xl: 7rem; --radius-sm: 3px; --radius-md: 12px; --max-prose: 680px; --max-wide: 1100px;
+} /* --- Reset --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-dark); background: var(--off);
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font: inherit; } /* --- Tipografia base --- */
+h1, h2, h3, h4 { font-family: var(--font-title); line-height: 1.2; font-weight: 600; letter-spacing: -0.01em;
+}
+h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
+h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+p { max-width: var(--max-prose); } /* --- Layout helpers --- */
+.container { width: 100%; max-width: var(--max-wide); margin: 0 auto; padding: 0 var(--space-md);
+}
+.section { padding: var(--space-xl) 0; }
+.section--dark { background: var(--musgo); color: var(--off); }
+.section--mid { background: var(--musgo-mid); color: var(--off); }
+.section--off { background: var(--off); color: var(--text-dark); }
+.section--dim { background: var(--off-dim); color: var(--text-dark); } /* --- Botões --- */
+.btn { display: inline-block; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.03em; padding: 0.85rem 2rem; border-radius: var(--radius-sm); transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.btn:active { transform: translateY(1px); } .btn-primary { background: var(--cobre); color: #fff;
+}
+.btn-primary:hover { background: var(--cobre-dark); } .btn-outline { background: transparent; color: var(--off); border: 1.5px solid rgba(248,246,243,0.4);
+}
+.btn-outline:hover { border-color: var(--cobre); color: var(--cobre);
+} .btn-outline-dark { background: transparent; color: var(--musgo); border: 1.5px solid var(--musgo);
+}
+.btn-outline-dark:hover { background: var(--musgo); color: var(--off); } /* --- NAV --- */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--musgo); border-bottom: 1px solid rgba(184,115,51,0.2); transition: box-shadow 0.2s;
+}
+.nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.35); }
+.nav__inner { max-width: var(--max-wide); margin: 0 auto; padding: 0 var(--space-md); height: 68px; display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm);
+}
+.nav__logo { font-family: var(--font-title); font-size: 1.25rem; font-weight: 700; color: var(--off); letter-spacing: 0.08em; flex-shrink: 0;
+}
+.nav__logo span { color: var(--cobre); }
+.nav__links { display: flex; align-items: center; gap: 0.25rem; list-style: none;
+}
+.nav__links a { font-size: 0.875rem; font-weight: 400; color: var(--text-light); padding: 0.4rem 0.75rem; border-radius: var(--radius-sm); transition: color 0.15s;
+}
+.nav__links a:hover { color: var(--off); }
+.nav__links .has-dropdown { position: relative; }
+.nav__links .has-dropdown > a::after { content: '▾'; font-size: 0.7rem; margin-left: 4px; opacity: 0.6;
+}
+.nav__dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: var(--musgo-mid); border: 1px solid rgba(184,115,51,0.2); border-radius: var(--radius-md); padding: 0.5rem 0; min-width: 240px; list-style: none; box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.has-dropdown:hover .nav__dropdown { display: block; }
+.nav__dropdown a { display: block; padding: 0.6rem 1.25rem; color: var(--text-light); font-size: 0.875rem;
+}
+.nav__dropdown a:hover { color: var(--off); background: rgba(255,255,255,0.05); }
+.nav__cta { flex-shrink: 0; } /* Hamburger */
+.nav__burger { display: none; flex-direction: column; gap: 5px; padding: 4px; cursor: pointer;
+}
+.nav__burger span { display: block; width: 22px; height: 2px; background: var(--off); border-radius: 2px; transition: all 0.25s;
+}
+.nav__mobile { display: none; flex-direction: column; background: var(--musgo-mid); padding: var(--space-sm) var(--space-md); gap: 0.25rem; border-top: 1px solid rgba(184,115,51,0.15);
+}
+.nav__mobile a { color: var(--text-light); font-size: 0.95rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); display: block;
+}
+.nav__mobile a:last-child { border-bottom: none; }
+.nav__mobile a.btn-primary { margin-top: 0.5rem; text-align: center; border-bottom: none; padding: 0.75rem;
+} /* --- HERO --- */
+.hero { min-height: 100svh; background: var(--musgo); display: flex; align-items: center; padding-top: 68px; position: relative; overflow: hidden;
+}
+.hero::before { content: ''; position: absolute; top: -10%; right: -5%; width: 55%; height: 120%; background: radial-gradient(ellipse at 70% 40%, rgba(184,115,51,0.08) 0%, transparent 65%); pointer-events: none;
+}
+.hero__inner { max-width: var(--max-wide); margin: 0 auto; padding: var(--space-xl) var(--space-md); width: 100%;
+}
+.hero__pre { font-family: var(--font-data); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; color: var(--cobre); text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;
+}
+.hero__pre::before { display:none; }
+.hero__title { font-size: clamp(2.2rem, 5.5vw, 3.8rem); color: var(--off); max-width: 720px; margin-bottom: 1.5rem; font-weight: 700;
+}
+.hero__title em { font-style: normal; color: var(--cobre);
+}
+.hero__sub { font-size: 1.1rem; color: var(--text-light); max-width: 560px; line-height: 1.8; margin-bottom: 2.5rem;
+}
+.hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
+}
+.hero__scroll { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.4rem; color: var(--text-pale); font-size: 0.75rem; font-family: var(--font-data); letter-spacing: 0.08em; animation: scrollBounce 2s ease-in-out infinite;
+}
+.hero__scroll::after { content: ''; display: block; width: 1px; height: 36px; background: linear-gradient(to bottom, var(--cobre), transparent);
+}
+@keyframes scrollBounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(5px); }
+} /* --- PROBLEMA --- */
+.problema__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem;
+}
+.problema__item { border-left: 2px solid var(--cobre); padding-left: 1.25rem;
+}
+.problema__item h3 { font-size: 1rem; font-family: var(--font-body); font-weight: 600; color: var(--text-dark); margin-bottom: 0.4rem;
+}
+.problema__item p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.6; max-width: 100%;
+}
+.problema__closing { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--off-dim); max-width: var(--max-prose); font-size: 1.05rem; color: var(--text-mid);
+} /* --- FUNIL DE SERVIÇOS --- */
+.funil__intro { max-width: var(--max-prose); margin-bottom: 3.5rem; color: var(--text-light); font-size: 1.05rem; line-height: 1.8;
+}
+.funil__track { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0; align-items: start; margin-bottom: 3rem;
+}
+.funil__arrow { color: var(--cobre); font-size: 1.5rem; padding-top: 1.5rem; opacity: 0.5; align-self: start;
+}
+.funil__step { padding: 1.75rem; border: 1px solid rgba(184,115,51,0.2); border-radius: var(--radius-md); background: rgba(255,255,255,0.03); transition: border-color 0.2s, background 0.2s;
+}
+.funil__step:hover { border-color: rgba(184,115,51,0.5); background: rgba(255,255,255,0.06);
+}
+.funil__step-num { font-family: var(--font-data); font-size: 0.75rem; font-weight: 600; color: var(--cobre); letter-spacing: 0.1em; margin-bottom: 0.75rem; display: block;
+}
+.funil__step h3 { color: var(--off); font-size: 1.1rem; margin-bottom: 0.75rem;
+}
+.funil__step p { color: var(--text-light); font-size: 0.875rem; line-height: 1.65; max-width: 100%;
+}
+.funil__step a { display: inline-block; margin-top: 1rem; font-size: 0.85rem; font-weight: 500; color: var(--cobre); transition: color 0.15s;
+}
+.funil__step a:hover { color: #d49245; }
+.funil__cta { text-align: center; padding-top: 1rem; border-top: 1px solid rgba(184,115,51,0.15); color: var(--text-pale); font-size: 0.875rem;
+}
+.funil__cta a { color: var(--cobre); font-weight: 500; }
+.funil__cta a:hover { text-decoration: underline; } /* --- SOBRE --- */
+.sobre__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+}
+.sobre__img-wrap { position: relative;
+}
+.sobre__img { width: 100%; max-width: 380px; border-radius: var(--radius-md); filter: grayscale(15%);
+}
+.sobre__img-wrap::after { content: ''; position: absolute; bottom: -16px; right: -16px; width: 60%; height: 60%; border: 2px solid var(--cobre); border-radius: var(--radius-md); opacity: 0.35; z-index: -1;
+}
+.sobre__credential { font-family: var(--font-data); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; color: var(--cobre); text-transform: uppercase; margin-bottom: 1rem;
+}
+.sobre__text h2 { margin-bottom: 1.25rem; }
+.sobre__text p { color: var(--text-mid); margin-bottom: 1rem; font-size: 0.975rem;
+} /* --- GUIA / AUTO-AVALIAÇÃO --- */
+.guia { background: var(--musgo); color: var(--off); text-align: center; padding: 5rem 0;
+}
+.guia__inner { max-width: 620px; margin: 0 auto; padding: 0 var(--space-md);
+}
+.guia h2 { margin-bottom: 1rem; }
+.guia p { color: var(--text-light); margin: 0 auto 2rem; font-size: 1rem;
+}
+.guia__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; } /* --- BLOG PREVIEW --- */
+.blog-prev__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2.5rem;
+}
+.blog-card { background: var(--off); border: 1px solid var(--off-dim); border-radius: var(--radius-md); padding: 1.75rem; display: flex; flex-direction: column; gap: 0.75rem; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.blog-card:hover { border-color: var(--cobre); box-shadow: 0 4px 20px rgba(13,31,45,0.08);
+}
+.blog-card__date { font-family: var(--font-data); font-size: 0.75rem; font-weight: 500; color: var(--text-pale); letter-spacing: 0.06em;
+}
+.blog-card__title { font-family: var(--font-title); font-size: 1.05rem; font-weight: 600; color: var(--text-dark); line-height: 1.35;
+}
+.blog-card__excerpt { font-size: 0.875rem; color: var(--text-mid); line-height: 1.65; flex: 1; max-width: 100%;
+}
+.blog-card__link { font-size: 0.85rem; font-weight: 500; color: var(--cobre); margin-top: 0.25rem; transition: color 0.15s;
+}
+.blog-card:hover .blog-card__link { color: var(--cobre-dark); } /* --- FAQ --- */
+.faq__list { margin-top: 2.5rem; max-width: 760px;
+}
+.faq__item { border-bottom: 1px solid rgba(184,115,51,0.15);
+}
+.faq__question { width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.25rem 0; font-family: var(--font-body); font-size: 0.975rem; font-weight: 500; color: var(--off); transition: color 0.15s;
+}
+.faq__question:hover { color: var(--cobre); }
+.faq__icon { width: 20px; height: 20px; flex-shrink: 0; border: 1.5px solid rgba(184,115,51,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--cobre); transition: transform 0.25s;
+}
+.faq__item.open .faq__icon { transform: rotate(45deg); }
+.faq__answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease;
+}
+.faq__answer p { font-size: 0.9rem; color: var(--text-light); padding-bottom: 1.25rem; line-height: 1.75; max-width: 680px;
+} /* --- CTA FINAL --- */
+.cta-final { background: var(--cobre); color: #fff; text-align: center; padding: 5.5rem 0;
+}
+.cta-final__inner { max-width: 600px; margin: 0 auto; padding: 0 var(--space-md); }
+.cta-final h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: #fff; margin-bottom: 0.75rem;
+}
+.cta-final p { color: rgba(255,255,255,0.82); margin: 0 auto 2rem; font-size: 1rem;
+}
+.cta-final .btn-cta-wpp { display: inline-flex; align-items: center; gap: 0.6rem; background: #fff; color: var(--cobre-dark); font-weight: 600; font-size: 0.95rem; padding: 1rem 2.25rem; border-radius: var(--radius-sm); transition: background 0.2s;
+}
+.cta-final .btn-cta-wpp:hover { background: rgba(255,255,255,0.9); }
+.cta-final__note { margin-top: 1.25rem; font-size: 0.8rem; color: rgba(255,255,255,0.65);
+} /* --- FOOTER --- */
+.footer { background: var(--musgo); color: var(--text-light); padding: 4rem 0 2rem; border-top: 1px solid rgba(184,115,51,0.15);
+}
+.footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
+}
+.footer__brand-name { font-family: var(--font-title); font-size: 1.1rem; color: var(--off); letter-spacing: 0.06em; margin-bottom: 0.75rem;
+}
+.footer__brand-name span { color: var(--cobre); }
+.footer__slogan { font-size: 0.8rem; color: var(--text-pale); font-style: italic; margin-bottom: 1.25rem;
+}
+.footer__social { display: flex; gap: 0.75rem;
+}
+.footer__social a { width: 34px; height: 34px; border: 1px solid rgba(184,115,51,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-pale); font-size: 0.8rem; transition: border-color 0.15s, color 0.15s;
+}
+.footer__social a:hover { border-color: var(--cobre); color: var(--cobre); }
+.footer__col h4 { font-family: var(--font-data); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; color: var(--off); text-transform: uppercase; margin-bottom: 1rem;
+}
+.footer__col ul { list-style: none; }
+.footer__col ul li { margin-bottom: 0.5rem; }
+.footer__col ul a { font-size: 0.875rem; color: var(--text-pale); transition: color 0.15s;
+}
+.footer__col ul a:hover { color: var(--cobre); }
+.footer__bottom { border-top: 1px solid rgba(184,115,51,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+}
+.footer__bottom p { font-size: 0.78rem; color: var(--text-pale); max-width: 100%; } /* WhatsApp flutuante */
+.wpp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 99; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.35); transition: transform 0.2s;
+}
+.wpp-float:hover { transform: scale(1.08); }
+.wpp-float svg { width: 26px; height: 26px; fill: #fff; } /* --- Responsivo --- */
+@media (max-width: 900px) { .funil__track { grid-template-columns: 1fr; } .funil__arrow { display: none; } .sobre__inner { grid-template-columns: 1fr; gap: 2.5rem; } .sobre__img { max-width: 260px; } .footer__grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+@media (max-width: 640px) { :root { --space-xl: 4rem; } .nav__links, .nav__cta { display: none; } .nav__burger { display: flex; } .nav__mobile.open { display: flex; } .hero__title { font-size: clamp(1.8rem, 7vw, 2.8rem); } .footer__grid { grid-template-columns: 1fr; } .footer__bottom { flex-direction: column; text-align: center; } .sobre__img-wrap::after { display: none; }
+} @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; }
+} .page-hero { background: var(--musgo); padding: 140px 0 80px; position: relative; overflow: hidden;
+}
+.page-hero::before { content:''; position:absolute; top:-10%;right:-5%; width:50%;height:120%; background:radial-gradient(ellipse at 70% 40%,rgba(184,115,51,0.09) 0%,transparent 65%); pointer-events:none;
+}
+.page-hero__inner { max-width:var(--max-wide);margin:0 auto;padding:0 var(--space-md); display:grid;grid-template-columns:1fr 460px;gap:4rem;align-items:center;
+}
+.page-hero__pre { font-family:var(--font-data);font-size:0.78rem;font-weight:600; letter-spacing:0.16em;color:var(--cobre);text-transform:uppercase; margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem;
+}
+.page-hero__pre::before { display:none; }
+.page-hero h1 { color:var(--off);margin-bottom:1.25rem; }
+.page-hero__sub { color:var(--text-light);font-size:1.05rem;line-height:1.8; margin-bottom:2rem;max-width:520px;
+}
+.page-hero__visual { border-radius:var(--radius-md);overflow:hidden; border:1px solid rgba(184,115,51,0.2); background:var(--musgo-mid); aspect-ratio: 13/10;
+}
+.content-block { max-width:780px;margin:0 auto; }
+.content-block h2 { margin-bottom:1.25rem; }
+.content-block p { color:var(--text-mid);margin-bottom:1rem;font-size:0.975rem; }
+.entregaveis { display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.5rem;margin:2.5rem 0;
+}
+.entregavel { border:1px solid var(--off-dim);border-radius:var(--radius-md);padding:1.5rem;
+}
+.entregavel__icon { width:36px;height:36px;border-radius:50%; background:rgba(184,115,51,0.12); display:flex;align-items:center;justify-content:center;margin-bottom:1rem;
+}
+.entregavel__icon svg { width:16px;height:16px;stroke:var(--cobre);fill:none;stroke-width:2; }
+.entregavel h3 { font-size:1rem;font-family:var(--font-body);font-weight:600; color:var(--text-dark);margin-bottom:0.4rem;
+}
+.entregavel p { font-size:0.875rem;color:var(--text-mid);margin:0;max-width:100%; }
+.etapas { counter-reset:etapa;display:flex;flex-direction:column;gap:0; }
+.etapa { display:grid;grid-template-columns:60px 1fr;gap:1.5rem; padding:2rem 0;border-bottom:1px solid var(--off-dim);
+}
+.etapa:last-child { border-bottom:none; }
+.etapa__num { counter-increment:etapa; width:44px;height:44px;border-radius:50%; border:1.5px solid var(--cobre); display:flex;align-items:center;justify-content:center; font-family:var(--font-data);font-size:0.8rem;font-weight:600; color:var(--cobre);flex-shrink:0;
+}
+.etapa__num::before { content:counter(etapa,decimal-leading-zero); }
+.etapa h3 { font-size:1.05rem;font-family:var(--font-body);font-weight:600; color:var(--text-dark);margin-bottom:0.4rem;
+}
+.etapa p { font-size:0.9rem;color:var(--text-mid);max-width:100%;margin:0; }
+.nivel-card { border:1px solid var(--off-dim);border-radius:var(--radius-md); padding:2rem;margin-bottom:1.5rem;
+}
+.nivel-card.destaque { border-color:var(--cobre);background:rgba(184,115,51,0.04);
+}
+.nivel-card__badge { display:inline-block;font-family:var(--font-data);font-size:0.72rem; font-weight:600;letter-spacing:0.1em;text-transform:uppercase; color:var(--cobre);border:1px solid rgba(184,115,51,0.4); border-radius:20px;padding:0.25rem 0.75rem;margin-bottom:1rem;
+}
+.nivel-card h3 { font-size:1.1rem;font-family:var(--font-body);font-weight:600; color:var(--text-dark);margin-bottom:0.75rem;
+}
+.nivel-card ul { list-style:none;display:flex;flex-direction:column;gap:0.4rem; }
+.nivel-card ul li { font-size:0.875rem;color:var(--text-mid); padding-left:1.25rem;position:relative;
+}
+.nivel-card ul li::before { content:'→';position:absolute;left:0;color:var(--cobre);font-size:0.8rem;
+}
+.cta-inline { background:var(--musgo);border-radius:var(--radius-md); padding:2.5rem;text-align:center;margin:3rem 0;
+}
+.cta-inline h3 { color:var(--off);font-size:1.4rem;margin-bottom:0.75rem; }
+.cta-inline p { color:var(--text-light);font-size:0.9rem;margin:0 auto 1.5rem;max-width:480px;
+}
+.nota-tecnica { border-left:2px solid var(--cobre); padding:1rem 1.25rem; background:rgba(184,115,51,0.05); border-radius:0 var(--radius-sm) var(--radius-sm) 0; margin:2rem 0;
+}
+.nota-tecnica p { font-size:0.875rem;color:var(--text-mid);margin:0;max-width:100%;
+}
+@media(max-width:900px){ .page-hero__inner { grid-template-columns:1fr; } .page-hero__visual { aspect-ratio:4/3;order:-1; }
+} 
+/* ── FOOTER MODERNO ── */
+.footer__top { background: var(--musgo); padding: 5rem 0 3rem; border-top: 1px solid rgba(184,115,51,0.2); }
+.footer__top-inner { display: grid; grid-template-columns: 1.4fr 1.2fr 1fr; gap: 4rem; align-items: start; }
+.footer__brand-block .footer__brand-name { font-family: var(--font-title); font-size: 1.2rem; color: var(--off); letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+.footer__brand-block .footer__brand-name span { color: var(--cobre); }
+.footer__brand-block .footer__slogan { font-size: 0.8rem; color: var(--text-pale); font-style: italic; margin-bottom: 0.75rem; }
+.footer__brand-block .footer__desc { font-size: 0.83rem; color: var(--text-pale); line-height: 1.65; max-width: 280px; }
+.footer__social-label { font-family: var(--font-data); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cobre); margin-bottom: 1.25rem; }
+.footer__social-links { display: flex; flex-direction: column; gap: 0.85rem; }
+.footer__social-item { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03); transition: border-color 0.2s, background 0.2s, transform 0.2s; }
+.footer__social-item:hover { border-color: rgba(184,115,51,0.4); background: rgba(184,115,51,0.08); transform: translateX(4px); }
+.footer__social-item--wpp:hover { border-color: rgba(37,211,102,0.35); background: rgba(37,211,102,0.07); }
+.footer__social-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(184,115,51,0.15); display: flex; align-items: center; justify-content: center; color: var(--cobre); flex-shrink: 0; }
+.footer__social-icon--wpp { background: rgba(37,211,102,0.12); color: #25D366; }
+.footer__social-info { display: flex; flex-direction: column; gap: 0.1rem; }
+.footer__social-name { font-size: 0.85rem; font-weight: 600; color: var(--off); }
+.footer__social-handle { font-size: 0.75rem; color: var(--text-pale); }
+.footer__links-block { display: flex; gap: 2.5rem; }
+.footer__col h4 { font-family: var(--font-data); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--off); margin-bottom: 1rem; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.footer__col ul a { font-size: 0.83rem; color: var(--text-pale); text-decoration: none; transition: color 0.15s; }
+.footer__col ul a:hover { color: var(--cobre); }
+.footer__bottom { background: rgba(0,0,0,0.25); padding: 1.25rem 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.footer__bottom-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.footer__bottom p { font-size: 0.77rem; color: var(--text-pale); max-width: 100%; }
+.footer__bottom a { color: var(--text-pale); text-decoration: none; transition: color 0.15s; }
+.footer__bottom a:hover { color: var(--cobre); }
+@media(max-width:900px) {
+  .footer__top-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .footer__links-block { flex-wrap: wrap; gap: 2rem; }
+  .footer__bottom-inner { flex-direction: column; text-align: center; }
+  .footer__brand-block .footer__desc { max-width: 100%; }
+}
+
+
+/* ============================================================
+   MOBILE REFINEMENTS — adicionado na revisão
+   Cobre: < 400px (iPhone SE), touch targets, legibilidade
+   ============================================================ */
+
+/* Viewport meta já está em todas as páginas */
+
+/* Nav mobile */
+@media (max-width: 640px) {
+  .nav__inner { padding: 0 1rem; height: 60px; }
+  .nav__logo { font-size: 1.1rem; }
+  .nav__mobile { padding: 1rem; gap: 0; }
+  .nav__mobile a { padding: 0.85rem 0; font-size: 1rem; min-height: 44px; display: flex; align-items: center; }
+  .nav__mobile a.btn-primary { margin-top: 0.75rem; min-height: 48px; justify-content: center; }
+  .nav__burger { padding: 8px; }
+}
+
+/* Hero mobile */
+@media (max-width: 640px) {
+  .hero__pre { font-size: 0.7rem; letter-spacing: 0.1em; }
+  .hero__sub { font-size: 0.95rem; }
+  .hero__actions { flex-direction: column; }
+  .hero__actions .btn { width: 100%; text-align: center; min-height: 52px; display: flex; align-items: center; justify-content: center; }
+}
+
+/* Botões — touch targets mínimos de 44px */
+@media (max-width: 640px) {
+  .btn { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; padding: 0.85rem 1.5rem; font-size: 0.9rem; }
+}
+
+/* Seções */
+@media (max-width: 640px) {
+  .section { padding: 3rem 0; }
+  .container { padding: 0 1.25rem; }
+  .problema__grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .blog-prev__grid { grid-template-columns: 1fr; }
+  .faq__list { max-width: 100%; }
+  .faq__question { font-size: 0.9rem; padding: 1rem 0; gap: 0.75rem; }
+}
+
+/* Blog */
+@media (max-width: 640px) {
+  .blog-featured { grid-template-columns: 1fr; }
+  .blog-featured__img { height: 220px; }
+  .blog-featured__body { padding: 1.75rem 1.25rem; }
+  .blog-featured__title { font-size: 1.2rem; }
+  .blog-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .blog-toolbar { flex-direction: column; align-items: stretch; }
+  .blog-search { min-width: 100%; }
+}
+
+/* Artigos */
+@media (max-width: 640px) {
+  .article-hero__inner { padding: 0 1.25rem 2rem; }
+  .article-hero h1 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+  .article-body { padding: 2.5rem 1.25rem 4rem; }
+  .article-body p { font-size: 1rem; line-height: 1.8; }
+  .article-author-card { flex-direction: column; text-align: center; padding: 1.5rem 1rem; }
+  .article-author-card__photo { width: 64px; height: 64px; margin: 0 auto; }
+  .article-cta { padding: 2rem 1.25rem; border-radius: 12px; }
+  .article-cta h3 { font-size: 1.25rem; }
+}
+
+/* Sobre */
+@media (max-width: 640px) {
+  .sobre-hero__content { padding: 2rem 1.25rem 3rem; }
+  .sobre-hero h1 { font-size: clamp(2rem, 8vw, 3rem); }
+  .formacao-grid { gap: 0.5rem; }
+  .formacao-pill { font-size: 0.78rem; padding: 0.4rem 0.85rem; }
+  .livro-card { grid-template-columns: 1fr; gap: 1rem; }
+  .numeros__grid { grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+  .numero-item__val { font-size: clamp(1.8rem,6vw,2.5rem); }
+  .sobre-split { grid-template-columns: 1fr; }
+  .sobre-split__foto { height: 260px; }
+}
+
+/* Serviços */
+@media (max-width: 640px) {
+  .page-hero { padding: 100px 0 50px; }
+  .page-hero__inner { grid-template-columns: 1fr !important; }
+  .page-hero__visual { display: none; }
+  .page-hero h1 { font-size: clamp(1.7rem, 6vw, 2.4rem); }
+  .entregaveis { grid-template-columns: 1fr; }
+  .etapa { grid-template-columns: 44px 1fr; gap: 1rem; }
+  .nivel-card { padding: 1.5rem; }
+  .cta-inline { padding: 2rem 1.25rem; border-radius: 12px; }
+  .cta-inline h3 { font-size: 1.2rem; }
+}
+
+/* Funil home */
+@media (max-width: 640px) {
+  .funil__step { padding: 1.25rem; }
+  .guia__actions { flex-direction: column; }
+  .guia__actions .btn { width: 100%; text-align: center; }
+}
+
+/* Footer moderno */
+@media (max-width: 640px) {
+  .footer__top { padding: 3rem 0 2rem; }
+  .footer__top-inner { gap: 2rem; }
+  .footer__social-item { padding: 0.65rem 0.85rem; }
+  .footer__bottom p { font-size: 0.72rem; }
+}
+
+/* CTA final */
+@media (max-width: 640px) {
+  .cta-final { padding: 3.5rem 0; }
+  .cta-final h2 { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+  .btn-cta-wpp { width: 100%; justify-content: center; }
+}
+
+/* Cookie banner */
+@media (max-width: 480px) {
+  .cookie-banner { padding: 1rem; }
+  .cookie-banner__inner { gap: 1rem; }
+  .cookie-banner__text p { font-size: 0.8rem; }
+}
+
+/* Telas muito pequenas (iPhone SE = 375px) */
+@media (max-width: 380px) {
+  :root { --space-md: 1rem; }
+  .hero__title { font-size: 1.7rem; }
+  .nav__logo { font-size: 1rem; }
+}
+
+</style>
+</head>
+<body> <header class="nav"> <div class="nav__inner"> <a href="/" class="nav__logo">KARIA <span>Gestão</span></a> <nav aria-label="Menu principal"> <ul class="nav__links"> <li class="has-dropdown"><a href="/servicos/">Serviços</a> <ul class="nav__dropdown"> <li><a href="/servicos/diagnostico.html">Diagnóstico Estruturado</a></li> <li><a href="/servicos/implantacao.html">Consultoria de Implantação</a></li> <li><a href="/servicos/acompanhamento.html">Acompanhamento Estratégico</a></li> </ul> </li> <li><a href="/sobre.html">Sobre</a></li> <li><a href="/blog/">Blog</a></li> <li><a href="/faq.html">FAQ</a></li> </ul> </nav> <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="btn btn-primary nav__cta" target="_blank" rel="noopener">Agendar conversa</a> <button class="nav__burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button> </div> <nav class="nav__mobile"> <a href="/servicos/diagnostico.html">Diagnóstico Estruturado</a> <a href="/servicos/implantacao.html">Consultoria de Implantação</a> <a href="/servicos/acompanhamento.html">Acompanhamento Estratégico</a> <a href="/sobre.html">Sobre</a> <a href="/blog/">Blog</a> <a href="/faq.html">FAQ</a> <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="btn btn-primary" target="_blank" rel="noopener">Agendar conversa</a> </nav>
+</header> <main>
+<section class="page-hero"> <div class="page-hero__inner"> <div> <p class="page-hero__pre">Acompanhamento Estratégico</p> <h1>Visão estratégica todo mês, sem abrir mão da advocacia</h1> <p class="page-hero__sub">O ciclo mensal de governança que transforma dados em decisão. Painel de Indicadores, reunião estratégica e Registro Executivo para o sócio que quer dirigir o escritório com clareza.</p> <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="btn btn-primary" target="_blank" rel="noopener">Quero uma conversa gratuita</a> </div> <div class="page-hero__visual" aria-hidden="true"><svg viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="display:block"> <rect width="520" height="420" fill="#0D1F2D" rx="0"/> <circle cx="460" cy="380" r="110" fill="#B87333" fill-opacity="0.05"/> <circle cx="40" cy="60" r="80" fill="#B87333" fill-opacity="0.05"/> <!-- Grid gráfico --> <g opacity="0.07" stroke="#fff" stroke-width="1"> <line x1="40" y1="280" x2="480" y2="280"/> <line x1="40" y1="240" x2="480" y2="240"/> <line x1="40" y1="200" x2="480" y2="200"/> <line x1="40" y1="160" x2="480" y2="160"/> <line x1="40" y1="120" x2="480" y2="120"/> </g> <!-- Eixo X --> <line x1="40" y1="300" x2="480" y2="300" stroke="#fff" stroke-width="0.5" opacity="0.15"/> <!-- Área preenchida do gráfico --> <path d="M40,280 C100,265 160,230 220,200 C280,170 340,148 400,128 C440,114 480,108 480,108 L480,300 L40,300 Z" fill="#B87333" fill-opacity="0.1"/> <!-- Linha do gráfico --> <path d="M40,280 C100,265 160,230 220,200 C280,170 340,148 400,128 C440,114 480,108 480,108" fill="none" stroke="#B87333" stroke-width="2.5" stroke-linecap="round"/> <!-- Pontos mensais --> <circle cx="40" cy="280" r="5" fill="#B87333"/> <circle cx="114" cy="250" r="5" fill="#B87333"/> <circle cx="187" cy="220" r="5" fill="#B87333"/> <circle cx="260" cy="192" r="5" fill="#B87333"/> <circle cx="333" cy="162" r="5" fill="#B87333"/> <circle cx="407" cy="134" r="5" fill="#B87333"/> <circle cx="480" cy="108" r="6" fill="#B87333" stroke="#F8F6F3" stroke-width="2"/> <!-- Labels meses --> <g font-family="Montserrat,sans-serif" font-size="9" fill="#8FA3B0" text-anchor="middle"> <text x="40" y="316">Jan</text> <text x="114" y="316">Fev</text> <text x="187" y="316">Mar</text> <text x="260" y="316">Abr</text> <text x="333" y="316">Mai</text> <text x="407" y="316">Jun</text> <text x="480" y="316" fill="#B87333" font-weight="700">Jul</text> </g> <!-- Label eixo Y --> <text x="30" y="284" text-anchor="end" font-family="Montserrat,sans-serif" font-size="8" fill="#8FA3B0">0%</text> <text x="30" y="204" text-anchor="end" font-family="Montserrat,sans-serif" font-size="8" fill="#8FA3B0">50%</text> <text x="30" y="124" text-anchor="end" font-family="Montserrat,sans-serif" font-size="8" fill="#8FA3B0">100%</text> <!-- KPI cards no topo --> <rect x="28" y="28" width="130" height="62" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(184,115,51,0.25)" stroke-width="1"/> <text x="42" y="48" font-family="Montserrat,sans-serif" font-size="8" font-weight="600" fill="#8FA3B0" letter-spacing="0.5">PRODUTIVIDADE</text> <text x="42" y="74" font-family="Cormorant Garamond,Georgia,serif" font-size="28" font-weight="700" fill="#F8F6F3">94%</text> <rect x="172" y="28" width="130" height="62" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(184,115,51,0.25)" stroke-width="1"/> <text x="186" y="48" font-family="Montserrat,sans-serif" font-size="8" font-weight="600" fill="#8FA3B0" letter-spacing="0.5">PRAZOS OK</text> <text x="186" y="74" font-family="Cormorant Garamond,Georgia,serif" font-size="28" font-weight="700" fill="#F8F6F3">98%</text> <rect x="316" y="28" width="176" height="62" rx="8" fill="rgba(184,115,51,0.15)" stroke="#B87333" stroke-width="1"/> <text x="330" y="48" font-family="Montserrat,sans-serif" font-size="8" font-weight="600" fill="#B87333" letter-spacing="0.5">MATURIDADE</text> <text x="330" y="74" font-family="Cormorant Garamond,Georgia,serif" font-size="26" font-weight="700" fill="#B87333">Nível 3</text> <!-- Label gráfico --> <rect x="28" y="328" width="160" height="28" rx="6" fill="#B87333" fill-opacity="0.18" stroke="#B87333" stroke-width="0.8" stroke-opacity="0.5"/> <text x="108" y="346" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="10" font-weight="700" fill="#B87333" letter-spacing="1.5">ACOMPANHAMENTO</text>
+</svg></div> </div>
+</section> <section class="section section--off"> <div class="container"><div class="content-block"> <h2>O que é o Acompanhamento Estratégico?</h2> <p>O Acompanhamento Estratégico em Gestão Jurídica é o serviço contínuo da KARIA Gestão. É o ciclo mensal que garante que a estrutura implantada se mantenha, evolua e continue gerando as informações que o sócio precisa para tomar decisões.</p> </div> </div></div>
+</section>
+<section class="section section--dim"> <div class="container"> <h2>Os três níveis</h2> <p style="color:var(--text-mid);margin:0.5rem 0 2.5rem;">O Acompanhamento é estruturado em três níveis progressivos. A indicação do nível adequado é feita pela KARIA com base no diagnóstico de maturidade do escritório.</p> <div class="nivel-card"> <span class="nivel-card__badge">Nível 1</span> <h3>Essencial</h3> <p style="font-size:0.9rem;color:var(--text-mid);margin-bottom:1rem;">Para escritórios que concluíram a implantação e precisam manter a estrutura funcionando com acompanhamento técnico mensal.</p> <ul> <li>Painel de Indicadores mensal</li> <li>Reunião estratégica de 60 minutos</li> <li>Registro Executivo do período</li> <li>Canal de suporte para dúvidas operacionais</li> </ul> </div> <div class="nivel-card destaque"> <span class="nivel-card__badge">Nível 2</span> <h3>Evolução</h3> <p style="font-size:0.9rem;color:var(--text-mid);margin-bottom:1rem;">Para escritórios com estrutura consolidada que querem evoluir os indicadores e aprofundar a análise de gestão.</p> <ul> <li>Tudo do nível Essencial</li> <li>Análise comparativa de tendências</li> <li>Revisão e refinamento de fluxos</li> <li>Acompanhamento de metas e OKRs</li> <li>Reunião estratégica de 90 minutos</li> </ul> </div> <div class="nivel-card"> <span class="nivel-card__badge">Nível 3</span> <h3>Estratégico</h3> <p style="font-size:0.9rem;color:var(--text-mid);margin-bottom:1rem;">Para escritórios em expansão ou com alta complexidade operacional, que precisam de visão estratégica integrada à gestão.</p> <ul> <li>Tudo do nível Evolução</li> <li>Suporte a decisões estratégicas do sócio</li> <li>Análise de cenários e planejamento</li> <li>Acompanhamento de projetos de expansão</li> <li>Disponibilidade estendida para consultas</li> </ul> </div> </div>
+</section>
+<section class="section section--dark"> <div class="container"><div class="content-block"> <h2 style="color:var(--off);">O ciclo mensal do Acompanhamento</h2> <div class="etapas" style="margin-top:2rem;"> <div class="etapa"><div class="etapa__num"></div><div> <h3 style="color:var(--off);">Coleta e consolidação de dados</h3> <p style="color:var(--text-light);">Levantamento dos indicadores do período com base nos dados do escritório. Sem trabalho extra da equipe.</p> </div></div> <div class="etapa"><div class="etapa__num"></div><div> <h3 style="color:var(--off);">Entrega do Painel de Indicadores</h3> <p style="color:var(--text-light);">Até o dia 10 de cada mês, o sócio recebe o Painel atualizado com a leitura do período anterior.</p> </div></div> <div class="etapa"><div class="etapa__num"></div><div> <h3 style="color:var(--off);">Reunião estratégica</h3> <p style="color:var(--text-light);">Análise conjunta dos dados, pontos de atenção, decisões a tomar e prioridades do próximo período.</p> </div></div> <div class="etapa"><div class="etapa__num"></div><div> <h3 style="color:var(--off);">Registro Executivo</h3> <p style="color:var(--text-light);">Ata executiva com os principais pontos da reunião, encaminhamentos e recomendações para o mês seguinte.</p> </div></div> </div> </div></div>
+</section>
+<section class="section section--off"> <div class="container"><div class="content-block"> <h2>Para quem é o Acompanhamento?</h2> <p>Para escritórios que já têm uma base estruturada e querem manter a gestão funcionando com visão estratégica contínua.</p> <div class="cta-inline"> <h3>Quer ter visão estratégica todo mês?</h3> <p>Agende uma conversa gratuita para entender qual nível de Acompanhamento faz sentido para o seu escritório agora.</p> <a href="https://{WPP}" class="btn btn-primary" target="_blank" rel="noopener">Agendar conversa gratuita</a> </div> </div></div>
+</section>
+</main> <footer class="footer">
+  <div class="footer__top">
+    <div class="container">
+      <div class="footer__top-inner">
+        <div class="footer__brand-block">
+          <p class="footer__brand-name">KARIA <span>Gestão</span></p>
+          <p class="footer__slogan">Gestão que entrega. Estratégia que transforma.</p>
+          <p class="footer__desc">Consultoria em Controladoria Jurídica exclusiva para escritórios de advocacia. Atendimento em todo o Brasil.</p>
+        </div>
+        <div class="footer__social-block">
+          <p class="footer__social-label">Acompanhe a KARIA</p>
+          <div class="footer__social-links">
+            <a href="https://www.instagram.com/kariagestao" target="_blank" rel="noopener" class="footer__social-item" aria-label="Instagram">
+              <div class="footer__social-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </div>
+              <div class="footer__social-info">
+                <span class="footer__social-name">Instagram</span>
+                <span class="footer__social-handle">@kariagestao</span>
+              </div>
+            </a>
+            <a href="https://www.linkedin.com/company/kariagestao/" target="_blank" rel="noopener" class="footer__social-item" aria-label="LinkedIn">
+              <div class="footer__social-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </div>
+              <div class="footer__social-info">
+                <span class="footer__social-name">LinkedIn</span>
+                <span class="footer__social-handle">KARIA Gestão</span>
+              </div>
+            </a>
+            <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." target="_blank" rel="noopener" class="footer__social-item footer__social-item--wpp" aria-label="WhatsApp">
+              <div class="footer__social-icon footer__social-icon--wpp">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </div>
+              <div class="footer__social-info">
+                <span class="footer__social-name">WhatsApp</span>
+                <span class="footer__social-handle">Fale agora</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="footer__links-block">
+          <div class="footer__col">
+            <h4>Serviços</h4>
+            <ul>
+              <li><a href="/servicos/diagnostico.html">Diagnóstico Estruturado</a></li>
+              <li><a href="/servicos/implantacao.html">Consultoria de Implantação</a></li>
+              <li><a href="/servicos/acompanhamento.html">Acompanhamento Estratégico</a></li>
+            </ul>
+          </div>
+          <div class="footer__col">
+            <h4>Conteúdo</h4>
+            <ul>
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="https://guia.kariagestao.com" target="_blank" rel="noopener">Guia de Maturidade</a></li>
+              <li><a href="/faq.html">FAQ</a></li>
+              <li><a href="/sobre.html">Sobre</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container">
+      <div class="footer__bottom-inner">
+        <p>© 2025 KARIA Gestão. Todos os direitos reservados.</p>
+        <p><a href="/politica-de-privacidade.html">Política de Privacidade</a> · CNPJ 60.942.073/0001-24</p>
+      </div>
+    </div>
+  </div>
+</footer> <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="wpp-float" target="_blank" rel="noopener" aria-label="WhatsApp"> <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a> <script>/* KARIA Gestão scripts globais */ document.addEventListener('DOMContentLoaded', () => { /* Nav scroll */ const nav = document.querySelector('.nav'); if (nav) { window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true }); } /* Hamburger mobile */ const burger = document.querySelector('.nav__burger'); const mobile = document.querySelector('.nav__mobile'); if (burger && mobile) { burger.addEventListener('click', () => { const open = mobile.classList.toggle('open'); burger.setAttribute('aria-expanded', open); }); } /* FAQ accordion */ document.querySelectorAll('.faq__question').forEach(btn => { btn.addEventListener('click', () => { const item = btn.closest('.faq__item'); const answer = item.querySelector('.faq__answer'); const open = item.classList.contains('open'); /* fecha todos */ document.querySelectorAll('.faq__item.open').forEach(el => { el.classList.remove('open'); el.querySelector('.faq__answer').style.maxHeight = '0'; }); if (!open) { item.classList.add('open'); answer.style.maxHeight = answer.scrollHeight + 'px'; } btn.setAttribute('aria-expanded', !open); }); }); });
+</script>
+</body>
+</html>
