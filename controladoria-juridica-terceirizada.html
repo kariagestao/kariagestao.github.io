@@ -807,7 +807,7 @@
     <div class="container">
       <h2>Prazo perdido não tem segunda chance.</h2>
       <p>Se o seu escritório se qualifica, a KARIA assume o monitoramento para que você volte a focar no que importa.</p>
-      <a href="https://wa.me/555133765996?text=Olá%2C%20preenchi%20o%20formulário%20de%20elegibilidade%20no%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20o%20serviço%20de%20terceirização." class="btn-hero">Falar com a KARIA pelo WhatsApp</a>
+      <a href="https://wa.me/555133765996?text=Olá%2C%20preenchi%20o%20formulário%20de%20elegibilidade%20para%20Controladoria%20Jurídica%20Terceirizada%20e%20gostaria%20de%20conversar%20sobre%20o%20serviço." class="btn-hero">Falar com a KARIA pelo WhatsApp</a>
     </div>
   </section>
 
@@ -839,19 +839,40 @@
 
       const status = avaliarElegibilidade();
       const nome = document.getElementById('nome').value.split(' ')[0];
+      const nomeCompleto = document.getElementById('nome').value;
+      const email = document.getElementById('email').value;
+      const telefone = document.getElementById('telefone') ? document.getElementById('telefone').value : 'não informado';
+      const areaTexto = document.getElementById('area').options[document.getElementById('area').selectedIndex].text;
+      const processosTexto = document.getElementById('processos').options[document.getElementById('processos').selectedIndex].text;
+      const publicacoesTexto = document.getElementById('publicacoes').options[document.getElementById('publicacoes').selectedIndex].text;
+      const sistemaTexto = document.getElementById('sistema').options[document.getElementById('sistema').selectedIndex].text;
 
-      // Envia para Web3Forms em background
-      const formData = new FormData(form);
-      formData.append('status_elegibilidade', status);
-      formData.append('area', document.getElementById('area').options[document.getElementById('area').selectedIndex].text);
-      formData.append('processos', document.getElementById('processos').options[document.getElementById('processos').selectedIndex].text);
-      formData.append('publicacoes', document.getElementById('publicacoes').options[document.getElementById('publicacoes').selectedIndex].text);
-      formData.append('sistema', document.getElementById('sistema').options[document.getElementById('sistema').selectedIndex].text);
+      const statusLabel = status === 'qualificado' ? '✅ QUALIFICADO' : status === 'parcial' ? '⚠️ PARCIAL' : '❌ NÃO QUALIFICADO';
+
+      // Envia notificação imediata por e-mail via Web3Forms
+      const notificacao = new FormData();
+      notificacao.append('access_key', document.querySelector('input[name="access_key"]').value);
+      notificacao.append('subject', `[KARIA] Novo lead: ${nomeCompleto} — ${statusLabel}`);
+      notificacao.append('from_name', 'Site KARIA Gestão');
+      notificacao.append('name', nomeCompleto);
+      notificacao.append('email', email);
+      notificacao.append('message',
+        `NOVO LEAD — FORMULÁRIO DE ELEGIBILIDADE\n\n` +
+        `Nome: ${nomeCompleto}\n` +
+        `E-mail: ${email}\n` +
+        `Telefone: ${telefone}\n\n` +
+        `RESULTADO: ${statusLabel}\n\n` +
+        `Área de atuação: ${areaTexto}\n` +
+        `Volume de processos: ${processosTexto}\n` +
+        `Publicações/intimações: ${publicacoesTexto}\n` +
+        `Sistema utilizado: ${sistemaTexto}\n\n` +
+        `Preenchido em: ${new Date().toLocaleString('pt-BR', {timeZone: 'America/Sao_Paulo'})}`
+      );
 
       try {
         await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
-          body: formData
+          body: notificacao
         });
       } catch(err) {}
 
@@ -864,7 +885,7 @@
         resultado.innerHTML = `
           <h3>✓ ${nome}, o perfil do seu escritório é compatível.</h3>
           <p>Com base nas suas respostas, seu escritório está dentro dos critérios do serviço de terceirização de controladoria jurídica da KARIA Gestão. O próximo passo é uma conversa rápida para alinhar o escopo e apresentar a proposta.</p>
-          <a href="https://wa.me/555133765996?text=Olá%2C%20preenchi%20o%20formulário%20de%20elegibilidade%20e%20meu%20escritório%20se%20qualificou.%20Gostaria%20de%20conversar%20sobre%20o%20serviço." class="btn-resultado btn-wpp">Falar com a KARIA pelo WhatsApp</a>
+          <a href="https://wa.me/555133765996?text=Olá%2C%20preenchi%20o%20formulário%20de%20elegibilidade%20para%20Controladoria%20Jurídica%20Terceirizada%20e%20meu%20escritório%20se%20qualificou.%20Gostaria%20de%20conversar%20sobre%20o%20serviço." class="btn-resultado btn-wpp">Falar com a KARIA pelo WhatsApp</a>
         `;
         gtag('event', 'lead_qualificado', { event_category: 'formulario_pocket' });
 
@@ -873,7 +894,7 @@
         resultado.innerHTML = `
           <h3>${nome}, seu perfil merece uma avaliação individual.</h3>
           <p>Algumas características do seu escritório estão fora da faixa padrão do serviço, mas isso não significa que não existe uma solução adequada. Entre em contato para conversarmos sobre o que faz sentido para o seu caso.</p>
-          <a href="https://wa.me/555133765996?text=Olá%2C%20preenchi%20o%20formulário%20de%20elegibilidade%20e%20gostaria%20de%20entender%20melhor%20as%20opções%20para%20o%20meu%20escritório." class="btn-resultado btn-wpp">Falar com a KARIA pelo WhatsApp</a>
+          <a href="https://wa.me/555133765996?text=Olá%2C%20preenchi%20o%20formulário%20de%20elegibilidade%20para%20Controladoria%20Jurídica%20Terceirizada%20e%20gostaria%20de%20entender%20melhor%20as%20opções%20para%20o%20meu%20escritório." class="btn-resultado btn-wpp">Falar com a KARIA pelo WhatsApp</a>
         `;
         gtag('event', 'lead_parcial', { event_category: 'formulario_pocket' });
 
