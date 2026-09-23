@@ -1461,7 +1461,7 @@ p { max-width: var(--max-prose); }
         </div>
 
         <input type="hidden" name="_subject" value="Novo lead qualificado — Pocket KARIA">
-        <input type="hidden" name="access_key" value="SEU_TOKEN_WEB3FORMS">
+        <input type="hidden" name="access_key" value="1062412a-df27-4597-9e4c-d921a4cdc6d9">
         <input type="hidden" name="_redirect" value="false">
 
         <button type="submit" class="btn-form">Verificar elegibilidade</button>
@@ -1691,56 +1691,6 @@ document.addEventListener('DOMContentLoaded', function(){
   </script>
 
 
-<script>
-(function() {
-  var form = document.getElementById('form-elegibilidade');
-  if (!form) return;
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var btn = form.querySelector('button[type="submit"]');
-    var orig = btn ? btn.textContent : '';
-    if (btn) { btn.textContent = 'Enviando...'; btn.disabled = true; }
-    var nome = (form.querySelector('[name="nome"]')||{}).value||'';
-    var email = (form.querySelector('[name="email"]')||{}).value||'';
-    var escritorio = (form.querySelector('[name="escritorio"]')||{}).value||'';
-    var area = (form.querySelector('[name="area"]')||{}).value||'';
-    var processos = (form.querySelector('[name="processos"]')||{}).value||'';
-    var sistema = (form.querySelector('[name="sistema"]')||{}).value||'';
-    var elegivel = (area==='elegivel'||area==='misto') && processos==='elegivel';
-    fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        access_key: 'f049d459-fe18-484b-bf14-5ccb70fbb65b',
-        subject: (elegivel?'[ELEGÍVEL] ':'[Não elegível] ') + 'Controladoria Terceirizada — ' + nome,
-        from_name: 'KARIA Gestão — Site',
-        replyto: email,
-        message: 'Nome: '+nome+'
-E-mail: '+email+'
-Escritório: '+escritorio+'
-Área: '+area+'
-Processos: '+processos+'
-Sistema: '+sistema+'
-Status: '+(elegivel?'ELEGÍVEL':'Não elegível')
-      })
-    })
-    .then(function(r){return r.json();})
-    .then(function(data){
-      var res = document.getElementById('resultado-elegibilidade');
-      if (data.success && res) {
-        res.style.display='block';
-        res.innerHTML = elegivel
-          ? '<div style="background:#0D1F2D;color:#F8F6F3;border-radius:12px;padding:2rem;text-align:center;border:1px solid rgba(184,115,51,0.3)"><h3 style="color:#B87333;font-family:Montserrat,sans-serif;margin-bottom:0.75rem;">✓ Seu escritório tem o perfil!</h3><p style="color:#C8D4DC;">Entraremos em contato em até 24 horas para dar os próximos passos, '+nome+'.</p></div>'
-          : '<div style="background:#0D1F2D;color:#F8F6F3;border-radius:12px;padding:2rem;text-align:center;border:1px solid rgba(184,115,51,0.3)"><h3 style="color:#B87333;font-family:Montserrat,sans-serif;margin-bottom:0.75rem;">Recebemos sua solicitação</h3><p style="color:#C8D4DC;">Neste momento seu escritório não se encaixa nos critérios. O <a href="/servicos/diagnostico.html" style="color:#B87333;">Diagnóstico Estruturado</a> pode ser o passo certo.</p></div>';
-        form.style.display='none';
-        res.scrollIntoView({behavior:'smooth',block:'center'});
-      } else {
-        if(btn){btn.textContent=orig;btn.disabled=false;}
-      }
-    })
-    .catch(function(){if(btn){btn.textContent=orig;btn.disabled=false;}});
-  });
-})();
-</script>
+
 </body>
 </html>
