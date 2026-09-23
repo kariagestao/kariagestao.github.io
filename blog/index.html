@@ -9,20 +9,13 @@
   <link rel="canonical" href="https://www.kariagestao.com/blog/">
   <link rel="icon" type="image/png" href="/images/favicon-karia.png">
   <link rel="shortcut icon" type="image/png" href="/images/favicon-karia.png">
-  <meta property="og:title" content="Blog sobre Gestão Jurídica e Controladoria para Advocacia | KARIA Gestão">
-  <meta property="og:description" content="Artigos sobre Controladoria Jurídica, gestão de escritórios de advocacia, processos internos e crescimento estratégico. Conteúdo técnico por Nathalya Pereira.">
+  <meta property="og:title" content="Blog sobre Gestão Jurídica | KARIA Gestão">
+  <meta property="og:description" content="Artigos sobre Controladoria Jurídica e gestão estratégica para escritórios de advocacia.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="KARIA Gestão">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YE6CYRG627"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YE6CYRG627');</script>
-  <script type="application/ld+json">{
-    "@context":"https://schema.org","@type":"ProfessionalService",
-    "name":"KARIA Gestão",
-    "description":"Consultoria em Controladoria Jurídica exclusiva para escritórios de advocacia.",
-    "url":"https://www.kariagestao.com","telephone":"+55-51-3376-5996",
-    "email":"contato@kariagestao.com","areaServed":"Brasil","serviceType":"Controladoria Jurídica"
-  }</script>
   <style>
 
 /* ============================================================
@@ -212,158 +205,6 @@ p { max-width: var(--max-prose); }
 .privacy-modal__body a{color:#B87333;text-decoration:underline}
 @media(max-width:640px){.privacy-modal{max-height:92vh;border-radius:12px 12px 0 0}.privacy-modal-overlay{align-items:flex-end;padding:0}.privacy-modal__header,.privacy-modal__body,.privacy-modal__meta{padding-left:1.25rem;padding-right:1.25rem}}
 
-/* --- HERO --- */
-.hero { min-height: 100svh; background: var(--musgo); display: flex; align-items: center; padding-top: 68px; position: relative; overflow: hidden;
-}
-.hero::before { content: ''; position: absolute; top: -10%; right: -5%; width: 55%; height: 120%; background: radial-gradient(ellipse at 70% 40%, rgba(184,115,51,0.08) 0%, transparent 65%); pointer-events: none;
-}
-.hero__inner { max-width: var(--max-wide); margin: 0 auto; padding: var(--space-xl) var(--space-md); width: 100%;
-}
-.hero__pre { font-family: var(--font-data); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; color: var(--cobre); text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;
-}
-.hero__pre::before { display:none; }
-.hero__title { font-size: clamp(2.2rem, 5.5vw, 3.8rem); color: var(--off); max-width: 720px; margin-bottom: 1.5rem; font-weight: 700;
-}
-.hero__title em { font-style: normal; color: var(--cobre);
-}
-.hero__sub { font-size: 1.1rem; color: var(--text-light); max-width: 560px; line-height: 1.8; margin-bottom: 2.5rem;
-}
-.hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
-}
-.hero__scroll { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.4rem; color: var(--text-pale); font-size: 0.75rem; font-family: var(--font-data); letter-spacing: 0.08em; animation: scrollBounce 2s ease-in-out infinite;
-}
-.hero__scroll::after { content: ''; display: block; width: 1px; height: 36px; background: linear-gradient(to bottom, var(--cobre), transparent);
-}
-@keyframes scrollBounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(5px); }
-} /* --- PROBLEMA --- */
-.problema__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem;
-}
-.problema__item { border-left: 2px solid var(--cobre); padding-left: 1.25rem;
-}
-.problema__item h3 { font-size: 1rem; font-family: var(--font-body); font-weight: 600; color: var(--text-dark); margin-bottom: 0.4rem;
-}
-.problema__item p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.6; max-width: 100%;
-}
-.problema__closing { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--off-dim); max-width: var(--max-prose); font-size: 1.05rem; color: var(--text-mid);
-} /* --- FUNIL DE SERVIÇOS --- */
-.funil__intro { max-width: var(--max-prose); margin-bottom: 3.5rem; color: var(--text-light); font-size: 1.05rem; line-height: 1.8;
-}
-.funil__track { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0; align-items: start; margin-bottom: 3rem;
-}
-.funil__arrow { color: var(--cobre); font-size: 1.5rem; padding-top: 1.5rem; opacity: 0.5; align-self: start;
-}
-.funil__step { padding: 1.75rem; border: 1px solid rgba(184,115,51,0.2); border-radius: var(--radius-md); background: rgba(255,255,255,0.03); transition: border-color 0.2s, background 0.2s;
-}
-.funil__step:hover { border-color: rgba(184,115,51,0.5); background: rgba(255,255,255,0.06);
-}
-.funil__step-num { font-family: var(--font-data); font-size: 0.75rem; font-weight: 600; color: var(--cobre); letter-spacing: 0.1em; margin-bottom: 0.75rem; display: block;
-}
-.funil__step h3 { color: var(--off); font-size: 1.1rem; margin-bottom: 0.75rem;
-}
-.funil__step p { color: var(--text-light); font-size: 0.875rem; line-height: 1.65; max-width: 100%;
-}
-.funil__step a { display: inline-block; margin-top: 1rem; font-size: 0.85rem; font-weight: 500; color: var(--cobre); transition: color 0.15s;
-}
-.funil__step a:hover { color: #d49245; }
-.funil__cta { text-align: center; padding-top: 1rem; border-top: 1px solid rgba(184,115,51,0.15); color: var(--text-pale); font-size: 0.875rem;
-}
-.funil__cta a { color: var(--cobre); font-weight: 500; }
-.funil__cta a:hover { text-decoration: underline; } /* --- SOBRE --- */
-.sobre__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
-}
-.sobre__img-wrap { position: relative;
-}
-.sobre__img { width: 100%; max-width: 380px; border-radius: var(--radius-md); filter: grayscale(15%);
-}
-.sobre__img-wrap::after { content: ''; position: absolute; bottom: -16px; right: -16px; width: 60%; height: 60%; border: 2px solid var(--cobre); border-radius: var(--radius-md); opacity: 0.35; z-index: -1;
-}
-.sobre__credential { font-family: var(--font-data); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; color: var(--cobre); text-transform: uppercase; margin-bottom: 1rem;
-}
-.sobre__text h2 { margin-bottom: 1.25rem; }
-.sobre__text p { color: var(--text-mid); margin-bottom: 1rem; font-size: 0.975rem;
-} /* --- GUIA / AUTO-AVALIAÇÃO --- */
-.guia { background: var(--musgo); color: var(--off); text-align: center; padding: 5rem 0;
-}
-.guia__inner { max-width: 620px; margin: 0 auto; padding: 0 var(--space-md);
-}
-.guia h2 { margin-bottom: 1rem; }
-.guia p { color: var(--text-light); margin: 0 auto 2rem; font-size: 1rem;
-}
-.guia__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; } /* --- BLOG PREVIEW --- */
-.blog-prev__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2.5rem;
-}
-.blog-card { background: var(--off); border: 1px solid var(--off-dim); border-radius: var(--radius-md); padding: 1.75rem; display: flex; flex-direction: column; gap: 0.75rem; transition: border-color 0.2s, box-shadow 0.2s;
-}
-.blog-card:hover { border-color: var(--cobre); box-shadow: 0 4px 20px rgba(13,31,45,0.08);
-}
-.blog-card__date { font-family: var(--font-data); font-size: 0.75rem; font-weight: 500; color: var(--text-pale); letter-spacing: 0.06em;
-}
-.blog-card__title { font-family: var(--font-title); font-size: 1.05rem; font-weight: 600; color: var(--text-dark); line-height: 1.35;
-}
-.blog-card__excerpt { font-size: 0.875rem; color: var(--text-mid); line-height: 1.65; flex: 1; max-width: 100%;
-}
-.blog-card__link { font-size: 0.85rem; font-weight: 500; color: var(--cobre); margin-top: 0.25rem; transition: color 0.15s;
-}
-.blog-card:hover .blog-card__link { color: var(--cobre-dark); } /* --- FAQ --- */
-.faq__list { margin-top: 2.5rem; max-width: 760px;
-}
-.faq__item { border-bottom: 1px solid rgba(184,115,51,0.15);
-}
-.faq__question { width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.25rem 0; font-family: var(--font-body); font-size: 0.975rem; font-weight: 500; color: var(--off); transition: color 0.15s;
-}
-.faq__question:hover { color: var(--cobre); }
-.faq__icon { width: 20px; height: 20px; flex-shrink: 0; border: 1.5px solid rgba(184,115,51,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--cobre); transition: transform 0.25s;
-}
-.faq__item.open .faq__icon { transform: rotate(45deg); }
-.faq__answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease;
-}
-.faq__answer p { font-size: 0.9rem; color: var(--text-light); padding-bottom: 1.25rem; line-height: 1.75; max-width: 680px;
-} /* --- CTA FINAL --- */
-.cta-final { background: var(--cobre); color: #fff; text-align: center; padding: 5.5rem 0;
-}
-.cta-final__inner { max-width: 600px; margin: 0 auto; padding: 0 var(--space-md); }
-.cta-final h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: #fff; margin-bottom: 0.75rem;
-}
-.cta-final p { color: rgba(255,255,255,0.82); margin: 0 auto 2rem; font-size: 1rem;
-}
-.cta-final .btn-cta-wpp { display: inline-flex; align-items: center; gap: 0.6rem; background: #fff; color: var(--cobre-dark); font-weight: 600; font-size: 0.95rem; padding: 1rem 2.25rem; border-radius: var(--radius-sm); transition: background 0.2s;
-}
-.cta-final .btn-cta-wpp:hover { background: rgba(255,255,255,0.9); }
-.cta-final__note { margin-top: 1.25rem; font-size: 0.8rem; color: rgba(255,255,255,0.65);
-} /* --- FOOTER --- */
-.footer { background: var(--musgo); color: var(--text-light); padding: 4rem 0 2rem; border-top: 1px solid rgba(184,115,51,0.15);
-}
-.footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
-}
-.footer__brand-name { font-family: var(--font-title); font-size: 1.1rem; color: var(--off); letter-spacing: 0.06em; margin-bottom: 0.75rem;
-}
-.footer__brand-name span { color: var(--cobre); }
-.footer__slogan { font-size: 0.8rem; color: var(--text-pale); font-style: italic; margin-bottom: 1.25rem;
-}
-.footer__social { display: flex; gap: 0.75rem;
-}
-.footer__social a { width: 34px; height: 34px; border: 1px solid rgba(184,115,51,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-pale); font-size: 0.8rem; transition: border-color 0.15s, color 0.15s;
-}
-.footer__social a:hover { border-color: var(--cobre); color: var(--cobre); }
-.footer__col h4 { font-family: var(--font-data); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; color: var(--off); text-transform: uppercase; margin-bottom: 1rem;
-}
-.footer__col ul { list-style: none; }
-.footer__col ul li { margin-bottom: 0.5rem; }
-.footer__col ul a { font-size: 0.875rem; color: var(--text-pale); transition: color 0.15s;
-}
-.footer__col ul a:hover { color: var(--cobre); }
-.footer__bottom { border-top: 1px solid rgba(184,115,51,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
-}
-.footer__bottom p { font-size: 0.78rem; color: var(--text-pale); max-width: 100%; } /* WhatsApp flutuante */
-.wpp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 99; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.35); transition: transform 0.2s;
-}
-.wpp-float:hover { transform: scale(1.08); }
-.wpp-float svg { width: 26px; height: 26px; fill: #fff; } /* --- Responsivo --- */
-@media (max-width: 900px) { .funil__track { grid-template-columns: 1fr; } .funil__arrow { display: none; } .sobre__inner { grid-template-columns: 1fr; gap: 2.5rem; } .sobre__img { max-width: 260px; } .footer__grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
-}
-@media (max-width: 640px) { :root { --space-xl: 4rem; } .nav__links, .nav__cta { display: none; } .nav__burger { display: flex; } .nav__mobile.open { display: flex; } .hero__title { font-size: clamp(1.8rem, 7vw, 2.8rem); } .footer__grid { grid-template-columns: 1fr; } .footer__bottom { flex-direction: column; text-align: center; } .sobre__img-wrap::after { display: none; }
-} @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; }
-} /* ── BLOG HERO ── */
 .blog-hero{background:var(--musgo);padding:140px 0 80px;position:relative;overflow:hidden;}
 .blog-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 75% 50%,rgba(184,115,51,0.1) 0%,transparent 60%);pointer-events:none;}
 .blog-hero__inner{max-width:1100px;margin:0 auto;padding:0 2rem;}
@@ -599,63 +440,36 @@ p { max-width: var(--max-prose); }
 
 <div id="karia-footer"></div>
 
+<div class="cookie-banner" id="cookieBanner" role="dialog"> <div class="cookie-banner__inner"> <div class="cookie-banner__text"> <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--cobre)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> <p>Utilizamos cookies para melhorar sua experiência e analisar o tráfego. Ao continuar, você concorda com nossa <a href="/politica-de-privacidade.html">Política de Privacidade</a>.</p> </div> <div class="cookie-banner__actions"> <button class="cookie-btn cookie-btn--reject" onclick="cookieReject()">Apenas essenciais</button> <button class="cookie-btn cookie-btn--accept" onclick="cookieAccept()">Aceitar todos</button> </div> </div>
+</div>
+
 <script>
-/* Carrega nav e footer externos */
 function loadComponent(id, file, callback) {
   var el = document.getElementById(id);
   if (!el) { if(callback) callback(); return; }
   fetch(file)
     .then(function(r){ return r.text(); })
-    .then(function(html){
-      el.innerHTML = html;
-      if(callback) callback();
-    })
+    .then(function(html){ el.innerHTML = html; if(callback) callback(); })
     .catch(function(){ if(callback) callback(); });
 }
-
-/* Scripts do nav — executados após carga */
 function initNav() {
   var nav = document.querySelector('.nav');
-  if (nav) {
-    window.addEventListener('scroll', function(){
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-    }, { passive: true });
-  }
+  if (nav) { window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true }); }
   var burger = document.querySelector('.nav__burger');
   var mobile = document.querySelector('.nav__mobile');
-  if (burger && mobile) {
-    burger.addEventListener('click', function(){
-      var open = mobile.classList.toggle('open');
-      burger.setAttribute('aria-expanded', open);
-    });
-  }
+  if (burger && mobile) { burger.addEventListener('click', function(){ var open = mobile.classList.toggle('open'); burger.setAttribute('aria-expanded', open); }); }
   document.querySelectorAll('.has-dropdown').forEach(function(item){
     var arrow = item.querySelector('.nav__dropdown-arrow');
     if (!arrow) return;
     arrow.addEventListener('click', function(e){
       e.stopPropagation();
       var isOpen = item.classList.contains('open');
-      document.querySelectorAll('.has-dropdown.open').forEach(function(el){
-        el.classList.remove('open');
-        var a = el.querySelector('.nav__dropdown-arrow');
-        if (a) a.setAttribute('aria-expanded','false');
-      });
-      if (!isOpen) {
-        item.classList.add('open');
-        arrow.setAttribute('aria-expanded','true');
-      }
+      document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); });
+      if (!isOpen) { item.classList.add('open'); arrow.setAttribute('aria-expanded','true'); }
     });
   });
-  document.addEventListener('click', function(){
-    document.querySelectorAll('.has-dropdown.open').forEach(function(el){
-      el.classList.remove('open');
-      var a = el.querySelector('.nav__dropdown-arrow');
-      if (a) a.setAttribute('aria-expanded','false');
-    });
-  });
+  document.addEventListener('click', function(){ document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); }); });
 }
-
-/* Scripts do footer — modal de privacidade */
 function initFooter() {
   var o = document.getElementById('privacyModal');
   if (o) {
@@ -663,45 +477,38 @@ function initFooter() {
     document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePrivacyModal(); });
   }
 }
-
 function openPrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.add('open');document.body.style.overflow='hidden';} }
 function closePrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.remove('open');document.body.style.overflow='';} }
-
-/* FAQ accordion */
-function initFaq() {
-  document.querySelectorAll('.faq__question').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var item = btn.closest('.faq__item');
-      var answer = item.querySelector('.faq__answer');
-      var open = item.classList.contains('open');
-      document.querySelectorAll('.faq__item.open').forEach(function(el){
-        el.classList.remove('open');
-        el.querySelector('.faq__answer').style.maxHeight = '0';
-      });
-      if (!open) {
-        item.classList.add('open');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
-      }
-      btn.setAttribute('aria-expanded', !open);
-    });
-  });
-}
-
-/* Detectar profundidade para paths relativos */
 var _depth = (window.location.pathname.match(/\//g)||[]).length - 1;
 var _base = _depth <= 0 ? '/' : Array(_depth+1).join('../');
-
 document.addEventListener('DOMContentLoaded', function(){
-  loadComponent('karia-nav', _base + 'nav.html', function(){
-    initNav();
-  });
-  loadComponent('karia-footer', _base + 'footer.html', function(){
-    initFooter();
-  });
-  initFaq();
+  loadComponent('karia-nav', _base + 'nav.html', function(){ initNav(); });
+  loadComponent('karia-footer', _base + 'footer.html', function(){ initFooter(); });
 });
 </script>
 
+<script>
+var ARTS = [
+  {"title": "Ordem não é controle: o que a gestão do seu escritório de advocacia realmente precisa", "date": "4 mai. 2025", "read": "3 min", "excerpt": "Ter tudo organizado não significa ter controle. Descubra a diferença entre aparência de gestão e estrutura real de Controladoria Jurídica.", "url": "/blog/posts/ordem-nao-e-controle-gestao-escritorio-de-advocacia.html", "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80"},
+  {"title": "Quando os processos internos do escritório de advocacia dependem só de você", "date": "20 abr. 2025", "read": "4 min", "excerpt": "Se a operação para quando o sócio para, o escritório não tem processo. Tem dependência. Entenda como mudar isso.", "url": "/blog/posts/processos-internos-escritorio-de-advocacia-2.html", "img": "https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?w=800&q=80"},
+  {"title": "Como delegar em escritório de advocacia sem abandonar o controle", "date": "17 abr. 2025", "read": "3 min", "excerpt": "Delegar sem estrutura é transferir o caos. Veja como criar um modelo de delegação que mantém o controle onde ele precisa estar.", "url": "/blog/posts/como-delegar-em-escritorio-de-advocacia.html", "img": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80"},
+  {"title": "Seu escritório tem operação. O que está faltando é visão estratégica.", "date": "8 abr. 2025", "read": "3 min", "excerpt": "Operação funcionando não é o mesmo que escritório gerido. Entenda por que a visão estratégica é o que falta na maioria dos escritórios que crescem.", "url": "/blog/posts/seu-escritorio-tem-operacao-o-que-falta-e-visao-estrategica.html", "img": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"},
+  {"title": "O que é consultoria de gestão jurídica e quando o seu escritório precisa de uma", "date": "7 abr. 2025", "read": "3 min", "excerpt": "Não é coach, não é contador. Entenda o que é uma consultoria de gestão jurídica e qual o momento certo para contratar.", "url": "/blog/posts/consultoria-de-gestao-juridica.html", "img": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80"},
+  {"title": "Processos internos no escritório: como a liderança se multiplica sem depender da sua presença", "date": "6 abr. 2025", "read": "3 min", "excerpt": "Liderança que precisa estar presente em tudo não é liderança. É gargalo. Veja como os processos internos mudam isso.", "url": "/blog/posts/processos-internos-escritorio-de-advocacia.html", "img": "https://images.unsplash.com/photo-1568667256549-094345857637?w=800&q=80"},
+  {"title": "Controladoria Jurídica Estratégica não é terceirização: entenda a diferença", "date": "1 abr. 2025", "read": "3 min", "excerpt": "Muita gente confunde Controladoria Jurídica com terceirização do administrativo. A diferença é estratégica e muda completamente o que você contrata.", "url": "/blog/posts/controladoria-juridica-estrategica-nao-e-terceirizacao.html", "img": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80"},
+  {"title": "Faturamento alto não significa maturidade na advocacia", "date": "23 mar. 2025", "read": "2 min", "excerpt": "Um escritório pode faturar bem e ainda operar no improviso. Entenda por que maturidade operacional e faturamento são coisas diferentes.", "url": "/blog/posts/faturamento-alto-na-advocacia.html", "img": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80"},
+  {"title": "7 sinais de crescimento desorganizado em escritório de advocacia", "date": "16 mar. 2025", "read": "3 min", "excerpt": "Crescer sem estrutura é acumular passivo operacional. Veja os 7 sinais que indicam que o crescimento do seu escritório está desorganizado.", "url": "/blog/posts/crescimento-desorganizado-em-escritorio-de-advocacia.html", "img": "https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=800&q=80"},
+  {"title": "Como estruturar o crescimento de um escritório de advocacia com método e previsibilidade", "date": "9 mar. 2025", "read": "3 min", "excerpt": "Crescimento previsível não acontece por acidente. É resultado de método, estrutura e indicadores que funcionam antes de o escritório precisar deles.", "url": "/blog/posts/estruturar-o-crescimento-de-um-escritorio-de-advocacia.html", "img": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&q=80"},
+  {"title": "Crescimento sem controle na advocacia: risco estrutural silencioso", "date": "2 mar. 2025", "read": "4 min", "excerpt": "O crescimento que não vem acompanhado de estrutura não é vitória. É risco acumulando em silêncio. Entenda como identificar e reverter esse cenário.", "url": "/blog/posts/crescimento-sem-controle-na-advocacia.html", "img": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80"},
+  {"title": "Diagnóstico operacional: o primeiro passo para organizar um escritório de advocacia", "date": "26 jan. 2025", "read": "3 min", "excerpt": "O diagnóstico operacional jurídico é a base para organizar a gestão, reduzir riscos e estruturar a Controladoria Jurídica em escritórios de advocacia.", "url": "/blog/posts/diagnostico-operacional-escritorio-de-advocacia.html", "img": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&q=80"}
+];
+var arrowSvg = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>'; function renderBlog(list) { var fw = document.getElementById('featuredWrap'); var grid = document.getElementById('blogGrid'); var cnt = document.getElementById('blogCount'); cnt.textContent = list.length + (list.length === 1 ? ' artigo' : ' artigos'); if (!list.length) { fw.style.display = 'none'; grid.innerHTML = '<div class="blog-empty">' + '<svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' + '<strong>Nenhum artigo encontrado.</strong><p style="margin-top:0.5rem;">Tente outro termo de busca.</p></div>'; return; } fw.style.display = ''; var f = list[0]; document.getElementById('featuredCard').href = f.url; document.getElementById('featuredImg').src = f.img; document.getElementById('featuredImg').alt = f.title; document.getElementById('featuredTitle').textContent = f.title; document.getElementById('featuredExcerpt').textContent = f.excerpt; document.getElementById('featuredDate').textContent = f.date; document.getElementById('featuredRead').textContent = f.read; var rest = list.slice(1); grid.innerHTML = rest.map(function(a) { return '<a class="blog-card" href="' + a.url + '" target="_blank" rel="noopener">' + '<div class="blog-card__img"><img src="' + a.img + '" alt="" loading="lazy"/></div>' + '<div class="blog-card__body">' + '<span class="blog-card__tag">Gestão Estratégica</span>' + '<div class="blog-card__title">' + a.title + '</div>' + '<p class="blog-card__excerpt">' + a.excerpt + '</p>' + '<div class="blog-card__footer">' + '<span>' + a.date + ' · ' + a.read + '</span>' + '<span class="blog-card__link">Ler ' + arrowSvg + '</span>' + '</div>' + '</div></a>'; }).join('');
+} function filterBlog() { var q = document.getElementById('blogSearch').value.toLowerCase().trim(); renderBlog(q ? ARTS.filter(function(a){ return a.title.toLowerCase().indexOf(q) > -1 || a.excerpt.toLowerCase().indexOf(q) > -1; }) : ARTS);
+} renderBlog(ARTS); (function(){ var b = document.getElementById('cookieBanner'); if (!b) return; if (!localStorage.getItem('karia_cookies')) { setTimeout(function(){ b.classList.add('visible'); }, 1000); }
+})();
+function cookieAccept(){ localStorage.setItem('karia_cookies','all'); document.getElementById('cookieBanner').classList.remove('visible'); }
+function cookieReject(){ localStorage.setItem('karia_cookies','essential'); document.getElementById('cookieBanner').classList.remove('visible'); } 
+</script>
 
 </body>
 </html>
