@@ -238,7 +238,7 @@ p { max-width: var(--max-prose); } /* --- Layout helpers --- */
 }
 .sobre-hero__photo { position:relative; overflow:hidden;
 }
-.sobre-hero__photo img { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; filter:brightness(1.02) saturate(1.06);
+.sobre-hero__photo img { width:100%; height:100%; object-fit:cover; object-position:center 15%; display:block; filter:brightness(1.02) saturate(1.06);
 }
 .sobre-hero__photo::after { content:''; position:absolute; inset:0; background: linear-gradient(to right, var(--musgo) 0%, transparent 25%), linear-gradient(to top, var(--musgo) 0%, transparent 15%); pointer-events:none;
 } /* Números */
@@ -252,11 +252,11 @@ p { max-width: var(--max-prose); } /* --- Layout helpers --- */
 .numero-item__val span { color:var(--cobre); }
 .numero-item__label { font-family:var(--font-data); font-size:0.75rem; font-weight:500; letter-spacing:0.08em; color:var(--text-mid); text-transform:uppercase;
 } /* Bloco central: texto + foto lado a lado */
-.sobre-split { display:grid; grid-template-columns:1fr 380px; gap:5rem; align-items:center;
+.sobre-split { display:block; max-width:720px;
 }
-.sobre-split__foto { border-radius:var(--radius-md); overflow:hidden; height:460px;
+.sobre-split__foto { display:none;
 }
-.sobre-split__foto img { width:100%; height:100%; object-fit:cover; object-position:center top; filter:brightness(1.02) saturate(1.06);
+.sobre-split__foto img { width:100%; height:100%; object-fit:cover; object-position:center 20%; filter:brightness(1.02) saturate(1.06);
 } /* Formação pills */
 .formacao-grid { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:1.75rem; }
 .formacao-pill { display:flex; align-items:center; gap:0.5rem; background:var(--off); border:1px solid var(--off-dim); border-radius:100px; padding:0.45rem 1rem; font-size:0.82rem; color:var(--text-dark); font-weight:500;
@@ -269,7 +269,7 @@ p { max-width: var(--max-prose); } /* --- Layout helpers --- */
 .livro-card__badge { font-family:var(--font-data); font-size:0.68rem; font-weight:600; letter-spacing:0.1em; color:var(--cobre); text-transform:uppercase; margin-bottom:0.4rem; display:block;
 }
 .livro-card h3 { color:var(--off); font-size:1rem; margin-bottom:0.3rem; }
-.livro-card p { color:var(--text-light); font-size:0.85rem; margin:0; max-width:100%; } @media(max-width:900px){ .sobre-hero { grid-template-columns:1fr; min-height:auto; } .sobre-hero__photo { height:55vw; min-height:280px; order:-1; } .sobre-hero__photo::after { background:linear-gradient(to bottom, transparent 60%, var(--musgo) 100%); } .sobre-hero__content { padding:3rem var(--space-md) 4rem; } .numeros__grid { grid-template-columns:repeat(2,1fr); } .sobre-split { grid-template-columns:1fr; gap:2.5rem; } .sobre-split__foto { height:300px; }
+.livro-card p { color:var(--text-light); font-size:0.85rem; margin:0; max-width:100%; } @media(max-width:900px){ .sobre-hero { grid-template-columns:1fr; min-height:auto; } .sobre-hero__photo { height:auto; aspect-ratio:3/4; max-height:90vh; order:-1; } .sobre-hero__photo::after { background:linear-gradient(to bottom, transparent 60%, var(--musgo) 100%); } .sobre-hero__content { padding:3rem var(--space-md) 4rem; } .numeros__grid { grid-template-columns:repeat(2,1fr); } .sobre-split { max-width:100%; }
 } 
 /* ── FOOTER MODERNO ── */
 .footer__top { background: var(--musgo); padding: 5rem 0 3rem; border-top: 1px solid rgba(184,115,51,0.2); }
@@ -378,8 +378,7 @@ p { max-width: var(--max-prose); } /* --- Layout helpers --- */
   .livro-card { grid-template-columns: 1fr; gap: 1rem; }
   .numeros__grid { grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
   .numero-item__val { font-size: clamp(1.8rem,6vw,2.5rem); }
-  .sobre-split { grid-template-columns: 1fr; }
-  .sobre-split__foto { height: 260px; }
+  .sobre-split { max-width:100%; }
 }
 
 /* Serviços */
