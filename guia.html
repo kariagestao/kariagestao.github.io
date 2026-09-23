@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Guia de Maturidade em Gestão Jurídica — Gratuito | KARIA Gestão</title>
+  <meta name="description" content="Descubra em qual nível de maturidade está o seu escritório de advocacia. Guia gratuito com os 3 níveis de Gestão Jurídica e o caminho para evoluir com estrutura.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.kariagestao.com/guia.html">
+  <link rel="icon" type="image/png" href="/images/favicon-karia.png">
+  <meta property="og:title" content="Guia de Maturidade em Gestão Jurídica — Gratuito">
+  <meta property="og:description" content="Descubra em qual nível está seu escritório. Guia gratuito com os 3 níveis de maturidade em Gestão Jurídica.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="KARIA Gestão">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YE6CYRG627"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YE6CYRG627');</script>
+  <style>
+
+  :root{--azul:#0D1F2D;--azul-mid:#1A3347;--cobre:#B87333;--cobre-light:#D4956A;--offwhite:#F8F6F3;--offwhite-2:#EDE9E3;--gray:#6B7280;--gray-light:#9CA3AF;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Poppins',sans-serif;background:var(--offwhite);color:var(--azul);overflow-x:hidden;}
+  .cursor{width:10px;height:10px;background:var(--cobre);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;mix-blend-mode:multiply;}
+  .cursor-ring{width:36px;height:36px;border:1.5px solid var(--cobre);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:transform 0.18s ease,width 0.2s,height 0.2s,opacity 0.2s;opacity:0.6;}
+  .cursor-ring.hovered{width:54px;height:54px;opacity:0.28;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 64px;display:flex;align-items:center;transition:background 0.4s,padding 0.3s;}
+  nav.scrolled{background:rgba(13,31,45,0.96);backdrop-filter:blur(12px);padding:14px 64px;}
+  .nav-logo{font-family:'Montserrat',sans-serif;font-weight:900;font-size:17px;letter-spacing:0.04em;color:var(--offwhite);text-decoration:none;}
+  .nav-logo span{color:var(--cobre);}
+  .hero{min-height:100vh;background:var(--azul);display:grid;grid-template-columns:1fr 1fr;align-items:center;position:relative;overflow:hidden;}
+  .geo{position:absolute;border-radius:50%;pointer-events:none;}
+  .geo-1{top:-80px;right:-80px;width:420px;height:420px;border:1px solid rgba(184,115,51,0.1);animation:spin 40s linear infinite;}
+  .geo-2{top:40px;right:40px;width:290px;height:290px;border:1px solid rgba(184,115,51,0.07);animation:spin 28s linear infinite reverse;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .hero-line{position:absolute;bottom:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(184,115,51,0.25),transparent);}
+  .hero-content{padding:140px 52px 80px 80px;position:relative;z-index:2;}
+  .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(184,115,51,0.1);border:1px solid rgba(184,115,51,0.28);color:var(--cobre);font-family:'Montserrat',sans-serif;font-weight:700;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;padding:6px 14px;border-radius:2px;margin-bottom:28px;opacity:0;animation:fadeUp 0.8s 0.2s forwards;}
+  .tag-dot{width:6px;height:6px;background:var(--cobre);border-radius:50%;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.6)}}
+  .hero-title{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(34px,4vw,54px);line-height:1.06;color:var(--offwhite);margin-bottom:22px;opacity:0;animation:fadeUp 0.9s 0.35s forwards;}
+  .hero-title em{font-style:normal;color:var(--cobre);}
+  .hero-sub{font-size:14.5px;line-height:1.75;color:rgba(248,246,243,0.55);max-width:450px;margin-bottom:36px;opacity:0;animation:fadeUp 0.9s 0.5s forwards;}
+  .hero-benefits{display:flex;flex-direction:column;gap:13px;opacity:0;animation:fadeUp 0.9s 0.65s forwards;}
+  .hero-benefit{display:flex;align-items:center;gap:12px;font-size:13px;color:rgba(248,246,243,0.7);}
+  .benefit-dot{width:26px;height:26px;flex-shrink:0;background:rgba(184,115,51,0.1);border:1px solid rgba(184,115,51,0.22);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .benefit-dot svg{width:12px;height:12px;stroke:var(--cobre);fill:none;stroke-width:2;}
+  .hero-form-wrap{padding:140px 80px 80px 52px;position:relative;z-index:2;opacity:0;animation:fadeLeft 0.9s 0.4s forwards;}
+  .form-card{background:var(--offwhite);border-radius:4px;padding:44px 38px;position:relative;box-shadow:0 0 0 1px rgba(184,115,51,0.14),0 32px 80px rgba(0,0,0,0.42);}
+  .form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cobre),var(--cobre-light));border-radius:4px 4px 0 0;}
+  .form-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:21px;color:var(--azul);margin-bottom:6px;}
+  .form-subtitle{font-size:13px;color:var(--gray);margin-bottom:28px;line-height:1.6;}
+  .form-group{margin-bottom:16px;}
+  .form-label{display:block;font-family:'Montserrat',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--azul);margin-bottom:7px;}
+  .form-input{width:100%;padding:13px 15px;border:1.5px solid var(--offwhite-2);border-radius:3px;background:white;font-family:'Poppins',sans-serif;font-size:13.5px;color:var(--azul);outline:none;transition:border-color 0.2s,box-shadow 0.2s;}
+  .form-input::placeholder{color:var(--gray-light);}
+  .form-input:focus{border-color:var(--cobre);box-shadow:0 0 0 3px rgba(184,115,51,0.1);}
+  .btn-primary{width:100%;padding:15px;background:var(--cobre);color:var(--azul);border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:900;font-size:12.5px;letter-spacing:0.1em;text-transform:uppercase;border-radius:3px;margin-top:6px;transition:transform 0.2s,box-shadow 0.2s;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(184,115,51,0.35);}
+  .form-privacy{text-align:center;font-size:11px;color:var(--gray-light);margin-top:12px;display:flex;align-items:center;justify-content:center;gap:5px;}
+  .form-privacy svg{width:11px;height:11px;stroke:var(--gray-light);fill:none;stroke-width:2;}
+  .form-success{display:none;text-align:center;padding:28px 0;}
+  .form-success.active{display:block;}
+  .form-actual.hidden{display:none;}
+  .success-icon{width:52px;height:52px;background:rgba(39,174,96,0.1);border:2px solid rgba(39,174,96,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+  .success-icon svg{width:22px;height:22px;stroke:#27AE60;fill:none;stroke-width:2;}
+  .counter-strip{background:var(--azul-mid);padding:28px 80px;display:flex;align-items:center;justify-content:center;gap:72px;border-top:1px solid rgba(184,115,51,0.14);border-bottom:1px solid rgba(184,115,51,0.14);}
+  .counter-item{text-align:center;}
+  .counter-number{font-family:'Montserrat',sans-serif;font-weight:900;font-size:30px;color:var(--cobre);line-height:1;}
+  .counter-label{font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:rgba(248,246,243,0.4);margin-top:5px;}
+  .counter-divider{width:1px;height:38px;background:rgba(184,115,51,0.18);}
+  .eyebrow{font-family:'Montserrat',sans-serif;font-weight:700;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cobre);margin-bottom:14px;}
+  .sec-title{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(26px,3vw,42px);color:var(--azul);line-height:1.1;margin-bottom:14px;}
+  .sec-sub{font-size:15px;line-height:1.72;color:var(--gray);max-width:520px;margin-bottom:56px;}
+  .symptoms-section{padding:112px 80px;background:var(--offwhite);}
+  .symptoms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;}
+  .sym-card{background:var(--azul);padding:38px 30px;position:relative;overflow:hidden;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);}
+  .sym-card:hover{transform:translateY(-5px);z-index:2;}
+  .sym-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--cobre);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+  .sym-card:hover::after{transform:scaleX(1);}
+  .sym-icon{width:38px;height:38px;background:rgba(184,115,51,0.1);border:1px solid rgba(184,115,51,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+  .sym-icon svg{width:17px;height:17px;stroke:var(--cobre);fill:none;stroke-width:1.5;}
+  .sym-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;color:var(--offwhite);line-height:1.4;margin-bottom:10px;}
+  .sym-desc{font-size:12.5px;line-height:1.65;color:rgba(248,246,243,0.42);}
+  .sym-card-cta{background:var(--cobre);display:flex;flex-direction:column;justify-content:center;gap:20px;}
+  .sym-card-cta::after{display:none;}
+  .sym-cta-text{font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:var(--azul);line-height:1.4;}
+  .btn-cta{display:inline-block;background:var(--azul);color:var(--offwhite);font-family:'Montserrat',sans-serif;font-weight:800;font-size:11.5px;letter-spacing:0.09em;text-transform:uppercase;padding:13px 20px;border-radius:2px;text-decoration:none;transition:background 0.2s,transform 0.2s;}
+  .btn-cta:hover{background:var(--azul-mid);transform:translateY(-2px);}
+  .guide-section{padding:112px 80px;background:var(--azul);position:relative;overflow:hidden;}
+  .guide-section::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(184,115,51,0.05) 0%,transparent 70%);pointer-events:none;}
+  .guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+  .guide-content .sec-title{color:var(--offwhite);max-width:420px;}
+  .guide-content .sec-sub{color:rgba(248,246,243,0.48);}
+  .guide-items{display:flex;flex-direction:column;gap:3px;margin-top:36px;}
+  .guide-item{display:flex;gap:18px;padding:18px 22px;border-radius:3px;border:1px solid transparent;transition:background 0.2s,border-color 0.2s;}
+  .guide-item:hover{background:rgba(184,115,51,0.06);border-color:rgba(184,115,51,0.14);}
+  .guide-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:26px;color:rgba(184,115,51,0.22);line-height:1;flex-shrink:0;transition:color 0.2s;}
+  .guide-item:hover .guide-num{color:var(--cobre);}
+  .guide-item h4{font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;color:var(--offwhite);margin-bottom:4px;}
+  .guide-item p{font-size:12.5px;color:rgba(248,246,243,0.42);line-height:1.55;}
+  .guide-visual{display:flex;align-items:center;justify-content:center;}
+  .promise-section{padding:112px 80px;background:var(--offwhite);}
+  .promise-header{text-align:center;margin-bottom:52px;}
+  .promise-header .sec-title{margin:0 auto 14px;text-align:center;max-width:500px;}
+  .promise-header .sec-sub{margin:0 auto;text-align:center;}
+  .promise-grid{display:flex;flex-direction:column;gap:3px;margin-bottom:40px;}
+  .promise-item{display:flex;align-items:flex-start;gap:22px;padding:26px 30px;background:var(--azul);border-left:3px solid transparent;transition:border-color 0.3s,transform 0.3s;}
+  .promise-item:hover{border-color:var(--cobre);transform:translateX(6px);}
+  .promise-lock{width:38px;height:38px;flex-shrink:0;background:rgba(184,115,51,0.1);border:1px solid rgba(184,115,51,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .promise-lock svg{width:16px;height:16px;stroke:var(--cobre);fill:none;stroke-width:1.5;}
+  .promise-item h4{font-family:'Montserrat',sans-serif;font-weight:700;font-size:14.5px;color:var(--offwhite);margin-bottom:5px;line-height:1.4;}
+  .promise-item p{font-size:12.5px;color:rgba(248,246,243,0.42);line-height:1.6;}
+  .promise-cta{text-align:center;padding:38px 40px;background:var(--offwhite-2);border-radius:4px;display:flex;flex-direction:column;align-items:center;gap:20px;}
+  .promise-cta p{font-family:'Montserrat',sans-serif;font-weight:600;font-size:15px;color:var(--azul);}
+  .btn-dark{display:inline-block;background:var(--azul);color:var(--offwhite);font-family:'Montserrat',sans-serif;font-weight:800;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:15px 32px;border-radius:3px;text-decoration:none;transition:background 0.2s,transform 0.2s;}
+  .btn-dark:hover{background:var(--azul-mid);transform:translateY(-2px);}
+  .about-section{padding:112px 80px;background:var(--azul);}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+  .about-content .sec-title{color:var(--offwhite);}
+  .about-content .sec-sub{color:rgba(248,246,243,0.48);margin-bottom:32px;}
+  .about-pillars{display:flex;flex-direction:column;gap:1px;}
+  .pillar{display:flex;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid rgba(184,115,51,0.09);transition:padding-left 0.3s;}
+  .pillar:hover{padding-left:8px;}
+  .pillar-dot{width:7px;height:7px;flex-shrink:0;background:var(--cobre);border-radius:50%;}
+  .pillar-text{font-size:13.5px;color:rgba(248,246,243,0.6);}
+  .pillar-text strong{color:var(--offwhite);font-weight:600;}
+  .about-services{display:flex;flex-direction:column;gap:3px;}
+  .svc{padding:22px 26px;background:rgba(248,246,243,0.03);border:1px solid rgba(184,115,51,0.09);border-radius:3px;display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:inherit;transition:background 0.2s,border-color 0.2s,transform 0.2s;}
+  .svc:hover{background:rgba(184,115,51,0.06);border-color:rgba(184,115,51,0.22);transform:translateX(4px);}
+  .svc-name{font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;color:var(--offwhite);}
+  .svc-desc{font-size:11.5px;color:rgba(248,246,243,0.38);margin-top:3px;}
+  .arrow{width:18px;height:18px;flex-shrink:0;stroke:rgba(184,115,51,0.38);fill:none;stroke-width:2;transition:stroke 0.2s,transform 0.2s;}
+  .svc:hover .arrow{stroke:var(--cobre);transform:translateX(3px);}
+  footer{background:var(--azul);padding:44px 80px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(184,115,51,0.13);}
+  .footer-logo{font-family:'Montserrat',sans-serif;font-weight:900;font-size:15px;color:var(--offwhite);}
+  .footer-logo span{color:var(--cobre);}
+  .footer-links{display:flex;gap:28px;align-items:center;}
+  .footer-link{font-size:12px;color:rgba(248,246,243,0.38);text-decoration:none;transition:color 0.2s;}
+  .footer-link:hover{color:var(--cobre);}
+  .footer-copy{font-size:11px;color:rgba(248,246,243,0.22);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes fadeLeft{from{opacity:0;transform:translateX(26px);}to{opacity:1;transform:translateX(0);}}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s cubic-bezier(0.25,0.46,0.45,0.94),transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+  .d1{transition-delay:0.12s;}.d2{transition-delay:0.24s;}
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr;}
+    .hero-content{padding:120px 28px 40px;}
+    .hero-form-wrap{padding:40px 28px 80px;}
+    .guide-grid,.about-grid{grid-template-columns:1fr;gap:48px;}
+    .guide-visual{display:none;}
+    .symptoms-grid{grid-template-columns:1fr;}
+    .counter-strip{gap:28px;padding:28px;flex-wrap:wrap;}
+    footer{flex-direction:column;gap:20px;text-align:center;}
+    .footer-links{flex-direction:column;gap:12px;}
+    nav,nav.scrolled{padding:16px 24px;}
+    .symptoms-section,.guide-section,.promise-section,.about-section{padding:80px 28px;}
+  }
+
+/* Logo link no topo */
+.guia-logo-top {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'Montserrat', sans-serif; font-weight: 800;
+  font-size: 1.05rem; letter-spacing: 0.06em;
+  color: var(--offwhite, #F8F6F3); text-decoration: none;
+}
+.guia-logo-top img { height: 36px; width: auto; object-fit: contain; }
+.guia-logo-top span { color: var(--cobre, #B87333); }
+  </style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <a href="#" class="nav-logo"><span>KARIA</span> Gestão</a>
+</nav>
+
+<section class="hero">
+  <div class="geo geo-1"></div>
+  <div class="geo geo-2"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <div class="hero-tag"><div class="tag-dot"></div>Material Gratuito</div>
+    <h1 class="hero-title">Descubra em qual <em>nível de maturidade</em> está o seu escritório</h1>
+    <p class="hero-sub">Um guia estratégico com os 3 níveis de maturidade em gestão jurídica, os sinais de cada estágio e o caminho para evoluir com segurança.</p>
+    <div class="hero-benefits">
+      <div class="hero-benefit">
+        <div class="benefit-dot"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        Diagnóstico claro do seu momento atual
+      </div>
+      <div class="hero-benefit">
+        <div class="benefit-dot"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg></div>
+        Os gargalos que travam seu crescimento
+      </div>
+      <div class="hero-benefit">
+        <div class="benefit-dot"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/></svg></div>
+        O caminho estratégico para evoluir
+      </div>
+    </div>
+  </div>
+  <div class="hero-form-wrap" id="form">
+    <div class="form-card">
+      <div class="form-actual" id="formActual">
+        <h2 class="form-title">Acesse gratuitamente</h2>
+        <p class="form-subtitle">Preencha os dados e receba o guia no seu e-mail.</p>
+        <form name="captura-guia" onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label class="form-label">Nome completo</label>
+            <input type="text" name="nome" class="form-input" placeholder="Seu nome" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">E-mail profissional</label>
+            <input type="email" name="email" class="form-input" placeholder="seu@escritorio.com.br" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Escritório</label>
+            <input type="text" name="escritorio" class="form-input" placeholder="Nome do escritório (opcional)">
+          </div>
+          <button type="submit" class="btn-primary">Quero receber o Guia →</button>
+          <p class="form-privacy">
+            <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
+            Seus dados estão seguros. Sem spam.
+          </p>
+        </form>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:19px;color:var(--azul);margin-bottom:7px;">Guia enviado!</h3>
+        <p style="font-size:13px;color:var(--gray);line-height:1.6;">Verifique seu e-mail. Não encontrou? Confira o spam.</p>
+        <div style="margin-top:20px;padding:14px;background:var(--offwhite-2);border-radius:3px;font-size:12px;color:var(--gray);">Siga no Instagram: <strong style="color:var(--cobre);">@kariagestao</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="counter-strip">
+  <div class="counter-item">
+    <div class="counter-number" data-target="3">0</div>
+    <div class="counter-label">Níveis de Maturidade</div>
+  </div>
+  <div class="counter-divider"></div>
+  <div class="counter-item">
+    <div class="counter-number" data-target="3">0</div>
+    <div class="counter-label">Serviços Estruturados</div>
+  </div>
+  <div class="counter-divider"></div>
+  <div class="counter-item">
+    <div class="counter-number" data-target="100" data-suffix="%">0</div>
+    <div class="counter-label">Foco em Advocacia</div>
+  </div>
+  <div class="counter-divider"></div>
+  <div class="counter-item">
+    <div class="counter-number" data-text="Consultivo">—</div>
+    <div class="counter-label">Modelo de Atuação</div>
+  </div>
+</div>
+
+<section class="symptoms-section">
+  <div class="reveal">
+    <p class="eyebrow">Você se reconhece aqui?</p>
+    <h2 class="sec-title">Sinais de que sua gestão precisa evoluir</h2>
+    <p class="sec-sub">Escritórios que crescem sem estrutura acumulam riscos invisíveis. Esses são os sintomas mais comuns e mais ignorados.</p>
+  </div>
+  <div class="symptoms-grid reveal d1">
+    <div class="sym-card">
+      <div class="sym-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg></div>
+      <h3 class="sym-title">A equipe está sempre ocupada, mas os resultados não evoluem</h3>
+      <p class="sym-desc">Movimento sem direção. Esforço sem estrutura gera retrabalho, não resultado.</p>
+    </div>
+    <div class="sym-card">
+      <div class="sym-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+      <h3 class="sym-title">Prazos se perdem e a pressão recai sempre sobre o sócio</h3>
+      <p class="sym-desc">Quando o controle depende de pessoas e não de processos, o risco é constante.</p>
+    </div>
+    <div class="sym-card">
+      <div class="sym-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3"/></svg></div>
+      <h3 class="sym-title">Você não consegue visualizar os resultados reais do escritório</h3>
+      <p class="sym-desc">Sem indicadores confiáveis, as decisões são baseadas em percepção, não em dados.</p>
+    </div>
+    <div class="sym-card">
+      <div class="sym-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg></div>
+      <h3 class="sym-title">Delegar é arriscado: o resultado nunca é o esperado</h3>
+      <p class="sym-desc">Sem padrão definido, cada colaborador executa de um jeito. A qualidade fica refém de quem faz.</p>
+    </div>
+    <div class="sym-card">
+      <div class="sym-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg></div>
+      <h3 class="sym-title">O escritório cresce, mas a sensação é de mais caos, não mais controle</h3>
+      <p class="sym-desc">Crescimento sem estrutura amplifica os problemas. A base precisa vir antes da escala.</p>
+    </div>
+    <div class="sym-card sym-card-cta">
+      <p class="sym-cta-text">Se você se reconheceu em algum desses sinais, o guia foi feito para o seu momento.</p>
+      <a href="#form" class="btn-cta">Quero o Guia Gratuito →</a>
+    </div>
+  </div>
+</section>
+
+<section class="guide-section">
+  <div class="guide-grid">
+    <div class="guide-content">
+      <div class="reveal">
+        <p class="eyebrow">O que está no guia</p>
+        <h2 class="sec-title">Tudo que você precisa para evoluir</h2>
+        <p class="sec-sub">Conteúdo estratégico e direto, construído para sócios que querem crescer com organização e segurança.</p>
+      </div>
+      <div class="guide-items reveal d1">
+        <div class="guide-item">
+          <div class="guide-num">01</div>
+          <div><h4>Diagnóstico do seu momento atual</h4><p>Interpretação detalhada de cada nível e o que ele significa para a sua operação.</p></div>
+        </div>
+        <div class="guide-item">
+          <div class="guide-num">02</div>
+          <div><h4>Os gargalos mais comuns por nível</h4><p>Sinais de alerta, riscos invisíveis e padrões que travam a escalabilidade.</p></div>
+        </div>
+        <div class="guide-item">
+          <div class="guide-num">03</div>
+          <div><h4>O que é Controladoria Jurídica</h4><p>Definição estratégica e os resultados que ela entrega quando bem implementada.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="guide-visual reveal d2">
+      <img src="https://i.postimg.cc/nc6RvWTP/Guia_Gratuito_Níveis_de_Maturidade.png" style="width:100%;max-width:420px;border-radius:6px;display:block;">
+    </div>
+  </div>
+</section>
+
+<section class="promise-section">
+  <div class="promise-header reveal">
+    <p class="eyebrow">O que você vai descobrir</p>
+    <h2 class="sec-title">Existe um caminho para cada nível de maturidade</h2>
+    <p class="sec-sub">O guia entrega mais do que um diagnóstico. Ele mostra exatamente o que fazer a partir do ponto em que o seu escritório está hoje.</p>
+  </div>
+  <div class="promise-grid reveal d1">
+    <div class="promise-item">
+      <div class="promise-lock"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg></div>
+      <div><h4>Em qual nível você está e o que isso significa para a sua operação</h4><p>Não apenas um número. Uma leitura estratégica do seu momento atual.</p></div>
+    </div>
+    <div class="promise-item">
+      <div class="promise-lock"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg></div>
+      <div><h4>Os gargalos específicos do seu estágio e por que eles travam o crescimento</h4><p>Cada nível tem padrões de risco distintos. O guia os nomeia com precisão.</p></div>
+    </div>
+    <div class="promise-item">
+      <div class="promise-lock"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg></div>
+      <div><h4>O próximo passo estratégico recomendado para o seu perfil</h4><p>Orientação técnica e direta sobre por onde começar, sem achismo.</p></div>
+    </div>
+  </div>
+  <div class="promise-cta reveal d2">
+    <p>O restante está no guia. É gratuito e leva menos de 10 minutos para ler.</p>
+    <a href="#form" class="btn-dark">Quero o Guia Agora →</a>
+  </div>
+</section>
+
+<section class="about-section">
+  <div class="about-grid">
+    <div class="about-content">
+      <div class="reveal">
+        <p class="eyebrow">Sobre a KARIA Gestão</p>
+        <h2 class="sec-title">Especialização exclusiva em escritórios de advocacia</h2>
+        <p class="sec-sub">Consultoria 100% estratégica em Controladoria Jurídica. Sem execução operacional. Com método diagnóstico primeiro.</p>
+      </div>
+      <div class="about-pillars reveal d1">
+        <div class="pillar"><div class="pillar-dot"></div><div class="pillar-text"><strong>Foco exclusivo</strong> em escritórios de advocacia</div></div>
+        <div class="pillar"><div class="pillar-dot"></div><div class="pillar-text"><strong>Atuação 100% consultiva</strong>, sem execução operacional</div></div>
+        <div class="pillar"><div class="pillar-dot"></div><div class="pillar-text"><strong>Método diagnóstico primeiro</strong> antes de qualquer implementação</div></div>
+        <div class="pillar"><div class="pillar-dot"></div><div class="pillar-text"><strong>Evolução por nível de maturidade</strong>, sem soluções genéricas</div></div>
+      </div>
+    </div>
+    <div class="about-services reveal d1">
+      <a href="https://www.kariagestao.com/diagnostico-estruturado-controladoria-juridica" class="svc" target="_blank">
+        <div><div class="svc-name">Diagnóstico</div><div class="svc-desc">Mapeamento completo da maturidade operacional</div></div>
+        <svg class="arrow" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+      </a>
+      <a href="https://www.kariagestao.com/implantacao-controladoria-juridica" class="svc" target="_blank">
+        <div><div class="svc-name">Consultoria de Implantação</div><div class="svc-desc">Fluxos, processos e controles com método progressivo</div></div>
+        <svg class="arrow" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+      </a>
+      <a href="https://www.kariagestao.com/acompanhamento-estrategico-gestao-juridica" class="svc" target="_blank">
+        <div><div class="svc-name">Acompanhamento Estratégico</div><div class="svc-desc">Três níveis: Essencial, Evolução e Estratégico</div></div>
+        <svg class="arrow" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo"><span>KARIA</span> Gestão</div>
+  <div class="footer-links">
+    <a href="mailto:contato@kariagestao.com" class="footer-link">contato@kariagestao.com</a>
+    <a href="https://www.kariagestao.com" class="footer-link" target="_blank">www.kariagestao.com</a>
+    <a href="https://instagram.com/kariagestao" class="footer-link" target="_blank">@kariagestao</a>
+  </div>
+  <div class="footer-copy">© 2025 KARIA Gestão. Todos os direitos reservados.</div>
+</footer>
+
+<script>
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.transform=`translate(${mx-5}px,${my-5}px)`;});
+(function loop(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.transform=`translate(${rx-18}px,${ry-18}px)`;requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.sym-card,.svc,.guide-item,.promise-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('hovered'));
+  el.addEventListener('mouseleave',()=>ring.classList.remove('hovered'));
+});
+
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
+
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+const cObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target;
+    if(el.dataset.text){el.textContent=el.dataset.text;cObs.unobserve(el);return;}
+    const target=parseInt(el.dataset.target),suffix=el.dataset.suffix||'';
+    let cur=0;const step=Math.ceil(target/40);
+    const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=cur+suffix;if(cur>=target)clearInterval(t);},35);
+    cObs.unobserve(el);
+  });
+},{threshold:0.5});
+document.querySelectorAll('.counter-number').forEach(c=>cObs.observe(c));
+
+function handleSubmit(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('.btn-primary');
+  btn.textContent='Enviando...';
+  btn.disabled=true;
+  const formData=new FormData(e.target);
+  fetch('https://api.web3forms.com/submit',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      access_key:'f049d459-fe18-484b-bf14-5ccb70fbb65b',
+      subject:'Novo lead - Guia KARIA Gestão',
+      from_name:'KARIA Gestão',
+      replyto:formData.get('email'),
+      nome:formData.get('nome'),
+      email:formData.get('email'),
+      escritorio:formData.get('escritorio'),
+      autoresponse:true,
+      autoresponse_subject:'Seu Guia de Maturidade chegou — KARIA Gestão',
+      autoresponse_message:'<p>Olá, '+formData.get('nome')+'!</p><p>Seu guia está disponível pelo link abaixo:</p><p><a href="https://kariagestao-my.sharepoint.com/:b:/p/nathalya/IQBYP0djMJRfRqO_HSjEXopaARt_oB5Ee6BR0YyVixpb2Mc?e=lARQAk">Clique aqui para acessar o Guia</a></p><p>Depois de ler, dê o próximo passo e descubra exatamente em qual nível está o seu escritório:</p><p><a href="https://form.typeform.com/to/xMVWB3ew#email='+formData.get('email')+'&first_name='+formData.get('nome')+'">Clique aqui para fazer o diagnóstico gratuito</a></p><p>Qualquer dúvida, estou à disposição.<br>Nathalya Pereira<br>KARIA Gestão | contato@kariagestao.com</p>'
+    })
+  })
+  .then(res=>res.json())
+  .then(data=>{
+    if(data.success){
+      const nome=encodeURIComponent(formData.get('nome'));
+      const email=encodeURIComponent(formData.get('email'));
+      window.location.href='/obrigado.html?nome='+nome+'&email='+email;
+    } else {
+      btn.textContent='Quero receber o Guia →';
+      btn.disabled=false;
+      alert('Erro ao enviar. Tente novamente.');
+    }
+  })
+  .catch(()=>{
+    btn.textContent='Quero receber o Guia →';
+    btn.disabled=false;
+    alert('Erro ao enviar. Tente novamente.');
+  });
+}
+
+document.querySelectorAll('a[href="#form"]').forEach(a=>{
+  a.addEventListener('click',e=>{e.preventDefault();document.getElementById('form').scrollIntoView({behavior:'smooth',block:'center'});});
+});
+
+function sendHeight(){window.parent.postMessage({type:'setHeight',height:document.documentElement.scrollHeight},'*');}
+window.addEventListener('load',sendHeight);
+window.addEventListener('resize',sendHeight);
+new ResizeObserver(sendHeight).observe(document.body);
+</script>
+</body>
+</html>
