@@ -448,7 +448,7 @@ function handleSubmit(e){
     if(data.success){
       const nome=encodeURIComponent(formData.get('nome'));
       const email=encodeURIComponent(formData.get('email'));
-      window.location.href='/obrigado.html?nome='+nome+'&email='+email;
+      window.location.href='/obrigado-guia.html?nome='+nome+'&email='+email;
     } else {
       btn.textContent='Quero receber o Guia →';
       btn.disabled=false;
