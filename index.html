@@ -682,37 +682,45 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 
 
-<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Aviso de cookies">
-  <div class="cookie-banner__inner">
-    <div class="cookie-banner__text">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#B87333" stroke-width="2" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <p>Utilizamos cookies para melhorar sua experiência e analisar o tráfego. Ao continuar, você concorda com nossa <a href="/politica-de-privacidade.html">Política de Privacidade</a>.</p>
+
+
+    <div style="display:flex;gap:0.75rem;flex-shrink:0;">
+      <button onclick="cookieReject()" style="font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:500;padding:0.6rem 1.25rem;border-radius:4px;cursor:pointer;background:transparent;color:#C8D4DC;border:1px solid rgba(200,212,220,0.3);">Apenas essenciais</button>
+      <button onclick="cookieAccept()" style="font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:500;padding:0.6rem 1.25rem;border-radius:4px;cursor:pointer;background:#B87333;color:#fff;border:none;">Aceitar todos</button>
     </div>
-    <div class="cookie-banner__actions">
-      <button class="cookie-btn cookie-btn--reject" onclick="cookieReject()">Apenas essenciais</button>
-      <button class="cookie-btn cookie-btn--accept" onclick="cookieAccept()">Aceitar todos</button>
+  </div>
+</div>
+
+<div id="cookieBanner" role="dialog" aria-label="Aviso de cookies" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#0D1F2D;border-top:1px solid rgba(184,115,51,0.3);padding:1.25rem 2rem;box-shadow:0 -4px 32px rgba(0,0,0,0.3);">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
+    <div style="display:flex;align-items:flex-start;gap:0.75rem;color:#C8D4DC;flex:1;min-width:260px;">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#B87333" stroke-width="2" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p style="font-size:0.84rem;line-height:1.6;margin:0;font-family:'Poppins',sans-serif;">Utilizamos cookies para melhorar sua experiência e analisar o tráfego. Ao continuar, você concorda com nossa <a href="#" onclick="openPrivacyModal();return false;" style="color:#B87333;text-decoration:underline;">Política de Privacidade</a>.</p>
+    </div>
+    <div style="display:flex;gap:0.75rem;flex-shrink:0;">
+      <button onclick="cookieReject()" style="font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:500;padding:0.6rem 1.25rem;border-radius:4px;cursor:pointer;background:transparent;color:#C8D4DC;border:1px solid rgba(200,212,220,0.3);">Apenas essenciais</button>
+      <button onclick="cookieAccept()" style="font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:500;padding:0.6rem 1.25rem;border-radius:4px;cursor:pointer;background:#B87333;color:#fff;border:none;">Aceitar todos</button>
     </div>
   </div>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function(){
+(function(){
   try {
-    var b = document.getElementById('cookieBanner');
-    if (!b) return;
     if (!localStorage.getItem('karia_cookies')) {
-      setTimeout(function(){ b.classList.add('visible'); }, 300);
+      var b = document.getElementById('cookieBanner');
+      if (b) b.style.display = 'block';
     }
   } catch(e) {}
-});
+})();
 function cookieAccept(){
   try { localStorage.setItem('karia_cookies','all'); } catch(e){}
   var b = document.getElementById('cookieBanner');
-  if (b) b.classList.remove('visible');
+  if (b) b.style.display = 'none';
 }
 function cookieReject(){
   try { localStorage.setItem('karia_cookies','essential'); } catch(e){}
   var b = document.getElementById('cookieBanner');
-  if (b) b.classList.remove('visible');
+  if (b) b.style.display = 'none';
 }
 </script>
 </body>
