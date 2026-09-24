@@ -8,7 +8,6 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.kariagestao.com/politica-de-privacidade">
   <link rel="icon" type="image/png" href="/images/favicon-karia.png">
-  <link rel="shortcut icon" type="image/png" href="/images/favicon-karia.png">
   <meta property="og:title" content="Política de Privacidade | KARIA Gestão">
   <meta property="og:description" content="Política de privacidade e proteção de dados da KARIA Gestão, em conformidade com a LGPD.">
   <meta property="og:type" content="website">
@@ -16,13 +15,7 @@
   <meta property="og:site_name" content="KARIA Gestão">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YE6CYRG627"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YE6CYRG627');</script>
-  <script type="application/ld+json">{
-    "@context":"https://schema.org","@type":"ProfessionalService",
-    "name":"KARIA Gestão",
-    "description":"Consultoria em Controladoria Jurídica exclusiva para escritórios de advocacia.",
-    "url":"https://www.kariagestao.com","telephone":"+55-51-3376-5996",
-    "email":"contato@kariagestao.com","areaServed":"Brasil","serviceType":"Controladoria Jurídica"
-  }</script>
+  
   <style>
 
 /* ============================================================
@@ -120,8 +113,42 @@ p { max-width: var(--max-prose); }
 .nav__mobile.open { display: flex; }
 
 /* ─── FOOTER ─── */
+.footer { background: var(--musgo); color: var(--off); }
+.footer__top { padding: var(--space-lg) 0 var(--space-md); }
+.footer__top-inner { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; }
+.footer__brand-block {}
+.footer__logo-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
+.footer__logo-wrap img { height: 40px; width: auto; object-fit: contain; }
+.footer__logo-text { font-family: var(--font-title); font-size: 1rem; font-weight: 800; color: var(--off); letter-spacing: 0.06em; }
 .footer__logo-text span { color: var(--cobre); }
+.footer__slogan { font-size: 0.8rem; color: var(--cobre); font-family: var(--font-data); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.footer__desc { font-size: 0.85rem; color: var(--text-pale); line-height: 1.7; max-width: 280px; }
+.footer__social-block {}
+.footer__social-label { font-family: var(--font-data); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-pale); margin-bottom: 1rem; }
+.footer__social-links { display: flex; flex-direction: column; gap: 0.75rem; }
+.footer__social-item { display: flex; align-items: center; gap: 0.75rem; color: var(--text-light); transition: color 0.2s; font-size: 0.85rem; }
+.footer__social-item:hover { color: var(--cobre); }
+.footer__social-icon { width: 36px; height: 36px; background: rgba(255,255,255,0.06); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.footer__social-icon--wpp { background: rgba(37,211,102,0.12); }
+.footer__social-info { display: flex; flex-direction: column; gap: 1px; }
+.footer__social-name { font-weight: 500; font-size: 0.85rem; }
+.footer__social-handle { font-size: 0.75rem; color: var(--text-pale); }
+.footer__links-block { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.footer__col h4 { font-family: var(--font-data); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-pale); margin-bottom: 1rem; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer__col ul a { font-size: 0.875rem; color: var(--text-light); transition: color 0.15s; }
+.footer__col ul a:hover { color: var(--cobre); }
+.footer__bottom { border-top: 1px solid rgba(184,115,51,0.1); padding: 1.25rem 0; }
+.footer__bottom-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.footer__bottom p { font-size: 0.78rem; color: var(--text-pale); max-width: 100%; }
+.footer__bottom a { color: var(--text-pale); transition: color 0.15s; }
+.footer__bottom a:hover { color: var(--cobre); }
+
 /* WhatsApp flutuante */
+.wpp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 99; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.35); transition: transform 0.2s; }
+.wpp-float:hover { transform: scale(1.08); }
+.wpp-float svg { width: 26px; height: 26px; fill: #fff; }
+
 /* Modal privacidade */
 .privacy-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
 .privacy-modal-overlay.open { display: flex; }
@@ -152,27 +179,64 @@ p { max-width: var(--max-prose); }
 
 /* Responsivo footer */
 @media (max-width: 900px) {
+  .footer__top-inner { grid-template-columns: 1fr 1fr; }
+  .footer__links-block { grid-column: 1 / -1; }
+}
 @media (max-width: 600px) {
+  .footer__top-inner { grid-template-columns: 1fr; }
+  .footer__bottom-inner { flex-direction: column; text-align: center; }
+}
 
-
-.privacy-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;padding:1rem}
-.privacy-modal-overlay.open{display:flex}
-.privacy-modal{background:#fff;color:#1a1a1a;border-radius:12px;max-width:720px;width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.4)}
-.privacy-modal__header{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2rem;border-bottom:1px solid #e8e8e8;flex-shrink:0}
-.privacy-modal__header h2{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:700;color:#0D1F2D;margin:0}
-.privacy-modal__close{background:none;border:none;cursor:pointer;color:#666;font-size:1.5rem;line-height:1;padding:.25rem;border-radius:4px}
-.privacy-modal__close:hover{color:#0D1F2D}
-.privacy-modal__meta{font-size:.78rem;color:#888;padding:.75rem 2rem;border-bottom:1px solid #f0f0f0;flex-shrink:0}
-.privacy-modal__body{overflow-y:auto;padding:1.5rem 2rem 2rem;flex:1}
-.privacy-modal__body h2{font-family:'Montserrat',sans-serif;font-size:.95rem;font-weight:700;color:#0D1F2D;margin:1.5rem 0 .5rem}
-.privacy-modal__body h2:first-child{margin-top:0}
-.privacy-modal__body p{font-size:.875rem;color:#444;line-height:1.7;margin-bottom:.75rem}
-.privacy-modal__body ul{padding-left:1.25rem;margin-bottom:.75rem}
-.privacy-modal__body ul li{font-size:.875rem;color:#444;line-height:1.7;margin-bottom:.35rem}
-.privacy-modal__body a{color:#B87333;text-decoration:underline}
-@media(max-width:640px){.privacy-modal{max-height:92vh;border-radius:12px 12px 0 0}.privacy-modal-overlay{align-items:flex-end;padding:0}.privacy-modal__header,.privacy-modal__body,.privacy-modal__meta{padding-left:1.25rem;padding-right:1.25rem}}
-
-/* --- HERO --- */
+.footer { background: var(--musgo); color: var(--off); }
+.footer__top { padding: var(--space-lg) 0 var(--space-md); }
+.footer__top-inner { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; }
+.footer__brand-block {}
+.footer__logo-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
+.footer__logo-wrap img { height: 40px; width: auto; object-fit: contain; }
+.footer__logo-text { font-family: var(--font-title); font-size: 1rem; font-weight: 800; color: var(--off); letter-spacing: 0.06em; }
+.footer__logo-text span { color: var(--cobre); }
+.footer__slogan { font-size: 0.8rem; color: var(--cobre); font-family: var(--font-data); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.footer__desc { font-size: 0.85rem; color: var(--text-pale); line-height: 1.7; max-width: 280px; }
+.footer__social-block {}
+.footer__social-label { font-family: var(--font-data); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-pale); margin-bottom: 1rem; }
+.footer__social-links { display: flex; flex-direction: column; gap: 0.75rem; }
+.footer__social-item { display: flex; align-items: center; gap: 0.75rem; color: var(--text-light); transition: color 0.2s; font-size: 0.85rem; text-decoration: none; }
+.footer__social-item:hover { color: var(--cobre); }
+.footer__social-icon { width: 36px; height: 36px; background: rgba(255,255,255,0.06); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.footer__social-icon--wpp { background: rgba(37,211,102,0.12); }
+.footer__social-info { display: flex; flex-direction: column; gap: 1px; }
+.footer__social-name { font-weight: 500; font-size: 0.85rem; }
+.footer__social-handle { font-size: 0.75rem; color: var(--text-pale); }
+.footer__links-block { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.footer__col h4 { font-family: var(--font-data); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-pale); margin-bottom: 1rem; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer__col ul a { font-size: 0.875rem; color: var(--text-light); transition: color 0.15s; }
+.footer__col ul a:hover { color: var(--cobre); }
+.footer__bottom { border-top: 1px solid rgba(184,115,51,0.1); padding: 1.25rem 0; }
+.footer__bottom-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.footer__bottom p { font-size: 0.78rem; color: var(--text-pale); max-width: 100%; }
+.footer__bottom a { color: var(--text-pale); transition: color 0.15s; }
+.footer__bottom a:hover { color: var(--cobre); }
+.wpp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 99; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.35); transition: transform 0.2s; }
+.wpp-float:hover { transform: scale(1.08); }
+.wpp-float svg { width: 26px; height: 26px; fill: #fff; }
+.privacy-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
+.privacy-modal-overlay.open { display: flex; }
+.privacy-modal { background: #fff; color: #1a1a1a; border-radius: 12px; max-width: 720px; width: 100%; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 24px 64px rgba(0,0,0,.4); }
+.privacy-modal__header { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem; border-bottom: 1px solid #e8e8e8; flex-shrink: 0; }
+.privacy-modal__header h2 { font-family: 'Montserrat',sans-serif; font-size: 1.1rem; font-weight: 700; color: #0D1F2D; margin: 0; }
+.privacy-modal__close { background: none; border: none; cursor: pointer; color: #666; font-size: 1.5rem; line-height: 1; padding: .25rem; border-radius: 4px; }
+.privacy-modal__close:hover { color: #0D1F2D; }
+.privacy-modal__meta { font-size: .78rem; color: #888; padding: .75rem 2rem; border-bottom: 1px solid #f0f0f0; flex-shrink: 0; }
+.privacy-modal__body { overflow-y: auto; padding: 1.5rem 2rem 2rem; flex: 1; }
+.privacy-modal__body h2 { font-family: 'Montserrat',sans-serif; font-size: .95rem; font-weight: 700; color: #0D1F2D; margin: 1.5rem 0 .5rem; }
+.privacy-modal__body h2:first-child { margin-top: 0; }
+.privacy-modal__body p { font-size: .875rem; color: #444; line-height: 1.7; margin-bottom: .75rem; }
+.privacy-modal__body ul { padding-left: 1.25rem; margin-bottom: .75rem; }
+.privacy-modal__body ul li { font-size: .875rem; color: #444; line-height: 1.7; margin-bottom: .35rem; }
+.privacy-modal__body a { color: #B87333; text-decoration: underline; }
+@media (max-width: 900px) { .footer__top-inner { grid-template-columns: 1fr 1fr; } .footer__links-block { grid-column: 1 / -1; } }
+@media (max-width: 600px) { .footer__top-inner { grid-template-columns: 1fr; } .footer__bottom-inner { flex-direction: column; text-align: center; } }
 .hero { min-height: 100svh; background: var(--musgo); display: flex; align-items: center; padding-top: 68px; position: relative; overflow: hidden;
 }
 .hero::before { content: ''; position: absolute; top: -10%; right: -5%; width: 55%; height: 120%; background: radial-gradient(ellipse at 70% 40%, rgba(184,115,51,0.08) 0%, transparent 65%); pointer-events: none;
@@ -291,16 +355,36 @@ p { max-width: var(--max-prose); }
 .cta-final .btn-cta-wpp:hover { background: rgba(255,255,255,0.9); }
 .cta-final__note { margin-top: 1.25rem; font-size: 0.8rem; color: rgba(255,255,255,0.65);
 } /* --- FOOTER --- */
+.footer { background: var(--musgo); color: var(--text-light); padding: 4rem 0 2rem; border-top: 1px solid rgba(184,115,51,0.15);
+}
 .footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
 }
 .footer__brand-name { font-family: var(--font-title); font-size: 1.1rem; color: var(--off); letter-spacing: 0.06em; margin-bottom: 0.75rem;
 }
 .footer__brand-name span { color: var(--cobre); }
+.footer__slogan { font-size: 0.8rem; color: var(--text-pale); font-style: italic; margin-bottom: 1.25rem;
+}
 .footer__social { display: flex; gap: 0.75rem;
 }
 .footer__social a { width: 34px; height: 34px; border: 1px solid rgba(184,115,51,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-pale); font-size: 0.8rem; transition: border-color 0.15s, color 0.15s;
 }
 .footer__social a:hover { border-color: var(--cobre); color: var(--cobre); }
+.footer__col h4 { font-family: var(--font-data); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; color: var(--off); text-transform: uppercase; margin-bottom: 1rem;
+}
+.footer__col ul { list-style: none; }
+.footer__col ul li { margin-bottom: 0.5rem; }
+.footer__col ul a { font-size: 0.875rem; color: var(--text-pale); transition: color 0.15s;
+}
+.footer__col ul a:hover { color: var(--cobre); }
+.footer__bottom { border-top: 1px solid rgba(184,115,51,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+}
+.footer__bottom p { font-size: 0.78rem; color: var(--text-pale); max-width: 100%; } /* WhatsApp flutuante */
+.wpp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 99; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.35); transition: transform 0.2s;
+}
+.wpp-float:hover { transform: scale(1.08); }
+.wpp-float svg { width: 26px; height: 26px; fill: #fff; } /* --- Responsivo --- */
+@media (max-width: 900px) { .funil__track { grid-template-columns: 1fr; } .funil__arrow { display: none; } .sobre__inner { grid-template-columns: 1fr; gap: 2.5rem; } .sobre__img { max-width: 260px; } .footer__grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
 @media (max-width: 640px) { :root { --space-xl: 4rem; } .nav__links, .nav__cta { display: none; } .nav__burger { display: flex; } .nav__mobile.open { display: flex; } .hero__title { font-size: clamp(1.8rem, 7vw, 2.8rem); } .footer__grid { grid-template-columns: 1fr; } .footer__bottom { flex-direction: column; text-align: center; } .sobre__img-wrap::after { display: none; }
 } @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; }
 } .privacy-hero{background:var(--musgo);padding:140px 0 60px;}
@@ -421,6 +505,11 @@ p { max-width: var(--max-prose); }
 
 /* Footer moderno */
 @media (max-width: 640px) {
+  .footer__top { padding: 3rem 0 2rem; }
+  .footer__top-inner { gap: 2rem; }
+  .footer__social-item { padding: 0.65rem 0.85rem; }
+  .footer__bottom p { font-size: 0.72rem; }
+}
 
 /* CTA final */
 @media (max-width: 640px) {
@@ -447,74 +536,40 @@ p { max-width: var(--max-prose); }
   </style>
 </head>
 <body>
-
 <div id="karia-nav"></div>
-
 <section class="privacy-hero"> <div class="privacy-hero__inner"> <h1>Política de Privacidade</h1> <p class="privacy-hero__meta">Última atualização: setembro de 2025 · NATHALYA DA SILVA PEREIRA LTDA · CNPJ 60.942.073/0001-24</p> </div>
 </section>
 <main>
-<div class="privacy-body"> <p>A KARIA Gestão, empresa registrada sob a razão social NATHALYA DA SILVA PEREIRA LTDA (CNPJ 60.942.073/0001-24), com atuação no endereço eletrônico kariagestao.com, está comprometida com a proteção dos dados pessoais dos seus usuários, clientes e contatos, em conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD Lei nº 13.709/2018).</p> <p>Esta Política de Privacidade descreve como coletamos, utilizamos, armazenamos e protegemos os dados pessoais tratados no âmbito das nossas atividades.</p> <h2>1. Quais dados coletamos</h2> <p>Coletamos os seguintes dados pessoais nas situações descritas abaixo:</p> <ul> <li><strong>Formulários de contato e captação de leads:</strong> nome, e-mail e, opcionalmente, nome do escritório.</li> <li><strong>Guia de Maturidade (kariagestao.com/guia):</strong> nome e e-mail fornecidos voluntariamente para acesso ao material.</li> <li><strong>Navegação no site:</strong> dados de acesso como endereço IP, tipo de navegador, páginas visitadas e tempo de navegação, coletados por meio do Google Analytics (GA4).</li> <li><strong>Comunicações diretas:</strong> mensagens enviadas por e-mail ou WhatsApp no contexto de interesse nos serviços da KARIA Gestão.</li> </ul> <h2>2. Como utilizamos seus dados</h2> <p>Os dados coletados são utilizados exclusivamente para as seguintes finalidades:</p> <ul> <li>Responder a solicitações de contato e agendamento de reuniões.</li> <li>Enviar o material solicitado (guia de maturidade ou outros conteúdos).</li> <li>Encaminhar comunicações sobre serviços da KARIA Gestão, quando há interesse expresso.</li> <li>Analisar o comportamento de navegação para melhoria do site e dos conteúdos.</li> <li>Cumprir obrigações legais e regulatórias aplicáveis.</li> </ul> <p>Não utilizamos seus dados para fins publicitários de terceiros, nem os comercializamos ou compartilhamos com empresas parceiras sem base legal adequada.</p> <h2>3. Base legal para o tratamento</h2> <p>O tratamento dos dados pessoais pela KARIA Gestão é fundamentado nas seguintes bases legais previstas na LGPD:</p> <ul> <li><strong>Consentimento</strong> (Art. 7º, I): quando o titular fornece seus dados voluntariamente em formulários ou comunicações.</li> <li><strong>Legítimo interesse</strong> (Art. 7º, IX): para análise de navegação e melhoria dos serviços, respeitados os direitos e expectativas dos titulares.</li> <li><strong>Execução de contrato</strong> (Art. 7º, V): no contexto de prestação dos serviços contratados.</li> </ul> <h2>4. Cookies e tecnologias de rastreamento</h2> <p>Este site utiliza cookies e tecnologias similares para melhorar a experiência de navegação e coletar dados de acesso por meio do Google Analytics (GA4). Os cookies são classificados em:</p> <ul> <li><strong>Essenciais:</strong> necessários para o funcionamento básico do site. Não podem ser desativados.</li> <li><strong>Analíticos:</strong> utilizados para mensurar o tráfego e o comportamento de navegação (Google Analytics). Podem ser recusados no banner de consentimento.</li> </ul> <p>Ao aceitar todos os cookies no banner apresentado na primeira visita, você consente com o uso dos cookies analíticos. Ao escolher "Apenas essenciais", apenas os cookies necessários serão ativados.</p> <h2>5. Compartilhamento de dados</h2> <p>Os dados pessoais coletados pela KARIA Gestão podem ser compartilhados com:</p> <ul> <li><strong>Google LLC:</strong> para fins de análise de tráfego via Google Analytics, sujeito à Política de Privacidade do Google.</li> <li><strong>Prestadores de serviços de hospedagem e infraestrutura:</strong> como GitHub Pages, que hospeda parte do site, sem acesso ao conteúdo dos dados dos visitantes.</li> </ul> <p>Não há compartilhamento de dados com terceiros para fins comerciais ou de marketing sem consentimento expresso.</p> <h2>6. Armazenamento e segurança</h2> <p>Os dados pessoais são armazenados em ambientes seguros, com acesso restrito e adoção de medidas técnicas e organizacionais para proteção contra acesso não autorizado, perda, alteração ou divulgação indevida.</p> <p>Os dados são mantidos pelo prazo necessário ao cumprimento das finalidades para as quais foram coletados, ou conforme exigido por obrigação legal.</p> <h2>7. Direitos dos titulares</h2> <p>Em conformidade com a LGPD, você, como titular dos dados, tem os seguintes direitos:</p> <ul> <li>Confirmar a existência de tratamento dos seus dados.</li> <li>Acessar os dados que possuímos sobre você.</li> <li>Corrigir dados incompletos, inexatos ou desatualizados.</li> <li>Solicitar a anonimização, bloqueio ou eliminação dos dados.</li> <li>Revogar o consentimento a qualquer momento.</li> <li>Obter informações sobre os terceiros com os quais os dados são compartilhados.</li> <li>Solicitar a portabilidade dos dados.</li> </ul> <p>Para exercer qualquer um desses direitos, entre em contato pelo e-mail <a href="mailto:contato@kariagestao.com">contato@kariagestao.com</a>. Responderemos em até 15 dias úteis.</p> <h2>8. Alterações nesta política</h2> <p>Esta Política de Privacidade pode ser atualizada periodicamente. Alterações relevantes serão comunicadas por meio do site. A data da última atualização está indicada no início deste documento.</p> <h2>9. Contato</h2> <p>Para dúvidas, solicitações ou exercício de direitos relacionados a esta Política de Privacidade:</p> <ul> <li><strong>E-mail:</strong> <a href="mailto:contato@kariagestao.com">contato@kariagestao.com</a></li> <li><strong>Responsável:</strong> Nathalya Pereira Controladora de Dados</li> <li><strong>CNPJ:</strong> 60.942.073/0001-24</li> </ul> </div>
+<div class="privacy-body"> <p>A KARIA Gestão, empresa registrada sob a razão social NATHALYA DA SILVA PEREIRA LTDA (CNPJ 60.942.073/0001-24), com atuação no endereço eletrônico kariagestao.com, está comprometida com a proteção dos dados pessoais dos seus usuários, clientes e contatos, em conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD Lei nº 13.709/2018).</p> <p>Esta Política de Privacidade descreve como coletamos, utilizamos, armazenamos e protegemos os dados pessoais tratados no âmbito das nossas atividades.</p> <h2>1. Quais dados coletamos</h2> <p>Coletamos os seguintes dados pessoais nas situações descritas abaixo:</p> <ul> <li><strong>Formulários de contato e captação de leads:</strong> nome, e-mail e, opcionalmente, nome do escritório.</li> <li><strong>Guia de Maturidade (guia.kariagestao.com):</strong> nome e e-mail fornecidos voluntariamente para acesso ao material.</li> <li><strong>Navegação no site:</strong> dados de acesso como endereço IP, tipo de navegador, páginas visitadas e tempo de navegação, coletados por meio do Google Analytics (GA4).</li> <li><strong>Comunicações diretas:</strong> mensagens enviadas por e-mail ou WhatsApp no contexto de interesse nos serviços da KARIA Gestão.</li> </ul> <h2>2. Como utilizamos seus dados</h2> <p>Os dados coletados são utilizados exclusivamente para as seguintes finalidades:</p> <ul> <li>Responder a solicitações de contato e agendamento de reuniões.</li> <li>Enviar o material solicitado (guia de maturidade ou outros conteúdos).</li> <li>Encaminhar comunicações sobre serviços da KARIA Gestão, quando há interesse expresso.</li> <li>Analisar o comportamento de navegação para melhoria do site e dos conteúdos.</li> <li>Cumprir obrigações legais e regulatórias aplicáveis.</li> </ul> <p>Não utilizamos seus dados para fins publicitários de terceiros, nem os comercializamos ou compartilhamos com empresas parceiras sem base legal adequada.</p> <h2>3. Base legal para o tratamento</h2> <p>O tratamento dos dados pessoais pela KARIA Gestão é fundamentado nas seguintes bases legais previstas na LGPD:</p> <ul> <li><strong>Consentimento</strong> (Art. 7º, I): quando o titular fornece seus dados voluntariamente em formulários ou comunicações.</li> <li><strong>Legítimo interesse</strong> (Art. 7º, IX): para análise de navegação e melhoria dos serviços, respeitados os direitos e expectativas dos titulares.</li> <li><strong>Execução de contrato</strong> (Art. 7º, V): no contexto de prestação dos serviços contratados.</li> </ul> <h2>4. Cookies e tecnologias de rastreamento</h2> <p>Este site utiliza cookies e tecnologias similares para melhorar a experiência de navegação e coletar dados de acesso por meio do Google Analytics (GA4). Os cookies são classificados em:</p> <ul> <li><strong>Essenciais:</strong> necessários para o funcionamento básico do site. Não podem ser desativados.</li> <li><strong>Analíticos:</strong> utilizados para mensurar o tráfego e o comportamento de navegação (Google Analytics). Podem ser recusados no banner de consentimento.</li> </ul> <p>Ao aceitar todos os cookies no banner apresentado na primeira visita, você consente com o uso dos cookies analíticos. Ao escolher "Apenas essenciais", apenas os cookies necessários serão ativados.</p> <h2>5. Compartilhamento de dados</h2> <p>Os dados pessoais coletados pela KARIA Gestão podem ser compartilhados com:</p> <ul> <li><strong>Google LLC:</strong> para fins de análise de tráfego via Google Analytics, sujeito à Política de Privacidade do Google.</li> <li><strong>Prestadores de serviços de hospedagem e infraestrutura:</strong> como GitHub Pages, que hospeda parte do site, sem acesso ao conteúdo dos dados dos visitantes.</li> </ul> <p>Não há compartilhamento de dados com terceiros para fins comerciais ou de marketing sem consentimento expresso.</p> <h2>6. Armazenamento e segurança</h2> <p>Os dados pessoais são armazenados em ambientes seguros, com acesso restrito e adoção de medidas técnicas e organizacionais para proteção contra acesso não autorizado, perda, alteração ou divulgação indevida.</p> <p>Os dados são mantidos pelo prazo necessário ao cumprimento das finalidades para as quais foram coletados, ou conforme exigido por obrigação legal.</p> <h2>7. Direitos dos titulares</h2> <p>Em conformidade com a LGPD, você, como titular dos dados, tem os seguintes direitos:</p> <ul> <li>Confirmar a existência de tratamento dos seus dados.</li> <li>Acessar os dados que possuímos sobre você.</li> <li>Corrigir dados incompletos, inexatos ou desatualizados.</li> <li>Solicitar a anonimização, bloqueio ou eliminação dos dados.</li> <li>Revogar o consentimento a qualquer momento.</li> <li>Obter informações sobre os terceiros com os quais os dados são compartilhados.</li> <li>Solicitar a portabilidade dos dados.</li> </ul> <p>Para exercer qualquer um desses direitos, entre em contato pelo e-mail <a href="mailto:contato@kariagestao.com">contato@kariagestao.com</a>. Responderemos em até 15 dias úteis.</p> <h2>8. Alterações nesta política</h2> <p>Esta Política de Privacidade pode ser atualizada periodicamente. Alterações relevantes serão comunicadas por meio do site. A data da última atualização está indicada no início deste documento.</p> <h2>9. Contato</h2> <p>Para dúvidas, solicitações ou exercício de direitos relacionados a esta Política de Privacidade:</p> <ul> <li><strong>E-mail:</strong> <a href="mailto:contato@kariagestao.com">contato@kariagestao.com</a></li> <li><strong>Responsável:</strong> Nathalya Pereira Controladora de Dados</li> <li><strong>CNPJ:</strong> 60.942.073/0001-24</li> </ul> </div>
 </main>
-
 <div id="karia-footer"></div>
-
 <script>
-/* Carrega nav e footer externos */
 function loadComponent(id, file, callback) {
   var el = document.getElementById(id);
   if (!el) { if(callback) callback(); return; }
   fetch(file)
     .then(function(r){ return r.text(); })
-    .then(function(html){
-      el.innerHTML = html;
-      if(callback) callback();
-    })
+    .then(function(html){ el.innerHTML = html; if(callback) callback(); })
     .catch(function(){ if(callback) callback(); });
 }
-
-/* Scripts do nav — executados após carga */
 function initNav() {
   var nav = document.querySelector('.nav');
-  if (nav) {
-    window.addEventListener('scroll', function(){
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-    }, { passive: true });
-  }
+  if (nav) { window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true }); }
   var burger = document.querySelector('.nav__burger');
   var mobile = document.querySelector('.nav__mobile');
-  if (burger && mobile) {
-    burger.addEventListener('click', function(){
-      var open = mobile.classList.toggle('open');
-      burger.setAttribute('aria-expanded', open);
-    });
-  }
+  if (burger && mobile) { burger.addEventListener('click', function(){ var open = mobile.classList.toggle('open'); burger.setAttribute('aria-expanded', open); }); }
   document.querySelectorAll('.has-dropdown').forEach(function(item){
     var arrow = item.querySelector('.nav__dropdown-arrow');
     if (!arrow) return;
     arrow.addEventListener('click', function(e){
       e.stopPropagation();
       var isOpen = item.classList.contains('open');
-      document.querySelectorAll('.has-dropdown.open').forEach(function(el){
-        el.classList.remove('open');
-        var a = el.querySelector('.nav__dropdown-arrow');
-        if (a) a.setAttribute('aria-expanded','false');
-      });
-      if (!isOpen) {
-        item.classList.add('open');
-        arrow.setAttribute('aria-expanded','true');
-      }
+      document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); });
+      if (!isOpen) { item.classList.add('open'); arrow.setAttribute('aria-expanded','true'); }
     });
   });
-  document.addEventListener('click', function(){
-    document.querySelectorAll('.has-dropdown.open').forEach(function(el){
-      el.classList.remove('open');
-      var a = el.querySelector('.nav__dropdown-arrow');
-      if (a) a.setAttribute('aria-expanded','false');
-    });
-  });
+  document.addEventListener('click', function(){ document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); }); });
 }
-
-/* Scripts do footer — modal de privacidade */
 function initFooter() {
   var o = document.getElementById('privacyModal');
   if (o) {
@@ -522,45 +577,28 @@ function initFooter() {
     document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePrivacyModal(); });
   }
 }
-
 function openPrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.add('open');document.body.style.overflow='hidden';} }
 function closePrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.remove('open');document.body.style.overflow='';} }
-
-/* FAQ accordion */
 function initFaq() {
   document.querySelectorAll('.faq__question').forEach(function(btn){
     btn.addEventListener('click', function(){
       var item = btn.closest('.faq__item');
       var answer = item.querySelector('.faq__answer');
       var open = item.classList.contains('open');
-      document.querySelectorAll('.faq__item.open').forEach(function(el){
-        el.classList.remove('open');
-        el.querySelector('.faq__answer').style.maxHeight = '0';
-      });
-      if (!open) {
-        item.classList.add('open');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
-      }
+      document.querySelectorAll('.faq__item.open').forEach(function(el){ el.classList.remove('open'); el.querySelector('.faq__answer').style.maxHeight='0'; });
+      if (!open) { item.classList.add('open'); answer.style.maxHeight = answer.scrollHeight+'px'; }
       btn.setAttribute('aria-expanded', !open);
     });
   });
 }
-
-/* Detectar profundidade para paths relativos */
 var _depth = (window.location.pathname.match(/\//g)||[]).length - 1;
 var _base = _depth <= 0 ? '/' : Array(_depth+1).join('../');
-
 document.addEventListener('DOMContentLoaded', function(){
-  loadComponent('karia-nav', _base + 'nav.html', function(){
-    initNav();
-  });
-  loadComponent('karia-footer', _base + 'footer.html', function(){
-    initFooter();
-  });
+  loadComponent('karia-nav', _base+'nav.html', function(){ initNav(); });
+  loadComponent('karia-footer', _base+'footer.html', function(){ initFooter(); });
   initFaq();
 });
 </script>
-
 
 </body>
 </html>

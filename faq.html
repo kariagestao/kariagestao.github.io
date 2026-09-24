@@ -8,7 +8,6 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.kariagestao.com/faq.html">
   <link rel="icon" type="image/png" href="/images/favicon-karia.png">
-  <link rel="shortcut icon" type="image/png" href="/images/favicon-karia.png">
   <meta property="og:title" content="FAQ — Perguntas Frequentes sobre Controladoria Jurídica | KARIA Gestão">
   <meta property="og:description" content="Tire suas dúvidas sobre Controladoria Jurídica, gestão de escritórios de advocacia e os serviços da KARIA Gestão.">
   <meta property="og:type" content="website">
@@ -16,13 +15,7 @@
   <meta property="og:site_name" content="KARIA Gestão">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YE6CYRG627"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YE6CYRG627');</script>
-  <script type="application/ld+json">{
-    "@context":"https://schema.org","@type":"ProfessionalService",
-    "name":"KARIA Gestão",
-    "description":"Consultoria em Controladoria Jurídica exclusiva para escritórios de advocacia.",
-    "url":"https://www.kariagestao.com","telephone":"+55-51-3376-5996",
-    "email":"contato@kariagestao.com","areaServed":"Brasil","serviceType":"Controladoria Jurídica"
-  }</script>
+  
   <style>
 
 /* ============================================================
@@ -120,8 +113,42 @@ p { max-width: var(--max-prose); }
 .nav__mobile.open { display: flex; }
 
 /* ─── FOOTER ─── */
+.footer { background: var(--musgo); color: var(--off); }
+.footer__top { padding: var(--space-lg) 0 var(--space-md); }
+.footer__top-inner { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; }
+.footer__brand-block {}
+.footer__logo-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
+.footer__logo-wrap img { height: 40px; width: auto; object-fit: contain; }
+.footer__logo-text { font-family: var(--font-title); font-size: 1rem; font-weight: 800; color: var(--off); letter-spacing: 0.06em; }
 .footer__logo-text span { color: var(--cobre); }
+.footer__slogan { font-size: 0.8rem; color: var(--cobre); font-family: var(--font-data); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.footer__desc { font-size: 0.85rem; color: var(--text-pale); line-height: 1.7; max-width: 280px; }
+.footer__social-block {}
+.footer__social-label { font-family: var(--font-data); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-pale); margin-bottom: 1rem; }
+.footer__social-links { display: flex; flex-direction: column; gap: 0.75rem; }
+.footer__social-item { display: flex; align-items: center; gap: 0.75rem; color: var(--text-light); transition: color 0.2s; font-size: 0.85rem; }
+.footer__social-item:hover { color: var(--cobre); }
+.footer__social-icon { width: 36px; height: 36px; background: rgba(255,255,255,0.06); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.footer__social-icon--wpp { background: rgba(37,211,102,0.12); }
+.footer__social-info { display: flex; flex-direction: column; gap: 1px; }
+.footer__social-name { font-weight: 500; font-size: 0.85rem; }
+.footer__social-handle { font-size: 0.75rem; color: var(--text-pale); }
+.footer__links-block { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.footer__col h4 { font-family: var(--font-data); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-pale); margin-bottom: 1rem; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer__col ul a { font-size: 0.875rem; color: var(--text-light); transition: color 0.15s; }
+.footer__col ul a:hover { color: var(--cobre); }
+.footer__bottom { border-top: 1px solid rgba(184,115,51,0.1); padding: 1.25rem 0; }
+.footer__bottom-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.footer__bottom p { font-size: 0.78rem; color: var(--text-pale); max-width: 100%; }
+.footer__bottom a { color: var(--text-pale); transition: color 0.15s; }
+.footer__bottom a:hover { color: var(--cobre); }
+
 /* WhatsApp flutuante */
+.wpp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 99; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.35); transition: transform 0.2s; }
+.wpp-float:hover { transform: scale(1.08); }
+.wpp-float svg { width: 26px; height: 26px; fill: #fff; }
+
 /* Modal privacidade */
 .privacy-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
 .privacy-modal-overlay.open { display: flex; }
@@ -152,27 +179,64 @@ p { max-width: var(--max-prose); }
 
 /* Responsivo footer */
 @media (max-width: 900px) {
+  .footer__top-inner { grid-template-columns: 1fr 1fr; }
+  .footer__links-block { grid-column: 1 / -1; }
+}
 @media (max-width: 600px) {
+  .footer__top-inner { grid-template-columns: 1fr; }
+  .footer__bottom-inner { flex-direction: column; text-align: center; }
+}
 
-
-.privacy-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;padding:1rem}
-.privacy-modal-overlay.open{display:flex}
-.privacy-modal{background:#fff;color:#1a1a1a;border-radius:12px;max-width:720px;width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.4)}
-.privacy-modal__header{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2rem;border-bottom:1px solid #e8e8e8;flex-shrink:0}
-.privacy-modal__header h2{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:700;color:#0D1F2D;margin:0}
-.privacy-modal__close{background:none;border:none;cursor:pointer;color:#666;font-size:1.5rem;line-height:1;padding:.25rem;border-radius:4px}
-.privacy-modal__close:hover{color:#0D1F2D}
-.privacy-modal__meta{font-size:.78rem;color:#888;padding:.75rem 2rem;border-bottom:1px solid #f0f0f0;flex-shrink:0}
-.privacy-modal__body{overflow-y:auto;padding:1.5rem 2rem 2rem;flex:1}
-.privacy-modal__body h2{font-family:'Montserrat',sans-serif;font-size:.95rem;font-weight:700;color:#0D1F2D;margin:1.5rem 0 .5rem}
-.privacy-modal__body h2:first-child{margin-top:0}
-.privacy-modal__body p{font-size:.875rem;color:#444;line-height:1.7;margin-bottom:.75rem}
-.privacy-modal__body ul{padding-left:1.25rem;margin-bottom:.75rem}
-.privacy-modal__body ul li{font-size:.875rem;color:#444;line-height:1.7;margin-bottom:.35rem}
-.privacy-modal__body a{color:#B87333;text-decoration:underline}
-@media(max-width:640px){.privacy-modal{max-height:92vh;border-radius:12px 12px 0 0}.privacy-modal-overlay{align-items:flex-end;padding:0}.privacy-modal__header,.privacy-modal__body,.privacy-modal__meta{padding-left:1.25rem;padding-right:1.25rem}}
-
-/* --- HERO --- */
+.footer { background: var(--musgo); color: var(--off); }
+.footer__top { padding: var(--space-lg) 0 var(--space-md); }
+.footer__top-inner { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; }
+.footer__brand-block {}
+.footer__logo-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
+.footer__logo-wrap img { height: 40px; width: auto; object-fit: contain; }
+.footer__logo-text { font-family: var(--font-title); font-size: 1rem; font-weight: 800; color: var(--off); letter-spacing: 0.06em; }
+.footer__logo-text span { color: var(--cobre); }
+.footer__slogan { font-size: 0.8rem; color: var(--cobre); font-family: var(--font-data); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.footer__desc { font-size: 0.85rem; color: var(--text-pale); line-height: 1.7; max-width: 280px; }
+.footer__social-block {}
+.footer__social-label { font-family: var(--font-data); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-pale); margin-bottom: 1rem; }
+.footer__social-links { display: flex; flex-direction: column; gap: 0.75rem; }
+.footer__social-item { display: flex; align-items: center; gap: 0.75rem; color: var(--text-light); transition: color 0.2s; font-size: 0.85rem; text-decoration: none; }
+.footer__social-item:hover { color: var(--cobre); }
+.footer__social-icon { width: 36px; height: 36px; background: rgba(255,255,255,0.06); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.footer__social-icon--wpp { background: rgba(37,211,102,0.12); }
+.footer__social-info { display: flex; flex-direction: column; gap: 1px; }
+.footer__social-name { font-weight: 500; font-size: 0.85rem; }
+.footer__social-handle { font-size: 0.75rem; color: var(--text-pale); }
+.footer__links-block { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.footer__col h4 { font-family: var(--font-data); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-pale); margin-bottom: 1rem; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer__col ul a { font-size: 0.875rem; color: var(--text-light); transition: color 0.15s; }
+.footer__col ul a:hover { color: var(--cobre); }
+.footer__bottom { border-top: 1px solid rgba(184,115,51,0.1); padding: 1.25rem 0; }
+.footer__bottom-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.footer__bottom p { font-size: 0.78rem; color: var(--text-pale); max-width: 100%; }
+.footer__bottom a { color: var(--text-pale); transition: color 0.15s; }
+.footer__bottom a:hover { color: var(--cobre); }
+.wpp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 99; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.35); transition: transform 0.2s; }
+.wpp-float:hover { transform: scale(1.08); }
+.wpp-float svg { width: 26px; height: 26px; fill: #fff; }
+.privacy-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
+.privacy-modal-overlay.open { display: flex; }
+.privacy-modal { background: #fff; color: #1a1a1a; border-radius: 12px; max-width: 720px; width: 100%; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 24px 64px rgba(0,0,0,.4); }
+.privacy-modal__header { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem; border-bottom: 1px solid #e8e8e8; flex-shrink: 0; }
+.privacy-modal__header h2 { font-family: 'Montserrat',sans-serif; font-size: 1.1rem; font-weight: 700; color: #0D1F2D; margin: 0; }
+.privacy-modal__close { background: none; border: none; cursor: pointer; color: #666; font-size: 1.5rem; line-height: 1; padding: .25rem; border-radius: 4px; }
+.privacy-modal__close:hover { color: #0D1F2D; }
+.privacy-modal__meta { font-size: .78rem; color: #888; padding: .75rem 2rem; border-bottom: 1px solid #f0f0f0; flex-shrink: 0; }
+.privacy-modal__body { overflow-y: auto; padding: 1.5rem 2rem 2rem; flex: 1; }
+.privacy-modal__body h2 { font-family: 'Montserrat',sans-serif; font-size: .95rem; font-weight: 700; color: #0D1F2D; margin: 1.5rem 0 .5rem; }
+.privacy-modal__body h2:first-child { margin-top: 0; }
+.privacy-modal__body p { font-size: .875rem; color: #444; line-height: 1.7; margin-bottom: .75rem; }
+.privacy-modal__body ul { padding-left: 1.25rem; margin-bottom: .75rem; }
+.privacy-modal__body ul li { font-size: .875rem; color: #444; line-height: 1.7; margin-bottom: .35rem; }
+.privacy-modal__body a { color: #B87333; text-decoration: underline; }
+@media (max-width: 900px) { .footer__top-inner { grid-template-columns: 1fr 1fr; } .footer__links-block { grid-column: 1 / -1; } }
+@media (max-width: 600px) { .footer__top-inner { grid-template-columns: 1fr; } .footer__bottom-inner { flex-direction: column; text-align: center; } }
 .hero { min-height: 100svh; background: var(--musgo); display: flex; align-items: center; padding-top: 68px; position: relative; overflow: hidden;
 }
 .hero::before { content: ''; position: absolute; top: -10%; right: -5%; width: 55%; height: 120%; background: radial-gradient(ellipse at 70% 40%, rgba(184,115,51,0.08) 0%, transparent 65%); pointer-events: none;
@@ -291,16 +355,36 @@ p { max-width: var(--max-prose); }
 .cta-final .btn-cta-wpp:hover { background: rgba(255,255,255,0.9); }
 .cta-final__note { margin-top: 1.25rem; font-size: 0.8rem; color: rgba(255,255,255,0.65);
 } /* --- FOOTER --- */
+.footer { background: var(--musgo); color: var(--text-light); padding: 4rem 0 2rem; border-top: 1px solid rgba(184,115,51,0.15);
+}
 .footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem;
 }
 .footer__brand-name { font-family: var(--font-title); font-size: 1.1rem; color: var(--off); letter-spacing: 0.06em; margin-bottom: 0.75rem;
 }
 .footer__brand-name span { color: var(--cobre); }
+.footer__slogan { font-size: 0.8rem; color: var(--text-pale); font-style: italic; margin-bottom: 1.25rem;
+}
 .footer__social { display: flex; gap: 0.75rem;
 }
 .footer__social a { width: 34px; height: 34px; border: 1px solid rgba(184,115,51,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-pale); font-size: 0.8rem; transition: border-color 0.15s, color 0.15s;
 }
 .footer__social a:hover { border-color: var(--cobre); color: var(--cobre); }
+.footer__col h4 { font-family: var(--font-data); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; color: var(--off); text-transform: uppercase; margin-bottom: 1rem;
+}
+.footer__col ul { list-style: none; }
+.footer__col ul li { margin-bottom: 0.5rem; }
+.footer__col ul a { font-size: 0.875rem; color: var(--text-pale); transition: color 0.15s;
+}
+.footer__col ul a:hover { color: var(--cobre); }
+.footer__bottom { border-top: 1px solid rgba(184,115,51,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+}
+.footer__bottom p { font-size: 0.78rem; color: var(--text-pale); max-width: 100%; } /* WhatsApp flutuante */
+.wpp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 99; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.35); transition: transform 0.2s;
+}
+.wpp-float:hover { transform: scale(1.08); }
+.wpp-float svg { width: 26px; height: 26px; fill: #fff; } /* --- Responsivo --- */
+@media (max-width: 900px) { .funil__track { grid-template-columns: 1fr; } .funil__arrow { display: none; } .sobre__inner { grid-template-columns: 1fr; gap: 2.5rem; } .sobre__img { max-width: 260px; } .footer__grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
 @media (max-width: 640px) { :root { --space-xl: 4rem; } .nav__links, .nav__cta { display: none; } .nav__burger { display: flex; } .nav__mobile.open { display: flex; } .hero__title { font-size: clamp(1.8rem, 7vw, 2.8rem); } .footer__grid { grid-template-columns: 1fr; } .footer__bottom { flex-direction: column; text-align: center; } .sobre__img-wrap::after { display: none; }
 } @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; }
 } .page-hero { background: var(--musgo); padding: 140px 0 80px; overflow: hidden; position: relative;
@@ -330,6 +414,38 @@ p { max-width: var(--max-prose); }
 .faq-group__title { font-family:var(--font-data); font-size:0.72rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--cobre); margin-bottom:0.5rem; padding-bottom:0.5rem; border-bottom:1px solid rgba(184,115,51,0.2);
 } 
 /* ── FOOTER MODERNO ── */
+.footer__top { background: var(--musgo); padding: 5rem 0 3rem; border-top: 1px solid rgba(184,115,51,0.2); }
+.footer__top-inner { display: grid; grid-template-columns: 1.4fr 1.2fr 1fr; gap: 4rem; align-items: start; }
+.footer__brand-block .footer__brand-name { font-family: var(--font-title); font-size: 1.2rem; color: var(--off); letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+.footer__brand-block .footer__brand-name span { color: var(--cobre); }
+.footer__brand-block .footer__slogan { font-size: 0.8rem; color: var(--text-pale); font-style: italic; margin-bottom: 0.75rem; }
+.footer__brand-block .footer__desc { font-size: 0.83rem; color: var(--text-pale); line-height: 1.65; max-width: 280px; }
+.footer__social-label { font-family: var(--font-data); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cobre); margin-bottom: 1.25rem; }
+.footer__social-links { display: flex; flex-direction: column; gap: 0.85rem; }
+.footer__social-item { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03); transition: border-color 0.2s, background 0.2s, transform 0.2s; }
+.footer__social-item:hover { border-color: rgba(184,115,51,0.4); background: rgba(184,115,51,0.08); transform: translateX(4px); }
+.footer__social-item--wpp:hover { border-color: rgba(37,211,102,0.35); background: rgba(37,211,102,0.07); }
+.footer__social-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(184,115,51,0.15); display: flex; align-items: center; justify-content: center; color: var(--cobre); flex-shrink: 0; }
+.footer__social-icon--wpp { background: rgba(37,211,102,0.12); color: #25D366; }
+.footer__social-info { display: flex; flex-direction: column; gap: 0.1rem; }
+.footer__social-name { font-size: 0.85rem; font-weight: 600; color: var(--off); }
+.footer__social-handle { font-size: 0.75rem; color: var(--text-pale); }
+.footer__links-block { display: flex; gap: 2.5rem; }
+.footer__col h4 { font-family: var(--font-data); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--off); margin-bottom: 1rem; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.footer__col ul a { font-size: 0.83rem; color: var(--text-pale); text-decoration: none; transition: color 0.15s; }
+.footer__col ul a:hover { color: var(--cobre); }
+.footer__bottom { background: rgba(0,0,0,0.25); padding: 1.25rem 0; border-top: 1px solid rgba(255,255,255,0.05); }
+.footer__bottom-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.footer__bottom p { font-size: 0.77rem; color: var(--text-pale); max-width: 100%; }
+.footer__bottom a { color: var(--text-pale); text-decoration: none; transition: color 0.15s; }
+.footer__bottom a:hover { color: var(--cobre); }
+@media(max-width:900px) {
+  .footer__top-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .footer__links-block { flex-wrap: wrap; gap: 2rem; }
+  .footer__bottom-inner { flex-direction: column; text-align: center; }
+  .footer__brand-block .footer__desc { max-width: 100%; }
+}
 
 
 /* ============================================================
@@ -430,6 +546,11 @@ p { max-width: var(--max-prose); }
 
 /* Footer moderno */
 @media (max-width: 640px) {
+  .footer__top { padding: 3rem 0 2rem; }
+  .footer__top-inner { gap: 2rem; }
+  .footer__social-item { padding: 0.65rem 0.85rem; }
+  .footer__bottom p { font-size: 0.72rem; }
+}
 
 /* CTA final */
 @media (max-width: 640px) {
@@ -456,72 +577,38 @@ p { max-width: var(--max-prose); }
   </style>
 </head>
 <body>
-
 <div id="karia-nav"></div>
-
 <main> <section class="page-hero"> <div class="page-hero__inner"> <p class="page-hero__pre">Perguntas Frequentes</p> <h1>Tire suas dúvidas sobre Controladoria Jurídica</h1> <p class="page-hero__sub">Respostas diretas sobre gestão jurídica, os serviços da KARIA e como tudo funciona na prática.</p> </div>
-</section> <section class="section section--off"> <div class="container"> <div class="faq-page"> <div class="faq-group"> <p class="faq-group__title">Sobre Controladoria Jurídica</p> <div class="faq__list"> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O que é Controladoria Jurídica?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Controladoria Jurídica é a área que organiza os fluxos operacionais, os indicadores e a governança interna de um escritório de advocacia. Ela atua na camada estratégica da operação jurídica: gestão de prazos, produtividade, distribuição de carga e informações para a tomada de decisão do sócio.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Controladoria Jurídica é o mesmo que jurídico ou administrativo?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Não. O jurídico cuida das causas. O administrativo cuida da operação do dia a dia. A Controladoria Jurídica atua em uma camada acima: ela organiza, mede e governa para que tanto o jurídico quanto o administrativo funcionem com método, rastreabilidade e previsibilidade.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Todo escritório precisa de Controladoria Jurídica?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Todo escritório que quer crescer de forma sustentável, sim. O momento de estruturar a Controladoria não é quando o caos já instalou, mas antes disso. O Guia de Maturidade gratuito ajuda a entender em qual estágio o seu escritório se encontra hoje.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O que é um Controller Jurídico?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>É o profissional responsável pela Controladoria Jurídica dentro do escritório. Ele não exerce advocacia, não despacha e não atende clientes. Sua função é garantir que os processos internos funcionem, que os indicadores sejam monitorados e que o sócio tenha as informações certas para decidir.</p></div> </div> </div> </div> <div class="faq-group"> <p class="faq-group__title">Sobre os Serviços da KARIA</p> <div class="faq__list"> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Como sei por qual serviço começar?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>A forma mais segura é começar pelo Diagnóstico Estruturado, que entrega um mapeamento técnico da operação e uma indicação clara do próximo passo. Se você já tem estrutura funcionando e quer visão estratégica contínua, pode conversar diretamente sobre o Acompanhamento. Em qualquer caso, a reunião gratuita de 30 minutos é o melhor ponto de partida.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">A KARIA atende escritórios de qualquer porte?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Sim. A metodologia foi desenvolvida a partir de experiência com escritórios de diferentes portes e especialidades. O que determina o serviço adequado não é o tamanho do escritório, mas o seu estágio de maturidade em gestão.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">A KARIA atende em todo o Brasil?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Sim. A atuação é 100% remota, o que permite atender escritórios em qualquer estado. O modelo consultivo da KARIA foi desenhado para funcionar à distância, com reuniões estratégicas por videoconferência e entregas em formato digital.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">A KARIA executa atividades operacionais do escritório?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>A atuação consultiva e estratégica da KARIA é a essência do trabalho. Mas para escritórios com necessidade específica de terceirização operacional de monitoramento de publicações, existe o Pacote Pocket: um serviço dedicado, com escopo e critérios de elegibilidade definidos. Saiba mais sobre o Pacote Pocket.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Quanto tempo leva para ver resultados?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>O Diagnóstico é entregue em até 20 dias corridos e já oferece clareza imediata sobre riscos e prioridades. A Implantação tem duração de 4 meses com entregas progressivas por fase. No Acompanhamento, o primeiro Painel de Indicadores é entregue no décimo dia do mês seguinte ao início. Resultados tangíveis aparecem nas primeiras semanas; a maturidade operacional consolida-se ao longo dos meses.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Meu escritório precisa ter um Controller Jurídico para contratar?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Para o Diagnóstico, não. Para a Implantação, uma das primeiras etapas pode ser justamente a estruturação do perfil e processo seletivo para um Controller Jurídico interno. A KARIA apoia esse processo quando necessário.</p></div> </div> </div> </div> <div class="faq-group"> <p class="faq-group__title">Sobre o Pacote Pocket</p> <div class="faq__list"> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O que é o Pacote Pocket?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>O Pacote Pocket é o serviço de terceirização operacional da KARIA Gestão, criado para escritórios que precisam de suporte no monitoramento de publicações e alimentação de sistemas jurídicos. Diferente dos serviços consultivos, o Pocket atua na camada operacional: a equipe da KARIA monitora as publicações, faz a triagem e alimenta o sistema do escritório com as informações necessárias, dentro de prazos e fluxos definidos.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Para quem o Pacote Pocket é indicado?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>O Pocket foi desenhado para escritórios que já têm uma operação em funcionamento e precisam de apoio específico na rotina de publicações. Para ser elegível, o escritório precisa ter volume de publicações que justifique o serviço, sistema jurídico ativo e equipe interna organizada. A elegibilidade é verificada por um formulário específico antes da contratação.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O Pacote Pocket substitui a gestão do escritório?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Não. O Pocket é um serviço operacional focado em publicações. Ele não substitui a gestão estratégica do escritório nem a atuação de um Controller Jurídico. O objetivo é liberar o time interno para o que realmente importa, garantindo que nenhuma publicação passe em branco.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Como funciona a contratação do Pacote Pocket?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>O primeiro passo é preencher o formulário de elegibilidade na página do serviço. Com base nas respostas, o escritório recebe uma avaliação técnica imediata. Se qualificado, a contratação é feita de forma direta, com escopo, prazo e condições definidos previamente. <a href="/controladoria-juridica-terceirizada.html" style="color:var(--cobre);">Verificar elegibilidade para o Pacote Pocket</a>.</p></div> </div> </div> </div> <div class="faq-group"> <p class="faq-group__title">Sobre o Acompanhamento Estratégico</p> <div class="faq__list"> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Posso escolher qual nível de Acompanhamento contratar?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>O nível do Acompanhamento não é escolhido pelo cliente. A indicação é técnica, feita pela Nathalya com base no mapeamento de maturidade do escritório. Isso garante que o serviço entregue seja adequado ao momento real do escritório, não ao que ele imagina que precisa.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O Acompanhamento pode ser contratado sem ter feito a Implantação?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Em alguns casos, sim. Escritórios que já possuem uma estrutura de gestão funcionando podem iniciar diretamente no Acompanhamento, após avaliação técnica. A conversa inicial de 30 minutos ajuda a entender se esse é o caminho adequado.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O que é o Painel de Indicadores?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>É o documento mensal que consolida os principais KPIs do escritório: produtividade, cumprimento de prazos, distribuição de carga, indicadores financeiros e outros definidos conforme o perfil do escritório. Entregue até o dia 10 de cada mês, ele é a base da reunião estratégica mensal.</p></div> </div> </div> </div> <div class="faq-group"> <p class="faq-group__title">Conteúdo Gratuito</p> <div class="faq__list"> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O que é o Guia de Maturidade em Gestão Jurídica?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>É um material gratuito que ajuda o escritório a identificar em qual estágio estrutural se encontra: do mais básico ao mais avançado. Com base nesse mapeamento, é possível entender o que precisa ser organizado e qual o próximo passo adequado. Acesse em <a href="/guia.html" target="_blank" rel="noopener" style="color:var(--cobre);">/guia.html">kariagestao.com/guia</a>.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Onde encontro mais conteúdo sobre gestão jurídica?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>No blog da KARIA Gestão, com artigos práticos sobre Controladoria Jurídica, gestão de escritórios e estruturação operacional. Também no Instagram <a href="https://www.instagram.com/kariagestao" target="_blank" rel="noopener" style="color:var(--cobre);">@kariagestao</a>, com conteúdo regular sobre o tema.</p></div> </div> </div> </div> <div style="background:var(--musgo);border-radius:var(--radius-md);padding:2.5rem;text-align:center;margin-top:1rem;"> <h3 style="color:var(--off);font-size:1.3rem;margin-bottom:0.5rem;">Não encontrou sua resposta?</h3> <p style="color:var(--text-light);font-size:0.9rem;margin:0 auto 1.5rem;">Fale diretamente com a Nathalya. 30 minutos gratuitos para esclarecer qualquer dúvida.</p> <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="btn btn-primary" target="_blank" rel="noopener">Agendar conversa gratuita</a> </div> </div> </div>
+</section> <section class="section section--off"> <div class="container"> <div class="faq-page"> <div class="faq-group"> <p class="faq-group__title">Sobre Controladoria Jurídica</p> <div class="faq__list"> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O que é Controladoria Jurídica?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Controladoria Jurídica é a área que organiza os fluxos operacionais, os indicadores e a governança interna de um escritório de advocacia. Ela atua na camada estratégica da operação jurídica: gestão de prazos, produtividade, distribuição de carga e informações para a tomada de decisão do sócio.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Controladoria Jurídica é o mesmo que jurídico ou administrativo?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Não. O jurídico cuida das causas. O administrativo cuida da operação do dia a dia. A Controladoria Jurídica atua em uma camada acima: ela organiza, mede e governa para que tanto o jurídico quanto o administrativo funcionem com método, rastreabilidade e previsibilidade.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Todo escritório precisa de Controladoria Jurídica?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Todo escritório que quer crescer de forma sustentável, sim. O momento de estruturar a Controladoria não é quando o caos já instalou, mas antes disso. O Guia de Maturidade gratuito ajuda a entender em qual estágio o seu escritório se encontra hoje.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O que é um Controller Jurídico?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>É o profissional responsável pela Controladoria Jurídica dentro do escritório. Ele não exerce advocacia, não despacha e não atende clientes. Sua função é garantir que os processos internos funcionem, que os indicadores sejam monitorados e que o sócio tenha as informações certas para decidir.</p></div> </div> </div> </div> <div class="faq-group"> <p class="faq-group__title">Sobre os Serviços da KARIA</p> <div class="faq__list"> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Como sei por qual serviço começar?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>A forma mais segura é começar pelo Diagnóstico Estruturado, que entrega um mapeamento técnico da operação e uma indicação clara do próximo passo. Se você já tem estrutura funcionando e quer visão estratégica contínua, pode conversar diretamente sobre o Acompanhamento. Em qualquer caso, a reunião gratuita de 30 minutos é o melhor ponto de partida.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">A KARIA atende escritórios de qualquer porte?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Sim. A metodologia foi desenvolvida a partir de experiência com escritórios de diferentes portes e especialidades. O que determina o serviço adequado não é o tamanho do escritório, mas o seu estágio de maturidade em gestão.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">A KARIA atende em todo o Brasil?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Sim. A atuação é 100% remota, o que permite atender escritórios em qualquer estado. O modelo consultivo da KARIA foi desenhado para funcionar à distância, com reuniões estratégicas por videoconferência e entregas em formato digital.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">A KARIA executa atividades operacionais do escritório?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>A atuação consultiva e estratégica da KARIA é a essência do trabalho. Mas para escritórios com necessidade específica de terceirização operacional de monitoramento de publicações, existe o Pacote Pocket: um serviço dedicado, com escopo e critérios de elegibilidade definidos. Saiba mais sobre o Pacote Pocket.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Quanto tempo leva para ver resultados?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>O Diagnóstico é entregue em até 20 dias corridos e já oferece clareza imediata sobre riscos e prioridades. A Implantação tem duração de 4 meses com entregas progressivas por fase. No Acompanhamento, o primeiro Painel de Indicadores é entregue no décimo dia do mês seguinte ao início. Resultados tangíveis aparecem nas primeiras semanas; a maturidade operacional consolida-se ao longo dos meses.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Meu escritório precisa ter um Controller Jurídico para contratar?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Para o Diagnóstico, não. Para a Implantação, uma das primeiras etapas pode ser justamente a estruturação do perfil e processo seletivo para um Controller Jurídico interno. A KARIA apoia esse processo quando necessário.</p></div> </div> </div> </div> <div class="faq-group"> <p class="faq-group__title">Sobre o Pacote Pocket</p> <div class="faq__list"> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O que é o Pacote Pocket?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>O Pacote Pocket é o serviço de terceirização operacional da KARIA Gestão, criado para escritórios que precisam de suporte no monitoramento de publicações e alimentação de sistemas jurídicos. Diferente dos serviços consultivos, o Pocket atua na camada operacional: a equipe da KARIA monitora as publicações, faz a triagem e alimenta o sistema do escritório com as informações necessárias, dentro de prazos e fluxos definidos.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Para quem o Pacote Pocket é indicado?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>O Pocket foi desenhado para escritórios que já têm uma operação em funcionamento e precisam de apoio específico na rotina de publicações. Para ser elegível, o escritório precisa ter volume de publicações que justifique o serviço, sistema jurídico ativo e equipe interna organizada. A elegibilidade é verificada por um formulário específico antes da contratação.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O Pacote Pocket substitui a gestão do escritório?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Não. O Pocket é um serviço operacional focado em publicações. Ele não substitui a gestão estratégica do escritório nem a atuação de um Controller Jurídico. O objetivo é liberar o time interno para o que realmente importa, garantindo que nenhuma publicação passe em branco.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Como funciona a contratação do Pacote Pocket?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>O primeiro passo é preencher o formulário de elegibilidade na página do serviço. Com base nas respostas, o escritório recebe uma avaliação técnica imediata. Se qualificado, a contratação é feita de forma direta, com escopo, prazo e condições definidos previamente. <a href="/controladoria-juridica-terceirizada.html" style="color:var(--cobre);">Verificar elegibilidade para o Pacote Pocket</a>.</p></div> </div> </div> </div> <div class="faq-group"> <p class="faq-group__title">Sobre o Acompanhamento Estratégico</p> <div class="faq__list"> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Posso escolher qual nível de Acompanhamento contratar?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>O nível do Acompanhamento não é escolhido pelo cliente. A indicação é técnica, feita pela Nathalya com base no mapeamento de maturidade do escritório. Isso garante que o serviço entregue seja adequado ao momento real do escritório, não ao que ele imagina que precisa.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O Acompanhamento pode ser contratado sem ter feito a Implantação?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>Em alguns casos, sim. Escritórios que já possuem uma estrutura de gestão funcionando podem iniciar diretamente no Acompanhamento, após avaliação técnica. A conversa inicial de 30 minutos ajuda a entender se esse é o caminho adequado.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O que é o Painel de Indicadores?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>É o documento mensal que consolida os principais KPIs do escritório: produtividade, cumprimento de prazos, distribuição de carga, indicadores financeiros e outros definidos conforme o perfil do escritório. Entregue até o dia 10 de cada mês, ele é a base da reunião estratégica mensal.</p></div> </div> </div> </div> <div class="faq-group"> <p class="faq-group__title">Conteúdo Gratuito</p> <div class="faq__list"> <div class="faq__item"> <button class="faq__question" aria-expanded="false">O que é o Guia de Maturidade em Gestão Jurídica?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>É um material gratuito que ajuda o escritório a identificar em qual estágio estrutural se encontra: do mais básico ao mais avançado. Com base nesse mapeamento, é possível entender o que precisa ser organizado e qual o próximo passo adequado. Acesse em <a href="https://guia.kariagestao.com" target="_blank" rel="noopener" style="color:var(--cobre);">guia.kariagestao.com</a>.</p></div> </div> <div class="faq__item"> <button class="faq__question" aria-expanded="false">Onde encontro mais conteúdo sobre gestão jurídica?<span class="faq__icon">+</span></button> <div class="faq__answer"><p>No blog da KARIA Gestão, com artigos práticos sobre Controladoria Jurídica, gestão de escritórios e estruturação operacional. Também no Instagram <a href="https://www.instagram.com/kariagestao" target="_blank" rel="noopener" style="color:var(--cobre);">@kariagestao</a>, com conteúdo regular sobre o tema.</p></div> </div> </div> </div> <div style="background:var(--musgo);border-radius:var(--radius-md);padding:2.5rem;text-align:center;margin-top:1rem;"> <h3 style="color:var(--off);font-size:1.3rem;margin-bottom:0.5rem;">Não encontrou sua resposta?</h3> <p style="color:var(--text-light);font-size:0.9rem;margin:0 auto 1.5rem;">Fale diretamente com a Nathalya. 30 minutos gratuitos para esclarecer qualquer dúvida.</p> <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="btn btn-primary" target="_blank" rel="noopener">Agendar conversa gratuita</a> </div> </div> </div>
 </section> </main>
-
 <div id="karia-footer"></div>
-
 <script>
-/* Carrega nav e footer externos */
 function loadComponent(id, file, callback) {
   var el = document.getElementById(id);
   if (!el) { if(callback) callback(); return; }
   fetch(file)
     .then(function(r){ return r.text(); })
-    .then(function(html){
-      el.innerHTML = html;
-      if(callback) callback();
-    })
+    .then(function(html){ el.innerHTML = html; if(callback) callback(); })
     .catch(function(){ if(callback) callback(); });
 }
-
-/* Scripts do nav — executados após carga */
 function initNav() {
   var nav = document.querySelector('.nav');
-  if (nav) {
-    window.addEventListener('scroll', function(){
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-    }, { passive: true });
-  }
+  if (nav) { window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true }); }
   var burger = document.querySelector('.nav__burger');
   var mobile = document.querySelector('.nav__mobile');
-  if (burger && mobile) {
-    burger.addEventListener('click', function(){
-      var open = mobile.classList.toggle('open');
-      burger.setAttribute('aria-expanded', open);
-    });
-  }
+  if (burger && mobile) { burger.addEventListener('click', function(){ var open = mobile.classList.toggle('open'); burger.setAttribute('aria-expanded', open); }); }
   document.querySelectorAll('.has-dropdown').forEach(function(item){
     var arrow = item.querySelector('.nav__dropdown-arrow');
     if (!arrow) return;
     arrow.addEventListener('click', function(e){
       e.stopPropagation();
       var isOpen = item.classList.contains('open');
-      document.querySelectorAll('.has-dropdown.open').forEach(function(el){
-        el.classList.remove('open');
-        var a = el.querySelector('.nav__dropdown-arrow');
-        if (a) a.setAttribute('aria-expanded','false');
-      });
-      if (!isOpen) {
-        item.classList.add('open');
-        arrow.setAttribute('aria-expanded','true');
-      }
+      document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); });
+      if (!isOpen) { item.classList.add('open'); arrow.setAttribute('aria-expanded','true'); }
     });
   });
-  document.addEventListener('click', function(){
-    document.querySelectorAll('.has-dropdown.open').forEach(function(el){
-      el.classList.remove('open');
-      var a = el.querySelector('.nav__dropdown-arrow');
-      if (a) a.setAttribute('aria-expanded','false');
-    });
-  });
+  document.addEventListener('click', function(){ document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); }); });
 }
-
-/* Scripts do footer — modal de privacidade */
 function initFooter() {
   var o = document.getElementById('privacyModal');
   if (o) {
@@ -529,45 +616,28 @@ function initFooter() {
     document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePrivacyModal(); });
   }
 }
-
 function openPrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.add('open');document.body.style.overflow='hidden';} }
 function closePrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.remove('open');document.body.style.overflow='';} }
-
-/* FAQ accordion */
 function initFaq() {
   document.querySelectorAll('.faq__question').forEach(function(btn){
     btn.addEventListener('click', function(){
       var item = btn.closest('.faq__item');
       var answer = item.querySelector('.faq__answer');
       var open = item.classList.contains('open');
-      document.querySelectorAll('.faq__item.open').forEach(function(el){
-        el.classList.remove('open');
-        el.querySelector('.faq__answer').style.maxHeight = '0';
-      });
-      if (!open) {
-        item.classList.add('open');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
-      }
+      document.querySelectorAll('.faq__item.open').forEach(function(el){ el.classList.remove('open'); el.querySelector('.faq__answer').style.maxHeight='0'; });
+      if (!open) { item.classList.add('open'); answer.style.maxHeight = answer.scrollHeight+'px'; }
       btn.setAttribute('aria-expanded', !open);
     });
   });
 }
-
-/* Detectar profundidade para paths relativos */
 var _depth = (window.location.pathname.match(/\//g)||[]).length - 1;
 var _base = _depth <= 0 ? '/' : Array(_depth+1).join('../');
-
 document.addEventListener('DOMContentLoaded', function(){
-  loadComponent('karia-nav', _base + 'nav.html', function(){
-    initNav();
-  });
-  loadComponent('karia-footer', _base + 'footer.html', function(){
-    initFooter();
-  });
+  loadComponent('karia-nav', _base+'nav.html', function(){ initNav(); });
+  loadComponent('karia-footer', _base+'footer.html', function(){ initFooter(); });
   initFaq();
 });
 </script>
-
 
 </body>
 </html>
