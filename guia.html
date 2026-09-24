@@ -403,7 +403,7 @@ p { max-width: var(--max-prose); }
   nav.scrolled{background:rgba(13,31,45,0.96);backdrop-filter:blur(12px);padding:14px 64px;}
   
   
-  .hero{min-height:100vh;background:var(--azul);display:grid;grid-template-columns:1fr 1fr;align-items:center;position:relative;overflow:hidden;padding-top:72px;}
+  .hero{min-height:100vh;background:var(--azul);display:grid;grid-template-columns:1fr 1fr;align-items:center;position:relative;overflow:hidden;padding-top:72px;z-index:0;}
   .geo{position:absolute;border-radius:50%;pointer-events:none;}
   .geo-1{top:-80px;right:-80px;width:420px;height:420px;border:1px solid rgba(184,115,51,0.1);animation:spin 40s linear infinite;}
   .geo-2{top:40px;right:40px;width:290px;height:290px;border:1px solid rgba(184,115,51,0.07);animation:spin 28s linear infinite reverse;}
@@ -552,7 +552,8 @@ p { max-width: var(--max-prose); }
 @media(max-width:600px){.cookie-banner__inner{flex-direction:column;}.cookie-banner__actions{width:100%;}.cookie-btn{flex:1;text-align:center;}}
 
 body { padding-top: 0 !important; }
-  </style>
+  #karia-nav, #karia-nav * { position: relative; } .nav { z-index: 1000 !important; pointer-events: all !important; }
+</style>
 </head>
 <body>
 
