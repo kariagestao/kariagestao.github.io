@@ -8,6 +8,7 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.kariagestao.com/controladoria-juridica-terceirizada">
   <link rel="icon" type="image/png" href="/images/favicon-karia.png">
+  <link rel="shortcut icon" type="image/png" href="/images/favicon-karia.png">
   <meta property="og:title" content="Controladoria Jurídica Terceirizada | KARIA Gestão">
   <meta property="og:description" content="Monitoramento diário de publicações, controle de prazos e cadastro de processos para escritórios de advocacia.">
   <meta property="og:type" content="website">
@@ -186,7 +187,6 @@ p { max-width: var(--max-prose); }
   .footer__bottom-inner { flex-direction: column; text-align: center; }
 }
 
-
 .privacy-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;padding:1rem}
 .privacy-modal-overlay.open{display:flex}
 .privacy-modal{background:#fff;color:#1a1a1a;border-radius:12px;max-width:720px;width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.4)}
@@ -201,7 +201,6 @@ p { max-width: var(--max-prose); }
 .privacy-modal__body ul{padding-left:1.25rem;margin-bottom:.75rem}
 .privacy-modal__body ul li{font-size:.875rem;color:#444;line-height:1.7;margin-bottom:.35rem}
 .privacy-modal__body a{color:#B87333;text-decoration:underline}
-
 .elegibilidade-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -466,20 +465,14 @@ p { max-width: var(--max-prose); }
       * { transition: none !important; }
     }
   
+  
   </style>
 </head>
 <body>
 
 <div id="karia-nav"></div>
 
-<nav>
-    <a href="https://www.kariagestao.com" class="nav-logo-img" aria-label="KARIA Gestão — página inicial">
-      <img src="/images/logo-karia.jpg" alt="KARIA Gestão — Controladoria Jurídica e Gestão Estratégica" height="56">
-    </a>
-    <a href="https://www.kariagestao.com/servicos" class="nav-link">Todos os serviços</a>
-  </nav>
-
-  <!-- HERO -->
+<!-- HERO -->
   <section class="hero">
     <div class="container">
       <div class="badge-pocket">● Serviço Pocket</div>
@@ -694,8 +687,6 @@ p { max-width: var(--max-prose); }
     </div>
   </section>
 
-<div id="karia-footer"></div>
-
 <script>
 function loadComponent(id, file, callback) {
   var el = document.getElementById(id);
@@ -784,6 +775,97 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 })();
 
+</script>
+
+<div id="karia-footer"></div>
+
+<script>
+function loadComponent(id, file, callback) {
+  var el = document.getElementById(id);
+  if (!el) { if(callback) callback(); return; }
+  fetch(file)
+    .then(function(r){ return r.text(); })
+    .then(function(html){ el.innerHTML = html; if(callback) callback(); })
+    .catch(function(){ if(callback) callback(); });
+}
+function initNav() {
+  var nav = document.querySelector('.nav');
+  if (nav) { window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true }); }
+  var burger = document.querySelector('.nav__burger');
+  var mobile = document.querySelector('.nav__mobile');
+  if (burger && mobile) { burger.addEventListener('click', function(){ var open = mobile.classList.toggle('open'); burger.setAttribute('aria-expanded', open); }); }
+  document.querySelectorAll('.has-dropdown').forEach(function(item){
+    var arrow = item.querySelector('.nav__dropdown-arrow');
+    if (!arrow) return;
+    arrow.addEventListener('click', function(e){
+      e.stopPropagation();
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); });
+      if (!isOpen) { item.classList.add('open'); arrow.setAttribute('aria-expanded','true'); }
+    });
+  });
+  document.addEventListener('click', function(){ document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); }); });
+}
+function initFooter() {
+  var o = document.getElementById('privacyModal');
+  if (o) {
+    o.addEventListener('click', function(e){ if(e.target===o) closePrivacyModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePrivacyModal(); });
+  }
+}
+function openPrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.add('open');document.body.style.overflow='hidden';} }
+function closePrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.remove('open');document.body.style.overflow='';} }
+document.addEventListener('DOMContentLoaded', function(){
+  loadComponent('karia-nav', '/nav.html', function(){ initNav(); });
+  loadComponent('karia-footer', '/footer.html', function(){ initFooter(); });
+});
+</script>
+
+<script>
+(function() {
+  var form = document.getElementById('form-elegibilidade');
+  if (!form) return;
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = form.querySelector('button[type="submit"]');
+    var orig = btn ? btn.textContent : '';
+    if (btn) { btn.textContent = 'Enviando...'; btn.disabled = true; }
+    var nome = (form.querySelector('[name="nome"]')||{}).value||'';
+    var email = (form.querySelector('[name="email"]')||{}).value||'';
+    var escritorio = (form.querySelector('[name="escritorio"]')||{}).value||'';
+    var area = (form.querySelector('[name="area"]')||{}).value||'';
+    var processos = (form.querySelector('[name="processos"]')||{}).value||'';
+    var sistema = (form.querySelector('[name="sistema"]')||{}).value||'';
+    var elegivel = (area==='elegivel'||area==='misto') && processos==='elegivel';
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        access_key: '1062412a-df27-4597-9e4c-d921a4cdc6d9',
+        subject: (elegivel?'[ELEGÍVEL] ':'[Não elegível] ') + 'Controladoria Terceirizada — ' + nome,
+        from_name: 'KARIA Gestão — Site',
+        replyto: email,
+        message: 'Nome: '+nome+'\nE-mail: '+email+'\nEscritório: '+escritorio+'\nÁrea: '+area+'\nProcessos: '+processos+'\nSistema: '+sistema+'\nStatus: '+(elegivel?'ELEGÍVEL':'Não elegível')
+      })
+    })
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var res = document.getElementById('resultado-elegibilidade');
+      if (data.success && res) {
+        res.style.display='block';
+        res.innerHTML = elegivel
+          ? '<div style="background:#0D1F2D;color:#F8F6F3;border-radius:12px;padding:2rem;text-align:center;border:1px solid rgba(184,115,51,0.3)"><h3 style="color:#B87333;font-family:Montserrat,sans-serif;margin-bottom:0.75rem;">✓ Seu escritório tem o perfil!</h3><p style="color:#C8D4DC;">Entraremos em contato em até 24 horas para dar os próximos passos, '+nome+'.</p></div>'
+          : '<div style="background:#0D1F2D;color:#F8F6F3;border-radius:12px;padding:2rem;text-align:center;border:1px solid rgba(184,115,51,0.3)"><h3 style="color:#B87333;font-family:Montserrat,sans-serif;margin-bottom:0.75rem;">Recebemos sua solicitação</h3><p style="color:#C8D4DC;">Neste momento seu escritório não se encaixa nos critérios. O <a href="/servicos/diagnostico.html" style="color:#B87333;">Diagnóstico Estruturado</a> pode ser o passo certo.</p></div>';
+        form.style.display='none';
+        res.scrollIntoView({behavior:'smooth',block:'center'});
+      } else {
+        if(btn){btn.textContent=orig;btn.disabled=false;}
+        alert('Erro ao enviar. Tente novamente.');
+      }
+    })
+    .catch(function(){if(btn){btn.textContent=orig;btn.disabled=false;}alert('Erro de conexão.');});
+  });
+})();
 </script>
 
 </body>
