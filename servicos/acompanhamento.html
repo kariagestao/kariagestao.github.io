@@ -4,25 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Acompanhamento Estratégico em Gestão Jurídica | KARIA Gestão</title>
-  <meta name="description" content="Ciclo mensal de governança para escritórios de advocacia. Painel de Indicadores, reunião estratégica e decisões baseadas em dados. Três níveis progressivos.">
+  <meta name="description" content="Ciclo mensal de governança para escritórios de advocacia. Painel de Indicadores, reunião estratégica e decisões baseadas em dados.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.kariagestao.com/acompanhamento-estrategico-gestao-juridica">
   <link rel="icon" type="image/png" href="/images/favicon-karia.png">
-  <link rel="shortcut icon" type="image/png" href="/images/favicon-karia.png">
   <meta property="og:title" content="Acompanhamento Estratégico em Gestão Jurídica | KARIA Gestão">
-  <meta property="og:description" content="Ciclo mensal de governança para escritórios de advocacia. Painel de Indicadores, reunião estratégica e decisões baseadas em dados. Três níveis progressivos.">
+  <meta property="og:description" content="Ciclo mensal de governança para escritórios de advocacia. Painel de Indicadores, reunião estratégica e decisões baseadas em dados.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="KARIA Gestão">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YE6CYRG627"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YE6CYRG627');</script>
-  <script type="application/ld+json">{
-    "@context":"https://schema.org","@type":"ProfessionalService",
-    "name":"KARIA Gestão",
-    "description":"Consultoria em Controladoria Jurídica exclusiva para escritórios de advocacia.",
-    "url":"https://www.kariagestao.com","telephone":"+55-51-3376-5996",
-    "email":"contato@kariagestao.com","areaServed":"Brasil","serviceType":"Controladoria Jurídica"
-  }</script>
+  
   <style>
 
 /* ============================================================
@@ -194,25 +187,56 @@ p { max-width: var(--max-prose); }
   .footer__bottom-inner { flex-direction: column; text-align: center; }
 }
 
-
-.privacy-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;padding:1rem}
-.privacy-modal-overlay.open{display:flex}
-.privacy-modal{background:#fff;color:#1a1a1a;border-radius:12px;max-width:720px;width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.4)}
-.privacy-modal__header{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2rem;border-bottom:1px solid #e8e8e8;flex-shrink:0}
-.privacy-modal__header h2{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:700;color:#0D1F2D;margin:0}
-.privacy-modal__close{background:none;border:none;cursor:pointer;color:#666;font-size:1.5rem;line-height:1;padding:.25rem;border-radius:4px}
-.privacy-modal__close:hover{color:#0D1F2D}
-.privacy-modal__meta{font-size:.78rem;color:#888;padding:.75rem 2rem;border-bottom:1px solid #f0f0f0;flex-shrink:0}
-.privacy-modal__body{overflow-y:auto;padding:1.5rem 2rem 2rem;flex:1}
-.privacy-modal__body h2{font-family:'Montserrat',sans-serif;font-size:.95rem;font-weight:700;color:#0D1F2D;margin:1.5rem 0 .5rem}
-.privacy-modal__body h2:first-child{margin-top:0}
-.privacy-modal__body p{font-size:.875rem;color:#444;line-height:1.7;margin-bottom:.75rem}
-.privacy-modal__body ul{padding-left:1.25rem;margin-bottom:.75rem}
-.privacy-modal__body ul li{font-size:.875rem;color:#444;line-height:1.7;margin-bottom:.35rem}
-.privacy-modal__body a{color:#B87333;text-decoration:underline}
-@media(max-width:640px){.privacy-modal{max-height:92vh;border-radius:12px 12px 0 0}.privacy-modal-overlay{align-items:flex-end;padding:0}.privacy-modal__header,.privacy-modal__body,.privacy-modal__meta{padding-left:1.25rem;padding-right:1.25rem}}
-
-/* --- HERO --- */
+.footer { background: var(--musgo); color: var(--off); }
+.footer__top { padding: var(--space-lg) 0 var(--space-md); }
+.footer__top-inner { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; }
+.footer__brand-block {}
+.footer__logo-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
+.footer__logo-wrap img { height: 40px; width: auto; object-fit: contain; }
+.footer__logo-text { font-family: var(--font-title); font-size: 1rem; font-weight: 800; color: var(--off); letter-spacing: 0.06em; }
+.footer__logo-text span { color: var(--cobre); }
+.footer__slogan { font-size: 0.8rem; color: var(--cobre); font-family: var(--font-data); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.footer__desc { font-size: 0.85rem; color: var(--text-pale); line-height: 1.7; max-width: 280px; }
+.footer__social-block {}
+.footer__social-label { font-family: var(--font-data); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-pale); margin-bottom: 1rem; }
+.footer__social-links { display: flex; flex-direction: column; gap: 0.75rem; }
+.footer__social-item { display: flex; align-items: center; gap: 0.75rem; color: var(--text-light); transition: color 0.2s; font-size: 0.85rem; text-decoration: none; }
+.footer__social-item:hover { color: var(--cobre); }
+.footer__social-icon { width: 36px; height: 36px; background: rgba(255,255,255,0.06); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.footer__social-icon--wpp { background: rgba(37,211,102,0.12); }
+.footer__social-info { display: flex; flex-direction: column; gap: 1px; }
+.footer__social-name { font-weight: 500; font-size: 0.85rem; }
+.footer__social-handle { font-size: 0.75rem; color: var(--text-pale); }
+.footer__links-block { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.footer__col h4 { font-family: var(--font-data); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-pale); margin-bottom: 1rem; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer__col ul a { font-size: 0.875rem; color: var(--text-light); transition: color 0.15s; }
+.footer__col ul a:hover { color: var(--cobre); }
+.footer__bottom { border-top: 1px solid rgba(184,115,51,0.1); padding: 1.25rem 0; }
+.footer__bottom-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.footer__bottom p { font-size: 0.78rem; color: var(--text-pale); max-width: 100%; }
+.footer__bottom a { color: var(--text-pale); transition: color 0.15s; }
+.footer__bottom a:hover { color: var(--cobre); }
+.wpp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 99; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.35); transition: transform 0.2s; }
+.wpp-float:hover { transform: scale(1.08); }
+.wpp-float svg { width: 26px; height: 26px; fill: #fff; }
+.privacy-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
+.privacy-modal-overlay.open { display: flex; }
+.privacy-modal { background: #fff; color: #1a1a1a; border-radius: 12px; max-width: 720px; width: 100%; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 24px 64px rgba(0,0,0,.4); }
+.privacy-modal__header { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem; border-bottom: 1px solid #e8e8e8; flex-shrink: 0; }
+.privacy-modal__header h2 { font-family: 'Montserrat',sans-serif; font-size: 1.1rem; font-weight: 700; color: #0D1F2D; margin: 0; }
+.privacy-modal__close { background: none; border: none; cursor: pointer; color: #666; font-size: 1.5rem; line-height: 1; padding: .25rem; border-radius: 4px; }
+.privacy-modal__close:hover { color: #0D1F2D; }
+.privacy-modal__meta { font-size: .78rem; color: #888; padding: .75rem 2rem; border-bottom: 1px solid #f0f0f0; flex-shrink: 0; }
+.privacy-modal__body { overflow-y: auto; padding: 1.5rem 2rem 2rem; flex: 1; }
+.privacy-modal__body h2 { font-family: 'Montserrat',sans-serif; font-size: .95rem; font-weight: 700; color: #0D1F2D; margin: 1.5rem 0 .5rem; }
+.privacy-modal__body h2:first-child { margin-top: 0; }
+.privacy-modal__body p { font-size: .875rem; color: #444; line-height: 1.7; margin-bottom: .75rem; }
+.privacy-modal__body ul { padding-left: 1.25rem; margin-bottom: .75rem; }
+.privacy-modal__body ul li { font-size: .875rem; color: #444; line-height: 1.7; margin-bottom: .35rem; }
+.privacy-modal__body a { color: #B87333; text-decoration: underline; }
+@media (max-width: 900px) { .footer__top-inner { grid-template-columns: 1fr 1fr; } .footer__links-block { grid-column: 1 / -1; } }
+@media (max-width: 600px) { .footer__top-inner { grid-template-columns: 1fr; } .footer__bottom-inner { flex-direction: column; text-align: center; } }
 .hero { min-height: 100svh; background: var(--musgo); display: flex; align-items: center; padding-top: 68px; position: relative; overflow: hidden;
 }
 .hero::before { content: ''; position: absolute; top: -10%; right: -5%; width: 55%; height: 120%; background: radial-gradient(ellipse at 70% 40%, rgba(184,115,51,0.08) 0%, transparent 65%); pointer-events: none;
@@ -588,9 +612,7 @@ p { max-width: var(--max-prose); }
   </style>
 </head>
 <body>
-
 <div id="karia-nav"></div>
-
 <main>
 <section class="page-hero"> <div class="page-hero__inner"> <div> <p class="page-hero__pre">Acompanhamento Estratégico</p> <h1>Visão estratégica todo mês, sem abrir mão da advocacia</h1> <p class="page-hero__sub">O ciclo mensal de governança que transforma dados em decisão. Painel de Indicadores, reunião estratégica e Registro Executivo para o sócio que quer dirigir o escritório com clareza.</p> <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="btn btn-primary" target="_blank" rel="noopener">Quero uma conversa gratuita</a> </div> <div class="page-hero__visual" aria-hidden="true"><svg viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="display:block"> <rect width="520" height="420" fill="#0D1F2D" rx="0"/> <circle cx="460" cy="380" r="110" fill="#B87333" fill-opacity="0.05"/> <circle cx="40" cy="60" r="80" fill="#B87333" fill-opacity="0.05"/> <!-- Grid gráfico --> <g opacity="0.07" stroke="#fff" stroke-width="1"> <line x1="40" y1="280" x2="480" y2="280"/> <line x1="40" y1="240" x2="480" y2="240"/> <line x1="40" y1="200" x2="480" y2="200"/> <line x1="40" y1="160" x2="480" y2="160"/> <line x1="40" y1="120" x2="480" y2="120"/> </g> <!-- Eixo X --> <line x1="40" y1="300" x2="480" y2="300" stroke="#fff" stroke-width="0.5" opacity="0.15"/> <!-- Área preenchida do gráfico --> <path d="M40,280 C100,265 160,230 220,200 C280,170 340,148 400,128 C440,114 480,108 480,108 L480,300 L40,300 Z" fill="#B87333" fill-opacity="0.1"/> <!-- Linha do gráfico --> <path d="M40,280 C100,265 160,230 220,200 C280,170 340,148 400,128 C440,114 480,108 480,108" fill="none" stroke="#B87333" stroke-width="2.5" stroke-linecap="round"/> <!-- Pontos mensais --> <circle cx="40" cy="280" r="5" fill="#B87333"/> <circle cx="114" cy="250" r="5" fill="#B87333"/> <circle cx="187" cy="220" r="5" fill="#B87333"/> <circle cx="260" cy="192" r="5" fill="#B87333"/> <circle cx="333" cy="162" r="5" fill="#B87333"/> <circle cx="407" cy="134" r="5" fill="#B87333"/> <circle cx="480" cy="108" r="6" fill="#B87333" stroke="#F8F6F3" stroke-width="2"/> <!-- Labels meses --> <g font-family="Montserrat,sans-serif" font-size="9" fill="#8FA3B0" text-anchor="middle"> <text x="40" y="316">Jan</text> <text x="114" y="316">Fev</text> <text x="187" y="316">Mar</text> <text x="260" y="316">Abr</text> <text x="333" y="316">Mai</text> <text x="407" y="316">Jun</text> <text x="480" y="316" fill="#B87333" font-weight="700">Jul</text> </g> <!-- Label eixo Y --> <text x="30" y="284" text-anchor="end" font-family="Montserrat,sans-serif" font-size="8" fill="#8FA3B0">0%</text> <text x="30" y="204" text-anchor="end" font-family="Montserrat,sans-serif" font-size="8" fill="#8FA3B0">50%</text> <text x="30" y="124" text-anchor="end" font-family="Montserrat,sans-serif" font-size="8" fill="#8FA3B0">100%</text> <!-- KPI cards no topo --> <rect x="28" y="28" width="130" height="62" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(184,115,51,0.25)" stroke-width="1"/> <text x="42" y="48" font-family="Montserrat,sans-serif" font-size="8" font-weight="600" fill="#8FA3B0" letter-spacing="0.5">PRODUTIVIDADE</text> <text x="42" y="74" font-family="Cormorant Garamond,Georgia,serif" font-size="28" font-weight="700" fill="#F8F6F3">94%</text> <rect x="172" y="28" width="130" height="62" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(184,115,51,0.25)" stroke-width="1"/> <text x="186" y="48" font-family="Montserrat,sans-serif" font-size="8" font-weight="600" fill="#8FA3B0" letter-spacing="0.5">PRAZOS OK</text> <text x="186" y="74" font-family="Cormorant Garamond,Georgia,serif" font-size="28" font-weight="700" fill="#F8F6F3">98%</text> <rect x="316" y="28" width="176" height="62" rx="8" fill="rgba(184,115,51,0.15)" stroke="#B87333" stroke-width="1"/> <text x="330" y="48" font-family="Montserrat,sans-serif" font-size="8" font-weight="600" fill="#B87333" letter-spacing="0.5">MATURIDADE</text> <text x="330" y="74" font-family="Cormorant Garamond,Georgia,serif" font-size="26" font-weight="700" fill="#B87333">Nível 3</text> <!-- Label gráfico --> <rect x="28" y="328" width="160" height="28" rx="6" fill="#B87333" fill-opacity="0.18" stroke="#B87333" stroke-width="0.8" stroke-opacity="0.5"/> <text x="108" y="346" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="10" font-weight="700" fill="#B87333" letter-spacing="1.5">ACOMPANHAMENTO</text>
 </svg></div> </div>
@@ -603,66 +625,34 @@ p { max-width: var(--max-prose); }
 <section class="section section--off"> <div class="container"><div class="content-block"> <h2>Para quem é o Acompanhamento?</h2> <p>Para escritórios que já têm uma base estruturada e querem manter a gestão funcionando com visão estratégica contínua.</p> <div class="cta-inline"> <h3>Quer ter visão estratégica todo mês?</h3> <p>Agende uma conversa gratuita para entender qual nível de Acompanhamento faz sentido para o seu escritório agora.</p> <a href="https://{WPP}" class="btn btn-primary" target="_blank" rel="noopener">Agendar conversa gratuita</a> </div> </div></div>
 </section>
 </main>
-
 <div id="karia-footer"></div>
-
 <script>
-/* Carrega nav e footer externos */
 function loadComponent(id, file, callback) {
   var el = document.getElementById(id);
   if (!el) { if(callback) callback(); return; }
   fetch(file)
     .then(function(r){ return r.text(); })
-    .then(function(html){
-      el.innerHTML = html;
-      if(callback) callback();
-    })
+    .then(function(html){ el.innerHTML = html; if(callback) callback(); })
     .catch(function(){ if(callback) callback(); });
 }
-
-/* Scripts do nav — executados após carga */
 function initNav() {
   var nav = document.querySelector('.nav');
-  if (nav) {
-    window.addEventListener('scroll', function(){
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-    }, { passive: true });
-  }
+  if (nav) { window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true }); }
   var burger = document.querySelector('.nav__burger');
   var mobile = document.querySelector('.nav__mobile');
-  if (burger && mobile) {
-    burger.addEventListener('click', function(){
-      var open = mobile.classList.toggle('open');
-      burger.setAttribute('aria-expanded', open);
-    });
-  }
+  if (burger && mobile) { burger.addEventListener('click', function(){ var open = mobile.classList.toggle('open'); burger.setAttribute('aria-expanded', open); }); }
   document.querySelectorAll('.has-dropdown').forEach(function(item){
     var arrow = item.querySelector('.nav__dropdown-arrow');
     if (!arrow) return;
     arrow.addEventListener('click', function(e){
       e.stopPropagation();
       var isOpen = item.classList.contains('open');
-      document.querySelectorAll('.has-dropdown.open').forEach(function(el){
-        el.classList.remove('open');
-        var a = el.querySelector('.nav__dropdown-arrow');
-        if (a) a.setAttribute('aria-expanded','false');
-      });
-      if (!isOpen) {
-        item.classList.add('open');
-        arrow.setAttribute('aria-expanded','true');
-      }
+      document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); });
+      if (!isOpen) { item.classList.add('open'); arrow.setAttribute('aria-expanded','true'); }
     });
   });
-  document.addEventListener('click', function(){
-    document.querySelectorAll('.has-dropdown.open').forEach(function(el){
-      el.classList.remove('open');
-      var a = el.querySelector('.nav__dropdown-arrow');
-      if (a) a.setAttribute('aria-expanded','false');
-    });
-  });
+  document.addEventListener('click', function(){ document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); }); });
 }
-
-/* Scripts do footer — modal de privacidade */
 function initFooter() {
   var o = document.getElementById('privacyModal');
   if (o) {
@@ -670,45 +660,28 @@ function initFooter() {
     document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePrivacyModal(); });
   }
 }
-
 function openPrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.add('open');document.body.style.overflow='hidden';} }
 function closePrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.remove('open');document.body.style.overflow='';} }
-
-/* FAQ accordion */
 function initFaq() {
   document.querySelectorAll('.faq__question').forEach(function(btn){
     btn.addEventListener('click', function(){
       var item = btn.closest('.faq__item');
       var answer = item.querySelector('.faq__answer');
       var open = item.classList.contains('open');
-      document.querySelectorAll('.faq__item.open').forEach(function(el){
-        el.classList.remove('open');
-        el.querySelector('.faq__answer').style.maxHeight = '0';
-      });
-      if (!open) {
-        item.classList.add('open');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
-      }
+      document.querySelectorAll('.faq__item.open').forEach(function(el){ el.classList.remove('open'); el.querySelector('.faq__answer').style.maxHeight='0'; });
+      if (!open) { item.classList.add('open'); answer.style.maxHeight = answer.scrollHeight+'px'; }
       btn.setAttribute('aria-expanded', !open);
     });
   });
 }
-
-/* Detectar profundidade para paths relativos */
 var _depth = (window.location.pathname.match(/\//g)||[]).length - 1;
 var _base = _depth <= 0 ? '/' : Array(_depth+1).join('../');
-
 document.addEventListener('DOMContentLoaded', function(){
-  loadComponent('karia-nav', _base + 'nav.html', function(){
-    initNav();
-  });
-  loadComponent('karia-footer', _base + 'footer.html', function(){
-    initFooter();
-  });
+  loadComponent('karia-nav', _base+'nav.html', function(){ initNav(); });
+  loadComponent('karia-footer', _base+'footer.html', function(){ initFooter(); });
   initFaq();
 });
 </script>
-
 
 </body>
 </html>
