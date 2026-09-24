@@ -695,11 +695,25 @@ document.addEventListener('DOMContentLoaded', function(){
   </div>
 </div>
 <script>
-(function(){
-  try{var b=document.getElementById('cookieBanner');if(!b)return;if(!localStorage.getItem('karia_cookies')){setTimeout(function(){b.classList.add('visible');},800);}}catch(e){}
-})();
-function cookieAccept(){try{localStorage.setItem('karia_cookies','all');}catch(e){}var b=document.getElementById('cookieBanner');if(b)b.classList.remove('visible');}
-function cookieReject(){try{localStorage.setItem('karia_cookies','essential');}catch(e){}var b=document.getElementById('cookieBanner');if(b)b.classList.remove('visible');}
+document.addEventListener('DOMContentLoaded', function(){
+  try {
+    var b = document.getElementById('cookieBanner');
+    if (!b) return;
+    if (!localStorage.getItem('karia_cookies')) {
+      setTimeout(function(){ b.classList.add('visible'); }, 300);
+    }
+  } catch(e) {}
+});
+function cookieAccept(){
+  try { localStorage.setItem('karia_cookies','all'); } catch(e){}
+  var b = document.getElementById('cookieBanner');
+  if (b) b.classList.remove('visible');
+}
+function cookieReject(){
+  try { localStorage.setItem('karia_cookies','essential'); } catch(e){}
+  var b = document.getElementById('cookieBanner');
+  if (b) b.classList.remove('visible');
+}
 </script>
 </body>
 </html>
