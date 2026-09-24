@@ -109,9 +109,13 @@
   </p>
 </div>
 <script>
+  // Proteção: redirecionar se não veio do formulário
   const params = new URLSearchParams(window.location.search);
   const nome = params.get('nome') || '';
   const email = params.get('email') || '';
+  if (!email || !nome) {
+    window.location.replace('/guia.html');
+  }
   const link = document.getElementById('typeform-link');
   if (nome || email) {
     link.href = 'https://form.typeform.com/to/xMVWB3ew#email=' + encodeURIComponent(email) + '&first_name=' + encodeURIComponent(nome);
