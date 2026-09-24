@@ -602,10 +602,6 @@ p { max-width: var(--max-prose); }
 
 /* Cookie banner */
 @media (max-width: 480px) {
-  .cookie-banner { padding: 1rem; }
-  .cookie-banner__inner { gap: 1rem; }
-  .cookie-banner__text p { font-size: 0.8rem; }
-}
 
 /* Telas muito pequenas (iPhone SE = 375px) */
 @media (max-width: 380px) {
@@ -850,7 +846,49 @@ p { max-width: var(--max-prose); }
     }
   }
   
-  </style>
+  
+/* === COOKIE BANNER === */
+
+
+/* === COOKIE BANNER === */
+
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width:600px){}
+
+/* Cards visuais clicáveis */
+a.servico-card__visual {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+a.servico-card__visual:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(13,31,45,0.25);
+}
+a.servico-card__visual::after {
+  content: 'Ver serviço →';
+  display: block;
+  margin-top: 1.25rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cobre, #B87333);
+  letter-spacing: 0.05em;
+  font-family: var(--font-body, 'Poppins', sans-serif);
+}
+
+</style>
 </head>
 <body>
 <div id="karia-nav"></div>
@@ -884,8 +922,8 @@ p { max-width: var(--max-prose); }
       </div>
       <a href="/servicos/diagnostico.html" class="btn btn-outline">Conhecer o Diagnóstico</a>
     </div>
-    <div class="servico-card__visual">
-      <div class="servico-card__visual-num">01</div>
+    <a href="/servicos/diagnostico.html" class="servico-card__visual">
+      <div class="servico-card__visual-num">01</a>
       <p class="servico-card__visual-tagline">Entenda onde seu escritório está de verdade.</p>
       <p class="servico-card__visual-detail">Relatório executivo em PDF com plano de ação entregue em até 20 dias corridos. Uma única entrega, sem recorrência.</p>
     </div>
@@ -908,8 +946,8 @@ p { max-width: var(--max-prose); }
       </div>
       <a href="/servicos/implantacao.html" class="btn btn-outline">Conhecer a Implantação</a>
     </div>
-    <div class="servico-card__visual">
-      <div class="servico-card__visual-num">02</div>
+    <a href="/servicos/implantacao.html" class="servico-card__visual">
+      <div class="servico-card__visual-num">02</a>
       <p class="servico-card__visual-tagline">Do diagnóstico à estrutura funcionando.</p>
       <p class="servico-card__visual-detail">Quatro fases progressivas ao longo de quatro meses. Indicado para escritórios que concluíram o Diagnóstico Estruturado.</p>
     </div>
@@ -931,8 +969,8 @@ p { max-width: var(--max-prose); }
       </div>
       <a href="/servicos/acompanhamento.html" class="btn btn-outline">Conhecer o Acompanhamento</a>
     </div>
-    <div class="servico-card__visual">
-      <div class="servico-card__visual-num">03</div>
+    <a href="/servicos/acompanhamento.html" class="servico-card__visual">
+      <div class="servico-card__visual-num">03</a>
       <p class="servico-card__visual-tagline">Visão estratégica todo mês, sem abrir mão da advocacia.</p>
       <p class="servico-card__visual-detail">O nível adequado é indicado pela KARIA com base na maturidade do escritório, não pela escolha do cliente.</p>
     </div>
@@ -955,8 +993,8 @@ p { max-width: var(--max-prose); }
       </div>
       <a href="/controladoria-juridica-terceirizada.html" class="btn btn-outline">Conhecer a Controladoria Terceirizada</a>
     </div>
-    <div class="servico-card__visual">
-      <div class="servico-card__visual-num">04</div>
+    <a href="/controladoria-juridica-terceirizada.html" class="servico-card__visual">
+      <div class="servico-card__visual-num">04</a>
       <p class="servico-card__visual-tagline">Prazo perdido não avisa antes de acontecer.</p>
       <p class="servico-card__visual-detail">Exclusivo para escritórios com sistema jurídico ativo e base de até 1.000 processos nas áreas elegíveis.</p>
     </div>
@@ -1031,5 +1069,55 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 
+
+
+
+    <div style="display:flex;gap:0.75rem;flex-shrink:0;">
+      <button onclick="cookieReject()" style="font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:500;padding:0.6rem 1.25rem;border-radius:4px;cursor:pointer;background:transparent;color:#C8D4DC;border:1px solid rgba(200,212,220,0.3);">Apenas essenciais</button>
+      <button onclick="cookieAccept()" style="font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:500;padding:0.6rem 1.25rem;border-radius:4px;cursor:pointer;background:#B87333;color:#fff;border:none;">Aceitar todos</button>
+    </div>
+  </div>
+</div>
+
+
+    <div style="display:flex;gap:0.75rem;flex-shrink:0;">
+      <button onclick="cookieReject()" style="font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:500;padding:0.6rem 1.25rem;border-radius:4px;cursor:pointer;background:transparent;color:#C8D4DC;border:1px solid rgba(200,212,220,0.3);">Apenas essenciais</button>
+      <button onclick="cookieAccept()" style="font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:500;padding:0.6rem 1.25rem;border-radius:4px;cursor:pointer;background:#B87333;color:#fff;border:none;">Aceitar todos</button>
+    </div>
+  </div>
+</div>
+
+<script>
+window.cookieAccept = function(){
+  try { localStorage.setItem('karia_cookies','all'); } catch(e){}
+  var b = document.getElementById('cookieBanner');
+  if (b) b.style.display = 'none';
+};
+window.cookieReject = function(){
+  try { localStorage.setItem('karia_cookies','essential'); } catch(e){}
+  var b = document.getElementById('cookieBanner');
+  if (b) b.style.display = 'none';
+};
+document.addEventListener('DOMContentLoaded', function(){
+  try {
+    if (!localStorage.getItem('karia_cookies')) {
+      var b = document.getElementById('cookieBanner');
+      if (b) b.style.display = 'block';
+    }
+  } catch(e) {}
+});
+</script>
+<div id="cookieBanner" role="dialog" aria-label="Aviso de cookies" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#0D1F2D;border-top:1px solid rgba(184,115,51,0.3);padding:1.25rem 2rem;box-shadow:0 -4px 32px rgba(0,0,0,0.3);">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
+    <div style="display:flex;align-items:flex-start;gap:0.75rem;color:#C8D4DC;flex:1;min-width:260px;">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#B87333" stroke-width="2" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p style="font-size:0.84rem;line-height:1.6;margin:0;font-family:'Poppins',sans-serif;">Utilizamos cookies para melhorar sua experiência e analisar o tráfego. Ao continuar, você concorda com nossa <a href="#" onclick="openPrivacyModal();return false;" style="color:#B87333;text-decoration:underline;">Política de Privacidade</a>.</p>
+    </div>
+    <div style="display:flex;gap:0.75rem;flex-shrink:0;">
+      <button onclick="window.cookieReject()" style="font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:500;padding:0.6rem 1.25rem;border-radius:4px;cursor:pointer;background:transparent;color:#C8D4DC;border:1px solid rgba(200,212,220,0.3);">Apenas essenciais</button>
+      <button onclick="window.cookieAccept()" style="font-family:'Poppins',sans-serif;font-size:0.82rem;font-weight:500;padding:0.6rem 1.25rem;border-radius:4px;cursor:pointer;background:#B87333;color:#fff;border:none;">Aceitar todos</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
