@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <link rel="icon" type="image/png" href="/images/favicon-karia.png">
+  <link rel="shortcut icon" type="image/png" href="/images/favicon-karia.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mentoria Individual em Controladoria Jurídica | KARIA Gestão</title>
+  <meta name="description" content="Sessão individual de 1h com Nathalya Pereira - Controller Jurídico com 10 anos de experiência. Direcionamento prático para quem quer estruturar processos ou migrar para a área."/>
+  <meta name="robots" content="index, follow"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YE6CYRG627"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YE6CYRG627');</script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&family=Montserrat:wght@400;500;600&display=swap');
+
+    :root {
+      --musgo: #0D1F2D; --musgo-mid: #162C3E; --musgo-soft: #1E3A50;
+      --cobre: #B87333; --cobre-dark: #9A5F28;
+      --off: #F8F6F3; --off-dim: #EDE9E3;
+      --text-dark: #0D1F2D; --text-mid: #4A5568;
+      --text-light: #C8D4DC; --text-pale: #8FA3B0;
+      --font-title: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Poppins', system-ui, sans-serif;
+      --font-data: 'Montserrat', system-ui, sans-serif;
+      --space-xs: 0.5rem; --space-sm: 1rem; --space-md: 2rem;
+      --space-lg: 4rem; --space-xl: 7rem;
+      --radius-sm: 3px; --radius-md: 12px;
+      --max-prose: 680px; --max-wide: 1100px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-dark); background: var(--off); padding-top: 0 !important; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+    h1, h2, h3, h4 { font-family: var(--font-title); line-height: 1.2; font-weight: 600; letter-spacing: -0.01em; }
+    h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); }
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
+    h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+    p { max-width: var(--max-prose); }
+
+    .container { width: 100%; max-width: var(--max-wide); margin: 0 auto; padding: 0 var(--space-md); }
+    .section { padding: var(--space-xl) 0; }
+    .section--dark { background: var(--musgo); color: var(--off); }
+    .section--mid { background: var(--musgo-mid); color: var(--off); }
+    .section--off { background: var(--off); color: var(--text-dark); }
+    .section--dim { background: var(--off-dim); color: var(--text-dark); }
+
+    .btn { display: inline-block; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.03em; padding: 0.85rem 2rem; border-radius: var(--radius-sm); transition: background 0.2s, color 0.2s, transform 0.15s; }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary { background: var(--cobre); color: #fff; }
+    .btn-primary:hover { background: var(--cobre-dark); }
+    .btn-outline { background: transparent; color: var(--off); border: 1.5px solid rgba(248,246,243,0.4); }
+    .btn-outline:hover { border-color: var(--cobre); color: var(--cobre); }
+
+    /* HERO */
+    .hero { min-height: 70svh; background: var(--musgo); display: flex; align-items: center; padding-top: 68px; position: relative; overflow: hidden; z-index: 0; }
+    .hero::before { content: ''; position: absolute; top: -10%; right: -5%; width: 55%; height: 120%; background: radial-gradient(ellipse at 70% 40%, rgba(184,115,51,0.08) 0%, transparent 65%); pointer-events: none; }
+    .hero__inner { max-width: var(--max-wide); margin: 0 auto; padding: var(--space-xl) var(--space-md); width: 100%; }
+    .hero__label { font-family: var(--font-data); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cobre); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+    .hero__label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--cobre); }
+    .hero h1 { color: var(--off); margin-bottom: 1.5rem; max-width: 720px; }
+    .hero h1 em { font-style: italic; color: var(--cobre); }
+    .hero__sub { font-size: 1.1rem; color: var(--text-light); margin-bottom: 2.5rem; max-width: 560px; line-height: 1.8; }
+    .hero__meta { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2.5rem; }
+    .hero__meta-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-data); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; color: var(--text-light); text-transform: uppercase; }
+    .hero__meta-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cobre); display: inline-block; }
+    .hero__cta-group { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+    .hero__note { font-size: 0.78rem; color: var(--text-pale); }
+
+    /* PARA QUEM É */
+    .para-quem { padding: var(--space-xl) 0; background: var(--off-dim); }
+    .section-label { font-family: var(--font-data); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cobre); margin-bottom: 0.75rem; }
+    .para-quem__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; margin-top: 3rem; }
+    .para-quem__intro { font-size: 1.05rem; color: var(--text-mid); line-height: 1.8; }
+    .para-quem__cards { display: flex; flex-direction: column; gap: 1rem; }
+    .pq-card { background: var(--off); border: 1px solid rgba(13,31,45,0.1); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+    .pq-card__icon { width: 36px; height: 36px; border-radius: 50%; background: rgba(184,115,51,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .pq-card__icon svg { width: 16px; height: 16px; stroke: var(--cobre); fill: none; stroke-width: 1.8; }
+    .pq-card p { font-size: 0.92rem; color: var(--text-mid); line-height: 1.65; margin: 0; max-width: none; }
+
+    /* COMO FUNCIONA */
+    .como-funciona { padding: var(--space-xl) 0; background: var(--musgo); color: var(--off); }
+    .como-funciona h2 { color: var(--off); margin-bottom: 3rem; }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .step { position: relative; }
+    .step__num { font-family: var(--font-title); font-size: 3rem; font-weight: 700; color: rgba(184,115,51,0.3); line-height: 1; margin-bottom: 1rem; }
+    .step__title { font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em; color: var(--cobre); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .step p { font-size: 0.9rem; color: var(--text-light); line-height: 1.7; max-width: none; }
+    .step::after { content: ''; position: absolute; top: 1.5rem; right: -0.75rem; width: 1px; height: 40px; background: rgba(184,115,51,0.2); }
+    .step:last-child::after { display: none; }
+
+    /* SOBRE A MENTORA */
+    .mentora { padding: var(--space-xl) 0; background: var(--off); }
+    .mentora__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .mentora__card { background: var(--musgo); border-radius: var(--radius-md); padding: 2.5rem; color: var(--off); }
+    .mentora__card-num { font-family: var(--font-title); font-size: 5rem; font-weight: 700; color: rgba(184,115,51,0.2); line-height: 1; margin-bottom: 1.5rem; }
+    .mentora__card-quote { font-family: var(--font-title); font-size: 1.3rem; font-style: italic; color: var(--off); line-height: 1.5; }
+    .mentora__card-assinatura { font-size: 0.8rem; color: var(--text-pale); margin-top: 1.5rem; max-width: none; }
+    .mentora__content h2 { margin-bottom: 1.5rem; color: var(--text-dark); }
+    .mentora__content p { font-size: 1rem; color: var(--text-mid); line-height: 1.8; margin-bottom: 1rem; }
+    .mentora__tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .tag { font-family: var(--font-data); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 99px; background: rgba(13,31,45,0.07); color: var(--text-mid); }
+
+    /* CTA FINAL */
+    .cta-final { padding: var(--space-xl) 0; background: var(--musgo-mid); color: var(--off); text-align: center; }
+    .cta-final h2 { color: var(--off); margin-bottom: 1rem; }
+    .cta-final > .container > p { font-size: 1rem; color: var(--text-light); margin: 0 auto 2rem; }
+    .cta-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; margin-bottom: 2rem; }
+    .cta-meta-item { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-data); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; color: var(--text-pale); text-transform: uppercase; }
+    .cta-meta-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cobre); display: inline-block; }
+    .cta-btn-wrap { display: flex; justify-content: center; }
+    .cta-note { font-size: 0.78rem; color: var(--text-pale); margin-top: 1rem; }
+
+    /* Cookie Banner */
+    #cookieBanner { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999; background: #0D1F2D; border-top: 1px solid rgba(184,115,51,0.3); padding: 1rem 2rem; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
+    #cookieBanner p { font-size: 0.82rem; color: #C8D4DC; margin: 0; max-width: 600px; }
+    .cookie-btn-reject { font-size: 0.8rem; color: #8FA3B0; background: none; border: 1px solid rgba(255,255,255,0.15); padding: 0.5rem 1rem; border-radius: 3px; cursor: pointer; font-family: inherit; }
+    .cookie-btn-accept { font-size: 0.8rem; color: #fff; background: #B87333; border: none; padding: 0.5rem 1.25rem; border-radius: 3px; cursor: pointer; font-family: inherit; }
+    .cookie-privacy-link { background: none; border: none; color: #B87333; font-size: 0.82rem; cursor: pointer; padding: 0; font-family: inherit; }
+
+    /* WPP Float */
+    .wpp-float { position: fixed; bottom: 1.75rem; right: 1.75rem; z-index: 90; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.25); transition: transform 0.2s; }
+    .wpp-float:hover { transform: scale(1.08); }
+    .wpp-float svg { width: 26px; height: 26px; fill: #fff; }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+      .para-quem__grid { grid-template-columns: 1fr; gap: 2rem; }
+      .steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .step::after { display: none; }
+      .mentora__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+    @media (max-width: 480px) {
+      .steps { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV (carregado via fetch) -->
+<div id="karia-nav"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__inner">
+    <p class="hero__label">Mentoria Individual</p>
+    <h1>Mentoria Individual em<br/><em>Controladoria Jurídica</em></h1>
+    <p class="hero__sub">Uma hora focada no seu desafio real — com quem já viveu o que você está enfrentando.</p>
+    <div class="hero__meta">
+      <div class="hero__meta-item"><span class="dot"></span> R$ 250</div>
+      <div class="hero__meta-item"><span class="dot"></span> 1 hora</div>
+      <div class="hero__meta-item"><span class="dot"></span> Online</div>
+      <div class="hero__meta-item"><span class="dot"></span> Sessão avulsa</div>
+    </div>
+    <div class="hero__cta-group">
+      <a href="#formulario" class="btn btn-primary">Quero agendar minha sessão</a>
+      <span class="hero__note">Agendamento mediante formulário · Confirmação em até 24h</span>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM É -->
+<section class="para-quem">
+  <div class="container">
+    <p class="section-label">Para quem é</p>
+    <h2>Você tem clareza do problema.<br/>Falta o caminho.</h2>
+    <div class="para-quem__grid">
+      <p class="para-quem__intro">
+        A mentoria não é um curso e não é uma consultoria. É uma conversa estruturada, com alguém que conhece o setor jurídico por dentro, para você sair da sessão com direcionamento real — não com mais dúvidas.
+      </p>
+      <div class="para-quem__cards">
+        <div class="pq-card">
+          <div class="pq-card__icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <p>Profissionais da área jurídica que querem migrar para controladoria ou Legal Ops e precisam entender por onde começar</p>
+        </div>
+        <div class="pq-card">
+          <div class="pq-card__icon">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <p>Analistas e coordenadores que querem se posicionar melhor na carreira e estruturar uma trajetória mais estratégica</p>
+        </div>
+        <div class="pq-card">
+          <div class="pq-card__icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <p>Quem está estruturando processos internos em um escritório e precisa de direcionamento prático para não reinventar a roda</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="como-funciona">
+  <div class="container">
+    <p class="section-label" style="color:var(--cobre)">Como funciona</p>
+    <h2>Quatro etapas. Uma hora que vale.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step__num">01</div>
+        <p class="step__title">Formulário</p>
+        <p>Você preenche com seu contexto e o que quer resolver. Isso garante que a sessão já começa focada.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">02</div>
+        <p class="step__title">Confirmação</p>
+        <p>Entro em contato em até 24h para alinhar data, horário e pagamento.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">03</div>
+        <p class="step__title">Sessão</p>
+        <p>1 hora por videochamada, com foco no que você trouxe. Conversa direta, sem rodeios.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">04</div>
+        <p class="step__title">Resumo</p>
+        <p>Você recebe um resumo escrito com os próximos passos para não perder o que foi construído na sessão.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE A MENTORA -->
+<section class="mentora">
+  <div class="container">
+    <div class="mentora__grid">
+      <div class="mentora__visual">
+        <div class="mentora__card">
+          <div class="mentora__card-num">10</div>
+          <p class="mentora__card-quote">"Falo de prática,<br/>não de teoria."</p>
+          <p class="mentora__card-assinatura">Nathalya Pereira · Controller Jurídico</p>
+        </div>
+      </div>
+      <div class="mentora__content">
+        <p class="section-label">Sobre a mentora</p>
+        <h2>Nathalya Pereira</h2>
+        <p>
+          10 anos de experiência no setor jurídico, passando por escritórios de diferentes portes e áreas de atuação. MBA em Gestão de Processos e pós-graduação em Legal Ops &amp; Controladoria Jurídica.
+        </p>
+        <p>
+          Estruturou controladoria do zero em escritório de alto volume. Fundou a KARIA Gestão para levar esse método para outros escritórios — com foco em estratégia, sem execução operacional.
+        </p>
+        <div class="mentora__tags">
+          <span class="tag">Controladoria Jurídica</span>
+          <span class="tag">Legal Ops</span>
+          <span class="tag">Gestão de Processos</span>
+          <span class="tag">MBA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL / FORMULÁRIO -->
+<section class="cta-final" id="formulario">
+  <div class="container">
+    <p class="section-label" style="color:var(--cobre);text-align:center">Agendar sessão</p>
+    <h2>Pronto para resolver de vez?</h2>
+    <p>Preencha o formulário com o seu contexto. A sessão já começa com foco no que importa para você.</p>
+    <div class="cta-meta">
+      <div class="cta-meta-item"><span class="dot"></span> R$ 250</div>
+      <div class="cta-meta-item"><span class="dot"></span> 1h · Online</div>
+      <div class="cta-meta-item"><span class="dot"></span> Sessão avulsa</div>
+      <div class="cta-meta-item"><span class="dot"></span> Confirmação em até 24h</div>
+    </div>
+    <div class="cta-btn-wrap">
+      <!-- Substituir o href pelo link real do Google Forms ou Typeform -->
+      <a href="#" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:1rem;padding:1rem 2.5rem">Quero agendar minha sessão →</a>
+    </div>
+    <p class="cta-note">Após preencher, entro em contato em até 24h para confirmar.</p>
+  </div>
+</section>
+
+<!-- FOOTER (carregado via fetch) -->
+<div id="karia-footer"></div>
+
+<!-- WPP Float -->
+<a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20a%20KARIA%20Gest%C3%A3o." target="_blank" rel="noopener" class="wpp-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
+<!-- Cookie Banner -->
+<script>
+window.cookieAccept = function(){ localStorage.setItem('karia_cookies','all'); document.getElementById('cookieBanner').style.display='none'; };
+window.cookieReject = function(){ localStorage.setItem('karia_cookies','essential'); document.getElementById('cookieBanner').style.display='none'; };
+document.addEventListener('DOMContentLoaded', function(){
+  if (!localStorage.getItem('karia_cookies')) document.getElementById('cookieBanner').style.display='flex';
+});
+</script>
+<div id="cookieBanner">
+  <p>Este site utiliza cookies para melhorar sua experiência. Ao continuar navegando, você concorda com nossa <button class="cookie-privacy-link" onclick="openPrivacyModal()">Política de Privacidade</button>.</p>
+  <div style="display:flex;gap:0.75rem;flex-shrink:0">
+    <button class="cookie-btn-reject" onclick="window.cookieReject()">Apenas essenciais</button>
+    <button class="cookie-btn-accept" onclick="window.cookieAccept()">Aceitar todos</button>
+  </div>
+</div>
+
+<!-- Scripts: fetch nav/footer + utilitários -->
+<script>
+function loadComponent(id, file, callback) {
+  var el = document.getElementById(id);
+  if (!el) { if(callback) callback(); return; }
+  fetch(file)
+    .then(function(r){ return r.text(); })
+    .then(function(html){ el.innerHTML = html; if(callback) callback(); })
+    .catch(function(){ if(callback) callback(); });
+}
+function initNav() {
+  var nav = document.querySelector('.nav');
+  if (nav) { window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true }); }
+  var burger = document.querySelector('.nav__burger');
+  var mobile = document.querySelector('.nav__mobile');
+  if (burger && mobile) { burger.addEventListener('click', function(){ var open = mobile.classList.toggle('open'); burger.setAttribute('aria-expanded', open); }); }
+  document.querySelectorAll('.has-dropdown').forEach(function(item){
+    var arrow = item.querySelector('.nav__dropdown-arrow');
+    if (!arrow) return;
+    arrow.addEventListener('click', function(e){
+      e.stopPropagation();
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); });
+      if (!isOpen) { item.classList.add('open'); arrow.setAttribute('aria-expanded','true'); }
+    });
+  });
+  document.addEventListener('click', function(){ document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); }); });
+}
+function initFooter() {
+  var o = document.getElementById('privacyModal');
+  if (o) {
+    o.addEventListener('click', function(e){ if(e.target===o) closePrivacyModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePrivacyModal(); });
+  }
+}
+function openPrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.add('open');document.body.style.overflow='hidden';} }
+function closePrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.remove('open');document.body.style.overflow='';} }
+
+var _depth = (window.location.pathname.match(/\//g)||[]).length - 1;
+var _base = _depth <= 0 ? '/' : Array(_depth+1).join('../');
+document.addEventListener('DOMContentLoaded', function(){
+  loadComponent('karia-nav', _base+'nav.html', function(){ initNav(); });
+  loadComponent('karia-footer', _base+'footer.html', function(){ initFooter(); });
+});
+</script>
+
+</body>
+</html>
