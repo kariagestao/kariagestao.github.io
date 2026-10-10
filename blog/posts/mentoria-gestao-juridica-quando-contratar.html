@@ -200,47 +200,7 @@ h1, h2, h3, h4 { font-family: var(--font-title); line-height: 1.2; font-weight: 
 
 <div class="read-progress" id="readProgress"></div>
 
-<!-- NAV -->
-<nav class="nav" id="mainNav">
-  <div class="nav__inner">
-    <a class="nav__logo" href="/">
-      <img src="/images/logo-karia.png" alt="KARIA Gestão">
-      <span class="nav__logo-label">KARIA <span>Gestão</span></span>
-    </a>
-    <ul class="nav__links">
-      <li><a href="/sobre.html">Sobre</a></li>
-      <li class="has-dropdown">
-        <a href="/servicos.html" class="nav__dropdown-toggle">Serviços</a>
-        <button class="nav__dropdown-arrow" aria-label="Abrir menu serviços"><span class="nav__arrow">▾</span></button>
-        <ul class="nav__dropdown">
-          <li><a href="/diagnostico.html">Diagnóstico Estruturado</a></li>
-          <li><a href="/consultoria-implantacao.html">Consultoria de Implantação</a></li>
-          <li><a href="/acompanhamento.html">Acompanhamento Estratégico</a></li>
-          <li><a href="/mentoria.html">Mentoria Individual</a></li>
-        </ul>
-      </li>
-      <li><a href="/blog.html">Blog</a></li>
-      <li><a href="/contato.html">Contato</a></li>
-    </ul>
-    <div class="nav__cta">
-      <a href="/mentoria.html" class="btn btn-primary">Mentoria Individual</a>
-    </div>
-    <button class="nav__burger" id="burger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-  <div class="nav__mobile" id="mobileMenu">
-    <a href="/sobre.html">Sobre</a>
-    <a href="/servicos.html">Serviços</a>
-    <a href="/diagnostico.html" style="padding-left:1.25rem;">Diagnóstico Estruturado</a>
-    <a href="/consultoria-implantacao.html" style="padding-left:1.25rem;">Consultoria de Implantação</a>
-    <a href="/acompanhamento.html" style="padding-left:1.25rem;">Acompanhamento Estratégico</a>
-    <a href="/mentoria.html" style="padding-left:1.25rem;">Mentoria Individual</a>
-    <a href="/blog.html">Blog</a>
-    <a href="/contato.html">Contato</a>
-    <a href="/mentoria.html" class="btn-primary">Mentoria Individual</a>
-  </div>
-</nav>
+<div id="karia-nav"></div>
 
 <!-- HERO DO ARTIGO -->
 <section class="article-hero">
@@ -393,69 +353,7 @@ h1, h2, h3, h4 { font-family: var(--font-title); line-height: 1.2; font-weight: 
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer__top">
-    <div class="container">
-      <div class="footer__top-inner">
-        <div class="footer__brand-block">
-          <div class="footer__logo-wrap">
-            <img src="/images/logo-karia.png" alt="KARIA Gestão">
-            <span class="footer__logo-text">KARIA <span>Gestão</span></span>
-          </div>
-          <div class="footer__slogan">Gestão que entrega. Estratégia que transforma.</div>
-          <p class="footer__desc">Consultoria em gestão estratégica exclusiva para escritórios de advocacia.</p>
-        </div>
-        <div class="footer__social-block">
-          <div class="footer__social-label">Contato</div>
-          <div class="footer__social-links">
-            <a href="mailto:contato@kariagestao.com" class="footer__social-item">
-              <div class="footer__social-icon">✉</div>
-              <div class="footer__social-info">
-                <span class="footer__social-name">E-mail</span>
-                <span class="footer__social-handle">contato@kariagestao.com</span>
-              </div>
-            </a>
-            <a href="https://wa.me/5511999999999" class="footer__social-item" target="_blank" rel="noopener">
-              <div class="footer__social-icon footer__social-icon--wpp">W</div>
-              <div class="footer__social-info">
-                <span class="footer__social-name">WhatsApp</span>
-                <span class="footer__social-handle">Fale com a Nathalya</span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="footer__links-block">
-          <div class="footer__col">
-            <h4>Serviços</h4>
-            <ul>
-              <li><a href="/diagnostico.html">Diagnóstico Estruturado</a></li>
-              <li><a href="/consultoria-implantacao.html">Consultoria de Implantação</a></li>
-              <li><a href="/acompanhamento.html">Acompanhamento Estratégico</a></li>
-              <li><a href="/mentoria.html">Mentoria Individual</a></li>
-            </ul>
-          </div>
-          <div class="footer__col">
-            <h4>KARIA</h4>
-            <ul>
-              <li><a href="/sobre.html">Sobre</a></li>
-              <li><a href="/blog.html">Blog</a></li>
-              <li><a href="/contato.html">Contato</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="footer__bottom">
-    <div class="container">
-      <div class="footer__bottom-inner">
-        <p>© 2026 NATHALYA DA SILVA PEREIRA LTDA · CNPJ 60.942.073/0001-24 · <a href="#" id="privacyLink">Política de Privacidade</a></p>
-        <p>KARIA Gestão · kariagestao.com</p>
-      </div>
-    </div>
-  </div>
-</footer>
+<div id="karia-footer"></div>
 
 <!-- WhatsApp flutuante -->
 <a href="https://wa.me/5511999999999" class="wpp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
@@ -463,25 +361,55 @@ h1, h2, h3, h4 { font-family: var(--font-title); line-height: 1.2; font-weight: 
 </a>
 
 <script>
-  // Progress bar
-  window.addEventListener('scroll', () => {
-    const el = document.getElementById('readProgress');
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    el.style.width = (winScroll / height * 100) + '%';
+function loadComponent(id, file, callback) {
+  var el = document.getElementById(id);
+  if (!el) { if(callback) callback(); return; }
+  fetch(file)
+    .then(function(r){ return r.text(); })
+    .then(function(html){ el.innerHTML = html; if(callback) callback(); })
+    .catch(function(){ if(callback) callback(); });
+}
+function initNav() {
+  var nav = document.querySelector('.nav');
+  if (nav) { window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true }); }
+  var burger = document.querySelector('.nav__burger');
+  var mobile = document.querySelector('.nav__mobile');
+  if (burger && mobile) { burger.addEventListener('click', function(){ var open = mobile.classList.toggle('open'); burger.setAttribute('aria-expanded', open); }); }
+  document.querySelectorAll('.has-dropdown').forEach(function(item){
+    var arrow = item.querySelector('.nav__dropdown-arrow');
+    if (!arrow) return;
+    arrow.addEventListener('click', function(e){
+      e.stopPropagation();
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); });
+      if (!isOpen) { item.classList.add('open'); arrow.setAttribute('aria-expanded','true'); }
+    });
   });
-  // Nav scroll
-  window.addEventListener('scroll', () => {
-    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
-  });
-  // Burger
-  document.getElementById('burger').addEventListener('click', () => {
-    document.getElementById('mobileMenu').classList.toggle('open');
-  });
-  // Dropdown
-  document.querySelectorAll('.has-dropdown').forEach(el => {
-    el.querySelector('.nav__dropdown-arrow')?.addEventListener('click', () => el.classList.toggle('open'));
-  });
+  document.addEventListener('click', function(){ document.querySelectorAll('.has-dropdown.open').forEach(function(el){ el.classList.remove('open'); var a = el.querySelector('.nav__dropdown-arrow'); if(a) a.setAttribute('aria-expanded','false'); }); });
+}
+function initFooter() {
+  var o = document.getElementById('privacyModal');
+  if (o) {
+    o.addEventListener('click', function(e){ if(e.target===o) closePrivacyModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePrivacyModal(); });
+  }
+}
+function openPrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.add('open');document.body.style.overflow='hidden';} }
+function closePrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.remove('open');document.body.style.overflow='';} }
+var _depth = (window.location.pathname.match(/\//g)||[]).length - 1;
+var _base = _depth <= 0 ? '/' : Array(_depth+1).join('../');
+document.addEventListener('DOMContentLoaded', function(){
+  loadComponent('karia-nav', _base+'nav.html', function(){ initNav(); });
+  loadComponent('karia-footer', _base+'footer.html', function(){ initFooter(); });
+});
+// Progress bar
+window.addEventListener('scroll', function() {
+  var el = document.getElementById('readProgress');
+  if (!el) return;
+  var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  el.style.width = (winScroll / height * 100) + '%';
+});
 </script>
 </body>
 </html>
