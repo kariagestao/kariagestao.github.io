@@ -193,11 +193,11 @@ body {
 }
 
 .question-title {
-  font-family: 'Cinzel', Georgia, serif;
-  font-size: clamp(17px, 3vw, 21px);
-  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(16px, 3vw, 19px);
+  font-weight: 500;
   color: var(--white);
-  line-height: 1.3;
+  line-height: 1.4;
   margin-bottom: 28px;
   text-wrap: balance;
 }
@@ -723,15 +723,20 @@ function updateProgress(n) {
 // Option selection
 document.querySelectorAll('.options').forEach(group => {
   group.querySelectorAll('.option').forEach(opt => {
-    opt.addEventListener('click', () => {
+    opt.addEventListener('click', (e) => {
+      e.preventDefault();
       const input = opt.querySelector('input');
       if (input.type === 'radio') {
-        group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        group.querySelectorAll('.option').forEach(o => {
+          o.classList.remove('selected');
+          o.querySelector('input').checked = false;
+        });
         opt.classList.add('selected');
         input.checked = true;
       } else {
-        opt.classList.toggle('selected');
-        input.checked = !input.checked;
+        const isSelected = opt.classList.contains('selected');
+        opt.classList.toggle('selected', !isSelected);
+        input.checked = !isSelected;
       }
     });
   });
