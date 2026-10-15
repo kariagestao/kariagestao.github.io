@@ -1,4 +1,5 @@
 <title>Código do Controller Jurídico</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@500;600;700&display=swap">
 
@@ -19,6 +20,11 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 html, body {
   height: 100%;
@@ -44,8 +50,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding-block: 48px;
+  justify-content: flex-start;
+  padding-block: 32px;
 }
 
 .card {
@@ -53,7 +59,7 @@ body {
   max-width: 560px;
   background: var(--musgo2);
   border: 1px solid rgba(184,115,51,0.18);
-  padding: 52px 48px;
+  padding: 40px 36px;
   position: relative;
 }
 
@@ -489,9 +495,20 @@ footer span { color: var(--cobre); }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
-  .card { padding: 36px 24px; }
-  .btn-row { flex-direction: column-reverse; }
+  .shell { padding-block: 20px; }
+  .card { padding: 28px 20px; border-left: none; border-right: none; }
+  .progress-wrap { margin-bottom: 28px; }
+  .intro-title { font-size: 20px; }
+  .material-box { padding: 12px 14px; gap: 12px; }
+  .material-name { font-size: 12px; }
+  .btn-row { flex-direction: column-reverse; margin-top: 24px; }
   .btn-back { width: 100%; }
+  .btn-next { padding: 14px 20px; }
+  .option { padding: 12px 14px; }
+  .option-text { font-size: 13px; }
+  .field input { font-size: 16px; } /* prevent iOS auto-zoom on focus */
+  .success-title { font-size: 20px; }
+  .btn-download { padding: 14px 20px; font-size: 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
