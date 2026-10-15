@@ -630,11 +630,11 @@ footer span { color: var(--cobre); }
 
       <div class="btn-row">
         <button class="btn-back" onclick="goTo(3)">← Voltar</button>
-        <button class="btn-next" onclick="validateRadio('pagaria','err-4',5)">Continuar →</button>
+        <button class="btn-next" onclick="validatePagaria()">Continuar →</button>
       </div>
     </div>
 
-    <!-- STEP 5: TICKET -->
+    <!-- STEP 5: TICKET (apenas para quem respondeu sim/talvez) -->
     <div class="step" id="step-5">
       <div class="question-label">Pergunta 4 de 5</div>
       <h2 class="question-title">Qual mensalidade faria sentido para você?</h2>
@@ -653,10 +653,10 @@ footer span { color: var(--cobre); }
       </div>
     </div>
 
-    <!-- STEP 6: LISTA DE ESPERA -->
+    <!-- STEP 6: LISTA DE ESPERA (apenas para quem respondeu sim/talvez) -->
     <div class="step" id="step-6">
       <div class="question-label">Pergunta 5 de 5</div>
-      <h2 class="question-title">Estou construindo um espaço exclusivo para Controllers Jurídicos. Quer entrar na lista de espera e ser uma das primeiras a saber quando abrir?</h2>
+      <h2 class="question-title">Você gostaria de entrar na lista de espera para um espaço pago exclusivo para Controllers Jurídicos — com conteúdo prático, comunidade e suporte?</h2>
 
       <div class="options" id="opts-6">
         <label class="option"><input type="radio" name="lista" value="sim"><div class="option-dot"></div><span class="option-text">Sim, quero entrar na lista de espera</span></label>
@@ -675,7 +675,7 @@ footer span { color: var(--cobre); }
       <div class="success-step">
         <div class="success-check">✓</div>
         <div class="success-title" id="successTitle">Obrigada, !</div>
-        <p class="success-body">Sua resposta foi registrada. Aqui está o seu material — ele foi pensado especialmente para quem está construindo o caminho da Controladoria Jurídica na prática.</p>
+        <p class="success-body" id="successBody">Sua resposta foi registrada. Aqui está o seu material — ele foi pensado especialmente para quem está construindo o caminho da Controladoria Jurídica na prática.</p>
 
         <div class="waitlist-badge" id="waitlistBadge">
           ✦ Você também está na lista de espera do <strong>K Controllers</strong>. Será uma das primeiras a saber quando abrirmos as vagas, com condições especiais de acesso.
@@ -782,12 +782,24 @@ function validateStep1() {
   });
 });
 
+function validatePagaria() {
+  const checked = document.querySelector('input[name="pagaria"]:checked');
+  const err = document.getElementById('err-4');
+  if (!checked) { err.classList.add('visible'); return; }
+  err.classList.remove('visible');
+  if (checked.value === 'nao') {
+    finish(true); // encerra direto, sem ticket nem lista
+  } else {
+    goTo(5); // sim ou talvez → pergunta de ticket
+  }
+}
+
 function validateRadio(name, errId, next) {
   const checked = document.querySelector(`input[name="${name}"]:checked`);
   const err = document.getElementById(errId);
   if (!checked) { err.classList.add('visible'); return; }
   err.classList.remove('visible');
-  if (next === 'done') finish(); else goTo(next);
+  if (next === 'done') finish(false); else goTo(next);
 }
 
 function validateCheckbox(name, errId, next) {
@@ -798,7 +810,7 @@ function validateCheckbox(name, errId, next) {
   goTo(next);
 }
 
-function finish() {
+function finish(semInteresse) {
   const name    = document.getElementById('inp-name').value.trim();
   const email   = document.getElementById('inp-email').value.trim();
   const lista   = document.querySelector('input[name="lista"]:checked')?.value;
@@ -810,7 +822,13 @@ function finish() {
   // Personaliza título
   document.getElementById('successTitle').textContent = `Obrigada, ${name.split(' ')[0]}!`;
 
-  // Badge lista de espera
+  // Mensagem de encerramento conforme interesse
+  if (semInteresse) {
+    document.getElementById('successBody').textContent =
+      'Sua participação foi muito valiosa. Aqui está o seu material — espero que ele contribua com a sua atuação.';
+  }
+
+  // Badge lista de espera (só aparece se passou pelo step 6 e marcou sim)
   if (lista === 'sim') {
     document.getElementById('waitlistBadge').classList.add('visible');
   }
@@ -818,7 +836,7 @@ function finish() {
   // Salva localmente
   try {
     const entries = JSON.parse(localStorage.getItem('karia_pesquisa') || '[]');
-    entries.push({ name, email, lista, pagaria, ticket, dificuldade, falta, ts: new Date().toISOString() });
+    entries.push({ name, email, lista, pagaria, ticket, dificuldade, falta, semInteresse, ts: new Date().toISOString() });
     localStorage.setItem('karia_pesquisa', JSON.stringify(entries));
   } catch(_) {}
 
