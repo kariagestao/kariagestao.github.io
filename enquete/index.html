@@ -126,11 +126,11 @@ body {
 }
 
 .intro-title {
-  font-family: 'Cinzel', Georgia, serif;
-  font-size: clamp(22px, 4vw, 30px);
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(21px, 4vw, 28px);
   font-weight: 700;
   color: var(--white);
-  line-height: 1.2;
+  line-height: 1.25;
   margin-bottom: 20px;
   text-wrap: balance;
 }
@@ -180,7 +180,7 @@ body {
 }
 
 .material-name {
-  font-family: 'Cinzel', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 13px;
   font-weight: 600;
   color: var(--white);
@@ -419,7 +419,7 @@ body {
 }
 
 .success-title {
-  font-family: 'Cinzel', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: clamp(20px, 4vw, 26px);
   font-weight: 700;
   color: var(--white);
@@ -656,7 +656,7 @@ footer span { color: var(--cobre); }
     <!-- STEP 6: LISTA DE ESPERA (apenas para quem respondeu sim/talvez) -->
     <div class="step" id="step-6">
       <div class="question-label">Pergunta 5 de 5</div>
-      <h2 class="question-title">Você gostaria de entrar na lista de espera para um espaço pago exclusivo para Controllers Jurídicos — com conteúdo prático, comunidade e suporte?</h2>
+      <h2 class="question-title">Você gostaria de entrar na lista de espera para um espaço pago exclusivo para Controllers Jurídicos, com conteúdo prático, comunidade e suporte?</h2>
 
       <div class="options" id="opts-6">
         <label class="option"><input type="radio" name="lista" value="sim"><div class="option-dot"></div><span class="option-text">Sim, quero entrar na lista de espera</span></label>
@@ -675,7 +675,7 @@ footer span { color: var(--cobre); }
       <div class="success-step">
         <div class="success-check">✓</div>
         <div class="success-title" id="successTitle">Obrigada, !</div>
-        <p class="success-body" id="successBody">Sua resposta foi registrada. Aqui está o seu material — ele foi pensado especialmente para quem está construindo o caminho da Controladoria Jurídica na prática.</p>
+        <p class="success-body" id="successBody">Sua resposta foi registrada. Aqui está o seu material, pensado especialmente para quem está construindo o caminho da Controladoria Jurídica na prática.</p>
 
         <div class="waitlist-badge" id="waitlistBadge">
           ✦ Você também está na lista de espera do <strong>K Controllers</strong>. Será uma das primeiras a saber quando abrirmos as vagas, com condições especiais de acesso.
@@ -825,7 +825,7 @@ function finish(semInteresse) {
   // Mensagem de encerramento conforme interesse
   if (semInteresse) {
     document.getElementById('successBody').textContent =
-      'Sua participação foi muito valiosa. Aqui está o seu material — espero que ele contribua com a sua atuação.';
+      'Sua participação foi muito valiosa. Aqui está o seu material. Espero que ele contribua com a sua atuação.';
   }
 
   // Badge lista de espera (só aparece se passou pelo step 6 e marcou sim)
@@ -843,7 +843,7 @@ function finish(semInteresse) {
   // Envia para Web3Forms (chega no e-mail da KARIA)
   const payload = {
     access_key: '1062412a-df27-4597-9e4c-d921a4cdc6d9',
-    subject: 'Enquete — O Código do Controller Jurídico',
+    subject: 'Enquete: O Código do Controller Jurídico',
     from_name: 'KARIA Gestão · Enquete',
     name,
     email,
