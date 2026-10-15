@@ -833,12 +833,34 @@ function finish(semInteresse) {
     document.getElementById('waitlistBadge').classList.add('visible');
   }
 
-  // Salva localmente
+  // Salva localmente (backup)
   try {
     const entries = JSON.parse(localStorage.getItem('karia_pesquisa') || '[]');
     entries.push({ name, email, lista, pagaria, ticket, dificuldade, falta, semInteresse, ts: new Date().toISOString() });
     localStorage.setItem('karia_pesquisa', JSON.stringify(entries));
   } catch(_) {}
+
+  // Envia para Web3Forms (chega no e-mail da KARIA)
+  const payload = {
+    access_key: '1062412a-df27-4597-9e4c-d921a4cdc6d9',
+    subject: 'Enquete — O Código do Controller Jurídico',
+    from_name: 'KARIA Gestão · Enquete',
+    name,
+    email,
+    dificuldade: dificuldade || '—',
+    falta: falta.length ? falta.join(', ') : '—',
+    pagaria: pagaria || '—',
+    ticket: ticket || '—',
+    lista: lista || '—',
+    sem_interesse: semInteresse ? 'sim' : 'não',
+    botcheck: ''
+  };
+
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(() => {}); // silencioso — fallback no localStorage
 
   goTo('done');
 }
