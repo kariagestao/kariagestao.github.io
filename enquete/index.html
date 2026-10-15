@@ -117,13 +117,7 @@ body {
   gap: 10px;
 }
 
-.intro-eyebrow::before {
-  content: '';
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: var(--cobre);
-}
+.intro-eyebrow::before { display: none; }
 
 .intro-title {
   font-family: 'Montserrat', sans-serif;
@@ -733,7 +727,7 @@ function updateProgress(n) {
 
   const pct = n === 0 ? 0 : Math.round((n / (TOTAL_Q + 1)) * 100);
   fill.style.width = pct + '%';
-  text.textContent = steps.labels[n] || '';
+  text.textContent = n === 0 ? '' : (steps.labels[n] || '');
   count.textContent = n >= 2 ? `${n - 1} de ${TOTAL_Q}` : '';
 }
 
