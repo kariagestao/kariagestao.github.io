@@ -388,6 +388,8 @@ tr.hist-row td { opacity: 0.75; }
   </div>
   <div class="section-title">Acumulado do Ano</div>
   <div id="evolucaoAcumulado" style="margin-bottom:24px"></div>
+  <div class="section-title">Médias do Período</div>
+  <div id="evolucaoMedias" style="margin-bottom:24px"></div>
   <div class="section-title">Resumo Mensal</div>
   <div id="evolucaoMeses"></div>
 </div>
@@ -1187,6 +1189,48 @@ function renderEvolucao() {
       <div class="dre-row total">
         <span>RESULTADO ${anoFiltro||'GERAL'}</span>
         <span class="${acRes>=0?'valor-pos':'valor-neg'}">${fmtSgn(acRes)}</span>
+      </div>
+    </div>`;
+
+  // === MÉDIAS DO PERÍODO ===
+  const nMeses = meses.length || 1;
+  const medRec  = acRec  / nMeses;
+  const medProl = acProl / nMeses;
+  const medDivL = acDivL / nMeses;
+  const medImp  = acImp  / nMeses;
+  const medDesp = acDesp / nMeses;
+  const medRes  = acRes  / nMeses;
+  document.getElementById('evolucaoMedias').innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px">
+      <div class="card receita">
+        <div class="card-label">Faturamento Médio</div>
+        <div class="card-valor pos">${fmt(medRec)}</div>
+        <div class="card-sub">por mês (${nMeses} meses)</div>
+      </div>
+      <div class="card despesa">
+        <div class="card-label">Pró-labore Médio</div>
+        <div class="card-valor neg">${fmt(Math.abs(medProl))}</div>
+        <div class="card-sub">por mês</div>
+      </div>
+      ${acDivL ? `<div class="card despesa">
+        <div class="card-label">Div. Lucros Média</div>
+        <div class="card-valor neg">${fmt(Math.abs(medDivL))}</div>
+        <div class="card-sub">por mês</div>
+      </div>` : ''}
+      <div class="card despesa">
+        <div class="card-label">Impostos Médios</div>
+        <div class="card-valor neg">${fmt(Math.abs(medImp))}</div>
+        <div class="card-sub">por mês</div>
+      </div>
+      <div class="card despesa">
+        <div class="card-label">Desp. Op. Média</div>
+        <div class="card-valor neg">${fmt(Math.abs(medDesp))}</div>
+        <div class="card-sub">por mês</div>
+      </div>
+      <div class="card saldo">
+        <div class="card-label">Resultado Médio</div>
+        <div class="card-valor ${medRes>=0?'pos':'neg'}">${fmtSgn(medRes)}</div>
+        <div class="card-sub">por mês</div>
       </div>
     </div>`;
 
