@@ -409,7 +409,7 @@ tr.hist-row td { opacity: 0.75; }
 
 <script>
 // ============================================================
-// HISTÓRICO BASE (read-only — até set/2026)
+// HISTÓRICO BASE (vazio — dados inseridos manualmente)
 // ============================================================
 const HISTORICO = [
   {data:"05/09/2025",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
@@ -873,8 +873,8 @@ function renderTransacoes() {
   const cof = document.getElementById('filtroTxConta').value;
 
   // Histórico vira objetos com status 'historico'
-  const histRows = HISTORICO.map(t=>({
-    _hist:true, data:t.data, vencimento:t.data,
+  const histRows = HISTORICO.map((t,i)=>({
+    _hist:true, _histIdx:i, id:'hist_'+i, data:t.data, vencimento:t.data,
     desc:t.desc, cat:t.cat, conta:t.conta, valor:t.valor, status:'historico'
   }));
   // Lançamentos operacionais
@@ -915,8 +915,8 @@ function renderTransacoes() {
             ? `<button class="btn btn-sm btn-success" onclick="marcarRecebido('${r.id}')">✓ Recebido</button> ` : ''}
           ${!r._hist && r.status!=='pago' && !CATS_RECEITA.includes(r.cat)
             ? `<button class="btn btn-sm btn-success" onclick="marcarPago('${r.id}')">✓ Pago</button> ` : ''}
-          ${!r._hist ? `<button class="btn btn-sm" style="background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE" onclick="editarLanc('${r.id}')">✎</button> ` : ''}
-          ${!r._hist ? `<button class="btn btn-sm btn-danger" onclick="excluirLanc('${r.id}')">✕</button>` : ''}
+          <button class="btn btn-sm" style="background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE" onclick="editarLanc('${r.id}',${r._hist?'true':'false'})">✎</button>
+          ${!r._hist ? `<button class="btn btn-sm btn-danger" onclick="excluirLanc('${r.id}')">✕</button>` : `<button class="btn btn-sm btn-danger" onclick="excluirHist(${r._histIdx})">✕</button>`}
         </td>
       </tr>`).join('')
     : `<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--cinza)">Nenhuma transação encontrada</td></tr>`;
@@ -927,10 +927,12 @@ function renderTransacoes() {
     ? slice.map(r=>{
         const isEnt=r.valor>=0;
         const tipoClass=r._hist?'hist':(isEnt?'entrada':'saida');
-        const acoes=r._hist?'':`
+        const acoes=r._hist?`
+          <button class="btn" style="background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE" onclick="editarLanc('${r.id}',true)">✎ Editar</button>
+          <button class="btn btn-danger" onclick="excluirHist(${r._histIdx})">✕ Excluir</button>`:`
           ${r.status!=='recebido'&&CATS_RECEITA.includes(r.cat)?`<button class="btn btn-success" onclick="marcarRecebido('${r.id}')">✓ Recebido</button>`:''}
           ${r.status!=='pago'&&!CATS_RECEITA.includes(r.cat)?`<button class="btn btn-success" onclick="marcarPago('${r.id}')">✓ Pago</button>`:''}
-          <button class="btn" style="background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE" onclick="editarLanc('${r.id}')">✎ Editar</button>
+          <button class="btn" style="background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE" onclick="editarLanc('${r.id}',false)">✎ Editar</button>
           <button class="btn btn-danger" onclick="excluirLanc('${r.id}')">✕ Excluir</button>`;
         return `<div class="tx-card ${tipoClass}">
           <div class="tx-card-top">
@@ -967,16 +969,31 @@ async function excluirLanc(id) {
   await deletarLancamento(id); renderTransacoes(); renderPainel();
 }
 
-function editarLanc(id) {
-  const l=lancamentos.find(x=>x.id===id); if(!l) return;
+function editarLanc(id, isHist) {
+  let l;
+  if (isHist) {
+    // Buscar no HISTORICO pelo índice embutido no id
+    const idx=parseInt(id.replace('hist_',''));
+    const t=HISTORICO[idx]; if(!t) return;
+    l={_hist:true, _histIdx:idx, id:id, data:t.data, vencimento:t.data,
+       desc:t.desc, cat:t.cat, conta:t.conta, valor:t.valor, status:'historico'};
+  } else {
+    l=lancamentos.find(x=>x.id===id); if(!l) return;
+  }
   const isReceita=CATS_RECEITA.includes(l.cat);
   const tits={receita:'Editar Receita',despesa:'Editar Despesa'};
-  document.getElementById('modalTitulo').textContent=isReceita?tits.receita:tits.despesa;
-  document.getElementById('modalConteudo').innerHTML=formModalEdicao(l, isReceita);
+  document.getElementById('modalTitulo').textContent=(isHist?'[Histórico] ':'')+( isReceita?tits.receita:tits.despesa);
+  document.getElementById('modalConteudo').innerHTML=formModalEdicao(l, isReceita, isHist);
   document.getElementById('modalOverlay').classList.add('open');
 }
 
-function formModalEdicao(l, isReceita) {
+async function excluirHist(idx) {
+  if (!confirm('Remover este lançamento do histórico?')) return;
+  HISTORICO.splice(idx,1);
+  rendered={}; atualizaFiltroMes(); renderTransacoes(); renderPainel();
+}
+
+function formModalEdicao(l, isReceita, isHist) {
   const vencIso=dataToIso(l.vencimento);
   const valorAbs=Math.abs(l.valor);
   if (isReceita) {
@@ -1015,7 +1032,7 @@ function formModalEdicao(l, isReceita) {
     <div class="form-group"><label class="form-label">Observação</label><input class="form-control" type="text" id="fObs" value="${l.obs||''}"></div>
     <div class="form-actions">
       <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
-      <button class="btn btn-primary" style="background:#166534" onclick="salvarEdicao('${l.id}','receita')">Salvar</button>
+      <button class="btn btn-primary" style="background:#166534" onclick="salvarEdicao('${l.id}','receita',${isHist?'true':'false'},${isHist?l._histIdx:-1})">Salvar</button>
     </div>`;
   } else {
     return `
@@ -1036,33 +1053,57 @@ function formModalEdicao(l, isReceita) {
     </div>
     <div class="form-actions">
       <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
-      <button class="btn btn-primary" onclick="salvarEdicao('${l.id}','despesa')">Salvar</button>
+      <button class="btn btn-primary" onclick="salvarEdicao('${l.id}','despesa',${isHist?'true':'false'},${isHist?l._histIdx:-1})">Salvar</button>
     </div>`;
   }
 }
 
-async function salvarEdicao(id, tipo) {
-  const l=lancamentos.find(x=>x.id===id); if(!l) return;
+async function salvarEdicao(id, tipo, isHist, histIdx) {
   const valor=parseFloat(document.getElementById('fValor').value);
   const vencIso=document.getElementById('fVenc').value;
   const venc=isoToData(vencIso);
   if (!valor||!venc) return alert('Preencha os campos obrigatórios (*).');
-  l.vencimento=venc;
-  l.cat=document.getElementById('fCat').value;
-  l.conta=document.getElementById('fConta').value;
-  l.status=document.getElementById('fStatus').value;
-  if (tipo==='receita') {
-    const clienteSel=document.getElementById('fCliente').value;
-    l.cliente=clienteSel==='_outro'?(document.getElementById('fClienteOutro').value.trim()):clienteSel;
-    l.servico=document.getElementById('fServico').value;
-    l.desc=l.cliente+' — '+l.servico;
-    l.obs=(document.getElementById('fObs')||{}).value||'';
-    l.valor=valor;
+  const cat=document.getElementById('fCat').value;
+  const conta=document.getElementById('fConta').value;
+  const status=document.getElementById('fStatus').value;
+
+  if (isHist) {
+    // Converter item do histórico em lançamento real no Supabase
+    const novoId=uid();
+    let desc, valorFinal;
+    if (tipo==='receita') {
+      const clienteSel=document.getElementById('fCliente').value;
+      const cliente=clienteSel==='_outro'?(document.getElementById('fClienteOutro').value.trim()):clienteSel;
+      const servico=document.getElementById('fServico').value;
+      desc=cliente+' — '+servico;
+      valorFinal=valor;
+    } else {
+      desc=document.getElementById('fDesc').value.trim();
+      valorFinal=-valor;
+    }
+    const novo={id:novoId, desc, valor:valorFinal, vencimento:venc, cat, conta, status,
+      recorrente:false, obs:'', cliente:'', servico:''};
+    lancamentos.push(novo);
+    await salvarLancamento(novo);
+    // Remover do HISTORICO (não precisa mais aparecer lá)
+    HISTORICO.splice(histIdx,1);
   } else {
-    l.desc=document.getElementById('fDesc').value.trim();
-    l.valor=-valor;
+    const l=lancamentos.find(x=>x.id===id); if(!l) return;
+    l.vencimento=venc; l.cat=cat; l.conta=conta; l.status=status;
+    if (tipo==='receita') {
+      const clienteSel=document.getElementById('fCliente').value;
+      l.cliente=clienteSel==='_outro'?(document.getElementById('fClienteOutro').value.trim()):clienteSel;
+      l.servico=document.getElementById('fServico').value;
+      l.desc=l.cliente+' — '+l.servico;
+      l.obs=(document.getElementById('fObs')||{}).value||'';
+      l.valor=valor;
+    } else {
+      l.desc=document.getElementById('fDesc').value.trim();
+      l.valor=-valor;
+    }
+    await salvarLancamento(l);
   }
-  await salvarLancamento(l); fecharModal(); atualizaFiltroMes(); renderTransacoes(); renderPainel();
+  fecharModal(); rendered={}; atualizaFiltroMes(); renderTransacoes(); renderPainel();
 }
 
 async function gerarFixas() {
