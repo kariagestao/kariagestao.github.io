@@ -757,6 +757,7 @@ function renderPainel() {
   const recLanc   = lancMes.filter(l=>CATS_RECEITA.includes(l.cat)&&l.status==='recebido').reduce((s,l)=>s+l.valor,0);
   const aReceber  = lancMes.filter(l=>CATS_RECEITA.includes(l.cat)&&l.status!=='recebido').reduce((s,l)=>s+l.valor,0);
   const aPagar    = lancMes.filter(l=>!CATS_RECEITA.includes(l.cat)&&l.status!=='pago').reduce((s,l)=>s+l.valor,0);
+  const despPagas = lancMes.filter(l=>!CATS_RECEITA.includes(l.cat)&&l.status==='pago').reduce((s,l)=>s+l.valor,0);
   const vencidos  = lancMes.filter(l=>l.status==='vencido').length;
   const sRes      = movReserva.reduce((s,m)=>s+m.valor,0);
 
@@ -781,6 +782,11 @@ function renderPainel() {
       <div class="card-label">Receita ${getMesLabel(ma)}</div>
       <div class="card-valor pos">${fmt(recHist+recLanc)}</div>
       <div class="card-sub">Histórico + confirmados</div>
+    </div>
+    <div class="card despesa">
+      <div class="card-label">Despesas Pagas</div>
+      <div class="card-valor neg">${fmt(Math.abs(despPagas))}</div>
+      <div class="card-sub">Confirmadas no mês</div>
     </div>
     <div class="card saldo">
       <div class="card-label">Reserva Financeira</div>
