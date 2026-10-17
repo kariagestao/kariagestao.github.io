@@ -306,6 +306,11 @@ tr.hist-row td { opacity: 0.75; }
         <button class="btn btn-primary" style="background:#166534" onclick="abrirModal('receita')">+ Receita</button>
       </div>
     </div>
+    <div style="padding:0 0 10px 0;display:flex;align-items:center;gap:8px">
+      <span style="font-size:18px;color:var(--cinza)">🔍</span>
+      <input type="text" id="txBusca" class="form-control" placeholder="Buscar por descrição, valor, categoria, conta..." autocomplete="off"
+        oninput="pgTx=1;renderTransacoes()" style="max-width:480px;margin:0">
+    </div>
     <div class="filtros">
       <select class="filtro-select" id="filtroTxTipo" onchange="renderTransacoes()">
         <option value="">Entradas e Saídas</option>
@@ -871,6 +876,7 @@ function renderTransacoes() {
   const sf  = document.getElementById('filtroTxStatus').value;
   const cf  = document.getElementById('filtroTxCat').value;
   const cof = document.getElementById('filtroTxConta').value;
+  const bq  = (document.getElementById('txBusca')||{value:''}).value.trim().toLowerCase();
 
   // Histórico vira objetos com status calculado pela data
   const hoje0=new Date(); hoje0.setHours(0,0,0,0);
@@ -895,6 +901,10 @@ function renderTransacoes() {
     if (sf&&r.status!==sf) return false;
     if (cf&&r.cat!==cf) return false;
     if (cof&&r.conta!==cof) return false;
+    if (bq) {
+      const hay=[r.desc,r.cat,r.conta,String(Math.abs(r.valor))].join(' ').toLowerCase();
+      if (!hay.includes(bq)) return false;
+    }
     return true;
   }).sort((a,b)=>parseBR(b.data)-parseBR(a.data));
 
@@ -955,7 +965,7 @@ function renderTransacoes() {
       }).join('')
     : `<div style="text-align:center;padding:32px;color:var(--cinza)">Nenhuma transação encontrada</div>`;
 
-  document.getElementById('txInfo').textContent=`${total} transação${total!==1?'ões':''}`;
+  document.getElementById('txInfo').textContent=total===1?'1 transação':`${total} transações`;
   renderPag('txPag',pgTx,pages,p=>{pgTx=p;renderTransacoes();});
 }
 
