@@ -872,11 +872,16 @@ function renderTransacoes() {
   const cf  = document.getElementById('filtroTxCat').value;
   const cof = document.getElementById('filtroTxConta').value;
 
-  // Histórico vira objetos com status 'historico'
-  const histRows = HISTORICO.map((t,i)=>({
-    _hist:true, _histIdx:i, id:'hist_'+i, data:t.data, vencimento:t.data,
-    desc:t.desc, cat:t.cat, conta:t.conta, valor:t.valor, status:'historico'
-  }));
+  // Histórico vira objetos com status calculado pela data
+  const hoje0=new Date(); hoje0.setHours(0,0,0,0);
+  const histRows = HISTORICO.map((t,i)=>{
+    const d=parseBR(t.data); d.setHours(0,0,0,0);
+    const isPast=d<hoje0;
+    const isRec=CATS_RECEITA.includes(t.cat);
+    const status=isPast?(isRec?'recebido':'pago'):'pendente';
+    return {_hist:true, _histIdx:i, id:'hist_'+i, data:t.data, vencimento:t.data,
+      desc:t.desc, cat:t.cat, conta:t.conta, valor:t.valor, status};
+  });
   // Lançamentos operacionais
   const opRows = lancamentos.map(l=>({...l, data:l.vencimento}));
 
@@ -1426,7 +1431,8 @@ function formModal(tipo) {
       <div class="form-group"><label class="form-label">Recorrência</label>
         <select class="form-control" id="fRecorr" onchange="toggleRecorr()">
           <option value="unica">Única</option>
-          <option value="mensal">Mensal</option>
+          <option value="mensal">Mensal (indefinido)</option>
+          <option value="parcelado">Parcelado</option>
         </select>
       </div>
     </div>
@@ -1437,6 +1443,12 @@ function formModal(tipo) {
         </select>
       </div>
       <div class="alert-box alert-info" style="margin-bottom:0">💡 Serão criadas <span id="recorrPreview">6</span> despesas a partir do vencimento.</div>
+    </div>
+    <div id="fRecorrParcelas" style="display:none">
+      <div class="form-group"><label class="form-label">Número de parcelas</label>
+        <input class="form-control" type="number" id="fNParcelas" min="2" max="60" value="10" onchange="atualizaPreviewParcelas()">
+      </div>
+      <div class="alert-box alert-info" style="margin-bottom:0" id="parcelasPreview">💡 Serão criadas 10 parcelas a partir do vencimento, todas como Pendente.</div>
     </div>
     <div class="form-actions">
       <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
@@ -1476,6 +1488,12 @@ function toggleClienteOutro() {
 function toggleRecorr() {
   const v=document.getElementById('fRecorr').value;
   document.getElementById('fRecorrMeses').style.display=v==='mensal'?'block':'none';
+  document.getElementById('fRecorrParcelas').style.display=v==='parcelado'?'block':'none';
+}
+function atualizaPreviewParcelas() {
+  const n=parseInt(document.getElementById('fNParcelas').value)||0;
+  const el=document.getElementById('parcelasPreview');
+  if (el) el.textContent=`💡 Serão criadas ${n} parcelas a partir do vencimento, todas como Pendente.`;
 }
 
 async function salvarReceita() {
@@ -1515,13 +1533,19 @@ async function salvarDespesa() {
   const conta=document.getElementById('fConta').value;
   const status=document.getElementById('fStatus').value;
   const recorr=document.getElementById('fRecorr').value;
-  const nMeses=recorr==='mensal'?parseInt(document.getElementById('fNMeses').value):1;
+  const nMeses=recorr==='mensal'?parseInt(document.getElementById('fNMeses').value)
+               :recorr==='parcelado'?parseInt(document.getElementById('fNParcelas').value)
+               :1;
   const novos=[];
   for (let i=0;i<nMeses;i++) {
     const d=new Date(vencIso); d.setMonth(d.getMonth()+i);
     const v=isoToData(d.toISOString().slice(0,10));
-    const novo={id:uid(),desc,valor:-valor,vencimento:v,cat,conta,
-      recorrente:recorr==='mensal',status:i===0?status:(recorr==='mensal'?'pendente':status)};
+    const descFinal=recorr==='parcelado'?`${desc} (${i+1}/${nMeses})`:desc;
+    const stFinal=recorr==='parcelado'?(i===0?status:'pendente')
+                  :recorr==='mensal'?(i===0?status:'pendente')
+                  :status;
+    const novo={id:uid(),desc:descFinal,valor:-valor,vencimento:v,cat,conta,
+      recorrente:recorr==='mensal',status:stFinal};
     lancamentos.push(novo); novos.push(novo);
   }
   await Promise.all(novos.map(salvarLancamento));
