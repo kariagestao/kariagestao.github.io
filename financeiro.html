@@ -789,9 +789,9 @@ function renderPainel() {
       <div class="card-sub">Confirmadas no mês</div>
     </div>
     <div class="card saldo">
-      <div class="card-label">Reserva Financeira</div>
-      <div class="card-valor cobre">${fmt(sRes)}</div>
-      <div class="card-sub">${metaReserva>0?`Meta: ${fmt(metaReserva)}`:'Sem meta definida'}</div>
+      <div class="card-label">Saldo do Mês</div>
+      <div class="card-valor ${(recHist+recLanc+despPagas)>=0?'pos':'neg'}">${fmtSgn(recHist+recLanc+despPagas)}</div>
+      <div class="card-sub">Receitas − despesas pagas</div>
     </div>`;
 
   // Chart receita
