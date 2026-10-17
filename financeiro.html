@@ -698,6 +698,13 @@ function showTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
   if (btn) btn.classList.add('active');
+  else {
+    // ativa o botão correto quando chamado programaticamente (restauração)
+    document.querySelectorAll('.tab-btn').forEach(b=>{
+      if (b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+name+"'")) b.classList.add('active');
+    });
+  }
+  try { localStorage.setItem('kariaTab', name); } catch(e){}
   if (!rendered[name]) {
     rendered[name]=true;
     if (name==='transacoes') renderTransacoes();
@@ -1503,6 +1510,34 @@ function atualizaFiltroMes() {
 // ============================================================
 // INIT
 // ============================================================
+function salvarFiltros() {
+  try {
+    const f={
+      txTipo: document.getElementById('filtroTxTipo').value,
+      txMes:  document.getElementById('filtroTxMes').value,
+      txStatus: document.getElementById('filtroTxStatus').value,
+      txCat:  document.getElementById('filtroTxCat').value,
+      txConta: document.getElementById('filtroTxConta').value,
+      painelMes: document.getElementById('filtroPainelMes').value,
+      evolAno: document.getElementById('filtroEvolAno').value
+    };
+    localStorage.setItem('kariaFiltros', JSON.stringify(f));
+  } catch(e){}
+}
+
+function restaurarFiltros() {
+  try {
+    const f=JSON.parse(localStorage.getItem('kariaFiltros')||'{}');
+    if (f.txTipo)    document.getElementById('filtroTxTipo').value=f.txTipo;
+    if (f.txMes)     document.getElementById('filtroTxMes').value=f.txMes;
+    if (f.txStatus)  document.getElementById('filtroTxStatus').value=f.txStatus;
+    if (f.txCat)     document.getElementById('filtroTxCat').value=f.txCat;
+    if (f.txConta)   document.getElementById('filtroTxConta').value=f.txConta;
+    if (f.painelMes) document.getElementById('filtroPainelMes').value=f.painelMes;
+    if (f.evolAno)   document.getElementById('filtroEvolAno').value=f.evolAno;
+  } catch(e){}
+}
+
 function init() {
   const n=new Date();
   document.getElementById('headerData').textContent=
@@ -1521,8 +1556,17 @@ function init() {
   todasContas.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;coEl.appendChild(o);});
 
   atualizaStatusTodos();
+
+  // Restaura filtros e aba salvos
+  restaurarFiltros();
+  const abaRestaurada = (() => { try { return localStorage.getItem('kariaTab')||'painel'; } catch(e){ return 'painel'; } })();
   renderPainel();
   rendered['painel']=true;
+  if (abaRestaurada !== 'painel') showTab(abaRestaurada);
+
+  // Salva filtros sempre que mudarem
+  ['filtroTxTipo','filtroTxMes','filtroTxStatus','filtroTxCat','filtroTxConta','filtroPainelMes','filtroEvolAno']
+    .forEach(id=>{ const el=document.getElementById(id); if(el) el.addEventListener('change', salvarFiltros); });
 }
 
 function limparFiltrosTx() {
