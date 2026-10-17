@@ -984,6 +984,16 @@ function editarLanc(id, isHist) {
   const tits={receita:'Editar Receita',despesa:'Editar Despesa'};
   document.getElementById('modalTitulo').textContent=(isHist?'[Histórico] ':'')+( isReceita?tits.receita:tits.despesa);
   document.getElementById('modalConteudo').innerHTML=formModalEdicao(l, isReceita, isHist);
+  if (!isReceita) {
+    const dl=document.getElementById('sugestoesDescEdit');
+    if (dl) {
+      const descs=[...new Set([
+        ...HISTORICO.filter(t=>!CATS_RECEITA.includes(t.cat)).map(t=>t.desc),
+        ...lancamentos.filter(x=>!CATS_RECEITA.includes(x.cat)).map(x=>x.desc)
+      ])].filter(Boolean).sort();
+      dl.innerHTML=descs.map(d=>`<option value="${d.replace(/"/g,'&quot;')}">`).join('');
+    }
+  }
   document.getElementById('modalOverlay').classList.add('open');
 }
 
@@ -1040,7 +1050,10 @@ function formModalEdicao(l, isReceita, isHist) {
       <div class="form-group"><label class="form-label">Vencimento *</label><input class="form-control" type="date" id="fVenc" value="${vencIso}"></div>
       <div class="form-group"><label class="form-label">Valor (R$) *</label><input class="form-control" type="number" id="fValor" value="${valorAbs}" step="0.01" min="0.01"></div>
     </div>
-    <div class="form-group"><label class="form-label">Descrição *</label><input class="form-control" type="text" id="fDesc" value="${l.desc}"></div>
+    <div class="form-group"><label class="form-label">Descrição *</label>
+      <input class="form-control" type="text" id="fDesc" value="${l.desc}" list="sugestoesDescEdit" autocomplete="off">
+      <datalist id="sugestoesDescEdit"></datalist>
+    </div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">Categoria</label><select class="form-control" id="fCat">${opt(CATS_DESPESA,l.cat)}</select></div>
       <div class="form-group"><label class="form-label">Conta</label><select class="form-control" id="fConta">${opt(CONTAS_LIST,l.conta)}</select></div>
