@@ -1362,6 +1362,20 @@ function formModal(tipo) {
           <option value="pago">Já pago</option>
         </select>
       </div>
+      <div class="form-group"><label class="form-label">Recorrência</label>
+        <select class="form-control" id="fRecorr" onchange="toggleRecorr()">
+          <option value="unica">Única</option>
+          <option value="mensal">Mensal</option>
+        </select>
+      </div>
+    </div>
+    <div id="fRecorrMeses" style="display:none">
+      <div class="form-group"><label class="form-label">Gerar para quantos meses?</label>
+        <select class="form-control" id="fNMeses" onchange="document.getElementById('recorrPreview').textContent=this.value">
+          <option value="3">3 meses</option><option value="6" selected>6 meses</option><option value="12">12 meses</option>
+        </select>
+      </div>
+      <div class="alert-box alert-info" style="margin-bottom:0">💡 Serão criadas <span id="recorrPreview">6</span> despesas a partir do vencimento.</div>
     </div>
     <div class="form-actions">
       <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
@@ -1439,9 +1453,17 @@ async function salvarDespesa() {
   const cat=document.getElementById('fCat').value;
   const conta=document.getElementById('fConta').value;
   const status=document.getElementById('fStatus').value;
-  const novo={id:uid(),desc,valor:-valor,vencimento:venc,cat,conta,status};
-  lancamentos.push(novo);
-  await salvarLancamento(novo);
+  const recorr=document.getElementById('fRecorr').value;
+  const nMeses=recorr==='mensal'?parseInt(document.getElementById('fNMeses').value):1;
+  const novos=[];
+  for (let i=0;i<nMeses;i++) {
+    const d=new Date(vencIso); d.setMonth(d.getMonth()+i);
+    const v=isoToData(d.toISOString().slice(0,10));
+    const novo={id:uid(),desc,valor:-valor,vencimento:v,cat,conta,
+      recorrente:recorr==='mensal',status:i===0?status:(recorr==='mensal'?'pendente':status)};
+    lancamentos.push(novo); novos.push(novo);
+  }
+  await Promise.all(novos.map(salvarLancamento));
   fecharModal(); atualizaFiltroMes(); renderTransacoes(); renderPainel();
 }
 
