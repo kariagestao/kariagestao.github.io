@@ -230,7 +230,7 @@
     <div class="msg" id="msg"></div>
   </form>
 
-  <p class="footer-link">Já tem conta? <a href="/login">Entrar</a></p>
+  <p class="footer-link">Já tem conta? <a href="/k-controllers/login">Entrar</a></p>
 </div>
 
 <script>
@@ -273,27 +273,40 @@
     spin.classList.add('ativo');
 
     try {
+      // Verifica se o e-mail tem assinatura ativa
+      const { data: membro, error: erroMembro } = await sb
+        .from('members')
+        .select('status')
+        .eq('email', email.toLowerCase())
+        .maybeSingle();
+
+      if (erroMembro) throw new Error('Erro ao verificar assinatura. Tente novamente.');
+
+      if (!membro) {
+        throw new Error('Este e-mail não possui uma assinatura ativa. Verifique se usou o mesmo e-mail do pagamento.');
+      }
+
+      if (membro.status !== 'active') {
+        throw new Error('Sua assinatura ainda não foi confirmada. Aguarde alguns minutos e tente novamente.');
+      }
+
       const { data, error } = await sb.auth.signUp({ email, password: senha, options: { data: { name: nome } } });
 
       if (error) throw error;
 
-      // Cria registro na tabela members
-      await sb.from('members').upsert({
-        email,
-        name: nome,
-        status: 'pending'
-      }, { onConflict: 'email' });
+      // Atualiza nome na tabela members
+      await sb.from('members').update({ name: nome }).eq('email', email.toLowerCase());
 
       msg.className = 'msg ok';
       msg.textContent = 'Conta criada! Redirecionando para a área de membros...';
 
-      setTimeout(() => { location.href = '/membros'; }, 1500);
+      setTimeout(() => { location.href = '/k-controllers/membros'; }, 1500);
 
     } catch (err) {
       msg.className = 'msg erro';
       msg.textContent = err.message === 'User already registered'
         ? 'Este e-mail já possui conta. Use a página de login.'
-        : 'Erro ao criar conta. Tente novamente.';
+        : err.message || 'Erro ao criar conta. Tente novamente.';
       btn.disabled = false;
       spin.classList.remove('ativo');
     }
