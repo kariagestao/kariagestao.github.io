@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>K Controllers — Entrar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+
+<style>
+  :root {
+    --musgo: #0D1F2D;
+    --cobre: #B87333;
+    --claro: #F8F6F3;
+    --texto: #1a2e3f;
+    --texto-suave: #4a6070;
+    --borda: rgba(13,31,45,0.15);
+    --erro: #c0392b;
+    --sucesso: #27ae60;
+    color-scheme: light;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--claro);
+    color: var(--texto);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px max(24px, env(safe-area-inset-left, 0px));
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 4px 32px rgba(13,31,45,0.10);
+  }
+
+  .logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--cobre);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--musgo);
+    margin-bottom: 8px;
+  }
+
+  .sub {
+    font-size: 14px;
+    color: var(--texto-suave);
+    margin-bottom: 32px;
+  }
+
+  .form-group { margin-bottom: 20px; }
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+    margin-bottom: 8px;
+  }
+
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--borda);
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: var(--texto);
+    background: #fff;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  input:focus { border-color: var(--cobre); }
+
+  .forgot {
+    text-align: right;
+    margin-top: 6px;
+    font-size: 12px;
+  }
+
+  .forgot a { color: var(--cobre); text-decoration: none; }
+
+  .btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--musgo);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+  }
+
+  .btn:hover { background: #162d40; }
+  .btn:disabled { background: #a0b0bb; cursor: not-allowed; }
+
+  .msg {
+    font-size: 13px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-top: 16px;
+    display: none;
+  }
+
+  .msg.erro { background: #fdecea; color: var(--erro); display: block; }
+  .msg.ok { background: #eafaf1; color: var(--sucesso); display: block; }
+
+  .footer-link {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 13px;
+    color: var(--texto-suave);
+  }
+
+  .footer-link a { color: var(--cobre); text-decoration: none; font-weight: 500; }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--borda);
+    margin: 28px 0;
+  }
+
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    display: none;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 500px) {
+    .card { padding: 32px 24px; }
+  }
+</style>
+
+<div class="card">
+  <div class="logo">K Controllers · KARIA Gestão</div>
+  <h1>Bem-vinda de volta</h1>
+  <p class="sub">Acesse sua área de membros</p>
+
+  <form id="form-login">
+    <div class="form-group">
+      <label>E-mail</label>
+      <input type="email" id="email" placeholder="seu@email.com" required>
+    </div>
+
+    <div class="form-group">
+      <label>Senha</label>
+      <input type="password" id="senha" placeholder="Sua senha" required>
+      <p class="forgot"><a href="/recuperar-senha">Esqueci minha senha</a></p>
+    </div>
+
+    <button type="submit" class="btn" id="btn-login">
+      <span class="spinner" id="spin"></span>
+      Entrar
+    </button>
+
+    <div class="msg" id="msg"></div>
+  </form>
+
+  <hr class="divider">
+
+  <p class="footer-link">Ainda não é membro? <a href="/k-controllers">Conhecer o K Controllers</a></p>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://olgkcfwnbhnngpqqkppm.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  // Redireciona se já logado
+  sb.auth.getSession().then(({ data }) => {
+    if (data.session) location.href = '/membros';
+  });
+
+  document.getElementById('form-login').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value.trim();
+    const senha = document.getElementById('senha').value;
+    const btn   = document.getElementById('btn-login');
+    const spin  = document.getElementById('spin');
+    const msg   = document.getElementById('msg');
+
+    msg.className = 'msg';
+    btn.disabled = true;
+    spin.style.display = 'inline-block';
+
+    try {
+      const { error } = await sb.auth.signInWithPassword({ email, password: senha });
+      if (error) throw error;
+      location.href = '/membros';
+    } catch (err) {
+      msg.className = 'msg erro';
+      msg.textContent = 'E-mail ou senha incorretos.';
+      btn.disabled = false;
+      spin.style.display = 'none';
+    }
+  });
+</script>
+
+</html>
