@@ -582,23 +582,41 @@ let metaReserva = 0;
 
 // Mapeamento JS <-> Supabase
 function lancToRow(l) {
+  // Serializa valorPago dentro do obs com marcador ||$VP$:valor|| para não precisar de nova coluna
+  let obsOut = l.obs||'';
+  if (l.valorPago != null && l.valorPago !== '') {
+    obsOut = obsOut.replace(/\|\|\$VP\$:[^|]*\|\|/g,'').trim();
+    obsOut += (obsOut?'\n':'') + `||$VP$:${l.valorPago}||`;
+  } else {
+    obsOut = obsOut.replace(/\|\|\$VP\$:[^|]*\|\|/g,'').trim();
+  }
   return {
     id: l.id, descricao: l.desc, valor: l.valor, vencimento: l.vencimento,
     cat: l.cat, conta: l.conta, status: l.status,
-    cliente: l.cliente||null, servico: l.servico||null, obs: l.obs||null,
+    cliente: l.cliente||null, servico: l.servico||null, obs: obsOut||null,
     recorrente: l.recorrente||false,
-    recebido_em: l.recebidoEm||null, pago_em: l.pagoEm||null
+    recebido_em: l.dataPagamento||l.recebidoEm||null,
+    pago_em: l.dataPagamento||l.pagoEm||null
   };
 }
 function rowToLanc(r) {
+  const obsRaw = r.obs||'';
+  const vpMatch = obsRaw.match(/\|\|\$VP\$:([^|]+)\|\|/);
+  const valorPago = vpMatch ? parseFloat(vpMatch[1]) : null;
+  const obsClean = obsRaw.replace(/\|\|\$VP\$:[^|]*\|\|/g,'').trim();
+  const dataPag = CATS_RECEITA_CHECK(r.cat) ? r.recebido_em : r.pago_em;
   return {
     id: r.id, desc: r.descricao, valor: r.valor, vencimento: r.vencimento,
     cat: r.cat, conta: r.conta, status: r.status,
-    cliente: r.cliente, servico: r.servico, obs: r.obs,
+    cliente: r.cliente, servico: r.servico, obs: obsClean,
     recorrente: r.recorrente,
-    recebidoEm: r.recebido_em, pagoEm: r.pago_em
+    recebidoEm: r.recebido_em, pagoEm: r.pago_em,
+    dataPagamento: dataPag||null,
+    valorPago: valorPago
   };
 }
+// helper para usar antes de CATS_RECEITA estar disponível em rowToLanc
+function CATS_RECEITA_CHECK(cat) { return cat==='Receita Serviços'||cat==='Receita Outros'; }
 function resToRow(m) {
   return { id: m.id, data: m.data, descricao: m.desc, valor: m.valor };
 }
@@ -764,11 +782,27 @@ function renderPainel() {
   const histMes   = HISTORICO.filter(t=>getMesAno(t.data)===ma);
   const lancMes   = lancamentos.filter(l=>getMesAno(l.vencimento)===ma);
 
-  const recHist   = histMes.filter(t=>CATS_RECEITA.includes(t.cat)).reduce((s,t)=>s+t.valor,0);
-  const recLanc   = lancMes.filter(l=>CATS_RECEITA.includes(l.cat)&&l.status==='recebido').reduce((s,l)=>s+l.valor,0);
+  // Projetados: valor original lançado
+  const recHistProj  = histMes.filter(t=>CATS_RECEITA.includes(t.cat)).reduce((s,t)=>s+t.valor,0);
+  const recLancProj  = lancMes.filter(l=>CATS_RECEITA.includes(l.cat)).reduce((s,l)=>s+l.valor,0);
+  const despLancProj = lancMes.filter(l=>!CATS_RECEITA.includes(l.cat)).reduce((s,l)=>s+l.valor,0);
+  const despHistProj = histMes.filter(t=>!CATS_RECEITA.includes(t.cat)&&t.valor<0).reduce((s,t)=>s+t.valor,0);
+  const recProjetada = recHistProj + recLancProj;
+  const despProjetada= despHistProj + despLancProj;
+
+  // Efetivos: valor realmente pago (valorPago quando disponível, senão valor original, apenas status pago/recebido)
+  const recLanc   = lancMes.filter(l=>CATS_RECEITA.includes(l.cat)&&l.status==='recebido')
+    .reduce((s,l)=>s+(l.valorPago!=null?Math.abs(l.valorPago):l.valor),0);
+  const despPagas = lancMes.filter(l=>!CATS_RECEITA.includes(l.cat)&&l.status==='pago')
+    .reduce((s,l)=>s+(l.valorPago!=null?l.valorPago:-Math.abs(l.valor)),0);
+  // Histórico: todos passados são considerados efetivos
+  const recHistEfet = recHistProj;
+  const despHistEfet= despHistProj;
+  const recEfetiva  = recHistEfet + recLanc;
+  const despEfetiva = despHistEfet + despPagas;
+
   const aReceber  = lancMes.filter(l=>CATS_RECEITA.includes(l.cat)&&l.status!=='recebido').reduce((s,l)=>s+l.valor,0);
   const aPagar    = lancMes.filter(l=>!CATS_RECEITA.includes(l.cat)&&l.status!=='pago').reduce((s,l)=>s+l.valor,0);
-  const despPagas = lancMes.filter(l=>!CATS_RECEITA.includes(l.cat)&&l.status==='pago').reduce((s,l)=>s+l.valor,0);
   const vencidos  = lancMes.filter(l=>l.status==='vencido').length;
   const sRes      = movReserva.reduce((s,m)=>s+m.valor,0);
 
@@ -780,6 +814,36 @@ function renderPainel() {
 
   document.getElementById('painelCards').innerHTML=`
     <div class="card receita">
+      <div class="card-label">Receita Projetada</div>
+      <div class="card-valor pos">${fmt(recProjetada)}</div>
+      <div class="card-sub">Previsto no mês</div>
+    </div>
+    <div class="card receita" style="border-left-color:#166534">
+      <div class="card-label">Receita Efetiva</div>
+      <div class="card-valor pos">${fmt(recEfetiva)}</div>
+      <div class="card-sub">Efetivamente recebido</div>
+    </div>
+    <div class="card despesa">
+      <div class="card-label">Despesa Projetada</div>
+      <div class="card-valor neg">${fmt(Math.abs(despProjetada))}</div>
+      <div class="card-sub">Prevista no mês</div>
+    </div>
+    <div class="card despesa" style="border-left-color:#7f1d1d">
+      <div class="card-label">Despesa Efetiva</div>
+      <div class="card-valor neg">${fmt(Math.abs(despEfetiva))}</div>
+      <div class="card-sub">Efetivamente pago</div>
+    </div>
+    <div class="card" style="border-left-color:var(--cobre)">
+      <div class="card-label">Saldo Projetado</div>
+      <div class="card-valor ${(recProjetada+despProjetada)>=0?'pos':'neg'}">${fmtSgn(recProjetada+despProjetada)}</div>
+      <div class="card-sub">Previsto</div>
+    </div>
+    <div class="card saldo">
+      <div class="card-label">Saldo Efetivo</div>
+      <div class="card-valor ${(recEfetiva+despEfetiva)>=0?'pos':'neg'}">${fmtSgn(recEfetiva+despEfetiva)}</div>
+      <div class="card-sub">O que sobra na conta</div>
+    </div>
+    <div class="card receita">
       <div class="card-label">A Receber</div>
       <div class="card-valor pos">${fmt(aReceber)}</div>
       <div class="card-sub">${vencidos>0?`<span style="color:var(--vermelho)">${vencidos} vencido${vencidos>1?'s':''}</span>`:'Em aberto'}</div>
@@ -788,21 +852,6 @@ function renderPainel() {
       <div class="card-label">A Pagar</div>
       <div class="card-valor neg">${fmt(Math.abs(aPagar))}</div>
       <div class="card-sub">Em aberto</div>
-    </div>
-    <div class="card receita">
-      <div class="card-label">Receita ${getMesLabel(ma)}</div>
-      <div class="card-valor pos">${fmt(recHist+recLanc)}</div>
-      <div class="card-sub">Histórico + confirmados</div>
-    </div>
-    <div class="card despesa">
-      <div class="card-label">Despesas Pagas</div>
-      <div class="card-valor neg">${fmt(Math.abs(despPagas))}</div>
-      <div class="card-sub">Confirmadas no mês</div>
-    </div>
-    <div class="card saldo">
-      <div class="card-label">Saldo do Mês</div>
-      <div class="card-valor ${(recHist+recLanc+despPagas)>=0?'pos':'neg'}">${fmtSgn(recHist+recLanc+despPagas)}</div>
-      <div class="card-sub">Receitas − despesas pagas</div>
     </div>`;
 
   // Chart receita
@@ -844,8 +893,9 @@ function renderPainel() {
 
   const desMap={};
   [...histMes.filter(t=>t.valor<0&&!CATS_RECEITA.includes(t.cat)&&t.cat!=='Reembolso'),
-   ...lancamentos.filter(l=>getMesAno(l.vencimento)===ma&&!CATS_RECEITA.includes(l.cat)&&l.status==='pago')]
-    .forEach(t=>{desMap[t.cat]=(desMap[t.cat]||0)+(t.valor||(-t.valor*-1));});
+   ...lancamentos.filter(l=>getMesAno(l.vencimento)===ma&&!CATS_RECEITA.includes(l.cat)&&l.status==='pago')
+     .map(l=>({...l, valor: l.valorPago!=null?l.valorPago:-Math.abs(l.valor)}))]
+    .forEach(t=>{desMap[t.cat]=(desMap[t.cat]||0)+t.valor;});
   const desT=Object.values(desMap).reduce((s,v)=>s+v,0);
   const res=recT+desT;
 
@@ -915,7 +965,10 @@ function renderTransacoes() {
   document.getElementById('tabelaTx').innerHTML=slice.length
     ? slice.map(r=>`
       <tr class="${r._hist?'hist-row':''}">
-        <td style="white-space:nowrap;color:var(--cinza);font-size:12px">${r.data}</td>
+        <td style="white-space:nowrap;font-size:12px">
+          <div style="color:var(--cinza)">${r.data}</div>
+          ${(r.dataPagamento&&r.dataPagamento!==r.data)?`<div style="color:var(--verde);font-size:11px">💳 ${r.dataPagamento}</div>`:''}
+        </td>
         <td>
           <span style="font-size:13px">${r.desc}</span>
           ${r.recorrente?` <span class="tag-mensal">↻ Mensal</span>`:''}
@@ -923,7 +976,12 @@ function renderTransacoes() {
         <td>${catBadge(r.cat)}</td>
         <td><span class="conta-badge ${contaCls(r.conta)}">${r.conta}</span></td>
         <td class="center">${statusBadge(r.status)}</td>
-        <td class="right ${r.valor>=0?'valor-pos':'valor-neg'}">${fmtSgn(r.valor)}</td>
+        <td class="right">
+          ${(r.valorPago!=null&&Math.abs(r.valorPago)!==Math.abs(r.valor))?
+            `<div class="${r.valorPago>=0?'valor-pos':'valor-neg'}" style="font-size:13px">${r.valor>=0?'+':'−'}${fmt(Math.abs(r.valorPago))}</div>
+             <div style="font-size:10px;color:var(--cinza);text-decoration:line-through">${fmtSgn(r.valor)}</div>`:
+            `<span class="${r.valor>=0?'valor-pos':'valor-neg'}">${fmtSgn(r.valor)}</span>`}
+        </td>
         <td class="center" style="white-space:nowrap">
           ${!r._hist && r.status!=='recebido' && CATS_RECEITA.includes(r.cat)
             ? `<button class="btn btn-sm btn-success" onclick="marcarRecebido('${r.id}')">✓ Recebido</button> ` : ''}
@@ -948,13 +1006,17 @@ function renderTransacoes() {
           ${r.status!=='pago'&&!CATS_RECEITA.includes(r.cat)?`<button class="btn btn-success" onclick="marcarPago('${r.id}')">✓ Pago</button>`:''}
           <button class="btn" style="background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE" onclick="editarLanc('${r.id}',false)">✎ Editar</button>
           <button class="btn btn-danger" onclick="excluirLanc('${r.id}')">✕ Excluir</button>`;
+        const temValorDif=r.valorPago!=null&&Math.abs(r.valorPago)!==Math.abs(r.valor);
         return `<div class="tx-card ${tipoClass}">
           <div class="tx-card-top">
             <div class="tx-card-desc">${r.desc}${r.recorrente?' <span class="tag-mensal">↻</span>':''}</div>
-            <div class="tx-card-valor ${isEnt?'valor-pos':'valor-neg'}">${fmtSgn(r.valor)}</div>
+            <div class="tx-card-valor ${isEnt?'valor-pos':'valor-neg'}">
+              ${temValorDif?`${r.valor>=0?'+':'−'}${fmt(Math.abs(r.valorPago))}<br><span style="font-size:10px;text-decoration:line-through;opacity:0.6">${fmtSgn(r.valor)}</span>`:fmtSgn(r.valor)}
+            </div>
           </div>
           <div class="tx-card-meta">
-            <span style="font-size:11px;color:var(--cinza)">${r.data}</span>
+            <span style="font-size:11px;color:var(--cinza)">Venc: ${r.data}</span>
+            ${r.dataPagamento&&r.dataPagamento!==r.data?`<span style="font-size:11px;color:var(--verde)">💳 ${r.dataPagamento}</span>`:''}
             ${statusBadge(r.status)}
             <span class="conta-badge ${contaCls(r.conta)}">${r.conta}</span>
             ${catBadge(r.cat)}
@@ -968,14 +1030,74 @@ function renderTransacoes() {
   renderPag('txPag',pgTx,pages,p=>{pgTx=p;renderTransacoes();});
 }
 
-async function marcarRecebido(id) {
+function marcarRecebido(id) {
   const l=lancamentos.find(x=>x.id===id); if(!l) return;
-  l.status='recebido'; l.recebidoEm=hoje();
+  const valorAbs=Math.abs(l.valorPago||l.valor);
+  const dataAtual=l.dataPagamento||hoje();
+  document.getElementById('modalTitulo').textContent='Confirmar Recebimento';
+  document.getElementById('modalConteudo').innerHTML=`
+    <p style="font-size:13px;color:var(--cinza);margin-bottom:16px">${l.desc}</p>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Data de Recebimento *</label>
+        <input class="form-control" type="date" id="mDataPag" value="${dataToIso(dataAtual)||new Date().toISOString().slice(0,10)}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Valor Recebido (R$) *</label>
+        <input class="form-control" type="number" id="mValorPago" value="${valorAbs}" step="0.01" min="0.01">
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--cinza);margin-bottom:16px">Valor projetado: <strong>${fmt(l.valor)}</strong> — preencha o valor real se diferente.</p>
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-primary" style="background:#166534" onclick="confirmarRecebido('${id}')">✓ Confirmar Recebido</button>
+    </div>`;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+async function confirmarRecebido(id) {
+  const l=lancamentos.find(x=>x.id===id); if(!l) return;
+  const dataIso=document.getElementById('mDataPag').value;
+  const valorPago=parseFloat(document.getElementById('mValorPago').value);
+  l.status='recebido';
+  l.dataPagamento=isoToData(dataIso)||hoje();
+  l.recebidoEm=l.dataPagamento;
+  l.valorPago=valorPago||Math.abs(l.valor);
+  fecharModal();
   await salvarLancamento(l); renderTransacoes(); renderPainel();
 }
-async function marcarPago(id) {
+function marcarPago(id) {
   const l=lancamentos.find(x=>x.id===id); if(!l) return;
-  l.status='pago'; l.pagoEm=hoje();
+  const valorAbs=Math.abs(l.valorPago||l.valor);
+  const dataAtual=l.dataPagamento||hoje();
+  document.getElementById('modalTitulo').textContent='Confirmar Pagamento';
+  document.getElementById('modalConteudo').innerHTML=`
+    <p style="font-size:13px;color:var(--cinza);margin-bottom:16px">${l.desc}</p>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Data de Pagamento *</label>
+        <input class="form-control" type="date" id="mDataPag" value="${dataToIso(dataAtual)||new Date().toISOString().slice(0,10)}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Valor Pago (R$) *</label>
+        <input class="form-control" type="number" id="mValorPago" value="${valorAbs}" step="0.01" min="0.01">
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--cinza);margin-bottom:16px">Valor projetado: <strong>${fmt(Math.abs(l.valor))}</strong> — preencha o valor real se diferente.</p>
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="confirmarPago('${id}')">✓ Confirmar Pago</button>
+    </div>`;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+async function confirmarPago(id) {
+  const l=lancamentos.find(x=>x.id===id); if(!l) return;
+  const dataIso=document.getElementById('mDataPag').value;
+  const valorPago=parseFloat(document.getElementById('mValorPago').value);
+  l.status='pago';
+  l.dataPagamento=isoToData(dataIso)||hoje();
+  l.pagoEm=l.dataPagamento;
+  l.valorPago=valorPago||Math.abs(l.valor);
+  fecharModal();
   await salvarLancamento(l); renderTransacoes(); renderPainel();
 }
 async function excluirLanc(id) {
@@ -1048,10 +1170,20 @@ function formModalEdicao(l, isReceita, isHist) {
       <div class="form-group"><label class="form-label">Conta</label><select class="form-control" id="fConta">${opt(CONTAS_LIST,l.conta)}</select></div>
     </div>
     <div class="form-group"><label class="form-label">Status</label>
-      <select class="form-control" id="fStatus">
+      <select class="form-control" id="fStatus" onchange="toggleCamposPagto(this.value,'recebido')">
         <option value="pendente"${l.status==='pendente'?' selected':''}>Pendente</option>
         <option value="recebido"${l.status==='recebido'?' selected':''}>Recebido</option>
       </select>
+    </div>
+    <div id="wrapPagtoEdit" style="display:${l.status==='recebido'?'block':'none'}">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Data de Recebimento</label>
+          <input class="form-control" type="date" id="fDataPag" value="${dataToIso(l.dataPagamento||l.recebidoEm||'')||''}">
+        </div>
+        <div class="form-group"><label class="form-label">Valor Recebido (R$)</label>
+          <input class="form-control" type="number" id="fValorPago" value="${l.valorPago!=null?Math.abs(l.valorPago):Math.abs(l.valor)}" step="0.01" min="0.01">
+        </div>
+      </div>
     </div>
     <div class="form-group"><label class="form-label">Observação</label><input class="form-control" type="text" id="fObs" value="${l.obs||''}"></div>
     <div class="form-actions">
@@ -1073,10 +1205,20 @@ function formModalEdicao(l, isReceita, isHist) {
       <div class="form-group"><label class="form-label">Conta</label><select class="form-control" id="fConta">${opt(CONTAS_LIST,l.conta)}</select></div>
     </div>
     <div class="form-group"><label class="form-label">Status</label>
-      <select class="form-control" id="fStatus">
+      <select class="form-control" id="fStatus" onchange="toggleCamposPagto(this.value,'pago')">
         <option value="pendente"${l.status==='pendente'?' selected':''}>Pendente</option>
         <option value="pago"${l.status==='pago'?' selected':''}>Pago</option>
       </select>
+    </div>
+    <div id="wrapPagtoEdit" style="display:${l.status==='pago'?'block':'none'}">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Data de Pagamento</label>
+          <input class="form-control" type="date" id="fDataPag" value="${dataToIso(l.dataPagamento||l.pagoEm||'')||''}">
+        </div>
+        <div class="form-group"><label class="form-label">Valor Pago (R$)</label>
+          <input class="form-control" type="number" id="fValorPago" value="${l.valorPago!=null?Math.abs(l.valorPago):Math.abs(l.valor)}" step="0.01" min="0.01">
+        </div>
+      </div>
     </div>
     <div class="form-actions">
       <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
@@ -1094,6 +1236,14 @@ async function salvarEdicao(id, tipo, isHist, histIdx) {
   const conta=document.getElementById('fConta').value;
   const status=document.getElementById('fStatus').value;
 
+  // Captura campos de pagamento se visíveis
+  const fDataPagEl=document.getElementById('fDataPag');
+  const fValorPagoEl=document.getElementById('fValorPago');
+  const dataPagamento=fDataPagEl&&fDataPagEl.closest('#wrapPagtoEdit')&&fDataPagEl.closest('#wrapPagtoEdit').style.display!=='none'
+    ? isoToData(fDataPagEl.value)||null : null;
+  const valorPagoRaw=fValorPagoEl&&fValorPagoEl.closest('#wrapPagtoEdit')&&fValorPagoEl.closest('#wrapPagtoEdit').style.display!=='none'
+    ? parseFloat(fValorPagoEl.value) : null;
+
   if (isHist) {
     // Converter item do histórico em lançamento real no Supabase
     const novoId=uid();
@@ -1109,7 +1259,8 @@ async function salvarEdicao(id, tipo, isHist, histIdx) {
       valorFinal=-valor;
     }
     const novo={id:novoId, desc, valor:valorFinal, vencimento:venc, cat, conta, status,
-      recorrente:false, obs:'', cliente:'', servico:''};
+      recorrente:false, obs:'', cliente:'', servico:'',
+      dataPagamento, valorPago: valorPagoRaw!=null?(tipo==='receita'?valorPagoRaw:-valorPagoRaw):null};
     lancamentos.push(novo);
     await salvarLancamento(novo);
     // Remover do HISTORICO (não precisa mais aparecer lá)
@@ -1117,6 +1268,8 @@ async function salvarEdicao(id, tipo, isHist, histIdx) {
   } else {
     const l=lancamentos.find(x=>x.id===id); if(!l) return;
     l.vencimento=venc; l.cat=cat; l.conta=conta; l.status=status;
+    if (dataPagamento) { l.dataPagamento=dataPagamento; l.pagoEm=dataPagamento; l.recebidoEm=dataPagamento; }
+    if (valorPagoRaw!=null) l.valorPago=tipo==='receita'?valorPagoRaw:-valorPagoRaw;
     if (tipo==='receita') {
       const clienteSel=document.getElementById('fCliente').value;
       l.cliente=clienteSel==='_outro'?(document.getElementById('fClienteOutro').value.trim()):clienteSel;
@@ -1493,6 +1646,10 @@ function formModal(tipo) {
 function toggleClienteOutro() {
   const v=document.getElementById('fCliente').value;
   document.getElementById('fClienteOutroWrap').style.display=v==='_outro'?'block':'none';
+}
+function toggleCamposPagto(val, statusPago) {
+  const w=document.getElementById('wrapPagtoEdit');
+  if (w) w.style.display=val===statusPago?'block':'none';
 }
 function toggleRecorr() {
   const v=document.getElementById('fRecorr').value;
