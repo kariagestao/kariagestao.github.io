@@ -622,6 +622,7 @@
     <div class="tabs">
       <button class="tab ativa" data-painel="biblioteca">Biblioteca</button>
       <button class="tab" data-painel="gravacoes">Gravações</button>
+      <button class="tab" data-painel="aulas">Aulas</button>
       <button class="tab" data-painel="orientacoes">Orientações</button>
       <button class="tab" data-painel="perfil">Meu Perfil</button>
     </div>
@@ -642,13 +643,22 @@
       </div>
     </div>
 
+    <!-- Painel Aulas -->
+    <div class="painel" id="painel-aulas">
+      <div class="vazio">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        <h3>As aulas chegam em breve</h3>
+        <p>Conteúdos gravados exclusivos, disponíveis para você assistir no seu ritmo e quantas vezes quiser.</p>
+      </div>
+    </div>
+
     <!-- Painel Orientações -->
     <div class="painel" id="painel-orientacoes">
       <div class="orientacoes-wrap">
 
         <div class="orientacao-boas-vindas">
           <div class="orientacao-bv-texto">
-            <h2>Bem-vinda à K Controllers</h2>
+            <h2>Bem-vindo(a) à K Controllers</h2>
             <p>Fico muito feliz em ter você aqui. Este é um espaço criado especialmente para Controllers Jurídicos que querem crescer com consistência, trocar experiências reais e ter acesso a conteúdo direto ao ponto.</p>
             <p>Abaixo você encontra tudo o que precisa para começar.</p>
           </div>
@@ -659,7 +669,7 @@
           <div class="orientacao-card">
             <div class="orientacao-num">01</div>
             <h3>Acesse o grupo exclusivo</h3>
-            <p>A troca entre membros acontece no nosso grupo. O link foi enviado para o e-mail cadastrado. Verifique sua caixa de entrada — e o spam também.</p>
+            <p>A troca entre membros acontece no nosso grupo. Você será adicionado(a) manualmente. Caso não seja incluído(a) em até 1 dia útil, entre em contato pelo WhatsApp <strong>(51) 3376-5996</strong>.</p>
           </div>
 
           <div class="orientacao-card">
@@ -792,50 +802,62 @@
   const materiais = [
     {
       titulo: 'Kit Prático de Controladoria Jurídica',
-      descricao: 'Guia completo de rotina e estratégia para o Controller Jurídico. Material âncora da biblioteca.',
+      descricao: 'Material âncora da biblioteca. Rotina, estratégia e estrutura para o Controller Jurídico — do diagnóstico à execução.',
       categoria: 'Kit Principal',
       url: null
     },
     {
-      titulo: 'Guia de Níveis de Maturidade',
-      descricao: 'Como identificar e evoluir o estágio de maturidade do escritório em gestão.',
+      titulo: 'Guia de Níveis de Maturidade em Gestão Jurídica',
+      descricao: 'Como identificar em qual estágio de maturidade o escritório se encontra e quais ações priorizar para evoluir.',
       categoria: 'Guia',
       url: null
     },
     {
-      titulo: 'Indicadores Operacionais Básicos',
-      descricao: 'Os principais indicadores que todo Controller deve monitorar e como calculá-los.',
+      titulo: 'Painel de Indicadores Operacionais',
+      descricao: 'Os principais indicadores que todo Controller Jurídico deve monitorar, com fórmulas, fontes de dados e periodicidade recomendada.',
       categoria: 'Indicadores',
       url: null
     },
     {
       titulo: 'Modelo de Relatório de Diagnóstico',
-      descricao: 'Estrutura completa para apresentação de diagnóstico operacional ao escritório.',
+      descricao: 'Estrutura completa para apresentação de diagnóstico operacional ao escritório, com análise de gaps e plano de ação.',
       categoria: 'Modelo',
       url: null
     },
     {
       titulo: 'Manual de Procedimentos da Controladoria',
-      descricao: 'Modelo base para documentar processos e padronizar a rotina do departamento.',
+      descricao: 'Modelo base para documentar processos internos e padronizar a rotina do departamento de controladoria.',
       categoria: 'Modelo',
       url: null
     },
     {
-      titulo: 'Política de Documentos',
-      descricao: 'Padrão de gestão documental adaptado à realidade dos escritórios de advocacia.',
+      titulo: 'Política de Gestão Documental',
+      descricao: 'Padrão de organização e controle de documentos adaptado à realidade dos escritórios de advocacia.',
       categoria: 'Modelo',
       url: null
     },
     {
-      titulo: 'Ata de Reuniões',
-      descricao: 'Modelo genérico de ata para registro e formalização das reuniões internas.',
+      titulo: 'Ata de Reunião',
+      descricao: 'Modelo objetivo para registro e formalização das reuniões internas, com campos para pautas, decisões e encaminhamentos.',
       categoria: 'Modelo',
       url: null
     },
     {
-      titulo: 'Relatório de Volumetria e Produtividade',
-      descricao: 'Planilha estruturada para acompanhamento de volume processual e produtividade da equipe.',
+      titulo: 'Planilha de Volumetria e Produtividade',
+      descricao: 'Planilha estruturada para acompanhamento de volume processual e produtividade por colaborador ou equipe.',
       categoria: 'Planilha',
+      url: null
+    },
+    {
+      titulo: 'Checklist de Implantação da Controladoria',
+      descricao: 'Passo a passo para estruturar a controladoria do zero em um escritório de advocacia, com marcos e entregas por fase.',
+      categoria: 'Checklist',
+      url: null
+    },
+    {
+      titulo: 'Mapa de Processos Internos',
+      descricao: 'Template para mapeamento dos fluxos operacionais do escritório, identificando responsáveis, gargalos e oportunidades de melhoria.',
+      categoria: 'Template',
       url: null
     }
   ];
