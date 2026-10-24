@@ -299,6 +299,61 @@
   .vazio h3 { font-family: 'Montserrat', sans-serif; font-size: 16px; color: var(--musgo); margin-bottom: 8px; }
   .vazio p { font-size: 13px; }
 
+  /* ORIENTAÇÕES */
+  .orientacoes-wrap { max-width: 720px; }
+  .orientacao-boas-vindas {
+    background: var(--musgo);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 28px;
+  }
+  .orientacao-boas-vindas h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .orientacao-boas-vindas p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.82);
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+  .orientacao-boas-vindas p:last-child { margin-bottom: 0; }
+  .orientacao-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 600px) { .orientacao-grid { grid-template-columns: 1fr; } }
+  .orientacao-card {
+    background: #fff;
+    border: 1.5px solid #e8e4de;
+    border-radius: 12px;
+    padding: 22px 22px 22px 20px;
+  }
+  .orientacao-num {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #b87333;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+  .orientacao-card h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--musgo);
+    margin-bottom: 8px;
+  }
+  .orientacao-card p {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+  .orientacao-card p strong { color: var(--musgo); font-weight: 600; }
+
   /* PRÓXIMA LIVE */
   .proxima-live {
     background: var(--musgo);
@@ -567,7 +622,7 @@
     <div class="tabs">
       <button class="tab ativa" data-painel="biblioteca">Biblioteca</button>
       <button class="tab" data-painel="gravacoes">Gravações</button>
-      <button class="tab" data-painel="comunidade">Comunidade</button>
+      <button class="tab" data-painel="orientacoes">Orientações</button>
       <button class="tab" data-painel="perfil">Meu Perfil</button>
     </div>
 
@@ -587,12 +642,46 @@
       </div>
     </div>
 
-    <!-- Painel Comunidade -->
-    <div class="painel" id="painel-comunidade">
-      <div class="vazio">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        <h3>Grupo exclusivo no WhatsApp</h3>
-        <p>O link de acesso ao grupo foi enviado para o seu e-mail de cadastro. Verifique sua caixa de entrada.</p>
+    <!-- Painel Orientações -->
+    <div class="painel" id="painel-orientacoes">
+      <div class="orientacoes-wrap">
+
+        <div class="orientacao-boas-vindas">
+          <div class="orientacao-bv-texto">
+            <h2>Bem-vinda à K Controllers</h2>
+            <p>Fico muito feliz em ter você aqui. Este é um espaço criado especialmente para Controllers Jurídicos que querem crescer com consistência, trocar experiências reais e ter acesso a conteúdo direto ao ponto.</p>
+            <p>Abaixo você encontra tudo o que precisa para começar.</p>
+          </div>
+        </div>
+
+        <div class="orientacao-grid">
+
+          <div class="orientacao-card">
+            <div class="orientacao-num">01</div>
+            <h3>Acesse o grupo exclusivo</h3>
+            <p>A troca entre membros acontece no nosso grupo. O link foi enviado para o e-mail cadastrado. Verifique sua caixa de entrada — e o spam também.</p>
+          </div>
+
+          <div class="orientacao-card">
+            <div class="orientacao-num">02</div>
+            <h3>Explore a Biblioteca</h3>
+            <p>Na aba <strong>Biblioteca</strong> você encontra modelos, templates e materiais práticos para usar no seu dia a dia. Novos conteúdos são adicionados com frequência.</p>
+          </div>
+
+          <div class="orientacao-card">
+            <div class="orientacao-num">03</div>
+            <h3>Acompanhe as Gravações</h3>
+            <p>Após cada live, o vídeo fica disponível na aba <strong>Gravações</strong>. Assista no seu ritmo, quantas vezes quiser.</p>
+          </div>
+
+          <div class="orientacao-card">
+            <div class="orientacao-num">04</div>
+            <h3>Dúvidas? Fale comigo</h3>
+            <p>Me chame diretamente pelo grupo ou pelo Instagram <strong>@kariagestao</strong>. Estou aqui para apoiar sua jornada.</p>
+          </div>
+
+        </div>
+
       </div>
     </div>
 
