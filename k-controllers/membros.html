@@ -773,14 +773,29 @@
   }
 
   // Tabs
+  function ativarTab(painel) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('ativa'));
+    document.querySelectorAll('.painel').forEach(p => p.classList.remove('ativo'));
+    const tabEl = document.querySelector('.tab[data-painel="' + painel + '"]');
+    const painelEl = document.getElementById('painel-' + painel);
+    if (tabEl && painelEl) {
+      tabEl.classList.add('ativa');
+      painelEl.classList.add('ativo');
+    }
+  }
+
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('ativa'));
-      document.querySelectorAll('.painel').forEach(p => p.classList.remove('ativo'));
-      tab.classList.add('ativa');
-      document.getElementById('painel-' + tab.dataset.painel).classList.add('ativo');
+      ativarTab(tab.dataset.painel);
+      try { localStorage.setItem('kc_tab', tab.dataset.painel); } catch(e) {}
     });
   });
+
+  // Restaura aba salva
+  try {
+    const tabSalva = localStorage.getItem('kc_tab');
+    if (tabSalva) ativarTab(tabSalva);
+  } catch(e) {}
 
   // Sair
   document.getElementById('btn-sair').addEventListener('click', async () => {
