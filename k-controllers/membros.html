@@ -299,6 +299,28 @@
   .vazio h3 { font-family: 'Montserrat', sans-serif; font-size: 16px; color: var(--musgo); margin-bottom: 8px; }
   .vazio p { font-size: 13px; }
 
+  /* FILTROS BIBLIOTECA */
+  .biblioteca-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .filtro {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid #d1cbc3;
+    background: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .filtro:hover { border-color: var(--musgo); color: var(--musgo); }
+  .filtro.ativo { background: var(--musgo); border-color: var(--musgo); color: #fff; }
+
   /* ORIENTAÇÕES */
   .orientacoes-wrap { max-width: 720px; }
   .orientacao-boas-vindas {
@@ -629,9 +651,16 @@
 
     <!-- Painel Biblioteca -->
     <div class="painel ativo" id="painel-biblioteca">
-      <div class="grid-materiais" id="grid-biblioteca">
-        <!-- Preenchido via JS ou estático -->
+      <div class="biblioteca-filtros" id="biblioteca-filtros">
+        <button class="filtro ativo" data-cat="todos">Todos</button>
+        <button class="filtro" data-cat="Guia">Guias</button>
+        <button class="filtro" data-cat="Checklist">Checklists</button>
+        <button class="filtro" data-cat="Modelo">Modelos</button>
+        <button class="filtro" data-cat="Planilha">Planilhas</button>
+        <button class="filtro" data-cat="Roteiro">Roteiros</button>
+        <button class="filtro" data-cat="Proposta">Propostas</button>
       </div>
+      <div class="grid-materiais" id="grid-biblioteca"></div>
     </div>
 
     <!-- Painel Gravações -->
@@ -799,89 +828,76 @@
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
   // Materiais estáticos (substitua por chamada ao banco quando adicionar links reais)
+  const BASE = '/k-controllers/biblioteca/';
   const materiais = [
-    {
-      titulo: 'Kit Prático de Controladoria Jurídica',
-      descricao: 'Material âncora da biblioteca. Rotina, estratégia e estrutura para o Controller Jurídico — do diagnóstico à execução.',
-      categoria: 'Kit Principal',
-      url: null
-    },
-    {
-      titulo: 'Guia de Níveis de Maturidade em Gestão Jurídica',
-      descricao: 'Como identificar em qual estágio de maturidade o escritório se encontra e quais ações priorizar para evoluir.',
-      categoria: 'Guia',
-      url: null
-    },
-    {
-      titulo: 'Painel de Indicadores Operacionais',
-      descricao: 'Os principais indicadores que todo Controller Jurídico deve monitorar, com fórmulas, fontes de dados e periodicidade recomendada.',
-      categoria: 'Indicadores',
-      url: null
-    },
-    {
-      titulo: 'Modelo de Relatório de Diagnóstico',
-      descricao: 'Estrutura completa para apresentação de diagnóstico operacional ao escritório, com análise de gaps e plano de ação.',
-      categoria: 'Modelo',
-      url: null
-    },
-    {
-      titulo: 'Manual de Procedimentos da Controladoria',
-      descricao: 'Modelo base para documentar processos internos e padronizar a rotina do departamento de controladoria.',
-      categoria: 'Modelo',
-      url: null
-    },
-    {
-      titulo: 'Política de Gestão Documental',
-      descricao: 'Padrão de organização e controle de documentos adaptado à realidade dos escritórios de advocacia.',
-      categoria: 'Modelo',
-      url: null
-    },
-    {
-      titulo: 'Ata de Reunião',
-      descricao: 'Modelo objetivo para registro e formalização das reuniões internas, com campos para pautas, decisões e encaminhamentos.',
-      categoria: 'Modelo',
-      url: null
-    },
-    {
-      titulo: 'Planilha de Volumetria e Produtividade',
-      descricao: 'Planilha estruturada para acompanhamento de volume processual e produtividade por colaborador ou equipe.',
-      categoria: 'Planilha',
-      url: null
-    },
-    {
-      titulo: 'Checklist de Implantação da Controladoria',
-      descricao: 'Passo a passo para estruturar a controladoria do zero em um escritório de advocacia, com marcos e entregas por fase.',
-      categoria: 'Checklist',
-      url: null
-    },
-    {
-      titulo: 'Mapa de Processos Internos',
-      descricao: 'Template para mapeamento dos fluxos operacionais do escritório, identificando responsáveis, gargalos e oportunidades de melhoria.',
-      categoria: 'Template',
-      url: null
-    }
+    // GUIAS
+    { titulo: 'Guia de Boas-Vindas K Controllers', descricao: 'Tudo o que você precisa saber para aproveitar ao máximo a comunidade: estrutura, conteúdos e próximos passos.', categoria: 'Guia', url: BASE + 'guia-boas-vindas.docx' },
+    { titulo: 'Mapa de Competências do Controller Jurídico', descricao: 'As competências técnicas e comportamentais essenciais para atuar como Controller Jurídico com autoridade e consistência.', categoria: 'Guia', url: BASE + 'mapa-competencias-controller.docx' },
+    { titulo: 'Template de Indicadores Operacionais', descricao: 'Os principais indicadores que todo Controller Jurídico deve monitorar, com fórmulas, fontes e periodicidade recomendada.', categoria: 'Guia', url: BASE + 'template-indicadores-operacionais.docx' },
+    // CHECKLISTS
+    { titulo: 'Checklist de Diagnóstico Operacional', descricao: 'Lista completa para mapear o estágio atual do escritório e identificar os principais gaps de gestão antes de qualquer intervenção.', categoria: 'Checklist', url: BASE + 'checklist-diagnostico-operacional.docx' },
+    { titulo: 'Checklist de Publicações e Prazos', descricao: 'Verificação sistemática do fluxo de publicações, controle de prazos e protocolos — base para qualquer auditoria operacional.', categoria: 'Checklist', url: BASE + 'checklist-publicacoes-prazos.docx' },
+    // MODELOS
+    { titulo: 'Relatório Mensal do Controller', descricao: 'Modelo estruturado para apresentação mensal de resultados, indicadores e recomendações ao escritório.', categoria: 'Modelo', url: BASE + 'modelo-relatorio-mensal.docx' },
+    { titulo: 'Relatório de Diagnóstico Operacional', descricao: 'Estrutura completa para apresentação do diagnóstico inicial, com análise de gaps, riscos e plano de ação.', categoria: 'Modelo', url: BASE + 'modelo-relatorio-diagnostico.docx' },
+    { titulo: 'Relatório de Ciclo — Controladoria Terceirizada', descricao: 'Modelo de entrega periódica para contratos de controladoria terceirizada, com resumo executivo e encaminhamentos.', categoria: 'Modelo', url: BASE + 'modelo-relatorio-ciclo-terceirizada.docx' },
+    { titulo: 'Manual de Procedimentos da Controladoria', descricao: 'Modelo base para documentar processos e padronizar a rotina operacional do departamento de controladoria.', categoria: 'Modelo', url: BASE + 'modelo-manual-procedimentos.docx' },
+    { titulo: 'Manual Simplificado de Processo', descricao: 'Versão enxuta para documentar um processo específico com responsáveis, etapas e critérios de qualidade.', categoria: 'Modelo', url: BASE + 'modelo-manual-simples-processo.docx' },
+    { titulo: 'Ata de Reunião', descricao: 'Modelo objetivo para registro e formalização das reuniões internas, com pauta, decisões e encaminhamentos.', categoria: 'Modelo', url: BASE + 'modelo-ata-reuniao.docx' },
+    { titulo: 'Cronograma de Implantação', descricao: 'Estrutura de planejamento por fases para organizar a implantação da controladoria com marcos, prazos e entregas.', categoria: 'Modelo', url: BASE + 'modelo-cronograma-implantacao.docx' },
+    { titulo: 'Política de Gestão Documental', descricao: 'Padrão de organização, controle e descarte de documentos adaptado à realidade dos escritórios de advocacia.', categoria: 'Modelo', url: BASE + 'politica-documentos.docx' },
+    // PLANILHAS
+    { titulo: 'Planilha de Volumetria e Produtividade', descricao: 'Acompanhamento de volume processual e produtividade por colaborador ou equipe, com campos para metas e variações.', categoria: 'Planilha', url: BASE + 'planilha-volumetria-produtividade.xlsx' },
+    { titulo: 'Tabela RACI — Controladoria Jurídica', descricao: 'Matriz de responsabilidades para as principais rotinas da controladoria: quem executa, aprova, consulta e é informado.', categoria: 'Planilha', url: BASE + 'tabela-raci.xlsx' },
+    // ROTEIROS
+    { titulo: 'Roteiro 1 — Onboarding e Diagnóstico', descricao: 'Passo a passo para a primeira etapa de atuação: coleta de informações, apresentação e alinhamento inicial com o escritório.', categoria: 'Roteiro', url: BASE + 'roteiro-1-onboarding-diagnostico.docx' },
+    { titulo: 'Roteiro 2 — Entrevista com Colaboradores', descricao: 'Roteiro estruturado para conduzir entrevistas com advogados e colaboradores durante o mapeamento operacional.', categoria: 'Roteiro', url: BASE + 'roteiro-2-entrevista-colaboradores.docx' },
+    { titulo: 'Roteiro 3 — Apresentação do Estudo Operacional', descricao: 'Como apresentar os resultados do mapeamento ao escritório com clareza, embasamento e proposta de encaminhamento.', categoria: 'Roteiro', url: BASE + 'roteiro-3-apresentacao-estudo.docx' },
+    { titulo: 'Roteiro 4 — Reunião de Início da Implantação', descricao: 'Condução da reunião de kickoff da implantação: objetivos, cronograma, responsáveis e alinhamento de expectativas.', categoria: 'Roteiro', url: BASE + 'roteiro-4-reuniao-implantacao.docx' },
+    { titulo: 'Roteiro 4.1 — Levantamento de Publicações e Prazos', descricao: 'Script específico para mapear o fluxo de publicações, controle de prazos e protocolos de comunicação interna.', categoria: 'Roteiro', url: BASE + 'roteiro-4.1-levantamento-publicacoes.docx' },
+    { titulo: 'Roteiro 5 — Implantação Fase 1', descricao: 'Execução da primeira fase de implantação: estruturação inicial dos fluxos operacionais prioritários.', categoria: 'Roteiro', url: BASE + 'roteiro-5-implantacao-fase1.docx' },
+    { titulo: 'Roteiro 6 — Levantamento de Rotinas e Gestão Documental', descricao: 'Mapeamento das rotinas operacionais e do modelo de gestão documental existente no escritório.', categoria: 'Roteiro', url: BASE + 'roteiro-6-levantamento-rotinas.docx' },
+    { titulo: 'Roteiro 7 — Devolutiva das Entrevistas', descricao: 'Como apresentar os resultados das entrevistas com colaboradores de forma estruturada e construtiva.', categoria: 'Roteiro', url: BASE + 'roteiro-7-devolutiva-entrevistas.docx' },
+    { titulo: 'Roteiro 8 — Apresentação Executiva do Estudo Operacional', descricao: 'Versão condensada para apresentação ao sócio ou gestor principal, com foco em impacto e decisão.', categoria: 'Roteiro', url: BASE + 'roteiro-8-apresentacao-executiva.docx' },
+    // PROPOSTAS
+    { titulo: 'Proposta de Diagnóstico Estruturado', descricao: 'Modelo de proposta comercial para o serviço de Diagnóstico Estruturado em Controladoria Jurídica.', categoria: 'Proposta', url: BASE + 'proposta-diagnostico-estruturado.docx' },
+    { titulo: 'Proposta de Implantação da Controladoria', descricao: 'Modelo de proposta para projetos de implantação, com escopo, entregas, cronograma e investimento.', categoria: 'Proposta', url: BASE + 'proposta-implantacao-controladoria.docx' },
+    { titulo: 'Proposta de Comissionamento — Controladoria Jurídica', descricao: 'Modelo de proposta para contratos com remuneração variável baseada em resultados e metas atingidas.', categoria: 'Proposta', url: BASE + 'proposta-comissao.docx' },
+    { titulo: 'Contrato de Implantação da Controladoria', descricao: 'Modelo de contrato para formalizar a prestação de serviços de implantação, com cláusulas de escopo e responsabilidades.', categoria: 'Proposta', url: BASE + 'contrato-implantacao.docx' },
   ];
 
-  function renderBiblioteca() {
+  let filtroAtivo = 'todos';
+
+  function renderBiblioteca(cat) {
     const grid = document.getElementById('grid-biblioteca');
-    grid.innerHTML = materiais.map(m => `
+    const lista = cat === 'todos' ? materiais : materiais.filter(m => m.categoria === cat);
+    grid.innerHTML = lista.map(m => `
       <div class="card-material">
         <span class="tag-categoria">${m.categoria}</span>
         <h3>${m.titulo}</h3>
         <p>${m.descricao}</p>
         ${m.url
-          ? `<a href="${m.url}" class="btn-download" target="_blank">
+          ? `<a href="${m.url}" class="btn-download" download>
                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                Baixar
              </a>`
           : `<span class="em-breve">
                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-               Link em breve
+               Em breve
              </span>`
         }
       </div>
     `).join('');
   }
+
+  document.getElementById('biblioteca-filtros').addEventListener('click', (e) => {
+    const btn = e.target.closest('.filtro');
+    if (!btn) return;
+    document.querySelectorAll('.filtro').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+    filtroAtivo = btn.dataset.cat;
+    renderBiblioteca(filtroAtivo);
+  });
 
   // Tabs
   function ativarTab(painel) {
