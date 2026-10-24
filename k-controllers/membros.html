@@ -796,6 +796,8 @@
       .eq('email', session.user.email)
       .single();
 
+    document.getElementById('p-email').value = session.user.email;
+
     if (!member) return;
 
     const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
@@ -808,8 +810,6 @@
     set('p-bairro', member.bairro);
     set('p-cidade', member.cidade);
     set('p-estado', member.estado);
-
-    document.getElementById('p-email').value = session.user.email;
 
     if (member.avatar_url) {
       document.getElementById('avatar-img').src = member.avatar_url;
