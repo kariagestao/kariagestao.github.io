@@ -927,46 +927,52 @@
     reader.readAsDataURL(file);
   });
 
-  document.getElementById('btn-crop-cancelar').addEventListener('click', () => {
-    document.getElementById('modal-crop').style.display = 'none';
-    if (cropperInstance) { cropperInstance.destroy(); cropperInstance = null; }
-  });
+  // Botões do modal de crop — delegação no document garante que o DOM já existe
+  document.addEventListener('click', async (e) => {
+    // Cancelar
+    if (e.target.id === 'btn-crop-cancelar') {
+      document.getElementById('modal-crop').style.display = 'none';
+      if (cropperInstance) { cropperInstance.destroy(); cropperInstance = null; }
+      return;
+    }
 
-  document.getElementById('btn-crop-confirmar').addEventListener('click', async () => {
-    if (!cropperInstance) return;
-    const btnOk  = document.getElementById('btn-crop-confirmar');
-    btnOk.disabled = true;
-    btnOk.textContent = 'Enviando...';
+    // Confirmar
+    if (e.target.id === 'btn-crop-confirmar') {
+      if (!cropperInstance) return;
+      const btnOk = e.target;
+      btnOk.disabled = true;
+      btnOk.textContent = 'Enviando...';
 
-    const canvas = cropperInstance.getCroppedCanvas({ width: 400, height: 400 });
-    canvas.toBlob(async (blob) => {
-      try {
-        const { data: { session } } = await sb.auth.getSession();
-        const ext  = 'jpg';
-        const path = `${session.user.id}.${ext}`;
-        const { error: upErr } = await sb.storage
-          .from('avatars')
-          .upload(path, blob, { contentType: 'image/jpeg', upsert: true });
-        if (upErr) throw upErr;
+      const canvas = cropperInstance.getCroppedCanvas({ width: 400, height: 400 });
+      canvas.toBlob(async (blob) => {
+        try {
+          const { data: { session } } = await sb.auth.getSession();
+          const ext  = 'jpg';
+          const filePath = `${session.user.id}.${ext}`;
+          const { error: upErr } = await sb.storage
+            .from('avatars')
+            .upload(filePath, blob, { contentType: 'image/jpeg', upsert: true });
+          if (upErr) throw upErr;
 
-        const { data: urlData } = sb.storage.from('avatars').getPublicUrl(path);
-        const publicUrl = urlData.publicUrl + '?t=' + Date.now();
+          const { data: urlData } = sb.storage.from('avatars').getPublicUrl(filePath);
+          const publicUrl = urlData.publicUrl + '?t=' + Date.now();
 
-        await sb.from('members').update({ avatar_url: publicUrl }).eq('email', session.user.email);
+          await sb.from('members').update({ avatar_url: publicUrl }).eq('email', session.user.email);
 
-        document.getElementById('avatar-img').src = publicUrl;
-        document.getElementById('avatar-img').style.display = 'block';
-        document.getElementById('avatar-placeholder').style.display = 'none';
+          document.getElementById('avatar-img').src = publicUrl;
+          document.getElementById('avatar-img').style.display = 'block';
+          document.getElementById('avatar-placeholder').style.display = 'none';
 
-        document.getElementById('modal-crop').style.display = 'none';
-        cropperInstance.destroy(); cropperInstance = null;
-      } catch (err) {
-        alert('Erro ao salvar foto: ' + (err.message || err));
-      } finally {
-        btnOk.disabled = false;
-        btnOk.textContent = 'Salvar foto';
-      }
-    }, 'image/jpeg', 0.9);
+          document.getElementById('modal-crop').style.display = 'none';
+          cropperInstance.destroy(); cropperInstance = null;
+        } catch (err) {
+          alert('Erro ao salvar foto: ' + (err.message || err));
+        } finally {
+          btnOk.disabled = false;
+          btnOk.textContent = 'Salvar foto';
+        }
+      }, 'image/jpeg', 0.9);
+    }
   });
 
   // Máscara CEP: 00000-000
