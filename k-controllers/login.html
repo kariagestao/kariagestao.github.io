@@ -205,7 +205,7 @@
 
   // Redireciona se já logado
   sb.auth.getSession().then(({ data }) => {
-    if (data.session) location.href = '/membros';
+    if (data.session) location.href = '/k-controllers/membros';
   });
 
   document.getElementById('form-login').addEventListener('submit', async (e) => {
@@ -224,7 +224,7 @@
     try {
       const { error } = await sb.auth.signInWithPassword({ email, password: senha });
       if (error) throw error;
-      location.href = '/membros';
+      location.href = '/k-controllers/membros';
     } catch (err) {
       msg.className = 'msg erro';
       msg.textContent = 'E-mail ou senha incorretos.';
