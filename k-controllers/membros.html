@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
 
 <style>
   :root {
@@ -881,21 +883,76 @@
     }
   });
 
-  // Perfil: preview de foto (upload real via Supabase Storage — implementar depois)
+  // Foto: abre modal de recorte
+  let cropperInstance = null;
+
   document.getElementById('input-foto').addEventListener('change', (e) => {
     const file = e.target.files[0];
+    e.target.value = '';
     if (!file) return;
-    if (file.size > 2 * 1024 * 1024) {
-      alert('Imagem muito grande. Use até 2MB.');
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Imagem muito grande. Use até 5MB.');
       return;
     }
     const reader = new FileReader();
     reader.onload = (ev) => {
-      document.getElementById('avatar-img').src = ev.target.result;
-      document.getElementById('avatar-img').style.display = 'block';
-      document.getElementById('avatar-placeholder').style.display = 'none';
+      const modal = document.getElementById('modal-crop');
+      const img   = document.getElementById('crop-img');
+      img.src = ev.target.result;
+      modal.style.display = 'flex';
+      if (cropperInstance) { cropperInstance.destroy(); cropperInstance = null; }
+      cropperInstance = new Cropper(img, {
+        aspectRatio: 1,
+        viewMode: 1,
+        dragMode: 'move',
+        autoCropArea: 0.8,
+        cropBoxResizable: false,
+        toggleDragModeOnDblclick: false,
+      });
     };
     reader.readAsDataURL(file);
+  });
+
+  document.getElementById('btn-crop-cancelar').addEventListener('click', () => {
+    document.getElementById('modal-crop').style.display = 'none';
+    if (cropperInstance) { cropperInstance.destroy(); cropperInstance = null; }
+  });
+
+  document.getElementById('btn-crop-confirmar').addEventListener('click', async () => {
+    if (!cropperInstance) return;
+    const btnOk  = document.getElementById('btn-crop-confirmar');
+    btnOk.disabled = true;
+    btnOk.textContent = 'Enviando...';
+
+    const canvas = cropperInstance.getCroppedCanvas({ width: 400, height: 400 });
+    canvas.toBlob(async (blob) => {
+      try {
+        const { data: { session } } = await sb.auth.getSession();
+        const ext  = 'jpg';
+        const path = `${session.user.id}.${ext}`;
+        const { error: upErr } = await sb.storage
+          .from('avatars')
+          .upload(path, blob, { contentType: 'image/jpeg', upsert: true });
+        if (upErr) throw upErr;
+
+        const { data: urlData } = sb.storage.from('avatars').getPublicUrl(path);
+        const publicUrl = urlData.publicUrl + '?t=' + Date.now();
+
+        await sb.from('members').update({ avatar_url: publicUrl }).eq('email', session.user.email);
+
+        document.getElementById('avatar-img').src = publicUrl;
+        document.getElementById('avatar-img').style.display = 'block';
+        document.getElementById('avatar-placeholder').style.display = 'none';
+
+        document.getElementById('modal-crop').style.display = 'none';
+        cropperInstance.destroy(); cropperInstance = null;
+      } catch (err) {
+        alert('Erro ao salvar foto: ' + (err.message || err));
+      } finally {
+        btnOk.disabled = false;
+        btnOk.textContent = 'Salvar foto';
+      }
+    }, 'image/jpeg', 0.9);
   });
 
   // Máscara CEP: 00000-000
@@ -964,5 +1021,20 @@
 
   init();
 </script>
+
+<!-- Modal de recorte de foto -->
+<div id="modal-crop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:1000; align-items:center; justify-content:center; padding:20px;">
+  <div style="background:#fff; border-radius:16px; padding:24px; width:100%; max-width:440px; display:flex; flex-direction:column; gap:16px;">
+    <p style="font-family:'Montserrat',sans-serif; font-weight:700; font-size:15px; color:#0D1F2D; margin:0;">Ajustar foto de perfil</p>
+    <div style="width:100%; max-height:360px; overflow:hidden; border-radius:8px; background:#111;">
+      <img id="crop-img" style="display:block; max-width:100%;">
+    </div>
+    <p style="font-size:12px; color:#4a6070; margin:0;">Arraste para reposicionar · Pinça para zoom</p>
+    <div style="display:flex; gap:12px; justify-content:flex-end;">
+      <button id="btn-crop-cancelar" style="padding:10px 20px; border:1.5px solid #0D1F2D; border-radius:8px; background:#fff; font-family:'Montserrat',sans-serif; font-size:13px; font-weight:700; cursor:pointer;">Cancelar</button>
+      <button id="btn-crop-confirmar" style="padding:10px 24px; background:#0D1F2D; color:#fff; border:none; border-radius:8px; font-family:'Montserrat',sans-serif; font-size:13px; font-weight:700; cursor:pointer;">Salvar foto</button>
+    </div>
+  </div>
+</div>
 
 </html>
