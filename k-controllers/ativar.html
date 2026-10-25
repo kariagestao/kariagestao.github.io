@@ -291,6 +291,20 @@
 
       const { data, error } = await sb.auth.signUp({ email, password: senha, options: { data: { name: nome } } });
 
+      // Se já tem conta, envia link de redefinição de senha automaticamente
+      if (error && (error.message === 'User already registered' || error.status === 422)) {
+        const { error: errReset } = await sb.auth.resetPasswordForEmail(email, {
+          redirectTo: 'https://kariagestao.com/k-controllers/membros'
+        });
+        if (errReset) throw new Error('Erro ao enviar link. Tente novamente.');
+
+        msg.className = 'msg ok';
+        msg.innerHTML = 'Você já possui uma conta. <strong>Enviamos um link para redefinir sua senha</strong> no e-mail ' + email + '. Verifique sua caixa de entrada.';
+        btn.disabled = false;
+        spin.classList.remove('ativo');
+        return;
+      }
+
       if (error) throw error;
 
       // Atualiza nome na tabela members
@@ -303,9 +317,7 @@
 
     } catch (err) {
       msg.className = 'msg erro';
-      msg.textContent = err.message === 'User already registered'
-        ? 'Este e-mail já possui conta. Use a página de login.'
-        : err.message || 'Erro ao criar conta. Tente novamente.';
+      msg.textContent = err.message || 'Erro ao criar conta. Tente novamente.';
       btn.disabled = false;
       spin.classList.remove('ativo');
     }
