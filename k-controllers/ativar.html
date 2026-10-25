@@ -238,26 +238,22 @@
   const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M';
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  // ─── Modo 1: chegou pelo link do e-mail (já tem sessão via token no hash) ───
-  // O Supabase JS detecta o access_token no hash automaticamente.
-  // Quando o evento é PASSWORD_RECOVERY, o usuário já está autenticado
-  // e só precisa definir a senha.
+  // Detecta se chegou pelo link do e-mail verificando o hash imediatamente
+  const temTokenNoHash = location.hash.includes('access_token');
 
-  let modoRecuperacao = false;
+  function mostrarModoSenha() {
+    document.getElementById('grupo-nome').style.display = 'none';
+    document.getElementById('grupo-email').style.display = 'none';
+    document.getElementById('badge-sucesso').style.display = 'flex';
+    document.querySelector('.sub').textContent = 'Crie uma senha para acessar sua área de membros agora.';
+  }
 
-  sb.auth.onAuthStateChange(async (event, session) => {
-    if ((event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') && session) {
-      modoRecuperacao = true;
-      // Esconde campos de e-mail e nome (já sabemos quem é)
-      document.getElementById('grupo-nome').style.display = 'none';
-      document.getElementById('grupo-email').style.display = 'none';
-      document.getElementById('badge-sucesso').style.display = 'flex';
-      document.querySelector('.sub').textContent = 'Crie uma senha para acessar sua área de membros agora.';
-      document.getElementById('btn-ativar').textContent = 'Criar minha senha →';
-    }
-  });
+  if (temTokenNoHash) {
+    // Já mostra o formulário simplificado sem esperar o evento assíncrono
+    mostrarModoSenha();
+  }
 
-  // ─── Pré-preenchimento por query params (fallback sem token) ───
+  // Pré-preenchimento por query params (fallback sem token)
   const params = new URLSearchParams(location.search);
   if (params.get('email')) {
     const emailInput = document.getElementById('email');
@@ -295,17 +291,20 @@
     spin.classList.add('ativo');
 
     try {
-      if (modoRecuperacao) {
-        // ── Modo 1: usuário autenticado via link do e-mail → só atualiza a senha
+      // Verifica se há sessão ativa (usuário autenticado via link do e-mail)
+      const { data: { session } } = await sb.auth.getSession();
+
+      if (session) {
+        // ── Modo 1: autenticado via invite link → só define a senha e vai para membros
         const { error } = await sb.auth.updateUser({ password: senha });
         if (error) throw error;
 
         msg.className = 'msg ok';
         msg.textContent = 'Senha criada! Redirecionando para a área de membros...';
-        setTimeout(() => { location.href = '/k-controllers/membros'; }, 1500);
+        setTimeout(() => { location.href = '/k-controllers/membros'; }, 1200);
 
       } else {
-        // ── Modo 2: chegou diretamente (sem link do e-mail) → signUp normal
+        // ── Modo 2: chegou diretamente sem link → signUp normal
         const nome  = document.getElementById('nome').value.trim();
         const email = document.getElementById('email').value.trim();
 
@@ -319,14 +318,12 @@
         const { error } = await sb.auth.signUp({ email, password: senha, options: { data: { name: nome } } });
 
         if (error && (error.message === 'User already registered' || error.status === 422)) {
-          // Auth user já existe → envia link de redefinição
-          await sb.auth.resetPasswordForEmail(email, {
-            redirectTo: 'https://kariagestao.com/k-controllers/ativar',
-          });
+          // Auth user já existe → faz signIn direto com a senha que acabou de digitar
+          const { error: errLogin } = await sb.auth.signInWithPassword({ email, password: senha });
+          if (errLogin) throw new Error('Conta já existe. Acesse pela página de login ou use o link enviado por e-mail.');
           msg.className = 'msg ok';
-          msg.innerHTML = '<strong>Enviamos um link para seu e-mail.</strong> Clique nele para criar sua senha e acessar a área de membros.';
-          btn.disabled = false;
-          spin.classList.remove('ativo');
+          msg.textContent = 'Login realizado! Redirecionando para a área de membros...';
+          setTimeout(() => { location.href = '/k-controllers/membros'; }, 1200);
           return;
         }
 
@@ -336,7 +333,7 @@
 
         msg.className = 'msg ok';
         msg.textContent = 'Conta criada! Redirecionando para a área de membros...';
-        setTimeout(() => { location.href = '/k-controllers/membros'; }, 1500);
+        setTimeout(() => { location.href = '/k-controllers/membros'; }, 1200);
       }
 
     } catch (err) {
