@@ -273,20 +273,19 @@
     spin.classList.add('ativo');
 
     try {
-      // Verifica se o e-mail tem assinatura ativa
-      const { data: membro, error: erroMembro } = await sb
-        .from('members')
-        .select('status')
-        .eq('email', email.toLowerCase())
-        .maybeSingle();
+      // Verifica se o e-mail tem assinatura ativa via função SQL (bypassa RLS para usuário não autenticado)
+      const { data: ativacao, error: erroAtivacao } = await sb
+        .rpc('verificar_ativacao', { p_email: email.toLowerCase() });
 
-      if (erroMembro) throw new Error('Erro ao verificar assinatura. Tente novamente.');
+      if (erroAtivacao) throw new Error('Erro ao verificar assinatura. Tente novamente.');
 
-      if (!membro) {
+      const statusMembro = ativacao?.status;
+
+      if (!statusMembro) {
         throw new Error('Este e-mail não possui uma assinatura ativa. Verifique se usou o mesmo e-mail do pagamento.');
       }
 
-      if (membro.status !== 'active') {
+      if (statusMembro !== 'active') {
         throw new Error('Sua assinatura ainda não foi confirmada. Aguarde alguns minutos e tente novamente.');
       }
 
