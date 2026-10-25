@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>K Controllers — Redefinir senha</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@300;400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+
+<style>
+  :root {
+    --musgo: #0D1F2D;
+    --cobre: #B87333;
+    --claro: #F8F6F3;
+    --texto: #1a2e3f;
+    --texto-suave: #4a6070;
+    --borda: rgba(13,31,45,0.15);
+    --erro: #c0392b;
+    --sucesso: #27ae60;
+    color-scheme: light;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--claro);
+    color: var(--texto);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px max(24px, env(safe-area-inset-left, 0px));
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 460px;
+    box-shadow: 0 4px 32px rgba(13,31,45,0.10);
+  }
+
+  .logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cobre);
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--musgo);
+    margin-bottom: 8px;
+  }
+
+  .sub {
+    font-size: 14px;
+    color: var(--texto-suave);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .form-group { margin-bottom: 20px; }
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+    margin-bottom: 8px;
+  }
+
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--borda);
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: var(--texto);
+    background: #fff;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  input:focus { border-color: var(--cobre); }
+
+  .btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--musgo);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn:hover { background: #162d40; }
+  .btn:active { transform: scale(0.99); }
+  .btn:disabled { background: #a0b0bb; cursor: not-allowed; }
+
+  .msg {
+    font-size: 13px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-top: 16px;
+    display: none;
+  }
+
+  .msg.erro { background: #fdecea; color: var(--erro); display: block; }
+  .msg.ok   { background: #eafaf1; color: var(--sucesso); display: block; }
+
+  .footer-link {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 13px;
+    color: var(--texto-suave);
+  }
+
+  .footer-link a { color: var(--cobre); text-decoration: none; font-weight: 500; }
+
+  .spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    display: none;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  .spinner.ativo { display: inline-block; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 500px) {
+    .card { padding: 32px 24px; }
+  }
+</style>
+
+<!-- Tela 1: formulário para solicitar link de redefinição -->
+<div class="card" id="tela-solicitar">
+  <div class="logo">K Controllers · KARIA Gestão</div>
+  <h1>Redefinir senha</h1>
+  <p class="sub">Informe seu e-mail e enviaremos um link para criar uma nova senha.</p>
+
+  <form id="form-solicitar">
+    <div class="form-group">
+      <label>E-mail</label>
+      <input type="email" id="email" placeholder="seu@email.com" required>
+    </div>
+
+    <button type="submit" class="btn" id="btn-solicitar">
+      <span class="spinner" id="spin-solicitar"></span>
+      Enviar link de redefinição
+    </button>
+
+    <div class="msg" id="msg-solicitar"></div>
+  </form>
+
+  <p class="footer-link">Lembrou a senha? <a href="/k-controllers/login">Entrar</a></p>
+</div>
+
+<!-- Tela 2: formulário para definir a nova senha (chegou pelo link do e-mail) -->
+<div class="card" id="tela-nova-senha" style="display:none;">
+  <div class="logo">K Controllers · KARIA Gestão</div>
+  <h1>Criar nova senha</h1>
+  <p class="sub">Escolha uma nova senha para acessar sua área de membros.</p>
+
+  <form id="form-nova-senha">
+    <div class="form-group">
+      <label>Nova senha</label>
+      <input type="password" id="nova-senha" placeholder="Mínimo 8 caracteres" minlength="8" required>
+    </div>
+
+    <div class="form-group">
+      <label>Confirme a nova senha</label>
+      <input type="password" id="nova-senha2" placeholder="Repita a nova senha" minlength="8" required>
+    </div>
+
+    <button type="submit" class="btn" id="btn-nova-senha">
+      <span class="spinner" id="spin-nova-senha"></span>
+      Salvar nova senha
+    </button>
+
+    <div class="msg" id="msg-nova-senha"></div>
+  </form>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://olgkcfwnbhnngpqqkppm.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  // Se chegou com token de recuperação no hash → mostra tela de nova senha
+  if (location.hash.includes('access_token') && location.hash.includes('type=recovery')) {
+    document.getElementById('tela-solicitar').style.display = 'none';
+    document.getElementById('tela-nova-senha').style.display = 'block';
+  }
+
+  // ── Tela 1: solicita link por e-mail ──────────────────────────────────────
+  document.getElementById('form-solicitar').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value.trim();
+    const btn   = document.getElementById('btn-solicitar');
+    const spin  = document.getElementById('spin-solicitar');
+    const msg   = document.getElementById('msg-solicitar');
+
+    msg.className = 'msg';
+    btn.disabled = true;
+    spin.classList.add('ativo');
+
+    const { error } = await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://kariagestao.com/k-controllers/redefinir-senha',
+    });
+
+    btn.disabled = false;
+    spin.classList.remove('ativo');
+
+    if (error) {
+      msg.className = 'msg erro';
+      msg.textContent = 'Erro ao enviar. Tente novamente.';
+    } else {
+      msg.className = 'msg ok';
+      msg.textContent = 'Link enviado! Verifique seu e-mail e clique no botão de redefinição.';
+    }
+  });
+
+  // ── Tela 2: define a nova senha ───────────────────────────────────────────
+  document.getElementById('form-nova-senha').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const senha  = document.getElementById('nova-senha').value;
+    const senha2 = document.getElementById('nova-senha2').value;
+    const btn    = document.getElementById('btn-nova-senha');
+    const spin   = document.getElementById('spin-nova-senha');
+    const msg    = document.getElementById('msg-nova-senha');
+
+    msg.className = 'msg';
+
+    if (senha !== senha2) {
+      msg.className = 'msg erro';
+      msg.textContent = 'As senhas não coincidem.';
+      return;
+    }
+    if (senha.length < 8) {
+      msg.className = 'msg erro';
+      msg.textContent = 'A senha deve ter ao menos 8 caracteres.';
+      return;
+    }
+
+    btn.disabled = true;
+    spin.classList.add('ativo');
+
+    try {
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) throw new Error('Link expirado. Solicite um novo link de redefinição.');
+
+      const { error } = await sb.auth.updateUser({ password: senha });
+      if (error) throw error;
+
+      msg.className = 'msg ok';
+      msg.textContent = 'Senha atualizada! Redirecionando...';
+      setTimeout(() => { location.href = '/k-controllers/membros'; }, 1200);
+
+    } catch (err) {
+      msg.className = 'msg erro';
+      msg.textContent = err.message || 'Erro ao atualizar senha. Tente novamente.';
+      btn.disabled = false;
+      spin.classList.remove('ativo');
+    }
+  });
+</script>
+
+</html>
