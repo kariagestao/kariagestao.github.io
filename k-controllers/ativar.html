@@ -195,20 +195,20 @@
   <h1>Crie sua senha de acesso</h1>
   <p class="sub">Pagamento confirmado. Configure sua senha para <strong>acessar a área de membros agora</strong>.</p>
 
-  <div class="badge-sucesso">
+  <div class="badge-sucesso" id="badge-sucesso" style="display:none;">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
     Assinatura K Controllers ativada com sucesso
   </div>
 
   <form id="form-ativar">
-    <div class="form-group">
+    <div class="form-group" id="grupo-nome">
       <label>Seu nome</label>
-      <input type="text" id="nome" placeholder="Como prefere ser chamado(a)" required>
+      <input type="text" id="nome" placeholder="Como prefere ser chamado(a)">
     </div>
 
-    <div class="form-group">
+    <div class="form-group" id="grupo-email">
       <label>E-mail</label>
-      <input type="email" id="email" placeholder="seu@email.com" required>
+      <input type="email" id="email" placeholder="seu@email.com">
       <p class="hint">Use o mesmo e-mail do pagamento</p>
     </div>
 
@@ -238,12 +238,31 @@
   const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M';
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  // Pré-preenche nome e e-mail vindos do redirect do Asaas (?name=XXX&email=YYY)
+  // ─── Modo 1: chegou pelo link do e-mail (já tem sessão via token no hash) ───
+  // O Supabase JS detecta o access_token no hash automaticamente.
+  // Quando o evento é PASSWORD_RECOVERY, o usuário já está autenticado
+  // e só precisa definir a senha.
+
+  let modoRecuperacao = false;
+
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if ((event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') && session) {
+      modoRecuperacao = true;
+      // Esconde campos de e-mail e nome (já sabemos quem é)
+      document.getElementById('grupo-nome').style.display = 'none';
+      document.getElementById('grupo-email').style.display = 'none';
+      document.getElementById('badge-sucesso').style.display = 'flex';
+      document.querySelector('.sub').textContent = 'Crie uma senha para acessar sua área de membros agora.';
+      document.getElementById('btn-ativar').textContent = 'Criar minha senha →';
+    }
+  });
+
+  // ─── Pré-preenchimento por query params (fallback sem token) ───
   const params = new URLSearchParams(location.search);
   if (params.get('email')) {
     const emailInput = document.getElementById('email');
     emailInput.value = decodeURIComponent(params.get('email'));
-    emailInput.setAttribute('readonly', true); // e-mail já confirmado pelo Asaas
+    emailInput.setAttribute('readonly', true);
   }
   if (params.get('name')) {
     document.getElementById('nome').value = decodeURIComponent(params.get('name'));
@@ -252,8 +271,6 @@
   document.getElementById('form-ativar').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const nome   = document.getElementById('nome').value.trim();
-    const email  = document.getElementById('email').value.trim();
     const senha  = document.getElementById('senha').value;
     const senha2 = document.getElementById('senha2').value;
     const btn    = document.getElementById('btn-ativar');
@@ -268,52 +285,59 @@
       msg.textContent = 'As senhas não coincidem.';
       return;
     }
+    if (senha.length < 8) {
+      msg.className = 'msg erro';
+      msg.textContent = 'A senha deve ter ao menos 8 caracteres.';
+      return;
+    }
 
     btn.disabled = true;
     spin.classList.add('ativo');
 
     try {
-      // Verifica se o e-mail tem assinatura ativa via função SQL (bypassa RLS para usuário não autenticado)
-      const { data: ativacao, error: erroAtivacao } = await sb
-        .rpc('verificar_ativacao', { p_email: email.toLowerCase() });
-
-      if (erroAtivacao) throw new Error('Erro ao verificar assinatura. Tente novamente.');
-
-      const statusMembro = ativacao?.status;
-
-      if (!statusMembro) {
-        throw new Error('Este e-mail não possui uma assinatura ativa. Verifique se usou o mesmo e-mail do pagamento.');
-      }
-
-      if (statusMembro !== 'active') {
-        throw new Error('Sua assinatura ainda não foi confirmada. Aguarde alguns minutos e tente novamente.');
-      }
-
-      const { data, error } = await sb.auth.signUp({ email, password: senha, options: { data: { name: nome } } });
-
-      // Se já tem conta, envia link de redefinição de senha automaticamente
-      if (error && (error.message === 'User already registered' || error.status === 422)) {
-        const { error: errReset } = await sb.auth.resetPasswordForEmail(email, {
-          redirectTo: 'https://kariagestao.com/k-controllers/membros'
-        });
-        if (errReset) throw new Error('Erro ao enviar link. Tente novamente.');
+      if (modoRecuperacao) {
+        // ── Modo 1: usuário autenticado via link do e-mail → só atualiza a senha
+        const { error } = await sb.auth.updateUser({ password: senha });
+        if (error) throw error;
 
         msg.className = 'msg ok';
-        msg.innerHTML = 'Você já possui uma conta. <strong>Enviamos um link para redefinir sua senha</strong> no e-mail ' + email + '. Verifique sua caixa de entrada.';
-        btn.disabled = false;
-        spin.classList.remove('ativo');
-        return;
+        msg.textContent = 'Senha criada! Redirecionando para a área de membros...';
+        setTimeout(() => { location.href = '/k-controllers/membros'; }, 1500);
+
+      } else {
+        // ── Modo 2: chegou diretamente (sem link do e-mail) → signUp normal
+        const nome  = document.getElementById('nome').value.trim();
+        const email = document.getElementById('email').value.trim();
+
+        const { data: ativacao, error: erroAtivacao } = await sb
+          .rpc('verificar_ativacao', { p_email: email.toLowerCase() });
+
+        if (erroAtivacao) throw new Error('Erro ao verificar assinatura. Tente novamente.');
+        if (!ativacao?.status) throw new Error('Este e-mail não possui uma assinatura ativa. Use o mesmo e-mail do pagamento.');
+        if (ativacao.status !== 'active') throw new Error('Sua assinatura ainda não foi confirmada. Aguarde alguns minutos.');
+
+        const { error } = await sb.auth.signUp({ email, password: senha, options: { data: { name: nome } } });
+
+        if (error && (error.message === 'User already registered' || error.status === 422)) {
+          // Auth user já existe → envia link de redefinição
+          await sb.auth.resetPasswordForEmail(email, {
+            redirectTo: 'https://kariagestao.com/k-controllers/ativar',
+          });
+          msg.className = 'msg ok';
+          msg.innerHTML = '<strong>Enviamos um link para seu e-mail.</strong> Clique nele para criar sua senha e acessar a área de membros.';
+          btn.disabled = false;
+          spin.classList.remove('ativo');
+          return;
+        }
+
+        if (error) throw error;
+
+        await sb.from('members').update({ name: nome }).eq('email', email.toLowerCase());
+
+        msg.className = 'msg ok';
+        msg.textContent = 'Conta criada! Redirecionando para a área de membros...';
+        setTimeout(() => { location.href = '/k-controllers/membros'; }, 1500);
       }
-
-      if (error) throw error;
-
-      // Atualiza nome na tabela members
-      await sb.from('members').update({ name: nome }).eq('email', email.toLowerCase());
-
-      msg.className = 'msg ok';
-      msg.textContent = 'Conta criada! Redirecionando para a área de membros...';
-
-      setTimeout(() => { location.href = '/k-controllers/membros'; }, 1500);
 
     } catch (err) {
       msg.className = 'msg erro';
