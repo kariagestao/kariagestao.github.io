@@ -238,31 +238,17 @@
   const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M';
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-  // Detecta se chegou pelo link do e-mail verificando o hash imediatamente
-  const temTokenNoHash = location.hash.includes('access_token');
-
-  function mostrarModoSenha() {
-    document.getElementById('grupo-nome').style.display = 'none';
-    document.getElementById('grupo-email').style.display = 'none';
-    document.getElementById('badge-sucesso').style.display = 'flex';
-    document.querySelector('.sub').textContent = 'Crie uma senha para acessar sua área de membros agora.';
+  // Esta página só funciona via link enviado por e-mail após o pagamento.
+  // Sem o token no hash → redireciona para login imediatamente.
+  if (!location.hash.includes('access_token')) {
+    location.replace('/k-controllers/login');
   }
 
-  if (temTokenNoHash) {
-    // Já mostra o formulário simplificado sem esperar o evento assíncrono
-    mostrarModoSenha();
-  }
-
-  // Pré-preenchimento por query params (fallback sem token)
-  const params = new URLSearchParams(location.search);
-  if (params.get('email')) {
-    const emailInput = document.getElementById('email');
-    emailInput.value = decodeURIComponent(params.get('email'));
-    emailInput.setAttribute('readonly', true);
-  }
-  if (params.get('name')) {
-    document.getElementById('nome').value = decodeURIComponent(params.get('name'));
-  }
+  // Mostra formulário simplificado (só senha, sem e-mail/nome)
+  document.getElementById('grupo-nome').style.display = 'none';
+  document.getElementById('grupo-email').style.display = 'none';
+  document.getElementById('badge-sucesso').style.display = 'flex';
+  document.querySelector('.sub').textContent = 'Crie uma senha para acessar sua área de membros agora.';
 
   document.getElementById('form-ativar').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -291,54 +277,19 @@
     spin.classList.add('ativo');
 
     try {
-      // Verifica se há sessão ativa (usuário autenticado via link do e-mail)
       const { data: { session } } = await sb.auth.getSession();
+      if (!session) throw new Error('Link expirado ou inválido. Verifique seu e-mail ou entre em contato pelo Instagram @kariagestao.');
 
-      if (session) {
-        // ── Modo 1: autenticado via invite link → só define a senha e vai para membros
-        const { error } = await sb.auth.updateUser({ password: senha });
-        if (error) throw error;
+      const { error } = await sb.auth.updateUser({ password: senha });
+      if (error) throw error;
 
-        msg.className = 'msg ok';
-        msg.textContent = 'Senha criada! Redirecionando para a área de membros...';
-        setTimeout(() => { location.href = '/k-controllers/membros'; }, 1200);
-
-      } else {
-        // ── Modo 2: chegou diretamente sem link → signUp normal
-        const nome  = document.getElementById('nome').value.trim();
-        const email = document.getElementById('email').value.trim();
-
-        const { data: ativacao, error: erroAtivacao } = await sb
-          .rpc('verificar_ativacao', { p_email: email.toLowerCase() });
-
-        if (erroAtivacao) throw new Error('Erro ao verificar assinatura. Tente novamente.');
-        if (!ativacao?.status) throw new Error('Este e-mail não possui uma assinatura ativa. Use o mesmo e-mail do pagamento.');
-        if (ativacao.status !== 'active') throw new Error('Sua assinatura ainda não foi confirmada. Aguarde alguns minutos.');
-
-        const { error } = await sb.auth.signUp({ email, password: senha, options: { data: { name: nome } } });
-
-        if (error && (error.message === 'User already registered' || error.status === 422)) {
-          // Auth user já existe → faz signIn direto com a senha que acabou de digitar
-          const { error: errLogin } = await sb.auth.signInWithPassword({ email, password: senha });
-          if (errLogin) throw new Error('Conta já existe. Acesse pela página de login ou use o link enviado por e-mail.');
-          msg.className = 'msg ok';
-          msg.textContent = 'Login realizado! Redirecionando para a área de membros...';
-          setTimeout(() => { location.href = '/k-controllers/membros'; }, 1200);
-          return;
-        }
-
-        if (error) throw error;
-
-        await sb.from('members').update({ name: nome }).eq('email', email.toLowerCase());
-
-        msg.className = 'msg ok';
-        msg.textContent = 'Conta criada! Redirecionando para a área de membros...';
-        setTimeout(() => { location.href = '/k-controllers/membros'; }, 1200);
-      }
+      msg.className = 'msg ok';
+      msg.textContent = 'Senha criada! Redirecionando para a área de membros...';
+      setTimeout(() => { location.href = '/k-controllers/membros'; }, 1200);
 
     } catch (err) {
       msg.className = 'msg erro';
-      msg.textContent = err.message || 'Erro ao criar conta. Tente novamente.';
+      msg.textContent = err.message || 'Erro ao criar senha. Tente novamente.';
       btn.disabled = false;
       spin.classList.remove('ativo');
     }
