@@ -230,6 +230,23 @@
     btn.disabled = true;
     spin.classList.add('ativo');
 
+    // Verifica se o email existe na tabela members com status active
+    const { data: membro, error: erroMembro } = await sb
+      .from('members')
+      .select('email, status')
+      .eq('email', email)
+      .eq('status', 'active')
+      .maybeSingle();
+
+    if (erroMembro || !membro) {
+      btn.disabled = false;
+      spin.classList.remove('ativo');
+      // Mensagem genérica para não revelar se o email existe ou não
+      msg.className = 'msg ok';
+      msg.textContent = 'Se este e-mail estiver cadastrado, você receberá um link em instantes.';
+      return;
+    }
+
     const { error } = await sb.auth.resetPasswordForEmail(email, {
       redirectTo: 'https://kariagestao.com/k-controllers/redefinir-senha',
     });
@@ -242,7 +259,7 @@
       msg.textContent = 'Erro ao enviar. Tente novamente.';
     } else {
       msg.className = 'msg ok';
-      msg.textContent = 'Link enviado! Verifique seu e-mail e clique no botão de redefinição.';
+      msg.textContent = 'Se este e-mail estiver cadastrado, você receberá um link em instantes.';
     }
   });
 
