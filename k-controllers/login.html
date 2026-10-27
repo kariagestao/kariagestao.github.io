@@ -209,6 +209,14 @@
     if (data.session) location.href = '/k-controllers/membros';
   });
 
+  // Exibe aviso se veio redirecionado por falta de assinatura ativa
+  const params = new URLSearchParams(location.search);
+  if (params.get('acesso') === 'negado') {
+    const msg = document.getElementById('msg');
+    msg.className = 'msg erro';
+    msg.textContent = 'Acesso negado. Sua assinatura não está ativa ou não foi encontrada.';
+  }
+
   document.getElementById('form-login').addEventListener('submit', async (e) => {
     e.preventDefault();
 
