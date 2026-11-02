@@ -135,7 +135,7 @@ tbody td.center { text-align: center; }
 .dre-row.subtotal { font-weight: 600; }
 .dre-section { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--cinza); padding: 12px 16px 4px; }
 
-.evolucao-month { background: var(--branco); border-radius: 10px; padding: 14px 20px; margin-bottom: 8px; box-shadow: 0 1px 4px rgba(13,31,45,0.06); display: grid; grid-template-columns: 80px 1fr 1fr 1fr 1fr; align-items: center; gap: 16px; }
+.evolucao-month { background: var(--branco); border-radius: 10px; padding: 14px 20px; margin-bottom: 8px; box-shadow: 0 1px 4px rgba(13,31,45,0.06); display: grid; grid-template-columns: 80px 1fr 1fr 1fr 1fr 1fr 1fr; align-items: center; gap: 12px; }
 .evolucao-mes-label { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; }
 .evolucao-item { text-align: center; }
 .evolucao-item-label { font-size: 10px; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.5px; }
@@ -1427,19 +1427,24 @@ function renderEvolucao() {
     </div>`;
 
   // === MÉDIAS DO PERÍODO ===
-  const nMeses = meses.length || 1;
+  // Se filtro for um ano específico, divide por 12 sempre; senão pelo nº de meses com dados
+  const nMeses = anoFiltro ? 12 : (meses.length || 1);
+  const nMesesLabel = anoFiltro ? '12 meses' : `${meses.length} meses`;
   const medRec  = acRec  / nMeses;
   const medProl = acProl / nMeses;
   const medDivL = acDivL / nMeses;
   const medImp  = acImp  / nMeses;
   const medDesp = acDesp / nMeses;
   const medRes  = acRes  / nMeses;
+  // Margem de lucro: Resultado / Receita * 100
+  const margemAcum = acRec > 0 ? (acRes / acRec * 100) : 0;
+  const margemMed  = medRec > 0 ? (medRes / medRec * 100) : 0;
   document.getElementById('evolucaoMedias').innerHTML=`
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px">
       <div class="card receita">
         <div class="card-label">Faturamento Médio</div>
         <div class="card-valor pos">${fmt(medRec)}</div>
-        <div class="card-sub">por mês (${nMeses} meses)</div>
+        <div class="card-sub">por mês (${nMesesLabel})</div>
       </div>
       <div class="card despesa">
         <div class="card-label">Pró-labore Médio</div>
@@ -1466,6 +1471,11 @@ function renderEvolucao() {
         <div class="card-valor ${medRes>=0?'pos':'neg'}">${fmtSgn(medRes)}</div>
         <div class="card-sub">por mês</div>
       </div>
+      <div class="card" style="background:linear-gradient(135deg,#0D1F2D 0%,#1a3a52 100%);color:#fff;border:none">
+        <div class="card-label" style="color:rgba(255,255,255,0.7)">Margem de Lucro</div>
+        <div class="card-valor" style="color:${margemAcum>=0?'#4ade80':'#f87171'};font-size:1.6rem">${margemAcum.toFixed(1)}%</div>
+        <div class="card-sub" style="color:rgba(255,255,255,0.55)">do faturamento ${anoFiltro||'geral'}</div>
+      </div>
     </div>`;
 
   // === RESUMO MENSAL ===
@@ -1476,6 +1486,7 @@ function renderEvolucao() {
     const imp =txFiltradas.filter(t=>getMesAno(t.data)===m&&t.cat==='Impostos').reduce((s,t)=>s+t.valor,0);
     const desp=txFiltradas.filter(t=>getMesAno(t.data)===m&&t.valor<0&&!CATS_RECEITA.includes(t.cat)&&t.cat!=='Reembolso'&&t.cat!=='Pró-labore'&&t.cat!=='Divisão de Lucros').reduce((s,t)=>s+t.valor,0);
     const res =rec+prol+divl+imp+desp;
+    const marg=rec>0?(res/rec*100):0;
     return `<div class="evolucao-month">
       <div class="evolucao-mes-label">${getMesLabel(m)}</div>
       <div class="evolucao-item"><div class="evolucao-item-label">Receita</div><div class="evolucao-item-val valor-pos">${fmt(rec)}</div></div>
@@ -1484,6 +1495,7 @@ function renderEvolucao() {
       <div class="evolucao-item"><div class="evolucao-item-label">Impostos</div><div class="evolucao-item-val valor-neg">${fmt(Math.abs(imp))}</div></div>
       <div class="evolucao-item"><div class="evolucao-item-label">Desp. Op.</div><div class="evolucao-item-val valor-neg">${fmt(Math.abs(desp))}</div></div>
       <div class="evolucao-item"><div class="evolucao-item-label">Resultado</div><div class="evolucao-item-val" style="color:${res>=0?'var(--verde)':'var(--vermelho)'}">${fmtSgn(res)}</div></div>
+      <div class="evolucao-item"><div class="evolucao-item-label">Margem</div><div class="evolucao-item-val" style="color:${marg>=0?'var(--verde)':'var(--vermelho)'};font-weight:700">${marg.toFixed(1)}%</div></div>
     </div>`;
   }).join('');
 }
