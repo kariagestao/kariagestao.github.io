@@ -672,7 +672,11 @@ function parseBR(d) {
 }
 function hoje()     { const n=new Date(); return pad(n.getDate())+'/'+pad(n.getMonth()+1)+'/'+n.getFullYear(); }
 function mesAtual() { const n=new Date(); return pad(n.getMonth()+1)+'/'+n.getFullYear(); }
-function getMesAno(d) { if(!d) return ''; const p=d.split('/'); return p[1]+'/'+p[2]; }
+function getMesAno(d) {
+  if(!d) return '';
+  if(d.includes('-')&&d.indexOf('-')===4){ const p=d.split('-'); return p[1]+'/'+p[0]; } // YYYY-MM-DD → MM/YYYY
+  const p=d.split('/'); return p[1]+'/'+p[2]; // DD/MM/YYYY → MM/YYYY
+}
 function getMesLabel(ma) {
   const ms=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   const [m,y] = ma.split('/'); return ms[+m-1]+'/'+y.slice(2);
@@ -1371,7 +1375,9 @@ function renderEvolucao() {
     }))
   ];
 
-  const txFiltradas=anoFiltro?todasTx.filter(t=>t.data.slice(-4)===anoFiltro):todasTx;
+  // Extrai ano independente do formato (DD/MM/YYYY ou YYYY-MM-DD)
+  function getAno(d){ if(!d) return ''; return d.includes('-')&&d.indexOf('-')===4 ? d.slice(0,4) : d.slice(-4); }
+  const txFiltradas=anoFiltro?todasTx.filter(t=>getAno(t.data)===anoFiltro):todasTx;
 
   const meses=[...new Set(txFiltradas.map(t=>getMesAno(t.data)))].sort((a,b)=>parseBR('01/'+a)-parseBR('01/'+b));
   const recArr=meses.map(m=>txFiltradas.filter(t=>getMesAno(t.data)===m&&CATS_RECEITA.includes(t.cat)).reduce((s,t)=>s+t.valor,0));
