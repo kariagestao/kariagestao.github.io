@@ -497,7 +497,7 @@
         <div class="chapter-item" style="color:var(--cobre);font-weight:500;">+ 23 capítulos adicionais</div>
       </div>
 
-      <p style="margin-top:2rem;font-size:0.82rem;">Prefere o exemplar físico? <a href="https://link.amazon/B0aegZZbI" style="color:var(--cobre);font-weight:600;" target="_blank" rel="noopener nofollow">Adquira na Amazon →</a></p>
+      <p style="margin-top:2rem;font-size:0.82rem;">Prefere o exemplar físico? <a href="/livro-legal-operations" style="color:var(--cobre);font-weight:600;">Adquira na Amazon →</a></p>
     </div>
 
     <!-- FORM CARD -->
@@ -531,8 +531,13 @@
 
       <div class="success-state" id="success-state">
         <div class="success-icon">✅</div>
-        <h3>Download iniciado!</h3>
-        <p>Seu e-book está sendo baixado agora.</p>
+        <h3>Pronto! Seu e-book está aqui.</h3>
+        <p>Obrigada pelo interesse. Clique abaixo para fazer o download.</p>
+        <a href="/downloads/legal-operations-2026.pdf" class="btn-download-direct" download>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Baixar Legal Operations PDF
+        </a>
+        <p style="margin-top:1.25rem;font-size:0.72rem;">Enviamos o link também para o seu e-mail.</p>
       </div>
     </div>
 
@@ -550,7 +555,7 @@
           <span class="autora-card__cap">Capítulo 23 · Diagnóstico e Mapeamento de Maturidade Operacional</span>
         </div>
       </div>
-      <p class="autora-card__bio">Advogada, Especialista em Controladoria Jurídica, Pós-graduada em Legal Ops e Controladoria Jurídica e MBA em Gestão de Processos, com atuação direta na estruturação operacional de escritórios de advocacia de diferentes portes e especialidades. Fundadora da KARIA Gestão, consultoria especializada em Controladoria Jurídica, desenvolveu um método próprio de diagnóstico e acompanhamento por maturidade, que é exatamente o tema do capítulo que assina nesta obra.</p>
+      <p class="autora-card__bio">Advogada com quase dez anos de atuação direta na estruturação operacional de escritórios de advocacia de diferentes portes e especialidades. Fundadora da KARIA Gestão, consultoria especializada em Controladoria Jurídica, desenvolveu um método próprio de diagnóstico e acompanhamento por maturidade — que é exatamente o tema do capítulo que assina nesta obra. Pós-graduada em Legal Ops e Controladoria Jurídica. MBA em Gestão de Processos.</p>
       <a href="https://www.kariagestao.com/sobre" class="autora-card__link">Conhecer o trabalho da Nathalya →</a>
     </div>
   </div>
@@ -593,14 +598,7 @@
       });
     } catch(err) {}
 
-    // Dispara o download imediatamente e mostra confirmação
-    var link = document.createElement('a');
-    link.href = '/downloads/legal-operations-2026.pdf';
-    link.download = 'Legal-Operations-2026.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
+    // Libera o download independente do resultado da API
     document.getElementById('form-state').style.display = 'none';
     document.getElementById('success-state').style.display = 'block';
   });
