@@ -1019,10 +1019,6 @@
 
         <!-- Formulário -->
         <form class="caso-real-form" id="form-caso-real" action="https://api.web3forms.com/submit" method="POST">
-          <input type="hidden" name="access_key" value="1062412a-df27-4597-9e4c-d921a4cdc6d9">
-          <input type="hidden" name="subject" value="Caso Real do Mês - K. Controllers">
-          <input type="hidden" name="from_name" value="K. Controllers">
-
           <div class="caso-form-row">
             <div class="caso-form-group">
               <label for="caso-nome">Seu nome</label>
@@ -1584,10 +1580,17 @@
     msg.textContent = '';
 
     try {
-      const formData = new FormData(this);
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        body: formData
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: '1062412a-df27-4597-9e4c-d921a4cdc6d9',
+          subject: 'Caso Real do Mês - K. Controllers',
+          from_name: 'K. Controllers',
+          nome: document.getElementById('caso-nome').value,
+          email: document.getElementById('caso-email').value,
+          caso: document.getElementById('caso-descricao').value
+        })
       });
       const result = await response.json();
 
