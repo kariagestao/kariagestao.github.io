@@ -205,6 +205,11 @@
   const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M';
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
+  // Se chegou com token de recuperação, manda para ativar.html para criar senha
+  if (location.hash && location.hash.includes('type=recovery')) {
+    location.replace('/k-controllers/ativar' + location.hash);
+  }
+
   // Redireciona se já logado
   sb.auth.getSession().then(({ data }) => {
     if (data.session) location.href = '/k-controllers/membros';
