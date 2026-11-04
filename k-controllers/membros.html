@@ -1587,9 +1587,9 @@
           access_key: '1062412a-df27-4597-9e4c-d921a4cdc6d9',
           subject: 'Caso Real do Mês - K. Controllers',
           from_name: 'K. Controllers',
-          nome: document.getElementById('caso-nome').value,
+          name: document.getElementById('caso-nome').value,
           email: document.getElementById('caso-email').value,
-          caso: document.getElementById('caso-descricao').value
+          message: document.getElementById('caso-descricao').value
         })
       });
       const result = await response.json();
@@ -1668,7 +1668,7 @@
       }
 
       // Carrega dados do perfil (falha silenciosamente — não bloqueia o app)
-      try { await carregarPerfil(session); } catch(e) { console.warn('Perfil não carregado:', e); }
+      try { await carregarPerfil(session); preencherCasoReal(); } catch(e) { console.warn('Perfil não carregado:', e); }
 
       // Mostra o app
       document.getElementById('loading').style.display = 'none';
