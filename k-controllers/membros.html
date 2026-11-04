@@ -363,6 +363,92 @@
     white-space: nowrap;
   }
 
+  /* VÍDEO BOAS-VINDAS */
+  .aula-bv {
+    background: var(--musgo);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .aula-bv-icon {
+    width: 44px; height: 44px;
+    background: rgba(184,115,51,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    color: var(--cobre);
+  }
+  .aula-bv-info { flex: 1; }
+  .aula-bv-info h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px; font-weight: 700;
+    color: var(--claro);
+    margin-bottom: 3px;
+  }
+  .aula-bv-info p { font-size: 12px; color: rgba(248,246,243,0.6); line-height: 1.4; }
+  .aula-bv-badge {
+    font-size: 11px; font-weight: 600;
+    color: rgba(248,246,243,0.5);
+    border: 1px solid rgba(248,246,243,0.15);
+    border-radius: 20px; padding: 4px 10px;
+    white-space: nowrap;
+  }
+
+  /* COMECE AQUI — guia inline */
+  .comece-wrap { max-width: 680px; }
+  .comece-section { margin-bottom: 36px; }
+  .comece-label {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--cobre); margin-bottom: 6px;
+  }
+  .comece-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px; font-weight: 700;
+    color: var(--musgo); margin-bottom: 12px; line-height: 1.3;
+  }
+  .comece-section p { font-size: 14px; color: var(--texto); margin-bottom: 10px; line-height: 1.7; }
+  .comece-section ul { font-size: 14px; color: var(--texto); padding-left: 20px; margin-bottom: 10px; line-height: 1.7; }
+  .comece-section ul li { margin-bottom: 4px; }
+  .comece-callout {
+    background: rgba(13,31,45,0.04);
+    border-left: 3px solid var(--cobre);
+    padding: 14px 18px; border-radius: 0 6px 6px 0;
+    margin: 16px 0; font-size: 13px;
+    color: var(--texto-suave); font-style: italic;
+  }
+  .comece-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
+  .comece-card {
+    background: var(--branco); border: 1px solid var(--borda);
+    border-radius: 8px; padding: 16px; display: flex; gap: 12px;
+  }
+  .comece-card-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 800;
+    color: var(--cobre); min-width: 22px;
+  }
+  .comece-card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px; font-weight: 700;
+    color: var(--musgo); margin-bottom: 4px;
+  }
+  .comece-card-desc { font-size: 12px; color: var(--texto-suave); line-height: 1.5; }
+  .comece-contact { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+  .comece-contact-item {
+    background: var(--branco); border: 1px solid var(--borda);
+    border-radius: 8px; padding: 12px 16px;
+  }
+  .comece-contact-label {
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--cobre); display: block; margin-bottom: 2px;
+  }
+  .comece-contact-val { font-size: 14px; color: var(--musgo); font-weight: 600; }
+  .comece-divider { border: none; border-top: 1px solid var(--borda); margin: 28px 0; }
+
   /* FILTROS BIBLIOTECA */
   .biblioteca-filtros {
     display: flex;
@@ -1158,21 +1244,6 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
               Guia
             </span>
-            <h4>Guia de Boas-Vindas</h4>
-            <p>Tudo que você precisa saber para aproveitar ao máximo a K Controllers: biblioteca, aulas, Caso Real e comunidade.</p>
-            <div class="bib-card-acoes">
-              <a class="bib-btn-ver" href="/k-controllers/biblioteca/guia-boas-vindas.html" target="_blank">
-                Acessar
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
-            </div>
-          </div>
-
-          <div class="bib-card">
-            <span class="bib-card-tipo">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-              Guia
-            </span>
             <h4>Mapa de Competências do Controller Jurídico</h4>
             <p>Competências técnicas e comportamentais essenciais para atuar com autoridade. Inclui escala de autoavaliação.</p>
             <div class="bib-card-acoes">
@@ -1354,6 +1425,16 @@
 
     <!-- Painel Aulas -->
     <div class="painel" id="painel-aulas">
+      <div class="aula-bv">
+        <div class="aula-bv-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <div class="aula-bv-info">
+          <h4>Vídeo de Boas-Vindas</h4>
+          <p>Uma mensagem especial da Nathalya para você começar bem.</p>
+        </div>
+        <div class="aula-bv-badge">Em breve</div>
+      </div>
       <div class="aulas-intro">
         <h2>Aulas exclusivas</h2>
         <p>Uma nova aula é adicionada todo mês. Assista no seu ritmo, quantas vezes quiser.</p>
@@ -1410,44 +1491,129 @@
       </div>
     </div>
 
-    <!-- Painel Orientações -->
+    <!-- Painel Orientações / Comece Aqui -->
     <div class="painel ativo" id="painel-orientacoes">
-      <div class="orientacoes-wrap">
+      <div class="comece-wrap">
 
-        <div class="orientacao-boas-vindas">
-          <div class="orientacao-bv-texto">
-            <h2>Bem-vindo(a) à K Controllers</h2>
-            <p>Fico muito feliz em ter você aqui. Este é um espaço criado especialmente para Controllers Jurídicos que querem crescer com consistência, trocar experiências reais e ter acesso a conteúdo direto ao ponto.</p>
-            <p>Abaixo você encontra tudo o que precisa para começar.</p>
+        <div class="comece-section">
+          <p class="comece-label">Introdução</p>
+          <h2 class="comece-heading">Bem-vindo(a) à K Controllers</h2>
+          <p>Fico muito feliz em ter você aqui. Este espaço foi criado especialmente para Controllers Jurídicos que querem crescer com consistência, trocar experiências reais e ter acesso a conteúdo direto ao ponto.</p>
+          <p>Neste guia você encontra tudo o que precisa saber para aproveitar ao máximo a comunidade desde o primeiro dia.</p>
+          <div class="comece-callout">
+            "A Controladoria Jurídica ainda é uma área nova no mercado, e é exatamente por isso que estar em comunidade faz toda a diferença."
           </div>
         </div>
 
-        <div class="orientacao-grid">
+        <hr class="comece-divider">
 
-          <div class="orientacao-card">
-            <div class="orientacao-num">01</div>
-            <h3>Acesse o grupo exclusivo</h3>
-            <p>A troca entre membros acontece no nosso grupo. Você será adicionado(a) manualmente. Caso não seja incluído(a) em até 1 dia útil, entre em contato pelo WhatsApp <strong>(51) 3376-5996</strong>.</p>
+        <div class="comece-section">
+          <p class="comece-label">Sobre a comunidade</p>
+          <h2 class="comece-heading">O que é a K Controllers</h2>
+          <p>K Controllers é uma comunidade criada pela Nathalya Pereira, especialista em Controladoria Jurídica, voltada exclusivamente para profissionais que atuam ou querem atuar com Controladoria Jurídica em escritórios de advocacia.</p>
+          <p>Aqui você encontra:</p>
+          <ul>
+            <li>Materiais práticos prontos para usar no seu dia a dia</li>
+            <li>Conteúdos sobre gestão, processos e indicadores jurídicos</li>
+            <li>Aulas temáticas mensais gravadas</li>
+            <li>Troca direta com outros Controllers e com a Nathalya</li>
+          </ul>
+        </div>
+
+        <hr class="comece-divider">
+
+        <div class="comece-section">
+          <p class="comece-label">Estrutura da área de membros</p>
+          <h2 class="comece-heading">Como a comunidade está organizada</h2>
+          <p>A área de membros está dividida em abas. Veja o que você encontra em cada uma:</p>
+          <div class="comece-cards">
+            <div class="comece-card">
+              <div class="comece-card-num">01</div>
+              <div>
+                <p class="comece-card-title">Comece Aqui</p>
+                <p class="comece-card-desc">Orientações iniciais. Leia antes de qualquer outra coisa.</p>
+              </div>
+            </div>
+            <div class="comece-card">
+              <div class="comece-card-num">02</div>
+              <div>
+                <p class="comece-card-title">Biblioteca</p>
+                <p class="comece-card-desc">Guias, checklists, modelos, roteiros e ebooks de Controladoria Jurídica.</p>
+              </div>
+            </div>
+            <div class="comece-card">
+              <div class="comece-card-num">03</div>
+              <div>
+                <p class="comece-card-title">Aulas</p>
+                <p class="comece-card-desc">Aulas temáticas mensais. Nova aula adicionada todo mês.</p>
+              </div>
+            </div>
+            <div class="comece-card">
+              <div class="comece-card-num">04</div>
+              <div>
+                <p class="comece-card-title">Caso Real</p>
+                <p class="comece-card-desc">Submeta seu caso para concorrer a uma sessão individual de 1h com a Nathalya.</p>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <div class="orientacao-card">
-            <div class="orientacao-num">02</div>
-            <h3>Explore a Biblioteca</h3>
-            <p>Na aba <strong>Biblioteca</strong> você encontra modelos, templates e materiais práticos para usar no seu dia a dia. Novos conteúdos são adicionados com frequência.</p>
+        <hr class="comece-divider">
+
+        <div class="comece-section">
+          <p class="comece-label">Comunidade</p>
+          <h2 class="comece-heading">Acesse o grupo exclusivo</h2>
+          <p>A troca entre membros acontece no grupo da comunidade. Você será adicionada manualmente pela Nathalya após confirmação do pagamento.</p>
+          <p>Caso não seja incluída em até 1 dia útil, entre em contato:</p>
+          <div class="comece-contact">
+            <div class="comece-contact-item">
+              <span class="comece-contact-label">WhatsApp</span>
+              <span class="comece-contact-val">(51) 3376-5996</span>
+            </div>
+            <div class="comece-contact-item">
+              <span class="comece-contact-label">Instagram</span>
+              <span class="comece-contact-val">@kariagestao</span>
+            </div>
           </div>
+        </div>
 
-          <div class="orientacao-card">
-            <div class="orientacao-num">03</div>
-            <h3>Acesse as Aulas</h3>
-            <p>Na aba <strong>Aulas</strong> você encontra conteúdos gravados exclusivos. Uma nova aula temática é adicionada todo mês.</p>
+        <hr class="comece-divider">
+
+        <div class="comece-section">
+          <p class="comece-label">Benefício exclusivo</p>
+          <h2 class="comece-heading">Caso Real do Mês</h2>
+          <p>Todo mês você pode submeter um caso real que está vivenciando ou que já vivenciou no seu escritório. Pode ser um conflito de gestão, um desafio de fluxo, uma situação com sócios, equipe ou cliente.</p>
+          <p>Entre os casos submetidos, um é selecionado para uma <strong>sessão individual de 1 hora com a Nathalya</strong>: análise do que aconteceu, o que poderia ser feito diferente e como a gestão estratégica se aplica àquele contexto específico. Após o encontro, você recebe uma <strong>ata escrita</strong> com as considerações e encaminhamentos.</p>
+          <div class="comece-callout">
+            <strong>Como funciona o ciclo:</strong> Submissões abertas até o dia 15 de cada mês. O encontro acontece até o dia 30 do mesmo mês. Membros que entram após o dia 15 participam a partir do mês seguinte. Todos os dados são mantidos sob sigilo absoluto.
           </div>
+        </div>
 
-          <div class="orientacao-card">
-            <div class="orientacao-num">04</div>
-            <h3>Dúvidas? Fale comigo</h3>
-            <p>Me chame diretamente pelo grupo ou pelo Instagram <strong>@kariagestao</strong>. Estou aqui para apoiar sua jornada.</p>
+        <hr class="comece-divider">
+
+        <div class="comece-section">
+          <p class="comece-label">Materiais</p>
+          <h2 class="comece-heading">Biblioteca de materiais</h2>
+          <p>A biblioteca é o coração da K Controllers. Você encontra materiais organizados nas seguintes categorias:</p>
+          <ul>
+            <li><strong>Guias:</strong> conteúdos de referência para o seu dia a dia</li>
+            <li><strong>Checklists:</strong> ferramentas de verificação prontas para usar</li>
+            <li><strong>Modelos:</strong> documentos e relatórios adaptáveis ao seu contexto</li>
+            <li><strong>Roteiros:</strong> estruturas de reuniões e alinhamentos com os escritórios</li>
+            <li><strong>Ebooks:</strong> publicações para leitura aprofundada</li>
+          </ul>
+          <div class="comece-callout">
+            Novos materiais são adicionados com frequência. Fique de olho nas atualizações pelo grupo.
           </div>
+        </div>
 
+        <hr class="comece-divider">
+
+        <div class="comece-section">
+          <p class="comece-label">Suporte</p>
+          <h2 class="comece-heading">Dúvidas ou sugestões?</h2>
+          <p>Chame diretamente no grupo da comunidade ou pelo Instagram <strong>@kariagestao</strong>. A Nathalya está aqui para apoiar sua jornada como Controller Jurídico.</p>
+          <p>Seja muito bem-vindo(a). Que essa comunidade seja um espaço de crescimento real para você.</p>
         </div>
 
       </div>
