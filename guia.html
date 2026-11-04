@@ -513,7 +513,7 @@ body { padding-top: 0 !important; }
         <p class="r-desc">O escritório ainda opera de forma reativa, sem processos definidos. Esse é o momento de estruturar as bases antes de escalar. O Guia mostra exatamente por onde começar.</p>
         <div class="r-actions">
           <a href="/downloads/guia-maturidade-juridica.pdf" download class="r-btn-pdf">⬇ Baixar o Guia de Maturidade (PDF)</a>
-          <a href="https://www.kariagestao.com/#contato" class="r-btn-cta">Quero evoluir minha gestão →</a>
+          <a id="wppBaixa" href="#" target="_blank" class="r-btn-cta">Quero saber como evoluir →</a>
         </div>
         <div class="r-social">
           <a href="https://instagram.com/kariagestao" target="_blank">
@@ -535,7 +535,7 @@ body { padding-top: 0 !important; }
         <p class="r-desc">Existem iniciativas de gestão, mas sem consistência. O risco está na dependência do sócio e na falta de processos padronizados. O Guia indica os próximos passos para ganhar consistência.</p>
         <div class="r-actions">
           <a href="/downloads/guia-maturidade-juridica.pdf" download class="r-btn-pdf">⬇ Baixar o Guia de Maturidade (PDF)</a>
-          <a href="https://www.kariagestao.com/#contato" class="r-btn-cta">Quero evoluir minha gestão →</a>
+          <a id="wppMedia" href="#" target="_blank" class="r-btn-cta">Quero saber como evoluir →</a>
         </div>
         <div class="r-social">
           <a href="https://instagram.com/kariagestao" target="_blank">
@@ -557,7 +557,7 @@ body { padding-top: 0 !important; }
         <p class="r-desc">O escritório tem processos consolidados e dados para decisão. O próximo passo é refinar indicadores, escalar com consistência e garantir que a estrutura acompanhe o crescimento.</p>
         <div class="r-actions">
           <a href="/downloads/guia-maturidade-juridica.pdf" download class="r-btn-pdf">⬇ Baixar o Guia de Maturidade (PDF)</a>
-          <a href="https://www.kariagestao.com/#contato" class="r-btn-cta">Quero falar com a KARIA Gestão →</a>
+          <a id="wppAlta" href="#" target="_blank" class="r-btn-cta">Quero falar com a KARIA Gestão →</a>
         </div>
         <div class="r-social">
           <a href="https://instagram.com/kariagestao" target="_blank">
@@ -849,12 +849,22 @@ function submitQuiz() {
 }
 
 function showResult(total) {
-  var id, scoreEl;
-  if (total <= 10) { id = 'resBaixa'; scoreEl = 'scoreBaixa'; }
-  else if (total <= 20) { id = 'resMedia'; scoreEl = 'scoreMedia'; }
-  else { id = 'resAlta'; scoreEl = 'scoreAlta'; }
+  var nivel, id, scoreEl, wppId;
+  if (total <= 10) {
+    nivel = 'Base Operacional'; id = 'resBaixa'; scoreEl = 'scoreBaixa'; wppId = 'wppBaixa';
+  } else if (total <= 20) {
+    nivel = 'Em Desenvolvimento'; id = 'resMedia'; scoreEl = 'scoreMedia'; wppId = 'wppMedia';
+  } else {
+    nivel = 'Alta Maturidade'; id = 'resAlta'; scoreEl = 'scoreAlta'; wppId = 'wppAlta';
+  }
   document.getElementById(scoreEl).innerHTML = total + ' <span>de 30 pontos</span>';
   document.getElementById(id).classList.add('active');
+
+  // Monta link WhatsApp com mensagem pré-preenchida
+  var msg = 'Olá! Realizei a autoavaliação da KARIA Gestão e meu resultado foi *' + nivel + '* (' + total + '/30 pontos). Gostaria de entender como a KARIA pode me ajudar a evoluir.';
+  var wppLink = 'https://wa.me/5551933765996?text=' + encodeURIComponent(msg);
+  var btn = document.getElementById(wppId);
+  if (btn) btn.href = wppLink;
 }
 
 // ── NAV ──

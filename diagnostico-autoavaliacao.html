@@ -394,7 +394,7 @@ body{
         <div class="result-score">Pontuação: <strong id="score-baixa">0</strong> de 30 pontos</div>
         <p class="result-text">Você já identificou a importância de estruturar a controladoria do seu escritório, mas ainda enfrenta muitos desafios. Provavelmente há ausência de padronização nos processos, uso de ferramentas básicas ou inexistentes, e uma gestão de prazos que depende muito das pessoas e pouco dos sistemas.</p>
         <div class="result-cta">
-          <a href="https://kariagestao.com/#contato" class="btn-result-main">Quero evoluir minha gestão →</a>
+          <a id="wppBaixa" href="#" target="_blank" class="btn-result-main">Quero evoluir minha gestão →</a>
           <a href="/downloads/guia-maturidade-juridica.pdf" download class="btn-result-sec">⬇ Baixar Guia de Maturidade (PDF)</a>
         </div>
         <div class="result-divider">Acompanhe a KARIA</div>
@@ -420,7 +420,7 @@ body{
         <div class="result-score">Pontuação: <strong id="score-media">0</strong> de 30 pontos</div>
         <p class="result-text">Você já iniciou um movimento de organização da controladoria do seu escritório, mas ainda há bastante espaço para melhorias. Talvez você conte com algumas ferramentas e rotinas definidas, mas elas ainda não estão integradas nem sistematizadas de forma eficiente.</p>
         <div class="result-cta">
-          <a href="https://kariagestao.com/#contato" class="btn-result-main">Quero avançar para o próximo nível →</a>
+          <a id="wppMedia" href="#" target="_blank" class="btn-result-main">Quero avançar para o próximo nível →</a>
           <a href="/downloads/guia-maturidade-juridica.pdf" download class="btn-result-sec">⬇ Baixar Guia de Maturidade (PDF)</a>
         </div>
         <div class="result-divider">Acompanhe a KARIA</div>
@@ -446,7 +446,7 @@ body{
         <div class="result-score">Pontuação: <strong id="score-alta">0</strong> de 30 pontos</div>
         <p class="result-text">Parabéns! Você atingiu um alto nível de excelência na controladoria jurídica. Os processos são padronizados e eficientes, as ferramentas estão bem implementadas e integradas, e há uma cultura voltada para dados e melhoria contínua.</p>
         <div class="result-cta">
-          <a href="https://kariagestao.com/#contato" class="btn-result-main">Falar com a KARIA Gestão →</a>
+          <a id="wppAlta" href="#" target="_blank" class="btn-result-main">Falar com a KARIA Gestão →</a>
           <a href="/downloads/guia-maturidade-juridica.pdf" download class="btn-result-sec">⬇ Baixar Guia de Maturidade (PDF)</a>
         </div>
         <div class="result-divider">Acompanhe a KARIA</div>
@@ -604,12 +604,25 @@ function showResult(total) {
   document.getElementById('screen-form').style.display = 'none';
   document.getElementById('screen-result').style.display = 'block';
 
-  let which;
-  if (total <= 10) { which = 'baixa'; document.getElementById('score-baixa').textContent = total; }
-  else if (total <= 20) { which = 'media'; document.getElementById('score-media').textContent = total; }
-  else { which = 'alta'; document.getElementById('score-alta').textContent = total; }
+  let which, nivel, wppId;
+  if (total <= 10) {
+    which = 'baixa'; nivel = 'Base Operacional'; wppId = 'wppBaixa';
+    document.getElementById('score-baixa').textContent = total;
+  } else if (total <= 20) {
+    which = 'media'; nivel = 'Em Desenvolvimento'; wppId = 'wppMedia';
+    document.getElementById('score-media').textContent = total;
+  } else {
+    which = 'alta'; nivel = 'Alta Maturidade'; wppId = 'wppAlta';
+    document.getElementById('score-alta').textContent = total;
+  }
 
   document.getElementById('result-' + which).style.display = 'block';
+
+  var msg = 'Olá! Realizei a autoavaliação da KARIA Gestão e meu resultado foi *' + nivel + '* (' + total + '/30 pontos). Gostaria de entender como a KARIA pode me ajudar a evoluir.';
+  var wppLink = 'https://wa.me/555133765996?text=' + encodeURIComponent(msg);
+  var btn = document.getElementById(wppId);
+  if (btn) btn.href = wppLink;
+
   window.scrollTo(0, 0);
 }
 </script>
