@@ -1268,64 +1268,82 @@
   // ── Auth check ────────────────────────────────────────────────────────────────
 
   async function init() {
-    const { data: { session } } = await sb.auth.getSession();
-
-    if (!session) {
-      location.href = '/k-controllers/login';
-      return;
-    }
-
-    // Busca membro: aceita active OU cancelled ainda dentro do período
-    const { data: membro, error: erroMembro } = await sb
-      .from('members')
-      .select('name, status, plan_end_date')
-      .eq('email', session.user.email)
-      .maybeSingle();
-
-    if (erroMembro || !membro) {
-      await sb.auth.signOut();
-      location.href = '/k-controllers/login?acesso=negado';
-      return;
-    }
-
-    const agora = new Date();
-    const statusOk = membro.status === 'active' ||
-      (membro.status === 'cancelled' && membro.plan_end_date && new Date(membro.plan_end_date) > agora);
-
-    if (!statusOk) {
-      await sb.auth.signOut();
-      location.href = '/k-controllers/login?acesso=negado';
-      return;
-    }
-
-    const nome = membro.name || session.user.user_metadata?.name || session.user.email.split('@')[0];
-    document.getElementById('nome-membro').textContent = nome;
-    document.getElementById('titulo-boas-vindas').textContent = `Olá, ${nome.split(' ')[0]}! 👋`;
-
-    // Banner se cancelado mas ainda com acesso
-    if (membro.status === 'cancelled' && membro.plan_end_date) {
-      const dataFmt = new Date(membro.plan_end_date).toLocaleDateString('pt-BR', {
-        timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', year: 'numeric'
-      });
-      document.getElementById('data-acesso-ate').textContent = dataFmt;
-      document.getElementById('banner-cancelado').style.display = 'flex';
-    }
-
-    // Zona de cancelamento só para quem ainda está ativo
-    if (membro.status === 'active') {
-      document.getElementById('zona-cancelamento').style.display = 'block';
-    }
-
-    await carregarPerfil(session);
-
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-
-    // Restaura aba salva
     try {
-      const tabSalva = localStorage.getItem('kc_tab');
-      if (tabSalva) ativarTab(tabSalva);
-    } catch(e) {}
+      const { data: { session }, error: sessErr } = await sb.auth.getSession();
+
+      if (sessErr || !session) {
+        location.href = '/k-controllers/login';
+        return;
+      }
+
+      // Busca membro: aceita active OU cancelled ainda dentro do período
+      const { data: membro, error: erroMembro } = await sb
+        .from('members')
+        .select('name, status, plan_end_date')
+        .eq('email', session.user.email)
+        .maybeSingle();
+
+      if (erroMembro) {
+        console.error('Erro ao buscar membro:', erroMembro);
+        // Se for erro de RLS/permissão, tenta redirecionar para login
+        await sb.auth.signOut();
+        location.href = '/k-controllers/login?acesso=negado';
+        return;
+      }
+
+      if (!membro) {
+        await sb.auth.signOut();
+        location.href = '/k-controllers/login?acesso=negado';
+        return;
+      }
+
+      const agora = new Date();
+      const statusOk = membro.status === 'active' ||
+        (membro.status === 'cancelled' && membro.plan_end_date && new Date(membro.plan_end_date) > agora);
+
+      if (!statusOk) {
+        await sb.auth.signOut();
+        location.href = '/k-controllers/login?acesso=negado';
+        return;
+      }
+
+      const nome = membro.name || session.user.user_metadata?.name || session.user.email.split('@')[0];
+      document.getElementById('nome-membro').textContent = nome;
+      document.getElementById('titulo-boas-vindas').textContent = `Olá, ${nome.split(' ')[0]}! 👋`;
+
+      // Banner se cancelado mas ainda com acesso
+      if (membro.status === 'cancelled' && membro.plan_end_date) {
+        const dataFmt = new Date(membro.plan_end_date).toLocaleDateString('pt-BR', {
+          timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', year: 'numeric'
+        });
+        document.getElementById('data-acesso-ate').textContent = dataFmt;
+        document.getElementById('banner-cancelado').style.display = 'flex';
+      }
+
+      // Zona de cancelamento só para quem ainda está ativo
+      if (membro.status === 'active') {
+        document.getElementById('zona-cancelamento').style.display = 'block';
+      }
+
+      // Carrega dados do perfil (falha silenciosamente — não bloqueia o app)
+      try { await carregarPerfil(session); } catch(e) { console.warn('Perfil não carregado:', e); }
+
+      // Mostra o app
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+
+      // Restaura aba salva
+      try {
+        const tabSalva = localStorage.getItem('kc_tab');
+        if (tabSalva) ativarTab(tabSalva);
+      } catch(e) {}
+
+    } catch (err) {
+      // Fallback: qualquer erro inesperado redireciona ao login
+      console.error('Erro no init():', err);
+      try { await sb.auth.signOut(); } catch {}
+      location.href = '/k-controllers/login';
+    }
   }
 
   init();
