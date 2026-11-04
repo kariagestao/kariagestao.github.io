@@ -961,6 +961,20 @@
   </div>
 </div>
 
+<!-- Modal de confirmação de cancelamento -->
+<div class="modal-overlay" id="modal-cancelamento">
+  <div class="modal-box">
+    <h2>Cancelar assinatura?</h2>
+    <p>Ao cancelar, sua cobrança recorrente será encerrada. Você continua com acesso completo até o fim do período já pago.</p>
+    <p>Se mudar de ideia, pode assinar novamente a qualquer momento.</p>
+    <div class="msg-cancelamento" id="msg-cancelamento"></div>
+    <div class="modal-acoes">
+      <button class="btn-modal-manter" id="btn-modal-manter">Manter assinatura</button>
+      <button class="btn-modal-confirmar" id="btn-modal-confirmar">Sim, cancelar</button>
+    </div>
+  </div>
+</div>
+
 <script>
 
   const SUPABASE_URL = 'https://olgkcfwnbhnngpqqkppm.supabase.co';
@@ -1348,20 +1362,6 @@
 
   init();
 </script>
-
-<!-- Modal de confirmação de cancelamento -->
-<div class="modal-overlay" id="modal-cancelamento">
-  <div class="modal-box">
-    <h2>Cancelar assinatura?</h2>
-    <p>Ao cancelar, sua cobrança recorrente será encerrada. Você continua com acesso completo até o fim do período já pago.</p>
-    <p>Se mudar de ideia, pode assinar novamente a qualquer momento.</p>
-    <div class="msg-cancelamento" id="msg-cancelamento"></div>
-    <div class="modal-acoes">
-      <button class="btn-modal-manter" id="btn-modal-manter">Manter assinatura</button>
-      <button class="btn-modal-confirmar" id="btn-modal-confirmar">Sim, cancelar</button>
-    </div>
-  </div>
-</div>
 
 <!-- Modal de recorte de foto -->
 <div id="modal-crop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:1000; align-items:center; justify-content:center; padding:20px;">
