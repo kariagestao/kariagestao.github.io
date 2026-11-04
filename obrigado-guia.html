@@ -9,9 +9,9 @@
   :root{--azul:#0D1F2D;--azul-mid:#1A3347;--cobre:#B87333;--cobre-light:#D4956A;--offwhite:#F8F6F3;--offwhite-2:#EDE9E3;--gray:#6B7280;}
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Poppins',sans-serif;background:var(--azul);color:var(--offwhite);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;position:relative;overflow:hidden;}
+  body{font-family:'Poppins',sans-serif;background:var(--azul);color:var(--offwhite);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 48px;position:relative;overflow-x:hidden;}
 
-  .geo{position:absolute;border-radius:50%;pointer-events:none;}
+  .geo{position:fixed;border-radius:50%;pointer-events:none;}
   .geo-1{top:-100px;right:-100px;width:500px;height:500px;border:1px solid rgba(184,115,51,0.08);animation:spin 50s linear infinite;}
   .geo-2{bottom:-80px;left:-80px;width:360px;height:360px;border:1px solid rgba(184,115,51,0.06);animation:spin 35s linear infinite reverse;}
   @keyframes spin{to{transform:rotate(360deg);}}
@@ -56,7 +56,11 @@
   .logo span{color:var(--cobre);}
 
   @media(max-width:600px){
-    .card{padding:40px 28px;}
+    .card{padding:36px 20px;}
+    h1{font-size:22px;}
+    .subtitle{font-size:13.5px;}
+    .btn-main{font-size:12px;padding:16px 20px;}
+    .btn-secondary{font-size:11px;padding:13px 20px;}
   }
 </style>
 </head>
