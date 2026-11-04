@@ -1206,16 +1206,16 @@
 
   // ── Cancelamento ─────────────────────────────────────────────────────────────
 
-  document.getElementById('btn-cancelar-assinatura').addEventListener('click', () => {
+  document.getElementById('btn-cancelar-assinatura')?.addEventListener('click', () => {
     document.getElementById('modal-cancelamento').classList.add('aberto');
     document.getElementById('msg-cancelamento').className = 'msg-cancelamento';
   });
 
-  document.getElementById('btn-modal-manter').addEventListener('click', () => {
+  document.getElementById('btn-modal-manter')?.addEventListener('click', () => {
     document.getElementById('modal-cancelamento').classList.remove('aberto');
   });
 
-  document.getElementById('btn-modal-confirmar').addEventListener('click', async () => {
+  document.getElementById('btn-modal-confirmar')?.addEventListener('click', async () => {
     const btnConf = document.getElementById('btn-modal-confirmar');
     const btnMant = document.getElementById('btn-modal-manter');
     const msg     = document.getElementById('msg-cancelamento');
