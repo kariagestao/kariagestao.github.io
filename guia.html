@@ -296,6 +296,19 @@ footer{background:var(--azul);padding:44px 80px;display:flex;align-items:center;
   .symptoms-section,.guide-section,.promise-section,.about-section{padding:80px 28px;}
 }
 @media(max-width:600px){.cookie-banner__inner{flex-direction:column;}.cookie-banner__actions{width:100%;}.cookie-btn{flex:1;text-align:center;}}
+@media(max-width:480px){
+  .hero-form-wrap{padding:32px 16px 60px;}
+  .fc-data{padding:28px 20px 24px;}
+  .form-title{font-size:18px;}
+  .fc-question{padding:24px 20px 20px;}
+  .q-text{font-size:14px;}
+  .fc-result{padding:28px 20px;}
+  .r-title{font-size:18px;}
+  .r-desc{font-size:13px;}
+  .r-btn-cta{font-size:12px;padding:14px 18px;}
+  .hero-content{padding:100px 20px 32px;}
+  .hero-title{font-size:clamp(26px,8vw,42px);}
+}
 body { padding-top: 0 !important; }
 #karia-nav, #karia-nav * { position: relative; } .nav { z-index: 1000 !important; pointer-events: all !important; }
   </style>
@@ -862,7 +875,7 @@ function showResult(total) {
 
   // Monta link WhatsApp com mensagem pré-preenchida
   var msg = 'Olá! Realizei a autoavaliação da KARIA Gestão e meu resultado foi *' + nivel + '* (' + total + '/30 pontos). Gostaria de entender como a KARIA pode me ajudar a evoluir.';
-  var wppLink = 'https://wa.me/5551933765996?text=' + encodeURIComponent(msg);
+  var wppLink = 'https://wa.me/555133765996?text=' + encodeURIComponent(msg);
   var btn = document.getElementById(wppId);
   if (btn) btn.href = wppLink;
 }
