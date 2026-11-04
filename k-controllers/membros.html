@@ -572,6 +572,134 @@
     .perfil-grid .form-group.full { grid-column: 1; }
   }
 
+  /* BANNER ACESSO */
+  .banner-acesso-cancelado {
+    background: #fff8f0;
+    border: 1.5px solid rgba(184,115,51,0.3);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .banner-acesso-cancelado svg { flex-shrink: 0; color: var(--cobre); }
+  .banner-acesso-cancelado p { font-size: 13px; color: var(--texto); line-height: 1.5; }
+  .banner-acesso-cancelado strong { color: var(--musgo); }
+
+  /* ZONA CANCELAMENTO */
+  .zona-cancelamento {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1.5px solid var(--borda);
+  }
+  .zona-cancelamento h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--texto-suave);
+    margin-bottom: 8px;
+  }
+  .zona-cancelamento p {
+    font-size: 13px;
+    color: var(--texto-suave);
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+  .btn-cancelar-assinatura {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border: 1.5px solid #d9534f;
+    border-radius: 8px;
+    background: none;
+    color: #c0392b;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-cancelar-assinatura:hover { background: #fff0ef; }
+  .btn-cancelar-assinatura:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* MODAL CANCELAMENTO */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.aberto { display: flex; }
+  .modal-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .modal-box h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--musgo);
+  }
+  .modal-box p { font-size: 14px; color: var(--texto-suave); line-height: 1.6; }
+  .modal-box p strong { color: var(--musgo); }
+  .modal-acoes {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-top: 8px;
+  }
+  .btn-modal-manter {
+    flex: 1;
+    padding: 13px 16px;
+    background: var(--musgo);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .btn-modal-manter:hover { background: #162d40; }
+  .btn-modal-confirmar {
+    padding: 13px 16px;
+    background: none;
+    border: 1.5px solid #d9534f;
+    color: #c0392b;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .btn-modal-confirmar:hover { background: #fff0ef; }
+  .btn-modal-confirmar:disabled { opacity: 0.5; cursor: not-allowed; }
+  .msg-cancelamento {
+    font-size: 13px;
+    padding: 10px 14px;
+    border-radius: 7px;
+    display: none;
+  }
+  .msg-cancelamento.erro { background: #fdecea; color: #c0392b; display: block; }
+
   /* LOADING */
   #loading {
     display: flex;
@@ -628,6 +756,12 @@
     <div class="boas-vindas">
       <h1 id="titulo-boas-vindas">Olá! 👋</h1>
       <p>Bem-vindo(a) ao K Controllers. Este é o seu espaço.</p>
+    </div>
+
+    <!-- Banner: acesso cancelado mas ainda vigente -->
+    <div class="banner-acesso-cancelado" id="banner-cancelado" style="display:none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p id="txt-banner-cancelado">Sua assinatura foi cancelada. Você tem acesso até <strong id="data-acesso-ate"></strong>. Pode renovar a qualquer momento.</p>
     </div>
 
     <!-- Próxima live -->
@@ -809,6 +943,16 @@
               Salvar alterações
             </button>
             <div class="msg-perfil" id="msg-perfil"></div>
+          </div>
+
+          <!-- Zona de cancelamento — só aparece se status = active -->
+          <div class="zona-cancelamento" id="zona-cancelamento" style="display:none">
+            <h3>Cancelamento</h3>
+            <p>Se cancelar sua assinatura, você mantém o acesso até o fim do período já pago. Após isso, o acesso será encerrado automaticamente.</p>
+            <button type="button" class="btn-cancelar-assinatura" id="btn-cancelar-assinatura">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              Cancelar assinatura
+            </button>
           </div>
         </form>
       </div>
@@ -1058,7 +1202,71 @@
     } catch {}
   });
 
-  // Auth check
+  const WORKER_URL = 'https://k-controllers-webhook.kariagestao25.workers.dev';
+
+  // ── Cancelamento ─────────────────────────────────────────────────────────────
+
+  document.getElementById('btn-cancelar-assinatura').addEventListener('click', () => {
+    document.getElementById('modal-cancelamento').classList.add('aberto');
+    document.getElementById('msg-cancelamento').className = 'msg-cancelamento';
+  });
+
+  document.getElementById('btn-modal-manter').addEventListener('click', () => {
+    document.getElementById('modal-cancelamento').classList.remove('aberto');
+  });
+
+  document.getElementById('btn-modal-confirmar').addEventListener('click', async () => {
+    const btnConf = document.getElementById('btn-modal-confirmar');
+    const btnMant = document.getElementById('btn-modal-manter');
+    const msg     = document.getElementById('msg-cancelamento');
+
+    btnConf.disabled = true;
+    btnMant.disabled = true;
+    btnConf.textContent = 'Cancelando...';
+    msg.className = 'msg-cancelamento';
+
+    try {
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) throw new Error('Sessão expirada. Faça login novamente.');
+
+      const res = await fetch(`${WORKER_URL}/cancelar`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Erro ao processar cancelamento.');
+      }
+
+      // Sucesso: esconde modal, mostra banner, esconde zona de cancelamento
+      document.getElementById('modal-cancelamento').classList.remove('aberto');
+      document.getElementById('zona-cancelamento').style.display = 'none';
+
+      if (data.plan_end_date) {
+        const dataFmt = new Date(data.plan_end_date).toLocaleDateString('pt-BR', {
+          timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', year: 'numeric'
+        });
+        document.getElementById('data-acesso-ate').textContent = dataFmt;
+        document.getElementById('banner-cancelado').style.display = 'flex';
+      }
+
+    } catch (err) {
+      msg.className = 'msg-cancelamento erro';
+      msg.textContent = err.message || 'Erro inesperado. Tente novamente.';
+    } finally {
+      btnConf.disabled = false;
+      btnMant.disabled = false;
+      btnConf.textContent = 'Sim, cancelar';
+    }
+  });
+
+  // ── Auth check ────────────────────────────────────────────────────────────────
+
   async function init() {
     const { data: { session } } = await sb.auth.getSession();
 
@@ -1067,16 +1275,24 @@
       return;
     }
 
-    // Verifica se o membro tem assinatura ativa na tabela members
+    // Busca membro: aceita active OU cancelled ainda dentro do período
     const { data: membro, error: erroMembro } = await sb
       .from('members')
-      .select('name, status')
+      .select('name, status, plan_end_date')
       .eq('email', session.user.email)
-      .eq('status', 'active')
       .maybeSingle();
 
     if (erroMembro || !membro) {
-      // Sessão existe mas não tem assinatura ativa — desloga e redireciona
+      await sb.auth.signOut();
+      location.href = '/k-controllers/login?acesso=negado';
+      return;
+    }
+
+    const agora = new Date();
+    const statusOk = membro.status === 'active' ||
+      (membro.status === 'cancelled' && membro.plan_end_date && new Date(membro.plan_end_date) > agora);
+
+    if (!statusOk) {
       await sb.auth.signOut();
       location.href = '/k-controllers/login?acesso=negado';
       return;
@@ -1085,6 +1301,20 @@
     const nome = membro.name || session.user.user_metadata?.name || session.user.email.split('@')[0];
     document.getElementById('nome-membro').textContent = nome;
     document.getElementById('titulo-boas-vindas').textContent = `Olá, ${nome.split(' ')[0]}! 👋`;
+
+    // Banner se cancelado mas ainda com acesso
+    if (membro.status === 'cancelled' && membro.plan_end_date) {
+      const dataFmt = new Date(membro.plan_end_date).toLocaleDateString('pt-BR', {
+        timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', year: 'numeric'
+      });
+      document.getElementById('data-acesso-ate').textContent = dataFmt;
+      document.getElementById('banner-cancelado').style.display = 'flex';
+    }
+
+    // Zona de cancelamento só para quem ainda está ativo
+    if (membro.status === 'active') {
+      document.getElementById('zona-cancelamento').style.display = 'block';
+    }
 
     await carregarPerfil(session);
 
@@ -1100,6 +1330,20 @@
 
   init();
 </script>
+
+<!-- Modal de confirmação de cancelamento -->
+<div class="modal-overlay" id="modal-cancelamento">
+  <div class="modal-box">
+    <h2>Cancelar assinatura?</h2>
+    <p>Ao cancelar, sua cobrança recorrente será encerrada. Você continua com acesso completo até o fim do período já pago.</p>
+    <p>Se mudar de ideia, pode assinar novamente a qualquer momento.</p>
+    <div class="msg-cancelamento" id="msg-cancelamento"></div>
+    <div class="modal-acoes">
+      <button class="btn-modal-manter" id="btn-modal-manter">Manter assinatura</button>
+      <button class="btn-modal-confirmar" id="btn-modal-confirmar">Sim, cancelar</button>
+    </div>
+  </div>
+</div>
 
 <!-- Modal de recorte de foto -->
 <div id="modal-crop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:1000; align-items:center; justify-content:center; padding:20px;">
