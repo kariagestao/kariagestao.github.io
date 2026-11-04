@@ -428,6 +428,207 @@
 
   .btn-live:hover { background: var(--cobre-light); }
 
+  /* CASO REAL */
+  .caso-real-wrap {
+    max-width: 640px;
+  }
+  .caso-real-hero {
+    background: var(--musgo);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    color: var(--claro);
+  }
+  .caso-real-hero-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cobre);
+    margin-bottom: 8px;
+  }
+  .caso-real-hero h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .caso-real-hero p {
+    font-size: 13px;
+    color: rgba(248,246,243,0.78);
+    line-height: 1.65;
+    margin: 0;
+  }
+  .caso-real-prazo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(184,115,51,0.18);
+    border: 1px solid rgba(184,115,51,0.35);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cobre-light);
+    margin-top: 16px;
+    letter-spacing: 0.02em;
+  }
+  .caso-real-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .caso-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 600px) { .caso-form-row { grid-template-columns: 1fr; } }
+  .caso-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .caso-form-group label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+  }
+  .caso-form-group input,
+  .caso-form-group textarea {
+    background: #fff;
+    border: 1.5px solid var(--borda);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: var(--texto);
+    transition: border-color 0.2s;
+    outline: none;
+    width: 100%;
+  }
+  .caso-form-group input:focus,
+  .caso-form-group textarea:focus { border-color: var(--cobre); }
+  .caso-form-group input[readonly] {
+    background: var(--claro);
+    color: var(--texto-suave);
+    cursor: default;
+  }
+  .caso-form-group textarea {
+    resize: vertical;
+    min-height: 160px;
+    line-height: 1.65;
+  }
+  .caso-char-count {
+    font-size: 11px;
+    color: var(--texto-suave);
+    text-align: right;
+    margin-top: -14px;
+  }
+  .caso-char-count.aviso { color: #c0392b; }
+  .caso-form-group .caso-hint {
+    font-size: 12px;
+    color: var(--texto-suave);
+    line-height: 1.5;
+    margin-top: -4px;
+  }
+  .caso-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--texto-suave);
+    line-height: 1.5;
+    cursor: pointer;
+  }
+  .caso-consent input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    margin-top: 2px;
+    accent-color: var(--cobre);
+    cursor: pointer;
+  }
+  .btn-enviar-caso {
+    background: var(--cobre);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 28px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-enviar-caso:hover:not(:disabled) { background: var(--cobre-light); }
+  .btn-enviar-caso:disabled { opacity: 0.55; cursor: not-allowed; }
+  .caso-spin {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin-caso 0.7s linear infinite;
+    display: none;
+  }
+  @keyframes spin-caso { to { transform: rotate(360deg); } }
+  .msg-caso {
+    display: none;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .msg-caso.ok {
+    display: block;
+    background: #eafaf1;
+    color: #1e7e4a;
+    border: 1px solid #a8e6c3;
+  }
+  .msg-caso.erro {
+    display: block;
+    background: #fdecea;
+    color: #c0392b;
+    border: 1px solid #f5b7b1;
+  }
+  .caso-sucesso {
+    display: none;
+    text-align: center;
+    padding: 48px 24px;
+  }
+  .caso-sucesso.visivel { display: block; }
+  .caso-sucesso-icone {
+    width: 60px; height: 60px;
+    background: #eafaf1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .caso-sucesso h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--musgo);
+    margin-bottom: 10px;
+  }
+  .caso-sucesso p {
+    font-size: 14px;
+    color: var(--texto-suave);
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
   /* PERFIL */
   .perfil-layout {
     display: grid;
@@ -779,6 +980,7 @@
     <div class="tabs">
       <button class="tab ativa" data-painel="orientacoes">Comece Aqui</button>
       <button class="tab" data-painel="biblioteca">Biblioteca</button>
+      <button class="tab" data-painel="casoreal">Caso Real</button>
       <button class="tab" data-painel="aulas">Aulas</button>
       <button class="tab" data-painel="perfil">Meu Perfil</button>
     </div>
@@ -789,6 +991,69 @@
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
         <h3>Materiais em breve</h3>
         <p>A biblioteca está sendo preparada com conteúdos exclusivos para você.</p>
+      </div>
+    </div>
+
+    <!-- Painel Caso Real -->
+    <div class="painel" id="painel-casoreal">
+      <div class="caso-real-wrap">
+
+        <div class="caso-real-hero">
+          <div class="caso-real-hero-label">Curadoria Mensal</div>
+          <h2>Caso Real do Mês</h2>
+          <p>Submeta um desafio real do seu escritório para uma sessão individual com a Nathalya. Cada mês, um caso é selecionado para análise aprofundada.</p>
+          <div class="caso-real-prazo">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Submissões abertas até o dia 15 de cada mês
+          </div>
+        </div>
+
+        <!-- Sucesso -->
+        <div class="caso-sucesso" id="caso-sucesso">
+          <div class="caso-sucesso-icone">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1e7e4a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>Caso enviado com sucesso!</h3>
+          <p>Recebemos sua submissão. Caso seja selecionado, você receberá uma mensagem para agendar o encontro até o dia 30 deste mês.</p>
+        </div>
+
+        <!-- Formulário -->
+        <form class="caso-real-form" id="form-caso-real" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="1062412a-df27-4597-9e4c-d921a4cdc6d9">
+          <input type="hidden" name="subject" value="Caso Real do Mês - K. Controllers">
+          <input type="hidden" name="from_name" value="K. Controllers">
+
+          <div class="caso-form-row">
+            <div class="caso-form-group">
+              <label for="caso-nome">Seu nome</label>
+              <input type="text" id="caso-nome" name="nome" placeholder="Carregando..." readonly>
+            </div>
+            <div class="caso-form-group">
+              <label for="caso-email">E-mail</label>
+              <input type="email" id="caso-email" name="email" placeholder="Carregando..." readonly>
+            </div>
+          </div>
+
+          <div class="caso-form-group">
+            <label for="caso-descricao">Descreva seu caso</label>
+            <textarea id="caso-descricao" name="caso" placeholder="Descreva o desafio ou situação que gostaria de discutir. Inclua contexto sobre o escritório, o problema em questão e o que você já tentou." maxlength="2000" required></textarea>
+            <div class="caso-char-count" id="caso-char-count">0 / 2000</div>
+            <span class="caso-hint">Quanto mais contexto, mais rica será a sessão. Mínimo recomendado: 150 caracteres.</span>
+          </div>
+
+          <label class="caso-consent">
+            <input type="checkbox" id="caso-consent" required>
+            Autorizo o uso do caso, de forma anonimizada, como material de aprendizado para outros membros.
+          </label>
+
+          <div class="msg-caso" id="msg-caso"></div>
+
+          <button type="submit" class="btn-enviar-caso" id="btn-enviar-caso">
+            <span id="btn-caso-texto">Enviar submissão</span>
+            <div class="caso-spin" id="caso-spin"></div>
+          </button>
+        </form>
+
       </div>
     </div>
 
@@ -989,6 +1254,7 @@
     tab.addEventListener('click', () => {
       ativarTab(tab.dataset.painel);
       try { localStorage.setItem('kc_tab', tab.dataset.painel); } catch(e) {}
+      if (tab.dataset.painel === 'casoreal') preencherCasoReal();
     });
   });
 
@@ -1271,6 +1537,74 @@
   });
 
   // ── Auth check ────────────────────────────────────────────────────────────────
+
+  // Caso Real
+  function preencherCasoReal() {
+    const nome  = document.getElementById('p-nome')?.value  || '';
+    const email = document.getElementById('p-email')?.value || '';
+    const inNome  = document.getElementById('caso-nome');
+    const inEmail = document.getElementById('caso-email');
+    if (inNome  && nome)  { inNome.value  = nome;  inNome.placeholder  = nome; }
+    if (inEmail && email) { inEmail.value = email; inEmail.placeholder = email; }
+  }
+
+  // Contador de caracteres
+  document.getElementById('caso-descricao')?.addEventListener('input', function() {
+    const len = this.value.length;
+    const counter = document.getElementById('caso-char-count');
+    if (counter) {
+      counter.textContent = len + ' / 2000';
+      counter.classList.toggle('aviso', len > 1800);
+    }
+  });
+
+  // Submissão Caso Real via fetch (sem reload)
+  document.getElementById('form-caso-real')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn  = document.getElementById('btn-enviar-caso');
+    const spin = document.getElementById('caso-spin');
+    const txt  = document.getElementById('btn-caso-texto');
+    const msg  = document.getElementById('msg-caso');
+
+    // Preenche nome/email antes de enviar (caso não tenha sido preenchido ainda)
+    preencherCasoReal();
+
+    // Validação mínima
+    const descricao = document.getElementById('caso-descricao')?.value.trim() || '';
+    if (descricao.length < 50) {
+      msg.className = 'msg-caso erro';
+      msg.textContent = 'Por favor, descreva seu caso com mais detalhes (mínimo 50 caracteres).';
+      return;
+    }
+
+    btn.disabled = true;
+    spin.style.display = 'block';
+    txt.textContent = 'Enviando...';
+    msg.className = 'msg-caso';
+    msg.textContent = '';
+
+    try {
+      const formData = new FormData(this);
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        document.getElementById('form-caso-real').style.display = 'none';
+        document.getElementById('caso-sucesso').classList.add('visivel');
+      } else {
+        throw new Error(result.message || 'Erro ao enviar');
+      }
+    } catch (err) {
+      msg.className = 'msg-caso erro';
+      msg.textContent = 'Não foi possível enviar. Verifique sua conexão e tente novamente.';
+      btn.disabled = false;
+      spin.style.display = 'none';
+      txt.textContent = 'Enviar submissão';
+    }
+  });
 
   async function init() {
     try {
