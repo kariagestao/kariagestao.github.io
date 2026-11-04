@@ -33,6 +33,51 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* TOPBAR */
+  .topbar {
+    background: var(--musgo);
+    border-bottom: 1px solid rgba(184,115,51,0.2);
+    padding: 10px max(24px, env(safe-area-inset-left, 0px));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .topbar-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(248,246,243,0.6);
+  }
+
+  .topbar-logo span { color: var(--cobre); }
+
+  .btn-ja-membro {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid rgba(184,115,51,0.5);
+    color: var(--cobre);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 7px 16px;
+    border-radius: 4px;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+
+  .btn-ja-membro:hover {
+    background: rgba(184,115,51,0.12);
+    border-color: var(--cobre);
+    color: var(--cobre-light);
+  }
+
   /* HERO */
   .hero {
     background: var(--musgo);
@@ -631,6 +676,15 @@
     .preco-numero { font-size: 52px; }
   }
 </style>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <span class="topbar-logo">K <span>Controllers</span></span>
+  <a href="/k-controllers/login.html" class="btn-ja-membro">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    Já sou membro
+  </a>
+</nav>
 
 <!-- HERO -->
 <header class="hero">
