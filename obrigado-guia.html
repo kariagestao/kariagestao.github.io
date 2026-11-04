@@ -110,7 +110,7 @@
   <a href="https://kariagestao-my.sharepoint.com/:b:/p/nathalya/IQBYP0djMJRfRqO_HSjEXopaARt_oB5Ee6BR0YyVixpb2Mc?e=NfnibZ" target="_blank" class="btn-main">
     Acessar o Guia Agora →
   </a>
-  <a id="typeform-link" href="https://form.typeform.com/to/xMVWB3ew" target="_blank" class="btn-secondary">
+  <a id="typeform-link" href="/diagnostico-autoavaliacao.html" class="btn-secondary">
     Fazer o Diagnóstico Gratuito
   </a>
 
@@ -127,10 +127,7 @@
   if (!email || !nome) {
     window.location.replace('/guia.html');
   }
-  const link = document.getElementById('typeform-link');
-  if (nome || email) {
-    link.href = 'https://form.typeform.com/to/xMVWB3ew#email=' + encodeURIComponent(email) + '&first_name=' + encodeURIComponent(nome);
-  }
+  // Link já aponta para /diagnostico-autoavaliacao.html — sem prefill necessário
 </script>
 </body>
 </html>

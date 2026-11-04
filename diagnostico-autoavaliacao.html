@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autoavaliação Gratuita — KARIA Gestão</title>
+<meta name="description" content="Descubra o nível de maturidade da gestão do seu escritório de advocacia. Autoavaliação gratuita da KARIA Gestão.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0D1F2D;
+  --azul-mid:#1A3347;
+  --cobre:#B87333;
+  --cobre-light:#D4956A;
+  --offwhite:#F8F6F3;
+  --offwhite-2:#EDE9E3;
+  --gray:#6B7280;
+  --verde:#27AE60;
+  --amarelo:#F59E0B;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;max-width:100%;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:var(--azul);
+  color:var(--offwhite);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:0;
+  overflow-x:hidden;
+}
+
+/* Fundo decorativo */
+.geo{position:fixed;border-radius:50%;pointer-events:none;z-index:0;}
+.geo-1{top:-120px;right:-120px;width:600px;height:600px;border:1px solid rgba(184,115,51,0.07);animation:spin 60s linear infinite;}
+.geo-2{bottom:-100px;left:-100px;width:400px;height:400px;border:1px solid rgba(184,115,51,0.05);animation:spin 40s linear infinite reverse;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* Logo */
+.logo{position:fixed;top:20px;left:50%;transform:translateX(-50%);font-family:'Montserrat',sans-serif;font-weight:900;font-size:15px;letter-spacing:0.04em;color:var(--offwhite);text-decoration:none;white-space:nowrap;z-index:10;}
+.logo span{color:var(--cobre);}
+
+/* Wrapper principal */
+.wrapper{width:100%;max-width:620px;padding:88px 20px 60px;position:relative;z-index:2;}
+
+/* Tela de boas-vindas */
+.welcome{text-align:center;animation:fadeUp 0.7s both;}
+.welcome-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(184,115,51,0.1);border:1px solid rgba(184,115,51,0.25);color:var(--cobre);font-family:'Montserrat',sans-serif;font-weight:700;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;padding:6px 14px;border-radius:2px;margin-bottom:28px;}
+.badge-dot{width:5px;height:5px;background:var(--cobre);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.welcome h1{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(26px,5vw,38px);line-height:1.15;margin-bottom:16px;}
+.welcome h1 span{color:var(--cobre);}
+.welcome p{font-size:15px;line-height:1.75;color:rgba(248,246,243,0.6);max-width:480px;margin:0 auto 12px;}
+.welcome .disclaimer{font-size:12.5px;font-style:italic;color:rgba(248,246,243,0.35);max-width:420px;margin:0 auto 36px;}
+.welcome-meta{display:flex;align-items:center;justify-content:center;gap:6px;color:rgba(248,246,243,0.4);font-size:12px;margin-bottom:36px;}
+.welcome-meta svg{width:14px;height:14px;stroke:currentColor;fill:none;}
+.btn-cta{display:inline-block;background:var(--cobre);color:var(--azul);font-family:'Montserrat',sans-serif;font-weight:900;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;padding:18px 48px;border-radius:3px;border:none;cursor:pointer;transition:background 0.2s,transform 0.2s,box-shadow 0.2s;text-decoration:none;}
+.btn-cta:hover{background:var(--cobre-light);transform:translateY(-2px);box-shadow:0 10px 30px rgba(184,115,51,0.3);}
+
+/* Card de etapas */
+.card{background:rgba(248,246,243,0.03);border:1px solid rgba(184,115,51,0.15);border-radius:8px;padding:40px 44px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cobre),var(--cobre-light));border-radius:8px 8px 0 0;}
+@media(max-width:600px){.card{padding:28px 20px;}}
+
+/* Progress bar */
+.progress-wrap{margin-bottom:28px;}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:rgba(248,246,243,0.4);font-family:'Montserrat',sans-serif;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+.progress-bar{height:3px;background:rgba(248,246,243,0.08);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--cobre),var(--cobre-light));border-radius:2px;transition:width 0.5s ease;}
+
+/* Etapas de formulário */
+.step{display:none;animation:fadeUp 0.5s both;}
+.step.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* Passo de dados */
+.step-label{font-family:'Montserrat',sans-serif;font-weight:900;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--cobre);margin-bottom:8px;}
+.step-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(18px,4vw,24px);line-height:1.25;margin-bottom:28px;}
+
+/* Input */
+.input-group{margin-bottom:20px;}
+.input-group label{display:block;font-size:12px;font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(248,246,243,0.5);margin-bottom:8px;}
+.input-group input{width:100%;background:rgba(248,246,243,0.05);border:1px solid rgba(248,246,243,0.12);border-radius:4px;padding:14px 16px;font-family:'Poppins',sans-serif;font-size:15px;color:var(--offwhite);outline:none;transition:border-color 0.2s;}
+.input-group input::placeholder{color:rgba(248,246,243,0.25);}
+.input-group input:focus{border-color:var(--cobre);}
+
+/* Questões */
+.question-num{font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cobre);opacity:0.7;margin-bottom:6px;}
+.question-text{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(16px,3.5vw,21px);line-height:1.3;margin-bottom:24px;}
+
+/* Opções */
+.options{display:flex;flex-direction:column;gap:10px;}
+.option{display:flex;align-items:center;gap:14px;background:rgba(248,246,243,0.04);border:1px solid rgba(248,246,243,0.1);border-radius:5px;padding:14px 18px;cursor:pointer;transition:all 0.18s;user-select:none;}
+.option:hover{background:rgba(184,115,51,0.08);border-color:rgba(184,115,51,0.3);}
+.option.selected{background:rgba(184,115,51,0.12);border-color:var(--cobre);}
+.option-key{font-family:'Montserrat',sans-serif;font-weight:900;font-size:11px;color:rgba(248,246,243,0.4);background:rgba(248,246,243,0.07);border:1px solid rgba(248,246,243,0.12);border-radius:3px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.18s;}
+.option.selected .option-key{background:var(--cobre);border-color:var(--cobre);color:var(--azul);}
+.option-text{font-size:14px;line-height:1.45;color:rgba(248,246,243,0.75);transition:color 0.18s;}
+.option.selected .option-text{color:var(--offwhite);}
+
+/* Navegação */
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:28px;gap:12px;}
+.btn-back{background:transparent;border:1px solid rgba(248,246,243,0.15);color:rgba(248,246,243,0.45);font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:12px 20px;border-radius:3px;cursor:pointer;transition:all 0.2s;}
+.btn-back:hover{border-color:rgba(248,246,243,0.3);color:rgba(248,246,243,0.7);}
+.btn-next{background:var(--cobre);color:var(--azul);font-family:'Montserrat',sans-serif;font-weight:900;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:14px 28px;border-radius:3px;border:none;cursor:pointer;transition:all 0.2s;flex-shrink:0;}
+.btn-next:hover:not(:disabled){background:var(--cobre-light);transform:translateY(-1px);box-shadow:0 6px 20px rgba(184,115,51,0.3);}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
+
+/* Loading */
+.loading-step{text-align:center;padding:20px 0;}
+.loading-ring{width:48px;height:48px;border:3px solid rgba(184,115,51,0.2);border-top-color:var(--cobre);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 20px;}
+.loading-step p{color:rgba(248,246,243,0.5);font-size:14px;}
+
+/* Resultados */
+.result{text-align:center;animation:fadeUp 0.7s both;}
+.result-icon{font-size:52px;margin-bottom:20px;display:block;}
+.result-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:2px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:24px;}
+.result-badge.baixa{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#F87171;}
+.result-badge.media{background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:#FCD34D;}
+.result-badge.alta{background:rgba(39,174,96,0.1);border:1px solid rgba(39,174,96,0.3);color:#6EE7A0;}
+.result h2{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(24px,5vw,34px);line-height:1.15;margin-bottom:12px;}
+.result-subtitle{font-family:'Montserrat',sans-serif;font-weight:600;font-size:14px;color:var(--cobre);margin-bottom:20px;}
+.result-text{font-size:14px;line-height:1.8;color:rgba(248,246,243,0.6);margin-bottom:32px;max-width:460px;margin-left:auto;margin-right:auto;}
+.result-score{display:inline-flex;align-items:center;gap:8px;background:rgba(248,246,243,0.05);border:1px solid rgba(248,246,243,0.1);border-radius:4px;padding:10px 20px;margin-bottom:36px;font-family:'Montserrat',sans-serif;font-size:12px;color:rgba(248,246,243,0.4);}
+.result-score strong{color:var(--offwhite);font-size:16px;}
+
+/* CTA resultado */
+.result-cta{margin-bottom:32px;}
+.btn-result-main{display:block;background:var(--cobre);color:var(--azul);font-family:'Montserrat',sans-serif;font-weight:900;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;padding:18px 24px;border-radius:3px;text-decoration:none;margin-bottom:12px;transition:all 0.2s;border:none;cursor:pointer;width:100%;}
+.btn-result-main:hover{background:var(--cobre-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(184,115,51,0.3);}
+.btn-result-sec{display:block;background:transparent;color:rgba(248,246,243,0.5);font-family:'Montserrat',sans-serif;font-weight:600;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;padding:14px 24px;border-radius:3px;text-decoration:none;border:1px solid rgba(248,246,243,0.12);transition:all 0.2s;width:100%;text-align:center;}
+.btn-result-sec:hover{border-color:rgba(184,115,51,0.4);color:var(--cobre);}
+
+/* Divisor resultado */
+.result-divider{display:flex;align-items:center;gap:12px;margin:24px 0;color:rgba(248,246,243,0.2);font-size:11px;font-family:'Montserrat',sans-serif;letter-spacing:0.1em;text-transform:uppercase;}
+.result-divider::before,.result-divider::after{content:'';flex:1;height:1px;background:rgba(248,246,243,0.1);}
+
+/* Redes sociais */
+.social-row{display:flex;justify-content:center;gap:12px;margin-bottom:24px;}
+.social-btn{display:flex;align-items:center;gap:8px;background:rgba(248,246,243,0.05);border:1px solid rgba(248,246,243,0.1);color:rgba(248,246,243,0.6);font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:10px 16px;border-radius:3px;text-decoration:none;transition:all 0.2s;}
+.social-btn:hover{background:rgba(184,115,51,0.1);border-color:rgba(184,115,51,0.3);color:var(--cobre);}
+.social-btn svg{width:16px;height:16px;fill:currentColor;flex-shrink:0;}
+
+/* Footer nota */
+.footer-note{margin-top:28px;font-size:11.5px;color:rgba(248,246,243,0.25);line-height:1.6;text-align:center;}
+.footer-note a{color:rgba(184,115,51,0.5);text-decoration:none;}
+.footer-note a:hover{color:var(--cobre);}
+
+/* Erro */
+.error-msg{color:#F87171;font-size:12px;margin-top:8px;display:none;}
+
+@media(max-width:600px){
+  .wrapper{padding:76px 14px 48px;}
+  .welcome h1{font-size:24px;}
+  .nav{flex-direction:column-reverse;}
+  .btn-back,.btn-next{width:100%;text-align:center;}
+  .social-row{flex-direction:column;}
+  .social-btn{justify-content:center;}
+}
+</style>
+</head>
+<body>
+
+<div class="geo geo-1"></div>
+<div class="geo geo-2"></div>
+<a href="https://www.kariagestao.com" class="logo"><span>KARIA</span> Gestão</a>
+
+<div class="wrapper">
+
+  <!-- TELA INICIAL -->
+  <div id="screen-welcome" class="welcome">
+    <div class="welcome-badge"><div class="badge-dot"></div>Autoavaliação gratuita</div>
+    <h1>Qual é o nível de <span>maturidade</span> do seu escritório?</h1>
+    <p>Responda com sinceridade e descubra, em minutos, em qual estágio de gestão o seu escritório está — e o que precisa evoluir.</p>
+    <p class="disclaimer">Esta autoavaliação oferece uma visão inicial e não substitui um diagnóstico técnico em controladoria jurídica.</p>
+    <div class="welcome-meta">
+      <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Leva cerca de 3 minutos
+    </div>
+    <button class="btn-cta" onclick="startForm()">Iniciar autoavaliação</button>
+  </div>
+
+  <!-- FORMULÁRIO -->
+  <div id="screen-form" style="display:none;">
+    <div class="card">
+
+      <!-- Progress -->
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="prog-label">Etapa 1 de 11</span>
+          <span id="prog-pct">0%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+
+      <!-- ETAPA 0: Dados -->
+      <div class="step active" id="step-0">
+        <div class="step-label">Seus dados</div>
+        <div class="step-title">Preencha seus dados para receber o resultado</div>
+        <div class="input-group">
+          <label for="inp-nome">Nome</label>
+          <input type="text" id="inp-nome" placeholder="Seu nome" autocomplete="given-name">
+        </div>
+        <div class="input-group">
+          <label for="inp-email">E-mail</label>
+          <input type="email" id="inp-email" placeholder="seu@email.com.br" autocomplete="email">
+          <div class="error-msg" id="err-email">Por favor, informe um e-mail válido.</div>
+        </div>
+        <div class="input-group">
+          <label for="inp-escritorio">Nome do escritório <span style="opacity:0.5;font-size:10px;">(opcional)</span></label>
+          <input type="text" id="inp-escritorio" placeholder="Nome do escritório">
+        </div>
+        <div class="nav">
+          <div></div>
+          <button class="btn-next" onclick="nextStep(0)">Continuar →</button>
+        </div>
+      </div>
+
+      <!-- ETAPAS DAS PERGUNTAS (1–10) -->
+      <!-- Q1 -->
+      <div class="step" id="step-1">
+        <div class="question-num">Pergunta 1 de 10</div>
+        <div class="question-text">Seu escritório possui fluxos de trabalho documentados?</div>
+        <div class="options">
+          <div class="option" onclick="selectOption(1,0,this)"><div class="option-key">A</div><div class="option-text">Não possui</div></div>
+          <div class="option" onclick="selectOption(1,1,this)"><div class="option-key">B</div><div class="option-text">Documentados, mas desatualizados</div></div>
+          <div class="option" onclick="selectOption(1,3,this)"><div class="option-key">C</div><div class="option-text">Documentados, atualizados e aplicados pela equipe</div></div>
+        </div>
+        <div class="nav">
+          <button class="btn-back" onclick="prevStep(1)">← Voltar</button>
+          <button class="btn-next" id="next-1" onclick="nextStep(1)" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="step" id="step-2">
+        <div class="question-num">Pergunta 2 de 10</div>
+        <div class="question-text">Como são feitas as revisões dos processos internos?</div>
+        <div class="options">
+          <div class="option" onclick="selectOption(2,0,this)"><div class="option-key">A</div><div class="option-text">Não há revisões</div></div>
+          <div class="option" onclick="selectOption(2,1,this)"><div class="option-key">B</div><div class="option-text">Com frequência, mas sem padronização</div></div>
+          <div class="option" onclick="selectOption(2,3,this)"><div class="option-key">C</div><div class="option-text">Regulares, com análise de indicadores e melhorias contínuas</div></div>
+        </div>
+        <div class="nav">
+          <button class="btn-back" onclick="prevStep(2)">← Voltar</button>
+          <button class="btn-next" id="next-2" onclick="nextStep(2)" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="step" id="step-3">
+        <div class="question-num">Pergunta 3 de 10</div>
+        <div class="question-text">Você utiliza sistemas jurídicos na rotina do escritório?</div>
+        <div class="options">
+          <div class="option" onclick="selectOption(3,0,this)"><div class="option-key">A</div><div class="option-text">Não uso</div></div>
+          <div class="option" onclick="selectOption(3,1,this)"><div class="option-key">B</div><div class="option-text">Utiliza, mas com baixa integração</div></div>
+          <div class="option" onclick="selectOption(3,3,this)"><div class="option-key">C</div><div class="option-text">Utiliza com alta integração e aproveitamento de recursos</div></div>
+        </div>
+        <div class="nav">
+          <button class="btn-back" onclick="prevStep(3)">← Voltar</button>
+          <button class="btn-next" id="next-3" onclick="nextStep(3)" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="step" id="step-4">
+        <div class="question-num">Pergunta 4 de 10</div>
+        <div class="question-text">Há automações em uso no dia a dia?</div>
+        <div class="options">
+          <div class="option" onclick="selectOption(4,0,this)"><div class="option-key">A</div><div class="option-text">Nenhuma</div></div>
+          <div class="option" onclick="selectOption(4,1,this)"><div class="option-key">B</div><div class="option-text">Algumas automações em áreas-chave</div></div>
+          <div class="option" onclick="selectOption(4,3,this)"><div class="option-key">C</div><div class="option-text">Alta automação com eficiência operacional</div></div>
+        </div>
+        <div class="nav">
+          <button class="btn-back" onclick="prevStep(4)">← Voltar</button>
+          <button class="btn-next" id="next-4" onclick="nextStep(4)" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="step" id="step-5">
+        <div class="question-num">Pergunta 5 de 10</div>
+        <div class="question-text">Como é o controle dos prazos no escritório?</div>
+        <div class="options">
+          <div class="option" onclick="selectOption(5,0,this)"><div class="option-key">A</div><div class="option-text">Manual e suscetível a erros</div></div>
+          <div class="option" onclick="selectOption(5,1,this)"><div class="option-key">B</div><div class="option-text">Em sistemas, mas com falhas frequentes</div></div>
+          <div class="option" onclick="selectOption(5,3,this)"><div class="option-key">C</div><div class="option-text">Gestão totalmente confiável, com acompanhamento estratégico</div></div>
+        </div>
+        <div class="nav">
+          <button class="btn-back" onclick="prevStep(5)">← Voltar</button>
+          <button class="btn-next" id="next-5" onclick="nextStep(5)" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="step" id="step-6">
+        <div class="question-num">Pergunta 6 de 10</div>
+        <div class="question-text">A equipe é comunicada com clareza sobre os prazos?</div>
+        <div class="options">
+          <div class="option" onclick="selectOption(6,0,this)"><div class="option-key">A</div><div class="option-text">Não há comunicação estruturada</div></div>
+          <div class="option" onclick="selectOption(6,1,this)"><div class="option-key">B</div><div class="option-text">Comunicação parcial, sem padronização</div></div>
+          <div class="option" onclick="selectOption(6,3,this)"><div class="option-key">C</div><div class="option-text">Comunicação automatizada com responsabilização clara</div></div>
+        </div>
+        <div class="nav">
+          <button class="btn-back" onclick="prevStep(6)">← Voltar</button>
+          <button class="btn-next" id="next-6" onclick="nextStep(6)" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="step" id="step-7">
+        <div class="question-num">Pergunta 7 de 10</div>
+        <div class="question-text">Como é feita a gestão da equipe jurídica?</div>
+        <div class="options">
+          <div class="option" onclick="selectOption(7,0,this)"><div class="option-key">A</div><div class="option-text">Sem gestão estruturada</div></div>
+          <div class="option" onclick="selectOption(7,1,this)"><div class="option-key">B</div><div class="option-text">Há alguma distribuição de tarefas</div></div>
+          <div class="option" onclick="selectOption(7,3,this)"><div class="option-key">C</div><div class="option-text">Gestão clara, com metas e acompanhamento individual</div></div>
+        </div>
+        <div class="nav">
+          <button class="btn-back" onclick="prevStep(7)">← Voltar</button>
+          <button class="btn-next" id="next-7" onclick="nextStep(7)" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="step" id="step-8">
+        <div class="question-num">Pergunta 8 de 10</div>
+        <div class="question-text">Como funciona a comunicação interna?</div>
+        <div class="options">
+          <div class="option" onclick="selectOption(8,0,this)"><div class="option-key">A</div><div class="option-text">Não estruturada</div></div>
+          <div class="option" onclick="selectOption(8,1,this)"><div class="option-key">B</div><div class="option-text">Reuniões ocasionais</div></div>
+          <div class="option" onclick="selectOption(8,3,this)"><div class="option-key">C</div><div class="option-text">Comunicação estruturada com canal oficial e feedbacks</div></div>
+        </div>
+        <div class="nav">
+          <button class="btn-back" onclick="prevStep(8)">← Voltar</button>
+          <button class="btn-next" id="next-8" onclick="nextStep(8)" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="step" id="step-9">
+        <div class="question-num">Pergunta 9 de 10</div>
+        <div class="question-text">Como você avalia a qualidade das entregas jurídicas?</div>
+        <div class="options">
+          <div class="option" onclick="selectOption(9,0,this)"><div class="option-key">A</div><div class="option-text">Não é avaliada</div></div>
+          <div class="option" onclick="selectOption(9,1,this)"><div class="option-key">B</div><div class="option-text">Avaliada pontualmente</div></div>
+          <div class="option" onclick="selectOption(9,3,this)"><div class="option-key">C</div><div class="option-text">Avaliada por critérios técnicos e indicadores</div></div>
+        </div>
+        <div class="nav">
+          <button class="btn-back" onclick="prevStep(9)">← Voltar</button>
+          <button class="btn-next" id="next-9" onclick="nextStep(9)" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- Q10 -->
+      <div class="step" id="step-10">
+        <div class="question-num">Pergunta 10 de 10</div>
+        <div class="question-text">Há iniciativas de melhoria contínua?</div>
+        <div class="options">
+          <div class="option" onclick="selectOption(10,0,this)"><div class="option-key">A</div><div class="option-text">Nenhuma</div></div>
+          <div class="option" onclick="selectOption(10,1,this)"><div class="option-key">B</div><div class="option-text">Melhorias pontuais</div></div>
+          <div class="option" onclick="selectOption(10,3,this)"><div class="option-key">C</div><div class="option-text">Melhorias baseadas em dados e com plano de ação</div></div>
+        </div>
+        <div class="nav">
+          <button class="btn-back" onclick="prevStep(10)">← Voltar</button>
+          <button class="btn-next" id="next-10" onclick="submitForm()" disabled>Ver meu resultado →</button>
+        </div>
+      </div>
+
+      <!-- LOADING -->
+      <div class="step" id="step-loading">
+        <div class="loading-step">
+          <div class="loading-ring"></div>
+          <p>Calculando o seu resultado...</p>
+        </div>
+      </div>
+
+    </div><!-- /card -->
+  </div><!-- /screen-form -->
+
+  <!-- RESULTADOS -->
+  <div id="screen-result" style="display:none;">
+    <div class="card">
+
+      <!-- RESULTADO A: BAIXA MATURIDADE -->
+      <div class="result" id="result-baixa" style="display:none;">
+        <span class="result-icon">🔎</span>
+        <div class="result-badge baixa">Sua gestão está em estágio inicial</div>
+        <h2>Baixa Maturidade</h2>
+        <p class="result-subtitle">O diagnóstico aponta desafios estruturais que podem ser resolvidos.</p>
+        <div class="result-score">Pontuação: <strong id="score-baixa">0</strong> de 30 pontos</div>
+        <p class="result-text">Você já identificou a importância de estruturar a controladoria do seu escritório, mas ainda enfrenta muitos desafios. Provavelmente há ausência de padronização nos processos, uso de ferramentas básicas ou inexistentes, e uma gestão de prazos que depende muito das pessoas e pouco dos sistemas.</p>
+        <div class="result-cta">
+          <a href="https://kariagestao.com/#contato" class="btn-result-main">Quero evoluir minha gestão →</a>
+          <a href="https://kariagestao-my.sharepoint.com/:b:/p/nathalya/IQBYP0djMJRfRqO_HSjEXopaARt_oB5Ee6BR0YyVixpb2Mc?e=NfnibZ" target="_blank" class="btn-result-sec">Acessar o Guia de Maturidade</a>
+        </div>
+        <div class="result-divider">Acompanhe a KARIA</div>
+        <div class="social-row">
+          <a href="https://instagram.com/kariagestao" target="_blank" class="social-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            @kariagestao
+          </a>
+          <a href="https://linkedin.com/company/kariagestao" target="_blank" class="social-btn">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+        <p class="footer-note">Dúvidas? <a href="mailto:contato@kariagestao.com">contato@kariagestao.com</a> · <a href="https://www.kariagestao.com">kariagestao.com</a></p>
+      </div>
+
+      <!-- RESULTADO B: MATURIDADE EM DESENVOLVIMENTO -->
+      <div class="result" id="result-media" style="display:none;">
+        <span class="result-icon">📈</span>
+        <div class="result-badge media">Sua gestão está em fase de desenvolvimento</div>
+        <h2>Maturidade em Desenvolvimento</h2>
+        <p class="result-subtitle">Você já iniciou a jornada. Agora é hora de consolidar.</p>
+        <div class="result-score">Pontuação: <strong id="score-media">0</strong> de 30 pontos</div>
+        <p class="result-text">Você já iniciou um movimento de organização da controladoria do seu escritório, mas ainda há bastante espaço para melhorias. Talvez você conte com algumas ferramentas e rotinas definidas, mas elas ainda não estão integradas nem sistematizadas de forma eficiente.</p>
+        <div class="result-cta">
+          <a href="https://kariagestao.com/#contato" class="btn-result-main">Quero avançar para o próximo nível →</a>
+          <a href="https://kariagestao-my.sharepoint.com/:b:/p/nathalya/IQBYP0djMJRfRqO_HSjEXopaARt_oB5Ee6BR0YyVixpb2Mc?e=NfnibZ" target="_blank" class="btn-result-sec">Acessar o Guia de Maturidade</a>
+        </div>
+        <div class="result-divider">Acompanhe a KARIA</div>
+        <div class="social-row">
+          <a href="https://instagram.com/kariagestao" target="_blank" class="social-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            @kariagestao
+          </a>
+          <a href="https://linkedin.com/company/kariagestao" target="_blank" class="social-btn">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+        <p class="footer-note">Dúvidas? <a href="mailto:contato@kariagestao.com">contato@kariagestao.com</a> · <a href="https://www.kariagestao.com">kariagestao.com</a></p>
+      </div>
+
+      <!-- RESULTADO C: ALTA MATURIDADE -->
+      <div class="result" id="result-alta" style="display:none;">
+        <span class="result-icon">⭐</span>
+        <div class="result-badge alta">Sua gestão é estratégica e madura</div>
+        <h2>Alta Maturidade</h2>
+        <p class="result-subtitle">Parabéns — você está no nível mais avançado de gestão jurídica.</p>
+        <div class="result-score">Pontuação: <strong id="score-alta">0</strong> de 30 pontos</div>
+        <p class="result-text">Parabéns! Você atingiu um alto nível de excelência na controladoria jurídica. Os processos são padronizados e eficientes, as ferramentas estão bem implementadas e integradas, e há uma cultura voltada para dados e melhoria contínua.</p>
+        <div class="result-cta">
+          <a href="https://kariagestao.com/#contato" class="btn-result-main">Falar com a KARIA Gestão →</a>
+          <a href="https://kariagestao-my.sharepoint.com/:b:/p/nathalya/IQBYP0djMJRfRqO_HSjEXopaARt_oB5Ee6BR0YyVixpb2Mc?e=NfnibZ" target="_blank" class="btn-result-sec">Acessar o Guia de Maturidade</a>
+        </div>
+        <div class="result-divider">Acompanhe a KARIA</div>
+        <div class="social-row">
+          <a href="https://instagram.com/kariagestao" target="_blank" class="social-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            @kariagestao
+          </a>
+          <a href="https://linkedin.com/company/kariagestao" target="_blank" class="social-btn">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+        <p class="footer-note">Dúvidas? <a href="mailto:contato@kariagestao.com">contato@kariagestao.com</a> · <a href="https://www.kariagestao.com">kariagestao.com</a></p>
+      </div>
+
+    </div><!-- /card -->
+  </div><!-- /screen-result -->
+
+</div><!-- /wrapper -->
+
+<script>
+// Estado
+const TOTAL_QUESTIONS = 10;
+const scores = new Array(TOTAL_QUESTIONS + 1).fill(null); // índices 1–10
+let currentStep = 0;
+
+// Labels de etapas: 0 = dados, 1–10 = perguntas, 11 = loading
+const TOTAL_STEPS = 11; // 0..10 visíveis
+
+function startForm() {
+  document.getElementById('screen-welcome').style.display = 'none';
+  document.getElementById('screen-form').style.display = 'block';
+  updateProgress(0);
+}
+
+function updateProgress(step) {
+  const pct = Math.round((step / TOTAL_STEPS) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+  if (step === 0) {
+    document.getElementById('prog-label').textContent = 'Seus dados';
+  } else {
+    document.getElementById('prog-label').textContent = 'Pergunta ' + step + ' de ' + TOTAL_QUESTIONS;
+  }
+}
+
+function showStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('step-' + n);
+  if (el) { el.classList.add('active'); el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; }
+  updateProgress(n);
+  currentStep = n;
+}
+
+function nextStep(from) {
+  if (from === 0) {
+    // Validar dados
+    const nome = document.getElementById('inp-nome').value.trim();
+    const email = document.getElementById('inp-email').value.trim();
+    const errEl = document.getElementById('err-email');
+    if (!nome || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errEl.style.display = 'block';
+      errEl.textContent = !nome ? 'Por favor, informe seu nome.' : 'Por favor, informe um e-mail válido.';
+      return;
+    }
+    errEl.style.display = 'none';
+    showStep(1);
+    return;
+  }
+  if (from >= 1 && from <= TOTAL_QUESTIONS) {
+    showStep(from + 1);
+  }
+}
+
+function prevStep(from) {
+  if (from > 0) showStep(from - 1);
+}
+
+function selectOption(question, points, el) {
+  // Remove seleção anterior
+  el.closest('.options').querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  scores[question] = points;
+  // Habilita botão avançar
+  const btn = document.getElementById('next-' + question);
+  if (btn) btn.disabled = false;
+}
+
+function calcScore() {
+  return scores.slice(1).reduce((acc, v) => acc + (v !== null ? v : 0), 0);
+}
+
+function submitForm() {
+  // Vai para loading
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-loading').classList.add('active');
+
+  const nome = document.getElementById('inp-nome').value.trim();
+  const email = document.getElementById('inp-email').value.trim();
+  const escritorio = document.getElementById('inp-escritorio').value.trim();
+  const total = calcScore();
+
+  // Monta resumo das respostas
+  const perguntas = [
+    'Fluxos de trabalho documentados',
+    'Revisões de processos internos',
+    'Uso de sistemas jurídicos',
+    'Automações no dia a dia',
+    'Controle de prazos',
+    'Comunicação sobre prazos',
+    'Gestão da equipe jurídica',
+    'Comunicação interna',
+    'Avaliação da qualidade das entregas',
+    'Iniciativas de melhoria contínua'
+  ];
+  const opcoes = [
+    ['Não possui','Documentados mas desatualizados','Documentados atualizados e aplicados'],
+    ['Não há revisões','Com frequência mas sem padronização','Regulares com análise de indicadores'],
+    ['Não uso','Utiliza com baixa integração','Utiliza com alta integração'],
+    ['Nenhuma','Algumas em áreas-chave','Alta automação com eficiência'],
+    ['Manual e suscetível a erros','Em sistemas com falhas frequentes','Totalmente confiável com acompanhamento'],
+    ['Não há comunicação estruturada','Comunicação parcial sem padronização','Automatizada com responsabilização clara'],
+    ['Sem gestão estruturada','Há alguma distribuição de tarefas','Gestão com metas e acompanhamento individual'],
+    ['Não estruturada','Reuniões ocasionais','Canal oficial com feedbacks'],
+    ['Não é avaliada','Avaliada pontualmente','Por critérios técnicos e indicadores'],
+    ['Nenhuma','Melhorias pontuais','Baseadas em dados com plano de ação']
+  ];
+
+  let nivel = total <= 6 ? 'Baixa Maturidade' : total <= 13 ? 'Maturidade em Desenvolvimento' : 'Alta Maturidade';
+  let respostas = perguntas.map((p,i) => `${i+1}. ${p}: ${opcoes[i][scores[i+1]] || '-'} (${scores[i+1]} pts)`).join('\n');
+
+  // Envia por Web3Forms
+  const payload = {
+    access_key: '1062412a-df27-4597-9e4c-d921a4cdc6d9',
+    subject: `[Autoavaliação KARIA] ${nome} — ${nivel}`,
+    from_name: 'KARIA Gestão — Autoavaliação',
+    name: nome,
+    email: email,
+    message: `NOVA AUTOAVALIAÇÃO\n\nNome: ${nome}\nE-mail: ${email}\nEscritório: ${escritorio || 'Não informado'}\nPontuação: ${total}/20\nNível: ${nivel}\n\nRESPOSTAS:\n${respostas}`
+  };
+
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json','Accept':'application/json'},
+    body: JSON.stringify(payload)
+  })
+  .catch(() => {}) // Exibe resultado mesmo se falhar
+  .finally(() => {
+    setTimeout(() => showResult(total), 800);
+  });
+}
+
+function showResult(total) {
+  document.getElementById('screen-form').style.display = 'none';
+  document.getElementById('screen-result').style.display = 'block';
+
+  let which;
+  if (total <= 10) { which = 'baixa'; document.getElementById('score-baixa').textContent = total; }
+  else if (total <= 20) { which = 'media'; document.getElementById('score-media').textContent = total; }
+  else { which = 'alta'; document.getElementById('score-alta').textContent = total; }
+
+  document.getElementById('result-' + which).style.display = 'block';
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
