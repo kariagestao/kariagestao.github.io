@@ -289,8 +289,14 @@
       setTimeout(() => { location.href = '/k-controllers/membros'; }, 1200);
 
     } catch (err) {
+      const erros = {
+        'New password should be different from the old password.': 'A nova senha deve ser diferente da senha anterior.',
+        'Password should be at least 6 characters.': 'A senha deve ter ao menos 6 caracteres.',
+        'Auth session missing!': 'Link expirado ou inválido. Solicite um novo acesso.',
+        'Token has expired or is invalid': 'Link expirado ou inválido. Solicite um novo acesso.',
+      };
       msg.className = 'msg erro';
-      msg.textContent = err.message || 'Erro ao criar senha. Tente novamente.';
+      msg.textContent = erros[err.message] || 'Erro ao criar senha. Tente novamente.';
       btn.disabled = false;
       spin.classList.remove('ativo');
     }
