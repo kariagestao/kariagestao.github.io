@@ -300,6 +300,69 @@
   .vazio h3 { font-family: 'Montserrat', sans-serif; font-size: 16px; color: var(--musgo); margin-bottom: 8px; }
   .vazio p { font-size: 13px; }
 
+  /* AULAS */
+  .aulas-intro {
+    margin-bottom: 28px;
+  }
+  .aulas-intro h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--musgo);
+    margin-bottom: 6px;
+  }
+  .aulas-intro p {
+    font-size: 13px;
+    color: var(--texto-suave);
+  }
+  .aulas-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .aula-item {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .aula-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--cobre);
+    letter-spacing: 0.08em;
+    min-width: 28px;
+  }
+  .aula-info {
+    flex: 1;
+  }
+  .aula-info h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--musgo);
+    margin-bottom: 3px;
+    line-height: 1.4;
+  }
+  .aula-info span {
+    font-size: 12px;
+    color: var(--texto-suave);
+  }
+  .aula-badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--cobre);
+    background: rgba(184,115,51,0.08);
+    border: 1px solid rgba(184,115,51,0.2);
+    border-radius: 20px;
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+
   /* FILTROS BIBLIOTECA */
   .biblioteca-filtros {
     display: flex;
@@ -1291,10 +1354,59 @@
 
     <!-- Painel Aulas -->
     <div class="painel" id="painel-aulas">
-      <div class="vazio">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        <h3>As aulas chegam em breve</h3>
-        <p>Conteúdos gravados exclusivos, disponíveis para você assistir no seu ritmo e quantas vezes quiser.</p>
+      <div class="aulas-intro">
+        <h2>Aulas exclusivas</h2>
+        <p>Uma nova aula é adicionada todo mês. Assista no seu ritmo, quantas vezes quiser.</p>
+      </div>
+      <div class="aulas-lista">
+        <div class="aula-item">
+          <div class="aula-num">01</div>
+          <div class="aula-info">
+            <h4>O que é ser um Controller Jurídico de verdade</h4>
+            <span>Novembro 2026</span>
+          </div>
+          <div class="aula-badge">Em breve</div>
+        </div>
+        <div class="aula-item">
+          <div class="aula-num">02</div>
+          <div class="aula-info">
+            <h4>Os indicadores que todo escritório deveria acompanhar</h4>
+            <span>Dezembro 2026</span>
+          </div>
+          <div class="aula-badge">Em breve</div>
+        </div>
+        <div class="aula-item">
+          <div class="aula-num">03</div>
+          <div class="aula-info">
+            <h4>Como fazer o diagnóstico de um escritório</h4>
+            <span>Janeiro 2027</span>
+          </div>
+          <div class="aula-badge">Em breve</div>
+        </div>
+        <div class="aula-item">
+          <div class="aula-num">04</div>
+          <div class="aula-info">
+            <h4>Mapeamento e estruturação de processos internos</h4>
+            <span>Fevereiro 2027</span>
+          </div>
+          <div class="aula-badge">Em breve</div>
+        </div>
+        <div class="aula-item">
+          <div class="aula-num">05</div>
+          <div class="aula-info">
+            <h4>Como apresentar resultados para a liderança</h4>
+            <span>Março 2027</span>
+          </div>
+          <div class="aula-badge">Em breve</div>
+        </div>
+        <div class="aula-item">
+          <div class="aula-num">06</div>
+          <div class="aula-info">
+            <h4>Como se posicionar e cobrar como Controller Jurídico</h4>
+            <span>Abril 2027</span>
+          </div>
+          <div class="aula-badge">Em breve</div>
+        </div>
       </div>
     </div>
 
