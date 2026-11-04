@@ -1,0 +1,813 @@
+<title>Slides de Apoio — Aula 01</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap">
+
+<style>
+:root {
+  --musgo: #0D1F2D;
+  --cobre: #B87333;
+  --cobre2: #9A6020;
+  --cream: #F8F6F3;
+  --cream2: #EDE9E3;
+  --fg: #1E2D3A;
+  --fg2: #4A5568;
+  --fg3: #718096;
+  --white: #FFFFFF;
+  --font-brand: 'Cinzel', Georgia, serif;
+  --font-heading: 'Montserrat', system-ui, sans-serif;
+  --font-body: 'Poppins', system-ui, sans-serif;
+  --slide-w: min(900px, 100%);
+  --r: clamp(6px, 0.8vw, 10px);
+}
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: #232323;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── TOP BAR ─────────────────────────────── */
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: #161616;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 max(24px, env(safe-area-inset-left, 0px));
+  height: 52px;
+  gap: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.topbar-brand {
+  font-family: var(--font-brand);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--cream);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.topbar-brand span { color: var(--cobre); }
+.topbar-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  font-family: var(--font-heading);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.topbar-sep {
+  width: 1px;
+  height: 16px;
+  background: rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
+.btn-pdf {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--cobre);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background .15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.btn-pdf:hover { background: var(--cobre2); }
+
+/* ── SLIDES WRAPPER ──────────────────────── */
+.slides {
+  padding: 72px max(20px, env(safe-area-inset-left, 0px)) 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+/* ── SLIDE BASE ──────────────────────────── */
+.slide {
+  width: var(--slide-w);
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.55);
+  background: var(--cream);
+}
+
+/* ── SLIDE NUMBER ────────────────────────── */
+.sn {
+  position: absolute;
+  bottom: 10px;
+  right: 14px;
+  font-size: clamp(7px, 0.85vw, 9px);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(13,31,45,0.18);
+}
+.slide-dark .sn,
+.slide-quote .sn,
+.slide-divider .sn { color: rgba(255,255,255,0.18); }
+
+/* ── BOTTOM RULE (content slides) ───────── */
+.slide-rule::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--musgo), var(--cobre));
+}
+
+/* ══════════════════════════════════════════
+   CAPA
+══════════════════════════════════════════ */
+.slide-cover {
+  background: var(--musgo);
+  justify-content: flex-end;
+  padding: 7% 8% 8%;
+}
+.slide-cover .cover-deco {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 95% 50%, rgba(184,115,51,0.13) 0%, transparent 70%);
+  pointer-events: none;
+}
+.slide-cover .cover-bignum {
+  position: absolute;
+  top: 50%; right: 7%;
+  transform: translateY(-55%);
+  font-family: var(--font-brand);
+  font-size: clamp(80px, 14vw, 130px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.cover-kicker {
+  font-family: var(--font-brand);
+  font-size: clamp(8px, 1.1vw, 11px);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  color: var(--cobre);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.cover-title {
+  font-family: var(--font-heading);
+  font-size: clamp(18px, 3.2vw, 32px);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.18;
+  max-width: 68%;
+  text-wrap: balance;
+  margin-bottom: 20px;
+}
+.cover-meta {
+  font-size: clamp(8px, 1vw, 10px);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════
+   DIVIDER
+══════════════════════════════════════════ */
+.slide-divider {
+  background: var(--cobre);
+  justify-content: flex-end;
+  padding: 7% 8% 8%;
+}
+.slide-divider .div-bignum {
+  position: absolute;
+  top: 7%; right: 7%;
+  font-family: var(--font-brand);
+  font-size: clamp(40px, 7vw, 68px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.12);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.div-kicker {
+  font-family: var(--font-heading);
+  font-size: clamp(8px, 1.1vw, 11px);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 10px;
+}
+.div-title {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 2.6vw, 26px);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.2;
+  max-width: 68%;
+  text-wrap: balance;
+  margin-bottom: 10px;
+}
+.div-desc {
+  font-size: clamp(9px, 1.2vw, 12px);
+  color: rgba(255,255,255,0.7);
+  font-family: var(--font-body);
+  max-width: 60%;
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════
+   CONTEÚDO PADRÃO
+══════════════════════════════════════════ */
+.slide-content {
+  padding: 6.5% 7%;
+  gap: 0;
+}
+.sc-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5%;
+  flex-shrink: 0;
+}
+.sc-head-bar {
+  width: 3px;
+  height: clamp(14px, 2.2vw, 20px);
+  background: var(--cobre);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.sc-head h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(13px, 1.9vw, 18px);
+  font-weight: 800;
+  color: var(--musgo);
+  margin: 0;
+  line-height: 1.2;
+}
+.sc-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* List */
+.sc-list {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.4vw, 14px);
+}
+.sc-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: clamp(10px, 1.45vw, 13.5px);
+  color: var(--fg);
+  line-height: 1.5;
+}
+.sc-list li .dot {
+  flex-shrink: 0;
+  width: clamp(5px, 0.6vw, 6px);
+  height: clamp(5px, 0.6vw, 6px);
+  border-radius: 50%;
+  background: var(--cobre);
+  margin-top: 0.5em;
+}
+.sc-list li strong { color: var(--musgo); font-weight: 600; }
+
+/* ══════════════════════════════════════════
+   DOIS LADOS
+══════════════════════════════════════════ */
+.slide-two {
+  flex-direction: row;
+}
+.s-col {
+  flex: 1;
+  padding: 6% 5.5%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.s-col-label {
+  font-size: clamp(7px, 0.95vw, 9px);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cobre);
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+.s-col h3 {
+  font-family: var(--font-heading);
+  font-size: clamp(11px, 1.5vw, 14px);
+  font-weight: 800;
+  color: var(--musgo);
+  margin: 0 0 14px;
+  line-height: 1.25;
+  flex-shrink: 0;
+}
+.s-col-left {
+  background: var(--musgo);
+}
+.s-col-left .s-col-label { color: rgba(184,115,51,0.85); }
+.s-col-left h3 { color: var(--white); }
+.s-col-left .sc-list li { color: rgba(255,255,255,0.78); }
+.s-col-left .sc-list li .dot { background: rgba(184,115,51,0.75); }
+.s-col-left .sc-list li strong { color: rgba(255,255,255,0.95); }
+.s-col-right { background: var(--cream); }
+.col-divider {
+  width: 1px;
+  background: rgba(13,31,45,0.07);
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════
+   CARREIRA
+══════════════════════════════════════════ */
+.career-wrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+}
+.career-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+.career-step + .career-step::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: clamp(14px, 2.5vw, 24px);
+  width: 1px;
+  height: 1px;
+  /* arrow drawn via the connector below */
+}
+.career-connector {
+  flex: 0 0 clamp(20px, 3vw, 32px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: clamp(10px, 1.8vw, 18px);
+}
+.career-connector svg {
+  width: clamp(10px, 1.5vw, 14px);
+  height: auto;
+  color: rgba(13,31,45,0.2);
+}
+.career-circle {
+  width: clamp(32px, 5.5vw, 52px);
+  height: clamp(32px, 5.5vw, 52px);
+  border-radius: 50%;
+  background: var(--cream2);
+  border: 2px solid rgba(13,31,45,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(8px, 1.1vw, 10px);
+  color: var(--fg2);
+  flex-shrink: 0;
+}
+.career-step.mid .career-circle {
+  background: var(--cream2);
+  border-color: rgba(13,31,45,0.2);
+  color: var(--fg);
+}
+.career-step.peak .career-circle {
+  background: var(--cobre);
+  border-color: var(--cobre);
+  color: var(--white);
+  width: clamp(38px, 6.5vw, 62px);
+  height: clamp(38px, 6.5vw, 62px);
+}
+.career-label {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(7px, 1vw, 9.5px);
+  color: var(--fg2);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+}
+.career-step.peak .career-label { color: var(--musgo); }
+.career-desc {
+  font-size: clamp(7px, 0.85vw, 8.5px);
+  color: var(--fg3);
+  text-align: center;
+  line-height: 1.4;
+  max-width: 85%;
+}
+
+/* ══════════════════════════════════════════
+   BOXES 4 COLUNAS
+══════════════════════════════════════════ */
+.sc-boxes {
+  display: flex;
+  gap: clamp(8px, 1.5vw, 14px);
+  width: 100%;
+  flex: 1;
+}
+.sc-box {
+  flex: 1;
+  background: var(--cream2);
+  border-radius: 6px;
+  padding: clamp(10px, 1.8vw, 18px) clamp(8px, 1.5vw, 14px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 2px solid transparent;
+}
+.sc-box:nth-child(odd) { border-top-color: var(--musgo); }
+.sc-box:nth-child(even) { border-top-color: var(--cobre); }
+.sc-box-num {
+  font-family: var(--font-brand);
+  font-size: clamp(14px, 2vw, 20px);
+  font-weight: 700;
+  color: rgba(13,31,45,0.2);
+  line-height: 1;
+}
+.sc-box-title {
+  font-family: var(--font-heading);
+  font-size: clamp(9px, 1.2vw, 11px);
+  font-weight: 800;
+  color: var(--musgo);
+  line-height: 1.3;
+}
+.sc-box-text {
+  font-size: clamp(8px, 0.95vw, 9.5px);
+  color: var(--fg2);
+  line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════
+   CITAÇÃO
+══════════════════════════════════════════ */
+.slide-quote {
+  background: var(--musgo);
+  flex-direction: row;
+  align-items: center;
+  padding: 7% 9%;
+  gap: 4%;
+}
+.quote-mark {
+  font-family: var(--font-brand);
+  font-size: clamp(40px, 6.5vw, 64px);
+  color: var(--cobre);
+  line-height: 0.7;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 1%;
+}
+.quote-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+  flex: 1;
+}
+.quote-text {
+  font-family: var(--font-heading);
+  font-size: clamp(14px, 2.2vw, 21px);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.45;
+  text-wrap: balance;
+}
+.quote-attr {
+  font-size: clamp(8px, 1vw, 10px);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════
+   TAKEAWAYS
+══════════════════════════════════════════ */
+.slide-takeaway { background: var(--cream2); }
+.tk-banner {
+  background: var(--musgo);
+  padding: clamp(8px, 1.3vw, 12px) 7%;
+  flex-shrink: 0;
+}
+.tk-banner-label {
+  font-family: var(--font-heading);
+  font-size: clamp(8px, 1.1vw, 10px);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cobre);
+}
+.tk-body {
+  flex: 1;
+  padding: 4.5% 7%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 0;
+}
+.tk-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: clamp(9px, 1.35vw, 12.5px);
+  color: var(--fg);
+  line-height: 1.45;
+}
+.tk-icon {
+  flex-shrink: 0;
+  width: clamp(14px, 1.8vw, 17px);
+  height: clamp(14px, 1.8vw, 17px);
+  background: var(--musgo);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+.tk-icon svg {
+  width: 54%; height: auto;
+}
+.tk-row strong { font-weight: 700; color: var(--musgo); }
+
+/* ── PRINT ──────────────────────────────── */
+@media print {
+  .topbar { display: none; }
+  body { background: white; }
+  .slides { padding: 0; gap: 0; display: block; }
+  .slide {
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 0;
+    box-shadow: none;
+    page-break-after: always;
+    break-after: page;
+  }
+  .slide:last-child { page-break-after: auto; break-after: auto; }
+  @page { margin: 0; size: landscape; }
+  .slide-cover,
+  .slide-divider,
+  .slide-quote,
+  .s-col-left,
+  .tk-banner,
+  .sc-box,
+  .slide-rule::after {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* ── RESPONSIVE ─────────────────────────── */
+@media (max-width: 600px) {
+  .slides { padding-top: 60px; gap: 14px; }
+  .slide { aspect-ratio: auto; min-height: 65vw; }
+  .slide-two { flex-direction: column; }
+  .col-divider { width: 100%; height: 1px; }
+  .career-wrap { flex-wrap: wrap; justify-content: center; gap: 10px 4px; }
+  .career-connector { display: none; }
+  .sc-boxes { flex-wrap: wrap; }
+  .sc-box { flex: calc(50% - 7px); min-width: calc(50% - 7px); }
+}
+</style>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:14px;overflow:hidden;">
+    <span class="topbar-brand">K <span>Controllers</span></span>
+    <div class="topbar-sep"></div>
+    <span class="topbar-label">Aula 01 — Slides de Apoio</span>
+  </div>
+  <button class="btn-pdf" onclick="window.print()">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    Salvar como PDF
+  </button>
+</div>
+
+<div class="slides">
+
+  <!-- 01 CAPA -->
+  <div class="slide slide-cover">
+    <div class="cover-deco"></div>
+    <div class="cover-bignum">01</div>
+    <p class="cover-kicker">K Controllers &mdash; Aula 01</p>
+    <h1 class="cover-title">O que é ser um Controller Jurídico de verdade</h1>
+    <p class="cover-meta">Slides de Apoio &mdash; Novembro 2026</p>
+    <span class="sn">1 / 8</span>
+  </div>
+
+  <!-- 02 UMA PROFISSÃO EM CONSTRUÇÃO -->
+  <div class="slide slide-content slide-rule">
+    <div class="sc-head">
+      <div class="sc-head-bar"></div>
+      <h2>Uma profissão em construção</h2>
+    </div>
+    <div class="sc-body">
+      <ul class="sc-list">
+        <li><span class="dot"></span><span>O Controller Jurídico é uma figura nova no mercado jurídico brasileiro. A área ainda está sendo definida e ocupada por profissionais que chegaram por caminhos diferentes.</span></li>
+        <li><span class="dot"></span><span>Não existe uma formação padronizada nem uma descrição de cargo consolidada. Quem atua nessa posição hoje está construindo o próprio caminho.</span></li>
+        <li><span class="dot"></span><span>Isso representa uma oportunidade real para quem souber se posicionar com clareza e entregar resultados consistentes e mensuráveis.</span></li>
+        <li><span class="dot"></span><span>O primeiro passo é entender com precisão o que esse papel exige, o que ele oferece como trajetória de carreira e o que não está no seu escopo.</span></li>
+      </ul>
+    </div>
+    <span class="sn">2 / 8</span>
+  </div>
+
+  <!-- 03 DIVIDER -->
+  <div class="slide slide-divider">
+    <div class="div-bignum">03</div>
+    <p class="div-kicker">O maior risco de carreira</p>
+    <h2 class="div-title">Acúmulo de funções sem identidade</h2>
+    <p class="div-desc">Muitos profissionais fazem tudo e, por isso, não são reconhecidos por nada.</p>
+    <span class="sn">3 / 8</span>
+  </div>
+
+  <!-- 04 DOIS LADOS -->
+  <div class="slide slide-two slide-rule">
+    <div class="s-col s-col-left">
+      <p class="s-col-label">O que costuma acontecer</p>
+      <h3>O profissional que faz tudo</h3>
+      <div class="sc-body">
+        <ul class="sc-list">
+          <li><span class="dot"></span><span>Secretaria processos, controla prazos, cobra honorários, organiza reuniões e ainda responde demandas da equipe.</span></li>
+          <li><span class="dot"></span><span>Nunca tem clareza sobre qual é a sua função principal dentro do escritório.</span></li>
+          <li><span class="dot"></span><span>Não consegue cobrar pelo valor estratégico porque ficou preso na execução operacional.</span></li>
+          <li><span class="dot"></span><span>Aceita qualquer demanda porque não tem um escopo definido para se apoiar.</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-divider"></div>
+    <div class="s-col s-col-right">
+      <p class="s-col-label">O que muda com o posicionamento certo</p>
+      <h3>O Controller Jurídico com escopo</h3>
+      <div class="sc-body">
+        <ul class="sc-list">
+          <li><span class="dot"></span><span>Tem um papel claro: <strong>gestão operacional</strong> do escritório.</span></li>
+          <li><span class="dot"></span><span>Sabe o que aceita e o que não está no seu escopo de atuação.</span></li>
+          <li><span class="dot"></span><span>Consegue comunicar valor porque entrega resultados específicos e mensuráveis.</span></li>
+          <li><span class="dot"></span><span>Pode crescer dentro de uma hierarquia porque o seu trabalho é visível e distinto.</span></li>
+        </ul>
+      </div>
+    </div>
+    <span class="sn">4 / 8</span>
+  </div>
+
+  <!-- 05 CARREIRA -->
+  <div class="slide slide-content slide-rule">
+    <div class="sc-head">
+      <div class="sc-head-bar"></div>
+      <h2>A hierarquia de carreira do Controller Jurídico</h2>
+    </div>
+    <div class="sc-body">
+      <div class="career-wrap">
+
+        <div class="career-step">
+          <div class="career-circle">AUX</div>
+          <p class="career-label">Auxiliar</p>
+          <p class="career-desc">Suporte operacional. Executa tarefas definidas por outros.</p>
+        </div>
+
+        <div class="career-connector">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </div>
+
+        <div class="career-step">
+          <div class="career-circle">ASS</div>
+          <p class="career-label">Assistente</p>
+          <p class="career-desc">Começa a assumir processos próprios com supervisão.</p>
+        </div>
+
+        <div class="career-connector">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </div>
+
+        <div class="career-step mid">
+          <div class="career-circle">JR</div>
+          <p class="career-label">CJ Júnior</p>
+          <p class="career-desc">Conduz diagnósticos e mapeamentos com autonomia parcial.</p>
+        </div>
+
+        <div class="career-connector">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </div>
+
+        <div class="career-step mid">
+          <div class="career-circle">PL</div>
+          <p class="career-label">CJ Pleno</p>
+          <p class="career-desc">Autonomia plena. Gere projetos do início ao fim.</p>
+        </div>
+
+        <div class="career-connector">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </div>
+
+        <div class="career-step peak">
+          <div class="career-circle">SR</div>
+          <p class="career-label">CJ Sênior</p>
+          <p class="career-desc">Lidera estratégia, forma outros e influencia a gestão.</p>
+        </div>
+
+      </div>
+    </div>
+    <span class="sn">5 / 8</span>
+  </div>
+
+  <!-- 06 O QUE O CJ FAZ -->
+  <div class="slide slide-content slide-rule">
+    <div class="sc-head">
+      <div class="sc-head-bar"></div>
+      <h2>O que o Controller Jurídico faz de verdade</h2>
+    </div>
+    <div class="sc-body">
+      <div class="sc-boxes">
+        <div class="sc-box">
+          <p class="sc-box-num">01</p>
+          <p class="sc-box-title">Estrutura processos internos</p>
+          <p class="sc-box-text">Mapeia como o trabalho acontece, identifica gargalos e organiza fluxos para que o escritório funcione sem depender de pessoas específicas.</p>
+        </div>
+        <div class="sc-box">
+          <p class="sc-box-num">02</p>
+          <p class="sc-box-title">Cria visibilidade com indicadores</p>
+          <p class="sc-box-text">Transforma dados operacionais em informação útil sobre volume, prazo e produtividade para que a liderança decida com clareza.</p>
+        </div>
+        <div class="sc-box">
+          <p class="sc-box-num">03</p>
+          <p class="sc-box-title">Reduz riscos organizacionais</p>
+          <p class="sc-box-text">Identifica responsabilidades sem dono, comunicação falha entre equipes e dependências críticas antes que virem problemas.</p>
+        </div>
+        <div class="sc-box">
+          <p class="sc-box-num">04</p>
+          <p class="sc-box-title">Apoia decisões estratégicas</p>
+          <p class="sc-box-text">Organiza informação para que os sócios possam decidir sobre estrutura, crescimento e pessoas com base em dados concretos.</p>
+        </div>
+      </div>
+    </div>
+    <span class="sn">6 / 8</span>
+  </div>
+
+  <!-- 07 CITAÇÃO -->
+  <div class="slide slide-quote">
+    <div class="quote-mark">"</div>
+    <div class="quote-inner">
+      <p class="quote-text">Controller Jurídico não é o profissional que faz tudo. É o profissional que organiza o escritório para que todos possam fazer o seu melhor.</p>
+      <p class="quote-attr">K Controllers &mdash; Aula 01</p>
+    </div>
+    <span class="sn">7 / 8</span>
+  </div>
+
+  <!-- 08 TAKEAWAYS -->
+  <div class="slide slide-takeaway slide-rule">
+    <div class="tk-banner">
+      <p class="tk-banner-label">Pontos-chave desta aula</p>
+    </div>
+    <div class="tk-body">
+      <div class="tk-row">
+        <div class="tk-icon"><svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <span>O Controller Jurídico atua na <strong>gestão operacional</strong> do escritório: processos, indicadores, estrutura e informação para decisão.</span>
+      </div>
+      <div class="tk-row">
+        <div class="tk-icon"><svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <span>O maior risco de carreira é o <strong>acúmulo de funções sem identidade</strong>: fazer de tudo sem ser reconhecido por nada específico.</span>
+      </div>
+      <div class="tk-row">
+        <div class="tk-icon"><svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <span>Existe uma <strong>hierarquia de carreira</strong> clara: de auxiliar a CJ sênior, cada nível tem autonomia e responsabilidades distintas.</span>
+      </div>
+      <div class="tk-row">
+        <div class="tk-icon"><svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <span>Ter um <strong>escopo definido</strong> é o que permite crescer, cobrar pelo valor real e influenciar a liderança com autoridade técnica.</span>
+      </div>
+    </div>
+    <span class="sn">8 / 8</span>
+  </div>
+
+</div>
