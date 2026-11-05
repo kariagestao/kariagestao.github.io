@@ -605,6 +605,154 @@ p { max-width: var(--max-prose); }
 
 
 @media(max-width:600px){}
+
+/* ============================================================
+   ANIMAÇÕES DE ENTRADA & INTERAÇÃO — KARIA v3
+   ============================================================ */
+
+/* --- Reveal ao scroll --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-32px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(32px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+/* Delay em cascata para listas */
+.reveal-cascade > *:nth-child(1) { transition-delay: 0s; }
+.reveal-cascade > *:nth-child(2) { transition-delay: 0.1s; }
+.reveal-cascade > *:nth-child(3) { transition-delay: 0.2s; }
+.reveal-cascade > *:nth-child(4) { transition-delay: 0.3s; }
+.reveal-cascade > *:nth-child(5) { transition-delay: 0.4s; }
+.reveal-cascade > * {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-cascade.visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Hero: animação de entrada ao carregar --- */
+.hero__pre {
+  animation: heroFadeDown 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+}
+.hero__title {
+  animation: heroFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+}
+.hero__sub {
+  animation: heroFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+}
+.hero__actions {
+  animation: heroFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
+}
+.hero__photo {
+  animation: heroRevealRight 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroFadeDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroRevealRight {
+  from { opacity: 0; transform: translateX(40px) scale(0.98); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+/* --- Cards hover mais rico --- */
+.funil__step {
+  transition: border-color 0.25s, background 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.funil__step:hover {
+  border-color: rgba(184,115,51,0.55) !important;
+  background: rgba(255,255,255,0.07) !important;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+}
+.blog-card {
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.blog-card:hover {
+  border-color: var(--cobre) !important;
+  box-shadow: 0 8px 28px rgba(13,31,45,0.12) !important;
+  transform: translateY(-4px);
+}
+.problema__item {
+  transition: border-color 0.25s, transform 0.25s;
+}
+.problema__item:hover {
+  border-color: var(--cobre);
+  transform: translateX(4px);
+}
+
+/* --- Linha cobre animada nos títulos de seção --- */
+.section-label {
+  position: relative;
+  display: inline-block;
+}
+.section-label::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--cobre);
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section-label.visible::after {
+  width: 48px;
+}
+
+/* --- Pulsação suave no botão primário do hero --- */
+@keyframes subtlePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(184,115,51,0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(184,115,51,0); }
+}
+.hero__actions .btn-primary {
+  animation: heroFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both,
+             subtlePulse 2.8s ease-in-out 1.4s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-left, .reveal-right,
+  .reveal-cascade > *,
+  .hero__pre, .hero__title, .hero__sub,
+  .hero__actions, .hero__photo {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
 </style>
   <script type="application/ld+json">
   {
@@ -858,5 +1006,100 @@ document.addEventListener('DOMContentLoaded', function(){
     </div>
   </div>
 </div>
+
+<script>
+/* ── KARIA Animações de entrada v3 ── */
+(function () {
+  if (typeof IntersectionObserver === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* Seleciona os elementos que receberão reveal */
+  const selectors = [
+    /* Seções de conteúdo */
+    '.problema__grid',
+    '.problema__closing',
+    '.funil__track',
+    '.funil__cta',
+    '.sobre__img-wrap',
+    '.sobre__text',
+    '.trabalho__img',
+    '.trabalho__text',
+    '.blog-prev__grid',
+    '.faq__list',
+    '.guia__inner',
+    /* Cards individualmente */
+    '.problema__item',
+    '.blog-card',
+    '.funil__step',
+    /* Títulos de seção */
+    '.section--off h2',
+    '.section--dim h2',
+    '.section--dark h2',
+    '.section--mid h2',
+    '.guia h2',
+    '.cta-final h2',
+    '.cta-final p',
+    '.cta-final .btn-cta-wpp',
+  ];
+
+  /* Cascata para grids de cards */
+  const cascadeParents = [
+    '.problema__grid',
+    '.blog-prev__grid',
+  ];
+
+  const observed = new Set();
+
+  /* Observer principal */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+
+  /* Adiciona classes e observa */
+  selectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      if (observed.has(el)) return;
+      /* Cascata nos grids */
+      const isChild = cascadeParents.some(p => {
+        const parent = el.closest(p);
+        return parent && !observed.has(parent);
+      });
+      if (!isChild) {
+        el.classList.add('reveal');
+        io.observe(el);
+        observed.add(el);
+      }
+    });
+  });
+
+  /* Cascata: observa o container e anima filhos em sequência */
+  cascadeParents.forEach(sel => {
+    document.querySelectorAll(sel).forEach(parent => {
+      if (observed.has(parent)) return;
+      parent.classList.add('reveal-cascade');
+      io.observe(parent);
+      observed.add(parent);
+    });
+  });
+
+  /* Sobre: direções diferentes para imagem e texto */
+  const sobreImg = document.querySelector('.sobre__img-wrap');
+  const sobreText = document.querySelector('.sobre__text');
+  if (sobreImg) { sobreImg.classList.remove('reveal'); sobreImg.classList.add('reveal-left'); io.observe(sobreImg); }
+  if (sobreText) { sobreText.classList.remove('reveal'); sobreText.classList.add('reveal-right'); io.observe(sobreText); }
+
+  /* Trabalho: mesma lógica */
+  const trabImg = document.querySelector('.trabalho__img');
+  const trabText = document.querySelector('.trabalho__text');
+  if (trabImg) { trabImg.classList.remove('reveal'); trabImg.classList.add('reveal-left'); io.observe(trabImg); }
+  if (trabText) { trabText.classList.remove('reveal'); trabText.classList.add('reveal-right'); io.observe(trabText); }
+
+})();
+</script>
 </body>
 </html>
