@@ -744,10 +744,7 @@ p { max-width: var(--max-prose); }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal-left, .reveal-right,
-  .reveal-cascade > *,
-  .hero__pre, .hero__title, .hero__sub,
-  .hero__actions, .hero__photo {
-    animation: none !important;
+  .reveal-cascade > * {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
@@ -1011,7 +1008,6 @@ document.addEventListener('DOMContentLoaded', function(){
 /* ── KARIA Animações de entrada v3 ── */
 (function () {
   if (typeof IntersectionObserver === 'undefined') return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   /* Seleciona os elementos que receberão reveal */
   const selectors = [
