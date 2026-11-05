@@ -660,7 +660,7 @@ function initFooter() {
 }
 function openPrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.add('open');document.body.style.overflow='hidden';} }
 function closePrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.remove('open');document.body.style.overflow='';} }
-var _depth = (window.location.pathname.match(/\/g)||[]).length - 1;
+var _depth = (window.location.pathname.match(/\//g)||[]).length - 1;
 var _base = _depth <= 0 ? '/' : Array(_depth+1).join('../');
 document.addEventListener('DOMContentLoaded', function(){
   loadComponent('karia-nav', _base+'nav.html', function(){ initNav(); });
