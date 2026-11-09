@@ -691,20 +691,22 @@
     border-radius: 12px;
     padding: 20px 22px;
     display: flex;
-    align-items: center;
-    gap: 14px;
+    align-items: flex-start;
+    gap: 16px;
   }
   .expert-card.fundadora { border-color: rgba(184,115,51,0.5); background: rgba(184,115,51,0.07); }
-  .expert-initials {
-    width: 44px; height: 44px; border-radius: 50%;
+  .expert-avatar {
+    width: 52px; height: 52px; border-radius: 50%;
     background: rgba(184,115,51,0.2); color: var(--cobre);
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 16px;
-    flex-shrink: 0;
+    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 17px;
+    flex-shrink: 0; overflow: hidden;
   }
-  .expert-card.fundadora .expert-initials { background: rgba(184,115,51,0.3); }
+  .expert-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .expert-card.fundadora .expert-avatar { background: rgba(184,115,51,0.3); }
   .expert-nome { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; color: #F8F6F3; margin-bottom: 3px; }
-  .expert-label { font-size: 11px; font-weight: 600; color: #D4924A; letter-spacing: 0.04em; text-transform: uppercase; }
+  .expert-label { font-size: 11px; font-weight: 600; color: #D4924A; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 6px; }
+  .expert-bio { font-size: 12px; color: rgba(248,246,243,0.65); line-height: 1.5; }
 </style>
 
 <!-- TOPBAR -->
@@ -962,14 +964,10 @@
   // Experts
   (async function() {
     try {
+      const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M';
       const res = await fetch(
-        'https://olgkcfwnbhnngpqqkppm.supabase.co/rest/v1/public_experts?select=name,role,state',
-        {
-          headers: {
-            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M'
-          }
-        }
+        'https://olgkcfwnbhnngpqqkppm.supabase.co/rest/v1/public_experts?select=name,role,state,avatar_url,bio',
+        { headers: { 'apikey': ANON, 'Authorization': 'Bearer ' + ANON } }
       );
       if (!res.ok) return;
       const experts = await res.json();
@@ -978,11 +976,16 @@
       experts.forEach(e => {
         const isFounder = e.role === 'expert_fundadora';
         const initials = e.name.trim().split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+        const avatarHtml = e.avatar_url
+          ? '<div class="expert-avatar"><img src="' + e.avatar_url + '" alt="' + e.name + '" onerror="this.parentElement.innerHTML=\'' + initials + '\'"></div>'
+          : '<div class="expert-avatar">' + initials + '</div>';
         const card = document.createElement('div');
         card.className = 'expert-card' + (isFounder ? ' fundadora' : '');
-        card.innerHTML = '<div class="expert-initials">' + initials + '</div>'
+        card.innerHTML = avatarHtml
           + '<div><div class="expert-nome">' + e.name + '</div>'
-          + '<div class="expert-label">' + (isFounder ? '★ Expert Fundadora' : '★ Expert') + (e.state ? ' · ' + e.state : '') + '</div></div>';
+          + '<div class="expert-label">' + (isFounder ? '★ Expert Fundadora' : '★ Expert') + (e.state ? ' · ' + e.state : '') + '</div>'
+          + (e.bio ? '<div class="expert-bio">' + e.bio + '</div>' : '')
+          + '</div>';
         grid.appendChild(card);
       });
       document.getElementById('experts-section').style.display = '';

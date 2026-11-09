@@ -1003,6 +1003,60 @@
 
   .perfil-form input[readonly] { background: #f5f5f5; color: var(--texto-suave); cursor: not-allowed; }
 
+  .perfil-form textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--borda);
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: var(--texto);
+    background: var(--branco);
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.5;
+    transition: border-color 0.2s;
+  }
+  .perfil-form textarea:focus { border-color: var(--cobre); outline: none; }
+  .bio-counter { font-size: 11px; color: var(--texto-suave); text-align: right; margin-top: 4px; }
+
+  /* MEMBROS DA COMUNIDADE */
+  .membros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .membro-card {
+    background: var(--branco);
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .membro-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(13,31,45,0.1); color: var(--musgo);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 15px;
+    flex-shrink: 0; overflow: hidden;
+  }
+  .membro-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .membro-avatar.expert { background: rgba(184,115,51,0.15); color: var(--cobre); }
+  .membro-nome { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; color: var(--musgo); margin-bottom: 3px; }
+  .membro-bio { font-size: 12px; color: var(--texto-suave); line-height: 1.5; margin-top: 4px; }
+  .membro-badge {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 20px; margin-top: 2px;
+  }
+  .membro-badge.membro-comum { background: rgba(13,31,45,0.08); color: var(--musgo); }
+  .membro-badge.expert-badge { background: rgba(184,115,51,0.15); color: var(--cobre); }
+  .membro-badge.admin-badge { background: var(--musgo); color: var(--claro); }
+  .membros-vazio { font-size: 14px; color: var(--texto-suave); text-align: center; padding: 40px 0; }
+
   .perfil-acoes { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 
   .btn-salvar-perfil {
@@ -1321,6 +1375,7 @@
       <button class="tab" data-painel="biblioteca">Biblioteca</button>
       <button class="tab" data-painel="casoreal">Caso Real</button>
       <button class="tab" data-painel="aulas">Aulas</button>
+      <button class="tab" data-painel="membros">Membros</button>
       <button class="tab" data-painel="perfil">Meu Perfil</button>
     </div>
 
@@ -1833,6 +1888,11 @@
       </div>
     </div>
 
+    <!-- Painel Membros -->
+    <div class="painel" id="painel-membros">
+      <div id="membros-grid" class="membros-grid"></div>
+    </div>
+
     <!-- Painel Perfil -->
     <div class="painel" id="painel-perfil">
       <div class="perfil-layout">
@@ -1931,6 +1991,16 @@
             </div>
           </div>
 
+          <div class="perfil-secao">
+            <div class="perfil-secao-titulo">Sobre você</div>
+            <p class="perfil-secao-desc">Uma apresentação curta que aparece na aba Membros da comunidade.</p>
+            <div class="form-group">
+              <label>Mini bio</label>
+              <textarea id="p-bio" maxlength="140" placeholder="Conte um pouco sobre você e sua atuação na Controladoria Jurídica..."></textarea>
+              <div class="bio-counter"><span id="bio-counter">0</span>/140 caracteres</div>
+            </div>
+          </div>
+
           <div class="perfil-acoes">
             <button type="submit" class="btn-salvar-perfil" id="btn-salvar-perfil">
               <span class="spinner-perfil" id="spin-perfil"></span>
@@ -2002,9 +2072,41 @@
     location.href = '/k-controllers/login';
   });
 
+  // Membros da Comunidade
+  async function carregarMembros() {
+    const { data: membros } = await sb.from('public_members').select('name, role, bio, avatar_url');
+    const grid = document.getElementById('membros-grid');
+    if (!membros || membros.length === 0) {
+      grid.innerHTML = '<p class="membros-vazio">Nenhum membro ativo encontrado.</p>';
+      return;
+    }
+    grid.innerHTML = '';
+    membros.forEach(m => {
+      const initials = m.name.trim().split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+      const isExpert = m.role === 'expert' || m.role === 'expert_fundadora';
+      const isAdmin = m.role === 'admin';
+      const avatarClass = 'membro-avatar' + (isExpert ? ' expert' : '');
+      const avatarHtml = m.avatar_url
+        ? `<div class="${avatarClass}"><img src="${m.avatar_url}" alt="${m.name}" onerror="this.parentElement.innerHTML='${initials}'"></div>`
+        : `<div class="${avatarClass}">${initials}</div>`;
+      let badgeHtml = '';
+      if (isAdmin) badgeHtml = '<span class="membro-badge admin-badge">Fundadora</span>';
+      else if (m.role === 'expert_fundadora') badgeHtml = '<span class="membro-badge expert-badge">★ Expert Fundadora</span>';
+      else if (isExpert) badgeHtml = '<span class="membro-badge expert-badge">★ Expert</span>';
+      else badgeHtml = '<span class="membro-badge membro-comum">Membro</span>';
+      const card = document.createElement('div');
+      card.className = 'membro-card';
+      card.innerHTML = avatarHtml
+        + `<div><div class="membro-nome">${m.name}</div>${badgeHtml}`
+        + (m.bio ? `<div class="membro-bio">${m.bio}</div>` : '')
+        + '</div>';
+      grid.appendChild(card);
+    });
+  }
+
   // Experts da Comunidade
   async function carregarExperts() {
-    const { data: experts } = await sb.from('public_experts').select('name, role, state');
+    const { data: experts } = await sb.from('public_experts').select('name, role, state, avatar_url, bio');
     if (!experts || experts.length === 0) return;
     const grid = document.getElementById('experts-com-grid');
     const section = document.getElementById('experts-comunidade');
@@ -2013,9 +2115,14 @@
       const initials = e.name.trim().split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
       const card = document.createElement('div');
       card.className = 'expert-com-card' + (isFounder ? ' fundadora' : '');
-      card.innerHTML = '<div class="expert-com-initials">' + initials + '</div>'
+      const avatarHtml = e.avatar_url
+        ? '<div class="expert-com-initials" style="overflow:hidden;padding:0"><img src="' + e.avatar_url + '" alt="' + e.name + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.parentElement.style=\'\';this.parentElement.innerHTML=\'' + initials + '\'"></div>'
+        : '<div class="expert-com-initials">' + initials + '</div>';
+      card.innerHTML = avatarHtml
         + '<div><div class="expert-com-nome">' + e.name + '</div>'
-        + '<div class="expert-com-label">' + (isFounder ? '★ Expert Fundadora' : '★ Expert') + (e.state ? ' · ' + e.state : '') + '</div></div>';
+        + '<div class="expert-com-label">' + (isFounder ? '★ Expert Fundadora' : '★ Expert') + (e.state ? ' · ' + e.state : '') + '</div>'
+        + (e.bio ? '<div style="font-size:12px;color:rgba(248,246,243,0.65);line-height:1.5;margin-top:5px">' + e.bio + '</div>' : '')
+        + '</div>';
       grid.appendChild(card);
     });
     if (grid.children.length > 0) section.style.display = '';
@@ -2025,7 +2132,7 @@
   async function carregarPerfil(session) {
     const { data: member } = await sb
       .from('members')
-      .select('name, phone, avatar_url, cep, rua, numero, complemento, bairro, cidade, estado, role')
+      .select('name, phone, avatar_url, cep, rua, numero, complemento, bairro, cidade, estado, role, bio')
       .eq('email', session.user.email)
       .single();
 
@@ -2054,6 +2161,10 @@
     set('p-bairro', member.bairro);
     set('p-cidade', member.cidade);
     set('p-estado', member.estado);
+    if (member.bio) {
+      const bioEl = document.getElementById('p-bio');
+      if (bioEl) { bioEl.value = member.bio; document.getElementById('bio-counter').textContent = member.bio.length; }
+    }
 
     if (member.avatar_url) {
       document.getElementById('avatar-img').src = member.avatar_url;
@@ -2086,6 +2197,7 @@
       bairro: document.getElementById('p-bairro').value.trim() || null,
       cidade: document.getElementById('p-cidade').value.trim() || null,
       estado: document.getElementById('p-estado').value || null,
+      bio: document.getElementById('p-bio').value.trim() || null,
       updated_at: new Date().toISOString()
     };
 
@@ -2458,6 +2570,17 @@
 
       // Carrega Experts da Comunidade (falha silenciosamente)
       try { carregarExperts(); } catch(e) {}
+
+      // Carrega Membros da Comunidade (falha silenciosamente)
+      try { carregarMembros(); } catch(e) {}
+
+      // Bio counter
+      const bioEl = document.getElementById('p-bio');
+      if (bioEl) {
+        bioEl.addEventListener('input', () => {
+          document.getElementById('bio-counter').textContent = bioEl.value.length;
+        });
+      }
 
       // Restaura aba salva
       try {
