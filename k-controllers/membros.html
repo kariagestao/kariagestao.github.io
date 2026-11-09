@@ -1269,101 +1269,78 @@
     .nome-membro { display: none; }
   }
 
-  /* BOTÃO EXPERTS NO HEADER */
-  .btn-experts {
-    font-size: 11px;
-    font-weight: 700;
-    font-family: 'Montserrat', sans-serif;
-    letter-spacing: 0.05em;
-    color: var(--cobre);
-    background: rgba(184,115,51,0.12);
-    border: 1px solid rgba(184,115,51,0.3);
-    border-radius: 20px;
-    padding: 5px 12px;
-    cursor: pointer;
-    display: none;
-    align-items: center;
-    gap: 5px;
-    transition: background 0.2s;
-    white-space: nowrap;
-  }
-  .btn-experts:hover { background: rgba(184,115,51,0.2); }
-
-  /* MODAL EXPERTS */
-  .experts-modal-overlay {
+  /* WIDGET FLUTUANTE DE EXPERTS */
+  .experts-widget {
     display: none;
     position: fixed;
-    inset: 0;
-    background: rgba(13,31,45,0.6);
-    z-index: 200;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    backdrop-filter: blur(2px);
+    top: 72px;
+    right: 16px;
+    width: 220px;
+    background: var(--musgo);
+    border-radius: 12px;
+    padding: 14px 16px 16px;
+    z-index: 90;
+    box-shadow: 0 4px 20px rgba(13,31,45,0.25);
+    overflow: hidden;
   }
-  .experts-modal-overlay.aberto { display: flex; }
-  .experts-modal {
-    background: var(--claro);
-    border-radius: 16px;
-    padding: 28px;
-    width: 100%;
-    max-width: 460px;
-    max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
-    animation: modalIn 0.25s ease;
-  }
-  @keyframes modalIn {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .experts-modal-titulo {
+  .experts-widget-label {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: 13px;
-    letter-spacing: 0.08em;
+    font-size: 9px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--musgo);
+    color: var(--cobre);
     display: flex;
     align-items: center;
-    gap: 7px;
-    margin-bottom: 20px;
+    gap: 5px;
+    margin-bottom: 12px;
+    opacity: 0.9;
   }
-  .experts-modal-titulo svg { color: var(--cobre); }
-  .btn-fechar-modal {
-    position: absolute;
-    top: 16px; right: 16px;
-    background: none; border: none;
-    color: var(--texto-suave);
-    cursor: pointer;
-    font-size: 20px;
-    line-height: 1;
-    padding: 4px;
-    border-radius: 50%;
-    transition: background 0.2s;
+  .experts-widget-track { position: relative; min-height: 70px; }
+  .expert-widget-slide {
+    display: none;
+    align-items: flex-start;
+    gap: 10px;
+    animation: wSlideIn 0.4s ease;
   }
-  .btn-fechar-modal:hover { background: rgba(13,31,45,0.07); }
-  .experts-modal-lista { display: flex; flex-direction: column; gap: 14px; }
-  .expert-modal-card {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px;
-    background: white;
-    border-radius: 10px;
-    border: 1px solid var(--borda);
+  .expert-widget-slide.ativo { display: flex; }
+  @keyframes wSlideIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to   { opacity: 1; transform: translateX(0); }
   }
-  .expert-modal-avatar {
-    width: 48px; height: 48px; border-radius: 50%;
-    background: rgba(184,115,51,0.15); color: var(--cobre);
+  .expert-widget-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(184,115,51,0.25); color: #D4924A;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 16px;
+    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 14px;
     flex-shrink: 0; overflow: hidden;
   }
-  .expert-modal-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-  .expert-modal-nome { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; color: var(--musgo); margin-bottom: 2px; }
-  .expert-modal-label { font-size: 10px; font-weight: 700; color: var(--cobre); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
-  .expert-modal-bio { font-size: 12px; color: var(--texto-suave); line-height: 1.5; }
+  .expert-widget-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .expert-widget-nome {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700; font-size: 12px;
+    color: #F8F6F3; margin-bottom: 2px;
+    line-height: 1.3;
+  }
+  .expert-widget-role {
+    font-size: 9px; font-weight: 700;
+    color: var(--cobre); letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .expert-widget-bio {
+    font-size: 11px; color: rgba(248,246,243,0.55);
+    line-height: 1.45;
+  }
+  .experts-widget-dots {
+    display: flex; gap: 5px; margin-top: 10px;
+  }
+  .w-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(248,246,243,0.2);
+    border: none; padding: 0; cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .w-dot.ativo { background: var(--cobre); transform: scale(1.3); }
 
   /* compat: mantém classes antigas */
   .experts-slider-wrap, .experts-com-grid { display: none !important; }
@@ -1402,25 +1379,19 @@
   <header class="header">
     <div class="header-logo">K <span>Controllers</span></div>
     <div class="header-right">
-      <button class="btn-experts" id="btn-experts" style="display:none">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        Experts
-      </button>
       <span class="nome-membro" id="nome-membro"></span>
       <button class="btn-sair" id="btn-sair">Sair</button>
     </div>
   </header>
 
-  <!-- Modal Experts -->
-  <div class="experts-modal-overlay" id="experts-modal-overlay">
-    <div class="experts-modal">
-      <button class="btn-fechar-modal" id="btn-fechar-modal" aria-label="Fechar">×</button>
-      <div class="experts-modal-titulo">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        Experts da Comunidade
-      </div>
-      <div class="experts-modal-lista" id="experts-modal-lista"></div>
+  <!-- Widget flutuante de Experts -->
+  <div class="experts-widget" id="experts-widget">
+    <div class="experts-widget-label">
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Experts da Comunidade
     </div>
+    <div class="experts-widget-track" id="experts-widget-track"></div>
+    <div class="experts-widget-dots" id="experts-widget-dots"></div>
   </div>
 
   <div class="container">
@@ -2169,38 +2140,52 @@
     });
   }
 
-  // Experts da Comunidade — Modal via botão no header
+  // Experts da Comunidade — Widget flutuante canto superior direito
   async function carregarExperts() {
     const { data: experts } = await sb.from('public_experts').select('name, role, state, avatar_url, bio');
     if (!experts || experts.length === 0) return;
 
-    const lista = document.getElementById('experts-modal-lista');
-    const btnExperts = document.getElementById('btn-experts');
-    const overlay = document.getElementById('experts-modal-overlay');
-    const btnFechar = document.getElementById('btn-fechar-modal');
+    const track = document.getElementById('experts-widget-track');
+    const dotsWrap = document.getElementById('experts-widget-dots');
+    const widget = document.getElementById('experts-widget');
 
-    experts.forEach(e => {
+    experts.forEach((e, i) => {
       const initials = e.name.trim().split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
       const avatarHtml = e.avatar_url
-        ? `<div class="expert-modal-avatar"><img src="${e.avatar_url}" alt="${e.name}" onerror="this.parentElement.innerHTML='${initials}'"></div>`
-        : `<div class="expert-modal-avatar">${initials}</div>`;
-      const card = document.createElement('div');
-      card.className = 'expert-modal-card';
-      card.innerHTML = avatarHtml
-        + `<div><div class="expert-modal-nome">${e.name}</div>`
-        + `<div class="expert-modal-label">★ Expert${e.state ? ' · ' + e.state : ''}</div>`
-        + (e.bio ? `<div class="expert-modal-bio">${e.bio}</div>` : '')
+        ? `<div class="expert-widget-avatar"><img src="${e.avatar_url}" alt="${e.name}" onerror="this.parentElement.innerHTML='${initials}'"></div>`
+        : `<div class="expert-widget-avatar">${initials}</div>`;
+      const slide = document.createElement('div');
+      slide.className = 'expert-widget-slide' + (i === 0 ? ' ativo' : '');
+      slide.dataset.idx = i;
+      slide.innerHTML = avatarHtml
+        + `<div><div class="expert-widget-nome">${e.name}</div>`
+        + `<div class="expert-widget-role">★ Expert${e.state ? ' · ' + e.state : ''}</div>`
+        + (e.bio ? `<div class="expert-widget-bio">${e.bio}</div>` : '')
         + '</div>';
-      lista.appendChild(card);
+      track.appendChild(slide);
+
+      if (experts.length > 1) {
+        const dot = document.createElement('button');
+        dot.className = 'w-dot' + (i === 0 ? ' ativo' : '');
+        dot.dataset.idx = i;
+        dot.addEventListener('click', () => irPara(i));
+        dotsWrap.appendChild(dot);
+      }
     });
 
-    // Exibe botão no header
-    btnExperts.style.display = 'inline-flex';
+    widget.style.display = 'block';
 
-    // Abre modal
-    btnExperts.addEventListener('click', () => overlay.classList.add('aberto'));
-    btnFechar.addEventListener('click', () => overlay.classList.remove('aberto'));
-    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('aberto'); });
+    if (experts.length > 1) {
+      let atual = 0;
+      function irPara(idx) {
+        track.querySelectorAll('.expert-widget-slide').forEach(s => s.classList.remove('ativo'));
+        dotsWrap.querySelectorAll('.w-dot').forEach(d => d.classList.remove('ativo'));
+        track.querySelector('[data-idx="' + idx + '"]').classList.add('ativo');
+        dotsWrap.querySelector('[data-idx="' + idx + '"]').classList.add('ativo');
+        atual = idx;
+      }
+      setInterval(() => irPara((atual + 1) % experts.length), 4000);
+    }
   }
 
   // Perfil: carregar dados
