@@ -909,10 +909,16 @@
   /* PERFIL */
   .perfil-layout {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 180px 1fr;
     gap: 40px;
     align-items: start;
   }
+  .perfil-direita {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .perfil-direita .expert-selo-bloco { margin-bottom: 20px; }
 
   .perfil-avatar-bloco {
     display: flex;
@@ -1950,11 +1956,13 @@
           <p class="avatar-hint">JPG ou PNG · máx. 2MB</p>
         </div>
 
-        <!-- Selo de papel -->
+        <!-- Coluna direita: selo + formulário -->
+        <div class="perfil-direita">
+
         <div class="expert-selo-bloco" id="expert-selo-bloco" style="display:none">
           <div id="expert-selo-txt" class="expert-selo">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            Expert Fundadora · K Controllers
+            Expert · K Controllers
           </div>
         </div>
         <div class="expert-selo-bloco" id="admin-selo-bloco" style="display:none">
@@ -2056,6 +2064,7 @@
             </button>
           </div>
         </form>
+        </div><!-- fim .perfil-direita -->
       </div>
     </div>
 
