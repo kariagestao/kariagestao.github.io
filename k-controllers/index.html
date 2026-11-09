@@ -694,7 +694,6 @@
     align-items: flex-start;
     gap: 16px;
   }
-  .expert-card.fundadora { border-color: rgba(184,115,51,0.5); background: rgba(184,115,51,0.07); }
   .expert-avatar {
     width: 52px; height: 52px; border-radius: 50%;
     background: rgba(184,115,51,0.2); color: var(--cobre);
@@ -703,7 +702,6 @@
     flex-shrink: 0; overflow: hidden;
   }
   .expert-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-  .expert-card.fundadora .expert-avatar { background: rgba(184,115,51,0.3); }
   .expert-nome { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; color: #F8F6F3; margin-bottom: 3px; }
   .expert-label { font-size: 11px; font-weight: 600; color: #D4924A; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 6px; }
   .expert-bio { font-size: 12px; color: rgba(248,246,243,0.65); line-height: 1.5; }
@@ -974,16 +972,15 @@
       if (!Array.isArray(experts) || experts.length === 0) return;
       const grid = document.getElementById('experts-grid');
       experts.forEach(e => {
-        const isFounder = e.role === 'expert_fundadora';
         const initials = e.name.trim().split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
         const avatarHtml = e.avatar_url
           ? '<div class="expert-avatar"><img src="' + e.avatar_url + '" alt="' + e.name + '" onerror="this.parentElement.innerHTML=\'' + initials + '\'"></div>'
           : '<div class="expert-avatar">' + initials + '</div>';
         const card = document.createElement('div');
-        card.className = 'expert-card' + (isFounder ? ' fundadora' : '');
+        card.className = 'expert-card';
         card.innerHTML = avatarHtml
           + '<div><div class="expert-nome">' + e.name + '</div>'
-          + '<div class="expert-label">' + (isFounder ? '★ Expert Fundadora' : '★ Expert') + (e.state ? ' · ' + e.state : '') + '</div>'
+          + '<div class="expert-label">★ Expert' + (e.state ? ' · ' + e.state : '') + '</div>'
           + (e.bio ? '<div class="expert-bio">' + e.bio + '</div>' : '')
           + '</div>';
         grid.appendChild(card);

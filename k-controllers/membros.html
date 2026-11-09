@@ -1299,7 +1299,6 @@
     align-items: center;
     gap: 12px;
   }
-  .expert-com-card.fundadora { border-color: rgba(184,115,51,0.4); }
   .expert-com-initials {
     width: 38px; height: 38px; border-radius: 50%;
     background: rgba(184,115,51,0.25); color: #D4924A;
@@ -2083,7 +2082,7 @@
     grid.innerHTML = '';
     membros.forEach(m => {
       const initials = m.name.trim().split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
-      const isExpert = m.role === 'expert' || m.role === 'expert_fundadora';
+      const isExpert = m.role === 'expert';
       const isAdmin = m.role === 'admin';
       const avatarClass = 'membro-avatar' + (isExpert ? ' expert' : '');
       const avatarHtml = m.avatar_url
@@ -2091,7 +2090,6 @@
         : `<div class="${avatarClass}">${initials}</div>`;
       let badgeHtml = '';
       if (isAdmin) badgeHtml = '<span class="membro-badge admin-badge">Fundadora</span>';
-      else if (m.role === 'expert_fundadora') badgeHtml = '<span class="membro-badge expert-badge">★ Expert Fundadora</span>';
       else if (isExpert) badgeHtml = '<span class="membro-badge expert-badge">★ Expert</span>';
       else badgeHtml = '<span class="membro-badge membro-comum">Membro</span>';
       const card = document.createElement('div');
@@ -2111,16 +2109,15 @@
     const grid = document.getElementById('experts-com-grid');
     const section = document.getElementById('experts-comunidade');
     experts.forEach(e => {
-      const isFounder = e.role === 'expert_fundadora';
       const initials = e.name.trim().split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
       const card = document.createElement('div');
-      card.className = 'expert-com-card' + (isFounder ? ' fundadora' : '');
+      card.className = 'expert-com-card';
       const avatarHtml = e.avatar_url
         ? '<div class="expert-com-initials" style="overflow:hidden;padding:0"><img src="' + e.avatar_url + '" alt="' + e.name + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.parentElement.style=\'\';this.parentElement.innerHTML=\'' + initials + '\'"></div>'
         : '<div class="expert-com-initials">' + initials + '</div>';
       card.innerHTML = avatarHtml
         + '<div><div class="expert-com-nome">' + e.name + '</div>'
-        + '<div class="expert-com-label">' + (isFounder ? '★ Expert Fundadora' : '★ Expert') + (e.state ? ' · ' + e.state : '') + '</div>'
+        + '<div class="expert-com-label">★ Expert' + (e.state ? ' · ' + e.state : '') + '</div>'
         + (e.bio ? '<div style="font-size:12px;color:rgba(248,246,243,0.65);line-height:1.5;margin-top:5px">' + e.bio + '</div>' : '')
         + '</div>';
       grid.appendChild(card);
@@ -2143,11 +2140,11 @@
     // Exibe selo conforme role
     if (member.role === 'admin') {
       document.getElementById('admin-selo-bloco').style.display = '';
-    } else if (member.role === 'expert_fundadora' || member.role === 'expert') {
+    } else if (member.role === 'expert') {
       const seloBloco = document.getElementById('expert-selo-bloco');
       const seloTxt = document.getElementById('expert-selo-txt');
       seloTxt.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
-        + (member.role === 'expert_fundadora' ? 'Expert Fundadora' : 'Expert') + ' · K Controllers';
+        + 'Expert · K Controllers';
       seloBloco.style.display = '';
     }
 
