@@ -1045,16 +1045,19 @@
   }
   .membro-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
   .membro-avatar.expert { background: rgba(184,115,51,0.15); color: var(--cobre); }
-  .membro-nome { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; color: var(--musgo); margin-bottom: 3px; }
-  .membro-bio { font-size: 12px; color: var(--texto-suave); line-height: 1.5; margin-top: 4px; }
+  .membro-info { flex: 1; min-width: 0; }
+  .membro-topo { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .membro-nome { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; color: var(--musgo); }
+  .membro-bio { font-size: 12px; color: var(--texto-suave); line-height: 1.5; }
   .membro-badge {
-    display: inline-block; font-size: 10px; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; font-weight: 700;
     letter-spacing: 0.05em; text-transform: uppercase;
-    padding: 2px 8px; border-radius: 20px; margin-top: 2px;
+    padding: 2px 8px; border-radius: 20px; flex-shrink: 0;
   }
-  .membro-badge.membro-comum { background: rgba(13,31,45,0.08); color: var(--musgo); }
-  .membro-badge.expert-badge { background: rgba(184,115,51,0.15); color: var(--cobre); }
-  .membro-badge.admin-badge { background: var(--musgo); color: var(--claro); }
+  .membro-badge.membro-comum { background: rgba(13,31,45,0.07); color: var(--musgo); }
+  .membro-badge.expert-badge { background: rgba(184,115,51,0.12); color: var(--cobre); }
+  .membro-badge.admin-badge { background: rgba(13,31,45,0.9); color: var(--claro); }
   .membros-vazio { font-size: 14px; color: var(--texto-suave); text-align: center; padding: 40px 0; }
 
   .perfil-acoes { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -1266,48 +1269,74 @@
     .nome-membro { display: none; }
   }
 
-  /* EXPERTS COMUNIDADE */
-  .experts-comunidade {
+  /* EXPERTS SLIDER */
+  .experts-slider-wrap {
     background: var(--musgo);
     border-radius: 14px;
-    padding: 28px 32px;
+    padding: 20px 28px;
     margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
   }
-  .experts-com-titulo {
+  .experts-slider-label {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: 13px;
-    letter-spacing: 0.08em;
+    font-size: 10px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--cobre);
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 20px;
+    gap: 6px;
+    margin-bottom: 14px;
+    opacity: 0.85;
   }
-  .experts-com-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 12px;
-  }
-  .expert-com-card {
-    background: rgba(248,246,243,0.06);
-    border: 1px solid rgba(248,246,243,0.1);
-    border-radius: 10px;
-    padding: 14px 18px;
+  .experts-slider-track {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 18px;
+    min-height: 60px;
   }
-  .expert-com-initials {
-    width: 38px; height: 38px; border-radius: 50%;
+  .expert-slide {
+    display: none;
+    align-items: center;
+    gap: 16px;
+    animation: slideIn 0.4s ease;
+  }
+  .expert-slide.ativo { display: flex; }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(12px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .expert-slide-avatar {
+    width: 52px; height: 52px; border-radius: 50%;
     background: rgba(184,115,51,0.25); color: #D4924A;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 14px;
-    flex-shrink: 0;
+    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 17px;
+    flex-shrink: 0; overflow: hidden;
   }
-  .expert-com-nome { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; color: #F8F6F3; margin-bottom: 2px; }
-  .expert-com-label { font-size: 10px; font-weight: 600; color: #D4924A; letter-spacing: 0.04em; text-transform: uppercase; }
+  .expert-slide-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .expert-slide-nome { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; color: #F8F6F3; margin-bottom: 3px; }
+  .expert-slide-label { font-size: 10px; font-weight: 700; color: var(--cobre); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+  .expert-slide-bio { font-size: 12px; color: rgba(248,246,243,0.6); line-height: 1.5; }
+  .experts-slider-dots {
+    display: flex;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .slider-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(248,246,243,0.25);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    border: none;
+    padding: 0;
+  }
+  .slider-dot.ativo { background: var(--cobre); transform: scale(1.3); }
+
+  /* compat: mantém classes antigas usadas na função carregarExperts */
+  .experts-com-grid { display: none; }
+  .expert-com-card, .expert-com-initials, .expert-com-nome, .expert-com-label { display: none; }
 
   /* SELOS DE PERFIL */
   .expert-selo-bloco { margin-bottom: 16px; }
@@ -1353,13 +1382,16 @@
       <p>Bem-vindo(a) ao K Controllers. Este é o seu espaço.</p>
     </div>
 
-    <!-- Experts da Comunidade -->
-    <div class="experts-comunidade" id="experts-comunidade" style="display:none">
-      <div class="experts-com-titulo">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <!-- Experts Slider -->
+    <div class="experts-slider-wrap" id="experts-comunidade" style="display:none">
+      <div class="experts-slider-label">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         Experts da Comunidade
       </div>
-      <div class="experts-com-grid" id="experts-com-grid"></div>
+      <div class="experts-slider-track" id="experts-slider-track"></div>
+      <div class="experts-slider-dots" id="experts-slider-dots"></div>
+      <!-- hidden grid mantido para compatibilidade com carregarExperts -->
+      <div class="experts-com-grid" id="experts-com-grid" style="display:none"></div>
     </div>
 
     <!-- Banner: acesso cancelado mas ainda vigente -->
@@ -2095,34 +2127,60 @@
       const card = document.createElement('div');
       card.className = 'membro-card';
       card.innerHTML = avatarHtml
-        + `<div><div class="membro-nome">${m.name}</div>${badgeHtml}`
+        + `<div class="membro-info"><div class="membro-topo"><span class="membro-nome">${m.name}</span>${badgeHtml}</div>`
         + (m.bio ? `<div class="membro-bio">${m.bio}</div>` : '')
         + '</div>';
       grid.appendChild(card);
     });
   }
 
-  // Experts da Comunidade
+  // Experts da Comunidade — Slider
   async function carregarExperts() {
     const { data: experts } = await sb.from('public_experts').select('name, role, state, avatar_url, bio');
     if (!experts || experts.length === 0) return;
-    const grid = document.getElementById('experts-com-grid');
+    const track = document.getElementById('experts-slider-track');
+    const dotsWrap = document.getElementById('experts-slider-dots');
     const section = document.getElementById('experts-comunidade');
-    experts.forEach(e => {
+
+    experts.forEach((e, i) => {
       const initials = e.name.trim().split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
-      const card = document.createElement('div');
-      card.className = 'expert-com-card';
       const avatarHtml = e.avatar_url
-        ? '<div class="expert-com-initials" style="overflow:hidden;padding:0"><img src="' + e.avatar_url + '" alt="' + e.name + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.parentElement.style=\'\';this.parentElement.innerHTML=\'' + initials + '\'"></div>'
-        : '<div class="expert-com-initials">' + initials + '</div>';
-      card.innerHTML = avatarHtml
-        + '<div><div class="expert-com-nome">' + e.name + '</div>'
-        + '<div class="expert-com-label">★ Expert' + (e.state ? ' · ' + e.state : '') + '</div>'
-        + (e.bio ? '<div style="font-size:12px;color:rgba(248,246,243,0.65);line-height:1.5;margin-top:5px">' + e.bio + '</div>' : '')
+        ? `<div class="expert-slide-avatar"><img src="${e.avatar_url}" alt="${e.name}" onerror="this.parentElement.innerHTML='${initials}'"></div>`
+        : `<div class="expert-slide-avatar">${initials}</div>`;
+      const slide = document.createElement('div');
+      slide.className = 'expert-slide' + (i === 0 ? ' ativo' : '');
+      slide.dataset.idx = i;
+      slide.innerHTML = avatarHtml
+        + `<div><div class="expert-slide-nome">${e.name}</div>`
+        + `<div class="expert-slide-label">★ Expert${e.state ? ' · ' + e.state : ''}</div>`
+        + (e.bio ? `<div class="expert-slide-bio">${e.bio}</div>` : '')
         + '</div>';
-      grid.appendChild(card);
+      track.appendChild(slide);
+
+      if (experts.length > 1) {
+        const dot = document.createElement('button');
+        dot.className = 'slider-dot' + (i === 0 ? ' ativo' : '');
+        dot.dataset.idx = i;
+        dot.addEventListener('click', () => irParaSlide(i));
+        dotsWrap.appendChild(dot);
+      }
     });
-    if (grid.children.length > 0) section.style.display = '';
+
+    section.style.display = '';
+
+    if (experts.length > 1) {
+      let atual = 0;
+      function irParaSlide(idx) {
+        track.querySelectorAll('.expert-slide').forEach(s => s.classList.remove('ativo'));
+        dotsWrap.querySelectorAll('.slider-dot').forEach(d => d.classList.remove('ativo'));
+        track.querySelector('[data-idx="' + idx + '"]').classList.add('ativo');
+        dotsWrap.querySelector('[data-idx="' + idx + '"]').classList.add('ativo');
+        atual = idx;
+      }
+      setInterval(() => {
+        irParaSlide((atual + 1) % experts.length);
+      }, 4000);
+    }
   }
 
   // Perfil: carregar dados
