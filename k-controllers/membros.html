@@ -1211,6 +1211,69 @@
     .proxima-live { flex-direction: column; }
     .nome-membro { display: none; }
   }
+
+  /* EXPERTS COMUNIDADE */
+  .experts-comunidade {
+    background: var(--musgo);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+  }
+  .experts-com-titulo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cobre);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .experts-com-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .expert-com-card {
+    background: rgba(248,246,243,0.06);
+    border: 1px solid rgba(248,246,243,0.1);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .expert-com-card.fundadora { border-color: rgba(184,115,51,0.4); }
+  .expert-com-initials {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: rgba(184,115,51,0.25); color: #D4924A;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 14px;
+    flex-shrink: 0;
+  }
+  .expert-com-nome { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; color: #F8F6F3; margin-bottom: 2px; }
+  .expert-com-label { font-size: 10px; font-weight: 600; color: #D4924A; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  /* SELOS DE PERFIL */
+  .expert-selo-bloco { margin-bottom: 16px; }
+  .expert-selo {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: linear-gradient(135deg, rgba(184,115,51,0.15), rgba(212,146,74,0.08));
+    border: 1px solid rgba(184,115,51,0.5);
+    border-radius: 8px; padding: 8px 16px;
+    font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700;
+    color: #B87333; letter-spacing: 0.04em;
+  }
+  .admin-selo {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(13,31,45,0.06);
+    border: 1px solid rgba(13,31,45,0.25);
+    border-radius: 8px; padding: 8px 16px;
+    font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700;
+    color: var(--musgo); letter-spacing: 0.04em;
+  }
 </style>
 
 <!-- Loading -->
@@ -1235,6 +1298,15 @@
     <div class="boas-vindas">
       <h1 id="titulo-boas-vindas">Olá! 👋</h1>
       <p>Bem-vindo(a) ao K Controllers. Este é o seu espaço.</p>
+    </div>
+
+    <!-- Experts da Comunidade -->
+    <div class="experts-comunidade" id="experts-comunidade" style="display:none">
+      <div class="experts-com-titulo">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Experts da Comunidade
+      </div>
+      <div class="experts-com-grid" id="experts-com-grid"></div>
     </div>
 
     <!-- Banner: acesso cancelado mas ainda vigente -->
@@ -1781,6 +1853,20 @@
           <p class="avatar-hint">JPG ou PNG · máx. 2MB</p>
         </div>
 
+        <!-- Selo de papel -->
+        <div class="expert-selo-bloco" id="expert-selo-bloco" style="display:none">
+          <div id="expert-selo-txt" class="expert-selo">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Expert Fundadora · K Controllers
+          </div>
+        </div>
+        <div class="expert-selo-bloco" id="admin-selo-bloco" style="display:none">
+          <div class="admin-selo">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="5"/><path d="M3 21v-1a9 9 0 0 1 18 0v1"/></svg>
+            Fundadora · K Controllers
+          </div>
+        </div>
+
         <!-- Formulário -->
         <form class="perfil-form" id="form-perfil">
           <div class="perfil-secao">
@@ -1916,17 +2002,47 @@
     location.href = '/k-controllers/login';
   });
 
+  // Experts da Comunidade
+  async function carregarExperts() {
+    const { data: experts } = await sb.from('public_experts').select('name, role, state');
+    if (!experts || experts.length === 0) return;
+    const grid = document.getElementById('experts-com-grid');
+    const section = document.getElementById('experts-comunidade');
+    experts.forEach(e => {
+      const isFounder = e.role === 'expert_fundadora';
+      const initials = e.name.trim().split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+      const card = document.createElement('div');
+      card.className = 'expert-com-card' + (isFounder ? ' fundadora' : '');
+      card.innerHTML = '<div class="expert-com-initials">' + initials + '</div>'
+        + '<div><div class="expert-com-nome">' + e.name + '</div>'
+        + '<div class="expert-com-label">' + (isFounder ? '★ Expert Fundadora' : '★ Expert') + (e.state ? ' · ' + e.state : '') + '</div></div>';
+      grid.appendChild(card);
+    });
+    if (grid.children.length > 0) section.style.display = '';
+  }
+
   // Perfil: carregar dados
   async function carregarPerfil(session) {
     const { data: member } = await sb
       .from('members')
-      .select('name, phone, avatar_url, cep, rua, numero, complemento, bairro, cidade, estado')
+      .select('name, phone, avatar_url, cep, rua, numero, complemento, bairro, cidade, estado, role')
       .eq('email', session.user.email)
       .single();
 
     document.getElementById('p-email').value = session.user.email;
 
     if (!member) return;
+
+    // Exibe selo conforme role
+    if (member.role === 'admin') {
+      document.getElementById('admin-selo-bloco').style.display = '';
+    } else if (member.role === 'expert_fundadora' || member.role === 'expert') {
+      const seloBloco = document.getElementById('expert-selo-bloco');
+      const seloTxt = document.getElementById('expert-selo-txt');
+      seloTxt.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
+        + (member.role === 'expert_fundadora' ? 'Expert Fundadora' : 'Expert') + ' · K Controllers';
+      seloBloco.style.display = '';
+    }
 
     const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
     set('p-nome', member.name);
@@ -2339,6 +2455,9 @@
       // Mostra o app
       document.getElementById('loading').style.display = 'none';
       document.getElementById('app').style.display = 'block';
+
+      // Carrega Experts da Comunidade (falha silenciosamente)
+      try { carregarExperts(); } catch(e) {}
 
       // Restaura aba salva
       try {

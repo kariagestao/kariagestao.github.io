@@ -675,6 +675,36 @@
     .card-preco { padding: 40px 24px; }
     .preco-numero { font-size: 52px; }
   }
+
+  /* EXPERTS */
+  .experts-section { background: var(--musgo); padding: 80px 0; }
+  .experts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .expert-card {
+    background: rgba(248,246,243,0.05);
+    border: 1px solid rgba(248,246,243,0.1);
+    border-radius: 12px;
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .expert-card.fundadora { border-color: rgba(184,115,51,0.5); background: rgba(184,115,51,0.07); }
+  .expert-initials {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(184,115,51,0.2); color: var(--cobre);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 16px;
+    flex-shrink: 0;
+  }
+  .expert-card.fundadora .expert-initials { background: rgba(184,115,51,0.3); }
+  .expert-nome { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; color: #F8F6F3; margin-bottom: 3px; }
+  .expert-label { font-size: 11px; font-weight: 600; color: #D4924A; letter-spacing: 0.04em; text-transform: uppercase; }
 </style>
 
 <!-- TOPBAR -->
@@ -789,6 +819,16 @@
         <p>O K Controllers nasce da percepção de que profissionais de gestão no universo jurídico precisam de um espaço próprio: para trocar com quem entende o contexto, aprender com o que acontece na prática e crescer com consistência.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- EXPERTS -->
+<section class="experts-section" id="experts-section" style="display:none">
+  <div class="container">
+    <div class="label-secao" style="text-align:center;color:#D4924A">Programa Expert</div>
+    <h2 style="text-align:center;color:#F8F6F3;margin-bottom:12px">As referências que definem o padrão</h2>
+    <p style="text-align:center;max-width:560px;margin:0 auto 48px;color:rgba(248,246,243,0.72);font-size:15px">Controllers Jurídicos convidados pela KARIA Gestão por sua contribuição real à profissão.</p>
+    <div class="experts-grid" id="experts-grid"></div>
   </div>
 </section>
 
@@ -924,6 +964,36 @@
     document.querySelectorAll('.faq-item.aberto').forEach(i => i.classList.remove('aberto'));
     if (!isAberto) item.classList.add('aberto');
   }
+
+  // Experts
+  (async function() {
+    try {
+      const res = await fetch(
+        'https://olgkcfwnbhnngpqqkppm.supabase.co/rest/v1/public_experts?select=name,role,state',
+        {
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M'
+          }
+        }
+      );
+      if (!res.ok) return;
+      const experts = await res.json();
+      if (!Array.isArray(experts) || experts.length === 0) return;
+      const grid = document.getElementById('experts-grid');
+      experts.forEach(e => {
+        const isFounder = e.role === 'expert_fundadora';
+        const initials = e.name.trim().split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+        const card = document.createElement('div');
+        card.className = 'expert-card' + (isFounder ? ' fundadora' : '');
+        card.innerHTML = '<div class="expert-initials">' + initials + '</div>'
+          + '<div><div class="expert-nome">' + e.name + '</div>'
+          + '<div class="expert-label">' + (isFounder ? '★ Expert Fundadora' : '★ Expert') + (e.state ? ' · ' + e.state : '') + '</div></div>';
+        grid.appendChild(card);
+      });
+      document.getElementById('experts-section').style.display = '';
+    } catch(e) {}
+  })();
 </script>
 
 </html>
