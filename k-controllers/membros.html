@@ -453,6 +453,12 @@
   .comece-contact-item {
     background: var(--branco); border: 1px solid var(--borda);
     border-radius: 8px; padding: 12px 16px;
+    text-decoration: none; display: block;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  a.comece-contact-item:hover {
+    border-color: var(--cobre);
+    box-shadow: 0 2px 8px rgba(184,115,51,0.12);
   }
   .comece-contact-label {
     font-size: 11px; font-weight: 700;
@@ -1877,14 +1883,14 @@
           <p>A troca entre membros acontece no grupo da comunidade. Você será adicionada manualmente pela Nathalya após confirmação do pagamento.</p>
           <p>Caso não seja incluída em até 1 dia útil, entre em contato:</p>
           <div class="comece-contact">
-            <div class="comece-contact-item">
+            <a class="comece-contact-item" href="https://wa.me/5551933765996?text=Ol%C3%A1%2C%20vim%20da%20%C3%A1rea%20de%20membros%20da%20comunidade%20e%20gostaria%20de%20tirar%20uma%20d%C3%BAvida" target="_blank" rel="noopener">
               <span class="comece-contact-label">WhatsApp</span>
               <span class="comece-contact-val">(51) 3376-5996</span>
-            </div>
-            <div class="comece-contact-item">
+            </a>
+            <a class="comece-contact-item" href="https://instagram.com/kariagestao" target="_blank" rel="noopener">
               <span class="comece-contact-label">Instagram</span>
               <span class="comece-contact-val">@kariagestao</span>
-            </div>
+            </a>
           </div>
         </div>
 
