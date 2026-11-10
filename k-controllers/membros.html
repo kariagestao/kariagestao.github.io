@@ -1074,6 +1074,9 @@
   .membro-topo { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
   .membro-nome { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; color: var(--musgo); }
   .membro-bio { font-size: 12px; color: var(--texto-suave); line-height: 1.5; }
+  .membro-redes { display: flex; gap: 8px; margin-top: 8px; }
+  .membro-rede-link { display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 6px; background: rgba(184,115,51,0.12); color: var(--cobre); transition: background 0.15s; }
+  .membro-rede-link:hover { background: rgba(184,115,51,0.25); }
   .membro-badge {
     display: inline-flex; align-items: center; gap: 4px;
     font-size: 10px; font-weight: 700;
@@ -1863,6 +1866,21 @@
         <hr class="comece-divider">
 
         <div class="comece-section">
+          <p class="comece-label">Sobre a comunidade</p>
+          <h2 class="comece-heading">O que é a K Controllers</h2>
+          <p>K Controllers é uma comunidade criada pela Nathalya Pereira, especialista em Controladoria Jurídica, voltada exclusivamente para profissionais que atuam ou querem atuar com Controladoria Jurídica em escritórios de advocacia.</p>
+          <p>Aqui você encontra:</p>
+          <ul>
+            <li>Materiais práticos prontos para usar no seu dia a dia</li>
+            <li>Conteúdos sobre gestão, processos e indicadores jurídicos</li>
+            <li>Aulas temáticas mensais gravadas</li>
+            <li>Troca direta com outros Controllers e com a Nathalya</li>
+          </ul>
+        </div>
+
+        <hr class="comece-divider">
+
+        <div class="comece-section">
           <p class="comece-label">Primeiro passo</p>
           <h2 class="comece-heading">Configure o seu perfil</h2>
           <p>Antes de explorar a comunidade, reserve dois minutos para preencher o seu perfil. Ele aparece para os demais membros na aba <strong>Membros</strong> e é a sua apresentação dentro da K Controllers.</p>
@@ -1884,36 +1902,21 @@
             <div class="comece-card">
               <div class="comece-card-num">💼</div>
               <div>
-                <p class="comece-card-title">Especialidade</p>
-                <p class="comece-card-desc">Informe sua área de atuação ou o tipo de escritório em que trabalha.</p>
+                <p class="comece-card-title">Mini bio</p>
+                <p class="comece-card-desc">Escreva uma apresentação curta sobre sua atuação na Controladoria Jurídica.</p>
               </div>
             </div>
             <div class="comece-card">
               <div class="comece-card-num">🔗</div>
               <div>
-                <p class="comece-card-title">LinkedIn</p>
-                <p class="comece-card-desc">Adicione o link do seu LinkedIn para facilitar conexões profissionais com os demais membros.</p>
+                <p class="comece-card-title">LinkedIn e Instagram</p>
+                <p class="comece-card-desc">Adicione seus perfis para facilitar conexões. Os ícones aparecem no seu card na aba Membros.</p>
               </div>
             </div>
           </div>
           <div class="comece-callout">
             Acesse a aba <strong>Meu Perfil</strong> para preencher todas as informações. Perfis completos aparecem com destaque para os outros membros.
           </div>
-        </div>
-
-        <hr class="comece-divider">
-
-        <div class="comece-section">
-          <p class="comece-label">Sobre a comunidade</p>
-          <h2 class="comece-heading">O que é a K Controllers</h2>
-          <p>K Controllers é uma comunidade criada pela Nathalya Pereira, especialista em Controladoria Jurídica, voltada exclusivamente para profissionais que atuam ou querem atuar com Controladoria Jurídica em escritórios de advocacia.</p>
-          <p>Aqui você encontra:</p>
-          <ul>
-            <li>Materiais práticos prontos para usar no seu dia a dia</li>
-            <li>Conteúdos sobre gestão, processos e indicadores jurídicos</li>
-            <li>Aulas temáticas mensais gravadas</li>
-            <li>Troca direta com outros Controllers e com a Nathalya</li>
-          </ul>
         </div>
 
         <hr class="comece-divider">
@@ -2129,6 +2132,16 @@
               <textarea id="p-bio" maxlength="140" placeholder="Conte um pouco sobre você e sua atuação na Controladoria Jurídica..."></textarea>
               <div class="bio-counter"><span id="bio-counter">0</span>/140 caracteres</div>
             </div>
+            <div class="perfil-grid" style="margin-top:16px;">
+              <div class="form-group">
+                <label>LinkedIn</label>
+                <input type="url" id="p-linkedin" placeholder="https://linkedin.com/in/seuperfil">
+              </div>
+              <div class="form-group">
+                <label>Instagram</label>
+                <input type="url" id="p-instagram" placeholder="https://instagram.com/seuperfil">
+              </div>
+            </div>
           </div>
 
           <div class="perfil-acoes">
@@ -2216,7 +2229,7 @@
 
   // Membros da Comunidade
   async function carregarMembros() {
-    const { data: membros } = await sb.from('public_members').select('name, role, bio, avatar_url');
+    const { data: membros } = await sb.from('public_members').select('name, role, bio, avatar_url, linkedin, instagram');
     const grid = document.getElementById('membros-grid');
     if (!membros || membros.length === 0) {
       grid.innerHTML = '<p class="membros-vazio">Nenhum membro ativo encontrado.</p>';
@@ -2237,9 +2250,14 @@
       else badgeHtml = '<span class="membro-badge membro-comum">Membro</span>';
       const card = document.createElement('div');
       card.className = 'membro-card';
+      const redesHtml = (m.linkedin || m.instagram) ? `<div class="membro-redes">`
+        + (m.linkedin ? `<a href="${m.linkedin}" target="_blank" rel="noopener" class="membro-rede-link" title="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>` : '')
+        + (m.instagram ? `<a href="${m.instagram}" target="_blank" rel="noopener" class="membro-rede-link" title="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>` : '')
+        + `</div>` : '';
       card.innerHTML = avatarHtml
         + `<div class="membro-info"><div class="membro-topo"><span class="membro-nome">${m.name}</span>${badgeHtml}</div>`
         + (m.bio ? `<div class="membro-bio">${m.bio}</div>` : '')
+        + redesHtml
         + '</div>';
       grid.appendChild(card);
     });
@@ -2297,7 +2315,7 @@
   async function carregarPerfil(session) {
     const { data: member } = await sb
       .from('members')
-      .select('name, phone, avatar_url, cep, rua, numero, complemento, bairro, cidade, estado, role, bio')
+      .select('name, phone, avatar_url, cep, rua, numero, complemento, bairro, cidade, estado, role, bio, linkedin, instagram')
       .eq('email', session.user.email)
       .single();
 
@@ -2330,6 +2348,8 @@
       const bioEl = document.getElementById('p-bio');
       if (bioEl) { bioEl.value = member.bio; document.getElementById('bio-counter').textContent = member.bio.length; }
     }
+    set('p-linkedin', member.linkedin);
+    set('p-instagram', member.instagram);
 
     if (member.avatar_url) {
       document.getElementById('avatar-img').src = member.avatar_url;
@@ -2363,6 +2383,8 @@
       cidade: document.getElementById('p-cidade').value.trim() || null,
       estado: document.getElementById('p-estado').value || null,
       bio: document.getElementById('p-bio').value.trim() || null,
+      linkedin: document.getElementById('p-linkedin').value.trim() || null,
+      instagram: document.getElementById('p-instagram').value.trim() || null,
       updated_at: new Date().toISOString()
     };
 
