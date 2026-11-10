@@ -2229,7 +2229,9 @@
 
   // Membros da Comunidade
   async function carregarMembros() {
-    const { data: membros } = await sb.from('public_members').select('name, role, bio, avatar_url, linkedin, instagram');
+    const { data: membrosRaw } = await sb.from('public_members').select('name, role, bio, avatar_url, linkedin, instagram');
+    const ordemRole = { admin: 0, expert: 1, member: 2 };
+    const membros = (membrosRaw || []).sort((a, b) => (ordemRole[a.role] ?? 9) - (ordemRole[b.role] ?? 9));
     const grid = document.getElementById('membros-grid');
     if (!membros || membros.length === 0) {
       grid.innerHTML = '<p class="membros-vazio">Nenhum membro ativo encontrado.</p>';
