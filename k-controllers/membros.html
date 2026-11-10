@@ -1428,6 +1428,31 @@
       <p>Bem-vindo(a) ao K Controllers. Este é o seu espaço.</p>
     </div>
 
+    <!-- Vídeo de Boas-Vindas — fixo abaixo da saudação -->
+    <div class="aula-bv" style="margin-bottom:20px;">
+      <div class="aula-bv-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+      </div>
+      <div class="aula-bv-info">
+        <h4>Vídeo de Boas-Vindas</h4>
+        <p>Uma mensagem especial da Nathalya para você começar bem.</p>
+      </div>
+      <button class="aula-bv-btn" onclick="abrirVideoModal()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Assistir
+      </button>
+    </div>
+
+    <!-- Modal vídeo boas-vindas -->
+    <div id="modal-video-bv" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:20px;box-sizing:border-box;" onclick="fecharVideoModal(event)">
+      <div style="width:100%;max-width:800px;position:relative;">
+        <button onclick="fecharVideoModal()" style="position:absolute;top:-36px;right:0;background:none;border:none;color:#fff;font-size:24px;cursor:pointer;line-height:1;">✕</button>
+        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;">
+          <iframe id="iframe-video-bv" src="" title="Boas-vindas à K Controllers" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        </div>
+      </div>
+    </div>
+
     <!-- Banner: acesso cancelado mas ainda vigente -->
     <div class="banner-acesso-cancelado" id="banner-cancelado" style="display:none">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -1746,29 +1771,6 @@
 
     <!-- Painel Aulas -->
     <div class="painel" id="painel-aulas">
-      <div class="aula-bv">
-        <div class="aula-bv-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
-        </div>
-        <div class="aula-bv-info">
-          <h4>Vídeo de Boas-Vindas</h4>
-          <p>Uma mensagem especial da Nathalya para você começar bem.</p>
-        </div>
-        <button class="aula-bv-btn" onclick="abrirVideoModal()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Assistir
-        </button>
-      </div>
-
-      <!-- Modal vídeo boas-vindas -->
-      <div id="modal-video-bv" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:20px;box-sizing:border-box;" onclick="fecharVideoModal(event)">
-        <div style="width:100%;max-width:800px;position:relative;">
-          <button onclick="fecharVideoModal()" style="position:absolute;top:-36px;right:0;background:none;border:none;color:#fff;font-size:24px;cursor:pointer;line-height:1;">✕</button>
-          <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;">
-            <iframe id="iframe-video-bv" src="" title="Boas-vindas à K Controllers" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
-          </div>
-        </div>
-      </div>
       <div class="aulas-intro">
         <h2>Aulas exclusivas</h2>
         <p>Uma nova aula é adicionada todo mês. Assista no seu ritmo, quantas vezes quiser.</p>
