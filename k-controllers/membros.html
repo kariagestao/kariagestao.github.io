@@ -1718,15 +1718,19 @@
 
     <!-- Painel Aulas -->
     <div class="painel" id="painel-aulas">
-      <div class="aula-bv">
-        <div class="aula-bv-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+      <div class="aula-bv" style="flex-direction:column;align-items:stretch;padding:0;overflow:hidden;">
+        <div style="padding:16px 20px;display:flex;align-items:center;gap:14px;">
+          <div class="aula-bv-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <div class="aula-bv-info">
+            <h4>Vídeo de Boas-Vindas</h4>
+            <p>Uma mensagem especial da Nathalya para você começar bem.</p>
+          </div>
         </div>
-        <div class="aula-bv-info">
-          <h4>Vídeo de Boas-Vindas</h4>
-          <p>Uma mensagem especial da Nathalya para você começar bem.</p>
+        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:0 0 10px 10px;">
+          <iframe src="https://www.youtube.com/embed/R4rZ5tBn2wc" title="Boas-vindas à K Controllers" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
         </div>
-        <div class="aula-bv-badge">Em breve</div>
       </div>
       <div class="aulas-intro">
         <h2>Aulas exclusivas</h2>
