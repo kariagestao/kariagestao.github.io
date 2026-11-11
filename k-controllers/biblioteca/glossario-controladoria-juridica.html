@@ -645,39 +645,32 @@ document.getElementById('busca').addEventListener('input', function() {
   renderGlossario(filtrado);
   renderNavAlfa(filtrado);
 });
+</script>
 
-  // MARCA D'ÁGUA — carrega nome e e-mail do membro logado para exibir no PDF
-  (async function() {
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', async function() {
     try {
       const sb = supabase.createClient('https://olgkcfwnbhnngpqqkppm.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M');
       const { data: { session } } = await sb.auth.getSession();
       if (!session) return;
-
       const email = session.user.email || '';
       const { data: member } = await sb.from('members').select('name').eq('email', email).single();
       const nome = member && member.name ? member.name : '';
-
       const partes = nome.trim().split(/\s+/);
       const nomeExibido = partes.length >= 2
         ? partes[0] + ' ' + partes[partes.length - 1]
         : partes[0] || email;
-
-      const marcaDagua = document.getElementById('marca-dagua-print');
-      if (marcaDagua) {
-        const texto = nomeExibido
-          ? 'Documento de uso exclusivo de ' + nomeExibido + ' · ' + email + ' · K Controllers'
-          : 'Documento de uso exclusivo de ' + email + ' · K Controllers';
-        marcaDagua.textContent = texto;
+      const el = document.getElementById('marca-dagua-print');
+      if (el) {
+        el.textContent = nomeExibido
+          ? 'Documento de uso exclusivo de ' + nomeExibido + ' \u00b7 ' + email + ' \u00b7 K Controllers'
+          : 'Documento de uso exclusivo de ' + email + ' \u00b7 K Controllers';
       }
-    } catch(e) {
-      console.warn('[marca-dagua] Erro ao carregar dados do membro:', e);
-    }
-  })();
+    } catch(e) { console.warn('[marca-dagua]', e); }
+  });
 </script>
-
-
-<!-- MARCA D'ÁGUA IMPRESSÃO -->
 <div id="marca-dagua-print" class="marca-dagua-print">Documento de uso exclusivo · K Controllers</div>
-
 </body>
 </html>
