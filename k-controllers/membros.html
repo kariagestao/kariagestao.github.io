@@ -2218,7 +2218,7 @@
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
       ativarTab(tab.dataset.painel);
-      try { localStorage.setItem('kc_tab', tab.dataset.painel); } catch(e) {}
+      try { sessionStorage.setItem('kc_tab', tab.dataset.painel); } catch(e) {}
       if (tab.dataset.painel === 'casoreal') preencherCasoReal();
     });
   });
@@ -2787,7 +2787,7 @@
 
       // Restaura aba salva
       try {
-        const tabSalva = localStorage.getItem('kc_tab');
+        const tabSalva = sessionStorage.getItem('kc_tab');
         if (tabSalva) ativarTab(tabSalva);
       } catch(e) {}
 
