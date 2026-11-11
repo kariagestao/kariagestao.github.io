@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Checklist de Diagnóstico Inicial</title>
@@ -17,7 +18,7 @@
   })();
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+
 <script>
   (function(){
     const sb = supabase.createClient(
@@ -29,6 +30,7 @@
     });
   })();
 </script>
+
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap">
@@ -48,6 +50,36 @@
     color-scheme: light;
   }
 
+  /* TOPBAR */
+  .topbar {
+    background: var(--musgo);
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 16px rgba(13,31,45,0.3);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: rgba(248,246,243,0.55);
+    font-size: 12px; font-family: 'Montserrat', sans-serif; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s;
+  }
+  .topbar-back:hover { color: var(--cobre); }
+  .topbar-sep { color: rgba(248,246,243,0.2); font-size: 14px; }
+  .topbar-title {
+    font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: rgba(248,246,243,0.75);
+  }
+  .btn-print {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; border: 1px solid rgba(184,115,51,0.4); color: var(--cobre);
+    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 7px 14px; border-radius: 4px; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-print:hover { background: rgba(184,115,51,0.1); border-color: var(--cobre); }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
@@ -60,100 +92,7 @@
     min-height: 100vh;
   }
 
-  /* TOPBAR */
-  .topbar {
-    background: var(--musgo);
-    padding: 14px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 16px rgba(13,31,45,0.3);
-  }
-
-  .topbar-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .topbar-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: rgba(248,246,243,0.55);
-    font-size: 12px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    text-decoration: none;
-    letter-spacing: 0.04em;
-    transition: color 0.2s;
-  }
-  .topbar-back:hover { color: var(--cobre); }
-  .topbar-back svg { flex-shrink: 0; }
-
-  .topbar-sep {
-    color: rgba(248,246,243,0.2);
-    font-size: 14px;
-  }
-
-  .topbar-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(248,246,243,0.75);
-  }
-
-  .topbar-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .btn-print {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: transparent;
-    border: 1px solid rgba(184,115,51,0.4);
-    color: var(--cobre);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 7px 14px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-print:hover { background: rgba(184,115,51,0.1); border-color: var(--cobre); }
-
-  .btn-reset {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: transparent;
-    border: 1px solid rgba(248,246,243,0.15);
-    color: rgba(248,246,243,0.45);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    padding: 7px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-reset:hover { border-color: rgba(248,246,243,0.3); color: rgba(248,246,243,0.65); }
-
-  /* HEADER */
+    /* HEADER */
   .page-header {
     background: var(--musgo);
     padding: 48px 32px 44px;
@@ -435,29 +374,25 @@
   .alerta-escopo strong { color: var(--texto); }
 
   /* PRINT */
+
     .marca-dagua-print { display: none; }
 
   @media print {
-    .topbar, .btn-print, .btn-reset { display: none !important; }
     .page-header { padding: 24px 32px; }
     .progress-wrap { display: none; }
     .item { break-inside: avoid; }
     .bloco { break-inside: avoid; }
     body { font-size: 13px; }
   
-  
     .marca-dagua-print {
       display: block !important;
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       padding: 7px 32px;
       background: #f8f6f3;
       border-top: 1px solid rgba(13,31,45,0.15);
       font-family: 'Montserrat', sans-serif;
-      font-size: 8px;
-      font-weight: 600;
+      font-size: 8px; font-weight: 600;
       letter-spacing: 0.06em;
       color: rgba(13,31,45,0.4);
       text-align: center;
@@ -465,7 +400,6 @@
   }
 
   @media (max-width: 600px) {
-    .topbar { padding: 12px 16px; }
     .page-header { padding: 36px 20px 32px; }
     .content { padding: 28px 16px 60px; }
     .bloco-header { gap: 10px; }
@@ -485,16 +419,10 @@
     <span class="topbar-sep">·</span>
     <span class="topbar-title">Checklist</span>
   </div>
-  <div class="topbar-actions">
-    <button class="btn-reset" onclick="resetarTudo()">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4"/></svg>
-      Reiniciar
-    </button>
-    <button class="btn-print" onclick="window.print()">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-      Imprimir / PDF
-    </button>
-  </div>
+  <button class="btn-print" onclick="window.print()">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    Imprimir / PDF
+  </button>
 </nav>
 
 <!-- HEADER -->
@@ -893,7 +821,32 @@
   })();
 </script>
 
-<!-- MARCA D'ÁGUA IMPRESSÃO -->
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    try {
+      const sb = supabase.createClient('https://olgkcfwnbhnngpqqkppm.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M');
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) return;
+      const email = session.user.email || '';
+      const { data: member } = await sb.from('members').select('name').eq('email', email).single();
+      const nome = member && member.name ? member.name : '';
+      const partes = nome.trim().split(/\s+/);
+      const nomeExibido = partes.length >= 2
+        ? partes[0] + ' ' + partes[partes.length - 1]
+        : partes[0] || email;
+      const el = document.getElementById('marca-dagua-print');
+      if (el) {
+        el.textContent = nomeExibido
+          ? 'Documento de uso exclusivo de ' + nomeExibido + ' \u00b7 ' + email + ' \u00b7 K Controllers'
+          : 'Documento de uso exclusivo de ' + email + ' \u00b7 K Controllers';
+      }
+    } catch(e) { console.warn('[marca-dagua]', e); }
+  });
+</script>
 <div id="marca-dagua-print" class="marca-dagua-print">Documento de uso exclusivo · K Controllers</div>
 
 </body>

@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Slides de Apoio — Aula 01</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
 <script>
@@ -12,10 +17,42 @@
   })();
 </script>
 <meta name="claude:viewport-fit-sides" content="cover">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap">
 
 <style>
+  /* TOPBAR */
+  .topbar {
+    background: var(--musgo);
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 16px rgba(13,31,45,0.3);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: rgba(248,246,243,0.55);
+    font-size: 12px; font-family: 'Montserrat', sans-serif; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s;
+  }
+  .topbar-back:hover { color: var(--cobre); }
+  .topbar-sep { color: rgba(248,246,243,0.2); font-size: 14px; }
+  .topbar-title {
+    font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: rgba(248,246,243,0.75);
+  }
+  .btn-print {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; border: 1px solid rgba(184,115,51,0.4); color: var(--cobre);
+    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 7px 14px; border-radius: 4px; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-print:hover { background: rgba(184,115,51,0.1); border-color: var(--cobre); }
+
 :root {
   --musgo: #0D1F2D;
   --cobre: #B87333;
@@ -43,61 +80,6 @@ body {
 }
 
 /* ── TOP BAR ─────────────────────────────── */
-.topbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  background: #161616;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 max(24px, env(safe-area-inset-left, 0px));
-  height: 52px;
-  gap: 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.topbar-brand {
-  font-family: var(--font-brand);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  color: var(--cream);
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.topbar-brand span { color: var(--cobre); }
-.topbar-label {
-  font-size: 11px;
-  color: rgba(255,255,255,0.3);
-  font-family: var(--font-heading);
-  font-weight: 500;
-  white-space: nowrap;
-}
-.topbar-sep {
-  width: 1px;
-  height: 16px;
-  background: rgba(255,255,255,0.1);
-  flex-shrink: 0;
-}
-.btn-pdf {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  background: var(--cobre);
-  color: var(--white);
-  border: none;
-  border-radius: 4px;
-  font-family: var(--font-heading);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: background .15s;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.btn-pdf:hover { background: var(--cobre2); }
 
 /* ── SLIDES WRAPPER ──────────────────────── */
 .slides {
@@ -577,7 +559,6 @@ body {
     .marca-dagua-print { display: none; }
 
   @media print {
-  .topbar { display: none; }
   body { background: white; }
   .slides { padding: 0; gap: 0; display: block; }
   .slide {
@@ -601,19 +582,15 @@ body {
     print-color-adjust: exact;
   }
   
-  
     .marca-dagua-print {
       display: block !important;
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       padding: 7px 32px;
       background: #f8f6f3;
       border-top: 1px solid rgba(13,31,45,0.15);
       font-family: 'Montserrat', sans-serif;
-      font-size: 8px;
-      font-weight: 600;
+      font-size: 8px; font-weight: 600;
       letter-spacing: 0.06em;
       color: rgba(13,31,45,0.4);
       text-align: center;
@@ -640,9 +617,9 @@ body {
     <div class="topbar-sep"></div>
     <span class="topbar-label">Aula 01 — Slides de Apoio</span>
   </div>
-  <button class="btn-pdf" onclick="window.print()">
+  <button class="btn-print" onclick="window.print()">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-    Salvar como PDF
+    Imprimir / PDF
   </button>
 </div>
 
@@ -844,6 +821,7 @@ body {
   </div>
 
 </div>
+
 <script>
   document.addEventListener('DOMContentLoaded', async function() {
     try {

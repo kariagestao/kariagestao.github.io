@@ -1,4 +1,6 @@
 <!doctype html>
+<html lang="pt-BR">
+<head>
 <title>Mapa de Competências</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
 <script>
@@ -15,8 +17,40 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap">
+
 <style>
+  /* TOPBAR */
+  .topbar {
+    background: var(--musgo);
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 16px rgba(13,31,45,0.3);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: rgba(248,246,243,0.55);
+    font-size: 12px; font-family: 'Montserrat', sans-serif; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s;
+  }
+  .topbar-back:hover { color: var(--cobre); }
+  .topbar-sep { color: rgba(248,246,243,0.2); font-size: 14px; }
+  .topbar-title {
+    font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: rgba(248,246,243,0.75);
+  }
+  .btn-print {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; border: 1px solid rgba(184,115,51,0.4); color: var(--cobre);
+    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 7px 14px; border-radius: 4px; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-print:hover { background: rgba(184,115,51,0.1); border-color: var(--cobre); }
+
   :root {
     --musgo: #0D1F2D;
     --cobre: #B87333;
@@ -38,46 +72,7 @@
     print-color-adjust: exact;
   }
 
-  /* TOPBAR */
-  .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--musgo);
-    padding: 14px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-  }
-  .topbar-marca {
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--cream);
-    letter-spacing: 0.08em;
-    text-decoration: none;
-  }
-  .topbar-marca span { color: var(--cobre); }
-  .btn-pdf {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: var(--cobre);
-    color: #fff;
-    border: none;
-    border-radius: 7px;
-    padding: 9px 18px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .btn-pdf:hover { background: var(--cobre-light); }
-
-  /* CAPA */
+    /* CAPA */
   .capa {
     background: var(--musgo);
     padding: 64px 48px 56px;
@@ -295,26 +290,21 @@
     .marca-dagua-print { display: none; }
 
   @media print {
-    .topbar { display: none; }
     .capa { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .conteudo { padding: 32px 24px; }
     .tabela-wrap { overflow: visible; }
     table { min-width: unset; }
     .secao { page-break-inside: avoid; }
   
-  
     .marca-dagua-print {
       display: block !important;
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       padding: 7px 32px;
       background: #f8f6f3;
       border-top: 1px solid rgba(13,31,45,0.15);
       font-family: 'Montserrat', sans-serif;
-      font-size: 8px;
-      font-weight: 600;
+      font-size: 8px; font-weight: 600;
       letter-spacing: 0.06em;
       color: rgba(13,31,45,0.4);
       text-align: center;
@@ -324,7 +314,6 @@
   @media (max-width: 600px) {
     .capa { padding: 40px 24px 36px; }
     .conteudo { padding: 32px 16px 60px; }
-    .topbar { padding: 12px 16px; }
     .autoavaliacao { padding: 20px 18px; }
   }
 </style>
@@ -332,9 +321,9 @@
 <!-- TOPBAR -->
 <div class="topbar">
   <a class="topbar-marca" href="/k-controllers/membros">K <span>Controllers</span></a>
-  <button class="btn-pdf" onclick="window.print()">
+  <button class="btn-print" onclick="window.print()">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-    Baixar PDF
+    Imprimir / PDF
   </button>
 </div>
 
@@ -550,6 +539,7 @@
 </div>
 
 <div class="footer">K Controllers · kariagestao.com</div>
+
 <script>
   document.addEventListener('DOMContentLoaded', async function() {
     try {

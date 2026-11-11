@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Guia de Boas-Vindas</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
 <script>
@@ -12,10 +17,42 @@
   })();
 </script>
 <meta name="claude:viewport-fit-sides" content="cover">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@400;500;600;700&family=Poppins:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap">
 
 <style>
+  /* TOPBAR */
+  .topbar {
+    background: var(--musgo);
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 16px rgba(13,31,45,0.3);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: rgba(248,246,243,0.55);
+    font-size: 12px; font-family: 'Montserrat', sans-serif; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s;
+  }
+  .topbar-back:hover { color: var(--cobre); }
+  .topbar-sep { color: rgba(248,246,243,0.2); font-size: 14px; }
+  .topbar-title {
+    font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: rgba(248,246,243,0.75);
+  }
+  .btn-print {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; border: 1px solid rgba(184,115,51,0.4); color: var(--cobre);
+    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 7px 14px; border-radius: 4px; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-print:hover { background: rgba(184,115,51,0.1); border-color: var(--cobre); }
+
 /* ── Design tokens ── */
 :root {
   /* Layout: editorial document, single-theme brand */
@@ -52,18 +89,6 @@ body {
 }
 
 /* ── Top bar ── */
-.topbar {
-  position: sticky;
-  top: env(safe-area-inset-top, 0px);
-  z-index: 100;
-  background: var(--musgo);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-block: 14px;
-  padding-left: max(24px, env(safe-area-inset-left, 0px));
-  padding-right: max(24px, env(safe-area-inset-right, 0px));
-}
 
 body::before {
   content: "";
@@ -73,40 +98,6 @@ body::before {
   background: var(--musgo);
   z-index: 101;
 }
-
-.topbar-brand {
-  font-family: var(--font-brand);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  color: var(--cream);
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-.topbar-brand span {
-  color: var(--cobre);
-}
-
-.btn-pdf {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  background: var(--cobre);
-  color: var(--white);
-  border: none;
-  border-radius: var(--radius);
-  font-family: var(--font-heading);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: background .15s;
-  white-space: nowrap;
-}
-.btn-pdf:hover { background: var(--cobre2); }
-.btn-pdf svg { flex-shrink: 0; }
 
 /* ── Document wrapper ── */
 .doc {
@@ -369,7 +360,6 @@ p {
     .marca-dagua-print { display: none; }
 
   @media print {
-  .topbar { display: none !important; }
   body { background: white; font-size: 13px; }
   .doc { padding: 24px; max-width: 100%; }
   .cover { margin-bottom: 32px; }
@@ -385,19 +375,15 @@ p {
     margin: 20mm 20mm 20mm 20mm;
   }
   
-  
     .marca-dagua-print {
       display: block !important;
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       padding: 7px 32px;
       background: #f8f6f3;
       border-top: 1px solid rgba(13,31,45,0.15);
       font-family: 'Montserrat', sans-serif;
-      font-size: 8px;
-      font-weight: 600;
+      font-size: 8px; font-weight: 600;
       letter-spacing: 0.06em;
       color: rgba(13,31,45,0.4);
       text-align: center;
@@ -408,11 +394,11 @@ p {
 <!-- Top bar -->
 <div class="topbar">
   <span class="topbar-brand">K<span> Controllers</span></span>
-  <button class="btn-pdf" onclick="window.print()">
+  <button class="btn-print" onclick="window.print()">
     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M4 1h8v5H4V1zM2 7h12v6H2V7zM5 10h6M5 12h4" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
     </svg>
-    Baixar PDF
+    Imprimir / PDF
   </button>
 </div>
 
@@ -562,6 +548,7 @@ p {
   </div>
 
 </div>
+
 <script>
   document.addEventListener('DOMContentLoaded', async function() {
     try {
