@@ -288,21 +288,8 @@
 
   /* PRINT */
   
-  .marca-dagua-print {
+    .marca-dagua-print {
     display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 8px 32px;
-    background: #f0ede8;
-    border-top: 1px solid rgba(13,31,45,0.12);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    color: rgba(13,31,45,0.45);
-    text-align: center;
   }
 
   @media print {
@@ -317,7 +304,19 @@
     .termo-card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
     .grupo-letra { break-inside: avoid; }
   
-    .marca-dagua-print { display: block !important; }
+    .marca-dagua-print {
+      display: block !important;
+      width: 100%;
+      margin-top: 32px;
+      padding: 8px 0;
+      border-top: 1px solid rgba(13,31,45,0.2);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: rgba(13,31,45,0.4);
+      text-align: center;
+    }
   }
 </style>
 </head>
