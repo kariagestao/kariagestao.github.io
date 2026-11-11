@@ -11,6 +11,34 @@
       if (!data.session) window.location.replace('/k-controllers/');
     });
   })();
+
+  // MARCA D'ÁGUA — carrega nome e e-mail do membro logado para exibir no PDF
+  (async function() {
+    try {
+      const sb = supabase.createClient('https://olgkcfwnbhnngpqqkppm.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M');
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) return;
+
+      const email = session.user.email || '';
+      const { data: member } = await sb.from('members').select('name').eq('email', email).single();
+      const nome = member && member.name ? member.name : '';
+
+      const partes = nome.trim().split(/\s+/);
+      const nomeExibido = partes.length >= 2
+        ? partes[0] + ' ' + partes[partes.length - 1]
+        : partes[0] || email;
+
+      const marcaDagua = document.getElementById('marca-dagua-print');
+      if (marcaDagua) {
+        const texto = nomeExibido
+          ? 'Documento de uso exclusivo de ' + nomeExibido + ' · ' + email + ' · K Controllers'
+          : 'Documento de uso exclusivo de ' + email + ' · K Controllers';
+        marcaDagua.textContent = texto;
+      }
+    } catch(e) {
+      console.warn('[marca-dagua] Erro ao carregar dados do membro:', e);
+    }
+  })();
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -291,6 +319,24 @@
   }
 
   /* PRINT */
+  
+  .marca-dagua-print {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 32px;
+    background: #f0ede8;
+    border-top: 1px solid rgba(13,31,45,0.12);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: rgba(13,31,45,0.45);
+    text-align: center;
+  }
+
   @media print {
     .topbar { display: none; }
     .capa { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -298,6 +344,8 @@
     .tabela-wrap { overflow: visible; }
     table { min-width: unset; }
     .secao { page-break-inside: avoid; }
+  
+    .marca-dagua-print { display: block !important; }
   }
 
   @media (max-width: 600px) {
