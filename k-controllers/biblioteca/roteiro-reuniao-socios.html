@@ -353,10 +353,7 @@
     border-top: 1px solid var(--borda);
   }
 
-  
-  .marca-dagua-print {
-    display: none;
-  }
+    .marca-dagua-print { display: none; }
 
   @media print {
     .topbar { display: none; }
@@ -364,7 +361,8 @@
     .conteudo { padding: 32px 24px; }
     .etapa { page-break-inside: avoid; }
     .pauta-wrap { overflow: visible; }
-
+  
+  
     .marca-dagua-print {
       display: block !important;
       position: fixed;
@@ -381,7 +379,6 @@
       color: rgba(13,31,45,0.4);
       text-align: center;
     }
-  
   }
 
   @media (max-width: 600px) {

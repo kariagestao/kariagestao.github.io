@@ -435,6 +435,8 @@
   .alerta-escopo strong { color: var(--texto); }
 
   /* PRINT */
+    .marca-dagua-print { display: none; }
+
   @media print {
     .topbar, .btn-print, .btn-reset { display: none !important; }
     .page-header { padding: 24px 32px; }
@@ -442,6 +444,8 @@
     .item { break-inside: avoid; }
     .bloco { break-inside: avoid; }
     body { font-size: 13px; }
+  
+  
     .marca-dagua-print {
       display: block !important;
       position: fixed;
@@ -458,11 +462,6 @@
       color: rgba(13,31,45,0.4);
       text-align: center;
     }
-  
-  }
-
-    .marca-dagua-print {
-    display: none;
   }
 
   @media (max-width: 600px) {
