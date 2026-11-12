@@ -205,7 +205,10 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
     <div class="login-title">KARIA OS</div>
     <div class="login-sub">Sistema operacional da KARIA Gestão</div>
     <input type="email" id="l-email" class="login-input" placeholder="E-mail">
-    <input type="password" id="l-senha" class="login-input" placeholder="Senha" onkeydown="if(event.key==='Enter')login()">
+    <div style="position:relative">
+      <input type="password" id="l-senha" class="login-input" placeholder="Senha" onkeydown="if(event.key==='Enter')login()" style="padding-right:40px;margin-bottom:0">
+      <button type="button" onclick="const i=document.getElementById('l-senha');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'👁':'🙈'" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;color:var(--gray)">👁</button>
+    </div>
     <button onclick="login()" class="login-btn">Entrar</button>
     <p id="l-err" class="login-err">E-mail ou senha incorretos.</p>
   </div>
