@@ -6,21 +6,54 @@
   <title>KARIA Gestão</title>
   <script>
     var p = window.location.pathname;
-    var s = window.location.search;
-  if(p==="/post/ordem-nao-e-controle-gestao-escritorio-de-advocacia") window.location.replace("/blog/posts/ordem-nao-e-controle-gestao-escritorio-de-advocacia.html");
-  if(p==="/post/processos-internos-escrit%C3%B3rio-de-advocacia-1") window.location.replace("/blog/posts/processos-internos-escritorio-de-advocacia-2.html");
-  if(p==="/post/como-delegar-em-escrit%C3%B3rio-de-advocacia") window.location.replace("/blog/posts/como-delegar-em-escritorio-de-advocacia.html");
-  if(p==="/post/acompanhamento-estrategico-escritorio-de-advocacia") window.location.replace("/blog/posts/seu-escritorio-tem-operacao-o-que-falta-e-visao-estrategica.html");
-  if(p==="/post/consultoria-de-gestao-juridica") window.location.replace("/blog/posts/consultoria-de-gestao-juridica.html");
-  if(p==="/post/processos-internos-escrit%C3%B3rio-de-advocacia") window.location.replace("/blog/posts/processos-internos-escritorio-de-advocacia.html");
-  if(p==="/post/controladoria-juridica-estrategica-nao-e-terceirizacao") window.location.replace("/blog/posts/controladoria-juridica-estrategica-nao-e-terceirizacao.html");
-  if(p==="/post/faturamento-alto-na-advocacia") window.location.replace("/blog/posts/faturamento-alto-na-advocacia.html");
-  if(p==="/post/crescimento-desorganizado-em-escrit%C3%B3rio-de-advocacia") window.location.replace("/blog/posts/crescimento-desorganizado-em-escritorio-de-advocacia.html");
-  if(p==="/post/estruturar-o-crescimento-de-um-escrit%C3%B3rio-de-advocacia") window.location.replace("/blog/posts/estruturar-o-crescimento-de-um-escritorio-de-advocacia.html");
-  if(p==="/post/crescimento-sem-controle-na-advocacia") window.location.replace("/blog/posts/crescimento-sem-controle-na-advocacia.html");
-  if(p==="/post/diagn%C3%B3stico-operacional-o-primeiro-passo-para-organizar-um-escrit%C3%B3rio-de-advocacia") window.location.replace("/blog/posts/diagnostico-operacional-escritorio-de-advocacia.html");
-    // Se não encontrou redirect, vai para a home
-    else window.location.replace('/');
+    // Normaliza URLs com caracteres especiais
+    try { p = decodeURIComponent(p); } catch(e) {}
+
+    var redirects = {
+      // Posts antigos da Wix → novos posts do blog
+      "/post/ordem-nao-e-controle-gestao-escritorio-de-advocacia": "/blog/posts/ordem-nao-e-controle-gestao-escritorio-de-advocacia.html",
+      "/post/processos-internos-escritório-de-advocacia-1": "/blog/posts/processos-internos-escritorio-de-advocacia-2.html",
+      "/post/processos-internos-escritório-de-advocacia": "/blog/posts/processos-internos-escritorio-de-advocacia.html",
+      "/post/como-delegar-em-escritório-de-advocacia": "/blog/posts/como-delegar-em-escritorio-de-advocacia.html",
+      "/post/acompanhamento-estrategico-escritorio-de-advocacia": "/blog/posts/seu-escritorio-tem-operacao-o-que-falta-e-visao-estrategica.html",
+      "/post/consultoria-de-gestao-juridica": "/blog/posts/consultoria-de-gestao-juridica.html",
+      "/post/controladoria-juridica-estrategica-nao-e-terceirizacao": "/blog/posts/controladoria-juridica-estrategica-nao-e-terceirizacao.html",
+      "/post/faturamento-alto-na-advocacia": "/blog/posts/faturamento-alto-na-advocacia.html",
+      "/post/crescimento-desorganizado-em-escritório-de-advocacia": "/blog/posts/crescimento-desorganizado-em-escritorio-de-advocacia.html",
+      "/post/estruturar-o-crescimento-de-um-escritório-de-advocacia": "/blog/posts/estruturar-o-crescimento-de-um-escritorio-de-advocacia.html",
+      "/post/crescimento-sem-controle-na-advocacia": "/blog/posts/crescimento-sem-controle-na-advocacia.html",
+      "/post/diagnóstico-operacional-o-primeiro-passo-para-organizar-um-escritório-de-advocacia": "/blog/posts/diagnostico-operacional-escritorio-de-advocacia.html",
+      "/post/improviso-decisório-na-advocacia": "/post/improviso-decisorio-na-advocacia.html",
+      "/post/planilha-de-controle-de-prazos-para-advogados-como-organizar-o-seu-escritório-com-segurança": "/post/planilha-de-controle-de-prazos-para-advogados-como-organizar-o-seu-escritorio-com-seguranca.html",
+
+      // Páginas de serviço e institucionais
+      "/diagnostico-estruturado-controladoria-juridica": "/servicos/diagnostico.html",
+      "/implantacao-controladoria-juridica": "/servicos/implantacao.html",
+      "/acompanhamento-estrategico-gestao-juridica": "/servicos/acompanhamento.html",
+      "/controladoria-juridica-terceirizada": "/controladoria-juridica-terceirizada.html",
+      "/servicos/": "/servicos.html",
+      "/mentoria": "/mentoria.html",
+      "/sobre": "/sobre.html",
+      "/livro-legal-operations": "/livro-legal-operations.html",
+      "/termos-e-condicoes": "/politica-de-privacidade.html",
+      "/politicadeprivacidade": "/politica-de-privacidade.html",
+      "/pacotediagnosticoestrategico": "/pacotediagnosticoestrategico.html",
+
+      // Categorias do blog → página do blog
+      "/blog/categories/gestão-e-produtividade-jurídica": "/blog/",
+      "/blog/categories/gestão-jurídica-estratégica": "/blog/",
+      "/blog/categories/mentoria-e-desenvolvimento": "/blog/",
+      "/blog/categories/gestao-e-produtividade-juridica": "/blog/",
+      "/blog/categories/gestao-juridica-estrategica": "/blog/",
+      "/blog/categories/mentoria-e-desenvolvimento": "/blog/"
+    };
+
+    var target = redirects[p];
+    if (target) {
+      window.location.replace(target);
+    } else {
+      window.location.replace('/');
+    }
   </script>
 
   <meta property="og:image" content="https://www.kariagestao.com/images/og-cover.jpg"/>
