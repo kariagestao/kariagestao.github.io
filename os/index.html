@@ -255,59 +255,8 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
 
     <!-- ===== MÓDULO: FINANCEIRO ===== -->
     <div class="module active" id="mod-financeiro">
-      <div class="cards-row" id="fin-kpis"></div>
-
-      <div class="charts-row">
-        <div class="chart-card">
-          <div class="chart-card-title">Receitas vs Despesas (6 meses)</div>
-          <div class="chart-container"><canvas id="chart-mensal"></canvas></div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-card-title">Categorias (mês atual)</div>
-          <div class="chart-container"><canvas id="chart-cat"></canvas></div>
-        </div>
-      </div>
-
-      <div class="table-wrap">
-        <div class="table-header">
-          <span class="table-title">Lançamentos</span>
-          <div style="display:flex;gap:8px">
-            <button class="btn btn-outline btn-sm" onclick="finOpenModal(null)">+ Novo</button>
-          </div>
-        </div>
-        <div class="filtros">
-          <select class="filtro-select" id="fin-f-tipo" onchange="finRender()">
-            <option value="">Todos os tipos</option>
-            <option value="Receita">Receitas</option>
-            <option value="Despesa">Despesas</option>
-          </select>
-          <select class="filtro-select" id="fin-f-status" onchange="finRender()">
-            <option value="">Todos os status</option>
-            <option value="pendente">Pendentes</option>
-            <option value="recebido">Recebidos</option>
-            <option value="pago">Pagos</option>
-          </select>
-          <select class="filtro-select" id="fin-f-mes" onchange="finRender()"></select>
-          <input type="text" class="filtro-select" id="fin-busca" placeholder="Buscar..." oninput="finRender()" style="min-width:160px">
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Descrição</th>
-              <th>Categoria</th>
-              <th>Conta</th>
-              <th>Vencimento</th>
-              <th>Status</th>
-              <th class="right">Valor</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="fin-tbody"></tbody>
-        </table>
-        <div class="paginacao">
-          <span id="fin-pag-info"></span>
-          <div class="pag-btns" id="fin-pag-btns"></div>
-        </div>
+      <div class="linz-frame-wrap">
+        <iframe id="fin-iframe" src="about:blank" style="width:100%;border:none;min-height:calc(100vh - 160px)"></iframe>
       </div>
     </div>
 
@@ -583,7 +532,7 @@ function showApp(user) {
   document.getElementById('app').style.display = 'block';
   document.getElementById('sidebar-user').textContent = user.email;
   document.getElementById('db-status').textContent = '● Conectado';
-  finLoad();
+  loadFinanceiro();
   crmLoad();
 }
 
@@ -598,6 +547,7 @@ function switchModule(mod, el) {
   document.getElementById('top-bar-title').textContent = t[0];
   document.getElementById('top-bar-sub').textContent = t[1];
   if (mod === 'linzmeyer') loadLinzmeyer();
+  if (mod === 'financeiro') loadFinanceiro();
   closeSidebar();
 }
 
@@ -999,6 +949,14 @@ async function crmDelete() {
   crmCloseModal();
   showToast('Contato excluído');
   await crmLoad();
+}
+
+// ========= FINANCEIRO iframe =========
+let finLoaded = false;
+function loadFinanceiro() {
+  if (finLoaded) return;
+  finLoaded = true;
+  document.getElementById('fin-iframe').src = 'https://kariagestao.com/financeiro.html';
 }
 
 // ========= LINZMEYER =========
