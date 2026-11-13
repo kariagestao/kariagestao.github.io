@@ -1883,7 +1883,7 @@ function editarLanc(id, isHist) {
     l={_hist:true, _histIdx:idx, id:id, data:t.data, vencimento:t.data, desc:t.desc, cat:t.cat, conta:t.conta, valor:t.valor, status:'historico'};
   } else { l=lancamentos.find(x=>x.id===id); if(!l) return; }
   const isReceita=CATS_RECEITA.includes(l.cat);
-  document.getElementById('modalTitulo').textContent=(isHist?'[Histórico] ')+(isReceita?'Editar Receita':'Editar Despesa');
+  document.getElementById('modalTitulo').textContent=(isHist?'[Histórico] ':'')+(isReceita?'Editar Receita':'Editar Despesa');
   document.getElementById('modalConteudo').innerHTML=formModalEdicao(l, isReceita, isHist);
   if (!isReceita) {
     const dl=document.getElementById('sugestoesDescEdit');
