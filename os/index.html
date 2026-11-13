@@ -1293,6 +1293,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('loginPass').addEventListener('keydown',e=>{ if(e.key==='Enter') login(); });
   document.getElementById('loginEmail').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('loginPass').focus(); });
   try{ if(localStorage.getItem('kariaSidebarCollapsed')==='1'){ document.body.classList.add('sidebar-collapsed'); const btn=document.querySelector('.sidebar-toggle'); if(btn) btn.textContent='›'; } }catch(e){}
+  // Auto-login via sessão persistida
+  SB = supabase.createClient(SB_URL, SB_KEY);
+  SB.auth.getSession().then(({data})=>{ if(data.session) showApp(data.session.user); });
 });
 async function logout(){
   if(SB) await SB.auth.signOut();
@@ -2287,6 +2290,8 @@ function initFinanceiro() {
   const coEl=document.getElementById('filtroTxConta');
   todasContas.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;coEl.appendChild(o);});
   atualizaStatusTodos();
+  // Não restaura filtro de status (evita tela em branco por filtro persistido)
+  try{ const f=JSON.parse(localStorage.getItem('kariaFiltros')||'{}'); delete f.txStatus; localStorage.setItem('kariaFiltros',JSON.stringify(f)); }catch(e){}
   restaurarFiltros();
   const abaRestaurada=(() => { try { return localStorage.getItem('kariaTab')||'painel'; } catch(e){ return 'painel'; } })();
   renderPainel();
