@@ -21,6 +21,7 @@
   --red: #DC2626;
   --yellow: #D97706;
   --sidebar-w: 220px;
+  --sidebar-w-collapsed: 52px;
   /* aliases financeiro */
   --azul: #0D1F2D;
   --creme: #F8F6F3;
@@ -64,6 +65,91 @@ body{font-family:'Poppins',sans-serif;background:var(--off);color:var(--musgo);m
 .sidebar-user{font-size:11px;color:rgba(248,246,243,.5)}
 .sidebar-logout{font-size:11px;color:rgba(184,115,51,.7);cursor:pointer;margin-top:4px;display:inline-block}
 .sidebar-logout:hover{color:var(--cobre)}
+/* Sidebar collapse */
+.sidebar-toggle{background:none;border:none;cursor:pointer;color:rgba(248,246,243,.5);font-size:16px;padding:4px 6px;border-radius:5px;transition:all .15s;line-height:1}
+.sidebar-toggle:hover{background:rgba(248,246,243,.08);color:var(--off)}
+.nav-submenu{padding-left:14px}
+.nav-submenu .nav-item{font-size:11px;padding:7px 10px}
+.nav-group-label{display:flex;align-items:center;justify-content:space-between;padding:0 10px;margin:16px 0 6px;cursor:pointer;user-select:none}
+.nav-group-label .nav-section{margin:0;flex:1}
+.nav-group-arrow{color:rgba(248,246,243,.35);font-size:10px;transition:transform .2s}
+.nav-group-label.open .nav-group-arrow{transform:rotate(90deg)}
+/* Collapsed state */
+body.sidebar-collapsed .sidebar{width:var(--sidebar-w-collapsed)}
+body.sidebar-collapsed .content{margin-left:var(--sidebar-w-collapsed)}
+body.sidebar-collapsed .sidebar-brand{font-size:0;letter-spacing:0}
+body.sidebar-collapsed .sidebar-brand::after{content:'K';font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;color:var(--cobre);letter-spacing:2px}
+body.sidebar-collapsed .sidebar-tagline{display:none}
+body.sidebar-collapsed .nav-item span:not(.icon){display:none}
+body.sidebar-collapsed .nav-section{display:none}
+body.sidebar-collapsed .nav-group-label{display:none}
+body.sidebar-collapsed .nav-submenu{padding-left:0}
+body.sidebar-collapsed .sidebar-user{display:none}
+body.sidebar-collapsed .sidebar-logout{display:none}
+body.sidebar-collapsed .nav-item{justify-content:center;padding:9px 0}
+body.sidebar-collapsed .nav-item .icon{width:auto;font-size:17px}
+body.sidebar-collapsed .nav-group-submenu{display:block!important}
+
+/* Financeiro adicional (ported from financeiro.html) */
+.card{background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 1px 6px rgba(13,31,45,.07);border-left:4px solid var(--gray-light)}
+.card.receita{border-left-color:var(--verde)}
+.card.despesa{border-left-color:var(--vermelho)}
+.card.saldo{border-left-color:var(--cobre)}
+.card-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--cinza);margin-bottom:5px}
+.card-valor{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;color:var(--azul)}
+.card-valor.pos{color:var(--verde)}
+.card-valor.neg{color:var(--vermelho)}
+.card-sub{font-size:11px;color:var(--cinza);margin-top:3px}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.tabs-bar{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--cinza-claro);padding:0}
+.tab-btn{padding:8px 18px;font-size:12px;font-weight:600;cursor:pointer;border-radius:6px 6px 0 0;color:var(--cinza);background:transparent;border:none;font-family:'Poppins',sans-serif;transition:all .15s}
+.tab-btn.active{background:var(--azul);color:var(--off)}
+.dre-section{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cobre);padding:8px 16px 4px;background:rgba(248,246,243,.5)}
+.dre-row{display:flex;justify-content:space-between;padding:6px 16px;font-size:12px;border-bottom:.5px solid var(--cinza-claro)}
+.dre-row.subtotal{background:rgba(22,163,74,.06);font-weight:600}
+.dre-row.total{background:var(--azul);color:#fff;font-weight:700;font-size:13px;padding:10px 16px;border-radius:0 0 8px 8px}
+.hist-row{background:rgba(248,246,243,.5);color:var(--cinza);font-size:12px}
+.tag-mensal{background:#EFF6FF;color:#1E40AF;font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600}
+.conta-badge{display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600}
+.conta-nubank{background:#8B5CF6;color:#fff}
+.conta-c6{background:#0D1F2D;color:#fff}
+.conta-asaas{background:#B87333;color:#fff}
+.conta-mp{background:#00b1ea;color:#fff}
+.badge-vencido{background:#FEE2E2;color:#991B1B}
+.badge-historico{background:#F3F4F6;color:#6B7280}
+.badge-neutro{background:#F3F4F6;color:#6B7280}
+.btn-success{background:#DCFCE7;color:#166534;border:1px solid #BBF7D0}
+.alert-box{background:#FEF3C7;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;font-size:12px;color:#92400E;display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.alert-box.alert-info{background:#EFF6FF;border-color:#BFDBFE;color:#1E40AF}
+.alert-box.alert-warn{background:#FEF3C7;border-color:#FDE68A;color:#92400E}
+.reserva-meta-card{background:#fff;border-radius:12px;padding:20px 24px;box-shadow:0 1px 6px rgba(13,31,45,.07);display:flex;align-items:center;margin-bottom:24px}
+.reserva-meta-label{font-size:11px;font-weight:600;text-transform:uppercase;color:var(--cinza);margin-bottom:4px}
+.reserva-meta-valor{font-family:'Montserrat',sans-serif;font-size:28px;font-weight:700;color:var(--azul);margin-bottom:8px}
+.reserva-progress-bar{height:8px;background:var(--cinza-claro);border-radius:4px;overflow:hidden;margin-bottom:4px}
+.reserva-progress-fill{height:100%;background:var(--cobre);border-radius:4px;transition:width .4s}
+.reserva-progress-label{font-size:11px;color:var(--cinza)}
+.section-title{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cobre);margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid var(--cinza-claro)}
+.evolucao-month{display:grid;grid-template-columns:120px repeat(auto-fit,minmax(120px,1fr));gap:12px;background:#fff;border-radius:10px;padding:14px 18px;margin-bottom:10px;box-shadow:0 1px 4px rgba(13,31,45,.06);align-items:center}
+.evolucao-mes-label{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--azul)}
+.evolucao-item{text-align:center}
+.evolucao-item-label{font-size:9px;color:var(--cinza);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.evolucao-item-val{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600}
+.tx-card-list{display:none}
+@media(max-width:1024px){
+  .table-wrap table{display:none}
+  .tx-card-list{display:block;padding:12px}
+  .filtros{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px}
+}
+.tx-card{background:#fff;border-radius:8px;padding:12px;margin-bottom:8px;border-left:3px solid var(--cinza-claro)}
+.tx-card.entrada{border-left-color:var(--verde)}
+.tx-card.saida{border-left-color:var(--vermelho)}
+.tx-card.hist{border-left-color:var(--cinza)}
+.tx-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.tx-card-desc{font-size:13px;font-weight:500;flex:1;padding-right:8px;line-height:1.4}
+.tx-card-valor{font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;white-space:nowrap}
+.tx-card-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.tx-card-actions{display:flex;gap:6px;flex-wrap:wrap}
 .content{margin-left:var(--sidebar-w);min-height:100vh}
 .top-bar{background:var(--white);border-bottom:1px solid var(--gray-light);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
 .top-bar-title{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;color:var(--musgo)}
@@ -309,20 +395,29 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
 <div id="app">
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-logo">
-      <div class="sidebar-brand">KARIA</div>
-      <div class="sidebar-tagline">Gestão Jurídica Estratégica</div>
+    <div class="sidebar-logo" style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div class="sidebar-brand">KARIA</div>
+        <div class="sidebar-tagline">Gestão Jurídica Estratégica</div>
+      </div>
+      <button class="sidebar-toggle" onclick="toggleSidebarCollapse()" title="Minimizar barra lateral">‹</button>
     </div>
     <nav class="sidebar-nav">
-      <div class="nav-section">Módulos</div>
+      <div class="nav-section">Principal</div>
       <div class="nav-item active" id="nav-financeiro" onclick="switchModule('financeiro',this)">
-        <span class="icon">💰</span> Financeiro
+        <span class="icon">💰</span> <span>Financeiro</span>
       </div>
       <div class="nav-item" id="nav-crm" onclick="switchModule('crm',this)">
-        <span class="icon">👥</span> Comercial CRM
+        <span class="icon">👥</span> <span>Comercial CRM</span>
       </div>
-      <div class="nav-item" id="nav-linzmeyer" onclick="switchModule('linzmeyer',this)">
-        <span class="icon">⚖️</span> Op. Linzmeyer
+      <div class="nav-group-label open" onclick="toggleNavGroup(this)" id="grp-operacao">
+        <div class="nav-section">Operação Clientes</div>
+        <span class="nav-group-arrow">›</span>
+      </div>
+      <div class="nav-group-submenu nav-submenu" id="grp-operacao-items">
+        <div class="nav-item" id="nav-linzmeyer" onclick="switchModule('linzmeyer',this)">
+          <span class="icon">⚖️</span> <span>Linzmeyer</span>
+        </div>
       </div>
     </nav>
     <div class="sidebar-footer">
@@ -345,108 +440,153 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
 
     <!-- ===== MÓDULO FINANCEIRO ===== -->
     <div class="module active" id="mod-financeiro">
-      <div class="fin-tabs">
-        <button class="fin-tab-btn active" onclick="finShowTab('painel',this)">Painel</button>
-        <button class="fin-tab-btn" onclick="finShowTab('transacoes',this)">Transações</button>
-        <button class="fin-tab-btn" onclick="finShowTab('reserva',this)">Reserva de Caixa</button>
-        <button class="fin-tab-btn" onclick="finShowTab('evolucao',this)">Evolução</button>
+      <div id="alertaVencidos" class="alert-box alert-warn" style="display:none"></div>
+      <div class="tabs-bar">
+        <button class="tab-btn active" onclick="showTab('painel',this)">Painel</button>
+        <button class="tab-btn" onclick="showTab('transacoes',this)">Transações</button>
+        <button class="tab-btn" onclick="showTab('reserva',this)">Reserva</button>
+        <button class="tab-btn" onclick="showTab('evolucao',this)">Evolução</button>
       </div>
 
-      <!-- Painel -->
-      <div id="fin-tab-painel" class="fin-tab-panel">
-        <div class="cards-row" id="fin-kpis"></div>
+      <!-- PAINEL -->
+      <div id="tab-painel" class="tab-panel active">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+          <span style="font-family:Poppins;font-size:13px;font-weight:600;color:var(--azul)">Visualizando:</span>
+          <select id="filtroPainelMes" class="filtro-select" style="min-width:160px" onchange="renderPainel()">
+            <option value="">Mês atual</option>
+          </select>
+        </div>
+        <div class="cards-row" id="painelCards"></div>
         <div class="charts-row">
           <div class="chart-card">
-            <div class="chart-card-title">Receitas vs Despesas (mês)</div>
-            <div class="chart-container"><canvas id="chartBarMes"></canvas></div>
+            <div class="chart-card-title">Receita Mensal</div>
+            <div class="chart-container"><canvas id="chartReceita"></canvas></div>
           </div>
           <div class="chart-card">
-            <div class="chart-card-title">Distribuição por Categoria</div>
-            <div class="chart-container"><canvas id="chartPizza"></canvas></div>
+            <div class="chart-card-title">Despesas por Categoria</div>
+            <div class="chart-container"><canvas id="chartDespesas"></canvas></div>
           </div>
         </div>
+        <div class="section-title" id="dreMesTitulo">DRE — Mês Atual</div>
+        <div class="table-wrap" id="dreMes" style="padding:4px 0"></div>
       </div>
 
-      <!-- Transações -->
-      <div id="fin-tab-transacoes" class="fin-tab-panel" style="display:none">
+      <!-- TRANSAÇÕES -->
+      <div id="tab-transacoes" class="tab-panel">
         <div class="table-wrap">
           <div class="table-header">
-            <span class="table-title">Lançamentos</span>
-            <button class="btn btn-primary btn-sm" onclick="finOpenModal()">+ Novo</button>
+            <span class="table-title">Transações</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn btn-primary" onclick="abrirModal('despesa')">+ Despesa</button>
+              <button class="btn btn-primary" style="background:#166534" onclick="abrirModal('receita')">+ Receita</button>
+              <button class="btn btn-outline" onclick="gerarFixas()">↻ Gerar Fixas</button>
+            </div>
+          </div>
+          <div style="padding:0 0 10px 0;display:flex;align-items:center;gap:8px;padding:10px 20px">
+            <span style="font-size:18px;color:var(--cinza)">🔍</span>
+            <input type="text" id="txBusca" class="form-control" placeholder="Buscar por descrição, valor, categoria, conta..." autocomplete="off"
+              oninput="pgTx=1;renderTransacoes()" style="max-width:480px;margin:0">
           </div>
           <div class="filtros">
-            <select class="filtro-select" id="fin-fil-mes" onchange="finRender()">
+            <select class="filtro-select" id="filtroTxTipo" onchange="renderTransacoes()">
+              <option value="">Entradas e Saídas</option>
+              <option value="entrada">Só Entradas</option>
+              <option value="saida">Só Saídas</option>
+            </select>
+            <select class="filtro-select" id="filtroTxMes" onchange="renderTransacoes()">
               <option value="">Todos os meses</option>
             </select>
-            <select class="filtro-select" id="fin-fil-tipo" onchange="finRender()">
-              <option value="">Todos os tipos</option>
-              <option value="Receita">Receitas</option>
-              <option value="Despesa">Despesas</option>
-              <option value="Pro-labore">Pro-labore</option>
-              <option value="Imposto">Impostos</option>
-            </select>
-            <select class="filtro-select" id="fin-fil-status" onchange="finRender()">
+            <select class="filtro-select" id="filtroTxStatus" onchange="renderTransacoes()">
               <option value="">Todos os status</option>
-              <option value="Pendente">Pendente</option>
-              <option value="Pago">Pago</option>
-              <option value="Recebido">Recebido</option>
+              <option value="pendente">Pendente</option>
+              <option value="vencido">Vencido</option>
+              <option value="pago">Pago</option>
+              <option value="recebido">Recebido</option>
+              <option value="historico">Histórico</option>
             </select>
+            <select class="filtro-select" id="filtroTxCat" onchange="renderTransacoes()">
+              <option value="">Todas as categorias</option>
+            </select>
+            <select class="filtro-select" id="filtroTxConta" onchange="renderTransacoes()">
+              <option value="">Todas as contas</option>
+            </select>
+            <button class="btn btn-outline" onclick="limparFiltrosTx()">Limpar</button>
           </div>
-          <div style="overflow-x:auto">
-            <table>
-              <thead>
-                <tr>
-                  <th>Data</th><th>Descrição</th><th>Categoria</th>
-                  <th>Tipo</th><th>Status</th><th class="right">Valor</th><th></th>
-                </tr>
-              </thead>
-              <tbody id="fin-tbody"></tbody>
-            </table>
-          </div>
+          <table>
+            <thead><tr>
+              <th>Data / Venc.</th>
+              <th>Descrição</th>
+              <th>Categoria</th>
+              <th>Conta</th>
+              <th style="text-align:center">Status</th>
+              <th style="text-align:right">Valor</th>
+              <th style="text-align:center">Ações</th>
+            </tr></thead>
+            <tbody id="tabelaTx"></tbody>
+          </table>
+          <div id="txCardList" class="tx-card-list"></div>
           <div class="paginacao">
-            <span id="fin-pag-info"></span>
-            <div class="pag-btns" id="fin-pag-btns"></div>
+            <span id="txInfo"></span>
+            <div class="pag-btns" id="txPag"></div>
           </div>
         </div>
       </div>
 
-      <!-- Reserva -->
-      <div id="fin-tab-reserva" class="fin-tab-panel" style="display:none">
-        <div class="cards-row">
-          <div class="kpi-card saldo">
-            <div class="kpi-label">Reserva Atual</div>
-            <div class="kpi-val cobre" id="res-total">R$ 0</div>
-            <div class="kpi-sub">Saldo acumulado disponível</div>
+      <!-- RESERVA -->
+      <div id="tab-reserva" class="tab-panel">
+        <div class="reserva-meta-card">
+          <div style="flex:1">
+            <div class="reserva-meta-label">Saldo Atual da Reserva</div>
+            <div class="reserva-meta-valor" id="reservaSaldo">R$ 0,00</div>
+            <div class="reserva-progress-bar"><div class="reserva-progress-fill" id="reservaFill" style="width:0%"></div></div>
+            <div class="reserva-progress-label" id="reservaProgressLabel"></div>
           </div>
-          <div class="kpi-card rec">
-            <div class="kpi-label">Meta de Reserva</div>
-            <div class="kpi-val pos" id="res-meta">R$ 0</div>
-            <div class="kpi-sub">3x despesas mensais</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-label">% da Meta</div>
-            <div class="kpi-val" id="res-pct">0%</div>
-            <div class="kpi-sub" id="res-pct-sub"></div>
-          </div>
+          <button class="btn btn-outline" style="margin-left:24px;color:var(--cobre);border-color:var(--cobre);white-space:nowrap" onclick="abrirModal('meta')">⚙ Definir Meta</button>
         </div>
-        <div class="chart-card">
-          <div class="chart-card-title">Evolução da Reserva de Caixa</div>
-          <div class="chart-container"><canvas id="chartReserva"></canvas></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div class="section-title" style="margin-bottom:0">Movimentações</div>
+          <button class="btn btn-primary" onclick="abrirModal('reserva')">+ Novo Aporte</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Data</th><th>Descrição</th><th style="text-align:right">Valor</th><th style="text-align:center">Ações</th></tr></thead>
+            <tbody id="tabelaReserva"></tbody>
+          </table>
+          <div id="resCardList" class="tx-card-list"></div>
         </div>
       </div>
 
-      <!-- Evolução -->
-      <div id="fin-tab-evolucao" class="fin-tab-panel" style="display:none">
-        <div class="chart-card" style="margin-bottom:20px">
-          <div class="chart-card-title">Evolução Mensal — Receitas vs Despesas</div>
+      <!-- EVOLUÇÃO -->
+      <div id="tab-evolucao" class="tab-panel">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+          <span style="font-family:Poppins;font-size:13px;font-weight:600;color:var(--azul)">Ano:</span>
+          <select id="filtroEvolAno" class="filtro-select" style="min-width:110px" onchange="renderEvolucao()">
+          </select>
+        </div>
+        <div class="chart-card" style="margin-bottom:24px">
+          <div class="chart-card-title">Receita vs Resultado Mensal</div>
           <div class="chart-container" style="height:280px"><canvas id="chartEvolucao"></canvas></div>
         </div>
-        <div class="chart-card">
-          <div class="chart-card-title">Saldo Líquido por Mês</div>
-          <div class="chart-container" style="height:220px"><canvas id="chartSaldoMes"></canvas></div>
-        </div>
+        <div class="section-title">Acumulado do Ano</div>
+        <div id="evolucaoAcumulado" style="margin-bottom:24px"></div>
+        <div class="section-title">Médias do Período</div>
+        <div id="evolucaoMedias" style="margin-bottom:24px"></div>
+        <div class="section-title">Resumo Mensal</div>
+        <div id="evolucaoMeses"></div>
       </div>
+
     </div><!-- /mod-financeiro -->
+
+    <!-- Modal Financeiro -->
+    <div class="modal-overlay" id="modalOverlay" onclick="fecharModalBg(event)">
+      <div class="modal">
+        <div class="modal-title">
+          <span id="modalTitulo"></span>
+          <button class="modal-close" onclick="fecharModal()">×</button>
+        </div>
+        <div id="modalConteudo"></div>
+      </div>
+    </div>
 
     <!-- ===== MÓDULO CRM ===== -->
     <div class="module" id="mod-crm">
@@ -1053,62 +1193,6 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
   </div><!-- /.content -->
 </div><!-- /#app -->
 
-<!-- ========= MODAL FINANCEIRO ========= -->
-<div class="modal-overlay" id="fin-modal">
-  <div class="modal">
-    <div class="modal-title">
-      <span id="fin-modal-title">Nova Transação</span>
-      <button class="modal-close" onclick="finCloseModal()">×</button>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Tipo</label>
-        <select class="form-control" id="fin-tipo">
-          <option>Receita</option>
-          <option>Despesa</option>
-          <option>Pro-labore</option>
-          <option>Imposto</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Status</label>
-        <select class="form-control" id="fin-status">
-          <option>Pendente</option>
-          <option>Pago</option>
-          <option>Recebido</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Descrição</label>
-      <input class="form-control" type="text" id="fin-desc" placeholder="Ex: Honorários cliente X">
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Valor (R$)</label>
-        <input class="form-control" type="number" id="fin-valor" placeholder="0,00" step="0.01">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Data</label>
-        <input class="form-control" type="date" id="fin-data">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Categoria</label>
-      <input class="form-control" type="text" id="fin-categoria" placeholder="Ex: Honorários, Aluguel, Folha">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Observação</label>
-      <textarea class="form-control" id="fin-obs" rows="2" placeholder="Opcional"></textarea>
-    </div>
-    <div class="form-actions">
-      <button class="btn btn-ghost" onclick="finCloseModal()">Cancelar</button>
-      <button class="btn btn-danger btn-sm" id="fin-del-btn" onclick="finDelete()" style="display:none">Excluir</button>
-      <button class="btn btn-primary" onclick="finSave()">Salvar</button>
-    </div>
-  </div>
-</div>
-
 <!-- ========= MODAL CRM ========= -->
 <div class="modal-overlay" id="crm-modal">
   <div class="modal">
@@ -1208,6 +1292,7 @@ async function login(){
 document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('loginPass').addEventListener('keydown',e=>{ if(e.key==='Enter') login(); });
   document.getElementById('loginEmail').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('loginPass').focus(); });
+  try{ if(localStorage.getItem('kariaSidebarCollapsed')==='1'){ document.body.classList.add('sidebar-collapsed'); const btn=document.querySelector('.sidebar-toggle'); if(btn) btn.textContent='›'; } }catch(e){}
 });
 async function logout(){
   if(SB) await SB.auth.signOut();
@@ -1219,7 +1304,7 @@ function showApp(user){
   document.getElementById('app').style.display='block';
   document.getElementById('sidebarUser').textContent=user.email;
   document.getElementById('dbStatus').textContent='● Conectado';
-  finLoad();
+  carregarDados().then(()=>{ initFinanceiro(); });
   crmLoad();
   linzInit();
 }
@@ -1245,6 +1330,18 @@ function switchModule(mod,el){
 function toggleSidebar(){
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function toggleSidebarCollapse(){
+  document.body.classList.toggle('sidebar-collapsed');
+  const btn=document.querySelector('.sidebar-toggle');
+  if(btn) btn.textContent=document.body.classList.contains('sidebar-collapsed')?'›':'‹';
+  try{ localStorage.setItem('kariaSidebarCollapsed', document.body.classList.contains('sidebar-collapsed')?'1':'0'); }catch(e){}
+}
+function toggleNavGroup(el){
+  const id=el.id; const submenu=document.getElementById(id+'-items');
+  if(!submenu) return;
+  el.classList.toggle('open');
+  submenu.style.display=el.classList.contains('open')?'block':'none';
 }
 function closeSidebar(){
   document.getElementById('sidebar').classList.remove('open');
@@ -1273,241 +1370,930 @@ function linzInit(){
   document.getElementById('linz-db-status').textContent='● Conectado';
 }
 
-/* ========= FINANCEIRO ========= */
-let finData=[], finPage=1, finPageSize=15, _finEditing=null;
-let _chartBarMes=null, _chartPizza=null, _chartEvolucao=null, _chartSaldoMes=null, _chartReserva=null;
-let _finTabAtual='painel';
+/* ========= FINANCEIRO COMPLETO (portado de financeiro.html) ========= */
 
-async function finLoad(){
-  try{
-    const {data,error}=await SB.from('lancamentos').select('*').order('data',{ascending:false});
-    if(error) throw error;
-    finData=data||[];
-    finPopulateMesFiltro();
-    finRenderKPIs();
-    finRenderCharts();
-    finRender();
-  }catch(e){ console.error('finLoad',e); }
+// ============================================================
+// HISTÓRICO BASE
+// ============================================================
+const HISTORICO = [
+  {data:"05/09/2025",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"05/09/2025",desc:"ASAAS - Taxas PIX/mensageria",valor:-2.98,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"23/09/2025",desc:"Ebook - Venda Mercado Pago",valor:19.90,cat:"Receita Outros",conta:"Mercado Pago"},
+  {data:"27/09/2025",desc:"SYMPLA - Evento/Curso",valor:-100.98,cat:"Educação e Capacitação",conta:"C6"},
+  {data:"30/09/2025",desc:"Pró-labore set/2025",valor:-1518.00,cat:"Pró-labore",conta:"C6"},
+  {data:"30/09/2025",desc:"TAINA DOS SANTOS OLIVEIRA - Marketing",valor:-600.00,cat:"Serviços de Terceiros",conta:"C6"},
+  {data:"03/10/2025",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"03/10/2025",desc:"ASAAS - Taxas PIX/mensageria",valor:-2.98,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"08/10/2025",desc:"DELL COMPUTADORES - Equipamento",valor:-760.00,cat:"Equipamentos e TI",conta:"C6"},
+  {data:"31/10/2025",desc:"Pró-labore out/2025",valor:-2609.00,cat:"Pró-labore",conta:"C6"},
+  {data:"31/10/2025",desc:"TAINA DOS SANTOS OLIVEIRA - Marketing",valor:-600.00,cat:"Serviços de Terceiros",conta:"C6"},
+  {data:"31/10/2025",desc:"CAYKE EDUARDO SANTOS - Freelancer",valor:-400.00,cat:"Serviços de Terceiros",conta:"C6"},
+  {data:"04/11/2025",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"04/11/2025",desc:"ASAAS - Taxas PIX/mensageria",valor:-2.98,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"05/11/2025",desc:"Receita - CRISTIANO METZ & ADVOGADOS ASSOCIADOS",valor:3500.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"05/11/2025",desc:"ASAAS - Taxas PIX/mensageria",valor:-2.98,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"07/11/2025",desc:"Receita - Bordas Advogados Associados",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"07/11/2025",desc:"ASAAS - Taxa PIX/boleto",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"07/11/2025",desc:"CARTPANDA - Plataforma digital",valor:-80.00,cat:"Marketing / Presença Digital",conta:"C6"},
+  {data:"28/11/2025",desc:"ENCANTOS DE LOGOS FL - Design/Logo",valor:-80.00,cat:"Marketing / Presença Digital",conta:"C6"},
+  {data:"30/11/2025",desc:"Pró-labore nov/2025",valor:-2379.32,cat:"Pró-labore",conta:"C6"},
+  {data:"30/11/2025",desc:"TAINA DOS SANTOS OLIVEIRA - Marketing",valor:-600.00,cat:"Serviços de Terceiros",conta:"C6"},
+  {data:"02/12/2025",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"02/12/2025",desc:"ASAAS - Taxa PIX/boleto",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"05/12/2025",desc:"Receita - Bordas Advogados Associados",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"05/12/2025",desc:"ASAAS - Taxa PIX/boleto",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"09/12/2025",desc:"Receita - Daniel Hatzemberger Soc. Ind. de Advocacia",valor:2925.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"09/12/2025",desc:"ASAAS - Taxa PIX",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"19/12/2025",desc:"Receita - Becker e Victor Advogados Associados",valor:2875.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"19/12/2025",desc:"ASAAS - Taxa PIX",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"31/12/2025",desc:"Pró-labore dez/2025",valor:-5824.00,cat:"Pró-labore",conta:"C6"},
+  {data:"31/12/2025",desc:"TAINA DOS SANTOS OLIVEIRA - Marketing",valor:-600.00,cat:"Serviços de Terceiros",conta:"C6"},
+  {data:"31/12/2025",desc:"Despesas pessoais dez/2025",valor:-1579.06,cat:"Despesas Pessoais",conta:"C6"},
+  {data:"06/01/2026",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"06/01/2026",desc:"ASAAS - Taxa PIX/boleto",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"31/01/2026",desc:"EBANX - Assinatura internacional",valor:-41.39,cat:"Software e Assinaturas",conta:"C6"},
+  {data:"31/01/2026",desc:"Pró-labore jan/2026",valor:-1621.00,cat:"Pró-labore",conta:"NuBank"},
+  {data:"31/01/2026",desc:"Ozaide da Silva Pereira - Reembolso",valor:42.00,cat:"Reembolso",conta:"C6"},
+  {data:"04/02/2026",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"04/02/2026",desc:"ASAAS - Taxa PIX/boleto",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"28/02/2026",desc:"Contabilizei - Contabilidade",valor:-170.00,cat:"Contabilidade",conta:"NuBank"},
+  {data:"28/02/2026",desc:"OAB-RS - Anuidade/mensalidade",valor:-69.54,cat:"Anuidades e Taxas Profissionais",conta:"NuBank"},
+  {data:"28/02/2026",desc:"EBANX - Assinatura internacional",valor:-41.39,cat:"Software e Assinaturas",conta:"C6"},
+  {data:"28/02/2026",desc:"Pró-labore fev/2026",valor:-1621.00,cat:"Pró-labore",conta:"NuBank"},
+  {data:"03/03/2026",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"03/03/2026",desc:"ASAAS - Taxa PIX/boleto",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"10/03/2026",desc:"Receita - Fellipe Bernardes",valor:2500.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"10/03/2026",desc:"ASAAS - Taxa PIX",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"31/03/2026",desc:"EBANX - Assinatura internacional",valor:-41.39,cat:"Software e Assinaturas",conta:"C6"},
+  {data:"31/03/2026",desc:"Contabilizei - Contabilidade",valor:-170.00,cat:"Contabilidade",conta:"NuBank"},
+  {data:"31/03/2026",desc:"OAB-RS - Anuidade/mensalidade",valor:-69.54,cat:"Anuidades e Taxas Profissionais",conta:"NuBank"},
+  {data:"31/03/2026",desc:"Pró-labore mar/2026",valor:-1658.00,cat:"Pró-labore",conta:"NuBank"},
+  {data:"02/04/2026",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"02/04/2026",desc:"ASAAS - Taxa PIX/boleto",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"13/04/2026",desc:"Receita - Becker e Victor Advogados Associados",valor:2875.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"13/04/2026",desc:"ASAAS - Taxas PIX/mensageria/WhatsApp",valor:-3.53,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"15/04/2026",desc:"Receita - CRISTIANO METZ & ADVOGADOS ASSOCIADOS",valor:3500.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"15/04/2026",desc:"ASAAS - Taxas PIX/mensageria/WhatsApp",valor:-4.08,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"23/04/2026",desc:"Receita - Fellipe Bernardes",valor:1750.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"23/04/2026",desc:"ASAAS - Taxas PIX/mensageria/WhatsApp",valor:-3.53,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"30/04/2026",desc:"Contabilizei - Contabilidade",valor:-170.00,cat:"Contabilidade",conta:"NuBank"},
+  {data:"30/04/2026",desc:"OAB-RS - Anuidade/mensalidade",valor:-69.54,cat:"Anuidades e Taxas Profissionais",conta:"NuBank"},
+  {data:"30/04/2026",desc:"Pró-labore abr/2026",valor:-3675.00,cat:"Pró-labore",conta:"NuBank"},
+  {data:"04/05/2026",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"04/05/2026",desc:"ASAAS - Taxa PIX/boleto",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"20/05/2026",desc:"Receita - Daniel Hatzemberger Soc. Ind. de Advocacia",valor:2925.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"20/05/2026",desc:"ASAAS - Taxas PIX/mensageria/WhatsApp",valor:-3.63,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"20/05/2026",desc:"Pró-labore mai/2026",valor:-2319.00,cat:"Pró-labore",conta:"NuBank"},
+  {data:"31/05/2026",desc:"Contabilizei - Contabilidade",valor:-195.00,cat:"Contabilidade",conta:"NuBank"},
+  {data:"31/05/2026",desc:"OAB-RS - Anuidade/mensalidade",valor:-69.54,cat:"Anuidades e Taxas Profissionais",conta:"NuBank"},
+  {data:"02/06/2026",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"02/06/2026",desc:"ASAAS - Taxa PIX/boleto",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"02/06/2026",desc:"Editora Verbo Juridico - Assinatura",valor:-189.00,cat:"Software e Assinaturas",conta:"NuBank"},
+  {data:"02/06/2026",desc:"Claro - Internet/Telefone",valor:-85.98,cat:"Comunicação",conta:"NuBank"},
+  {data:"30/06/2026",desc:"Contabilizei - Contabilidade",valor:-195.00,cat:"Contabilidade",conta:"NuBank"},
+  {data:"30/06/2026",desc:"OAB-RS - Anuidade/mensalidade",valor:-69.54,cat:"Anuidades e Taxas Profissionais",conta:"NuBank"},
+  {data:"30/06/2026",desc:"Pró-labore jun/2026",valor:-1621.00,cat:"Pró-labore",conta:"NuBank"},
+  {data:"06/07/2026",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"06/07/2026",desc:"ASAAS - Taxa PIX/boleto",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"13/07/2026",desc:"Receita - Fellipe Bernardes",valor:1750.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"13/07/2026",desc:"ASAAS - Taxa PIX/boleto",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"21/07/2026",desc:"Receita - Fellipe Bernardes",valor:1750.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"21/07/2026",desc:"ASAAS - Taxas PIX/mensageria/WhatsApp",valor:-5.17,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"24/07/2026",desc:"Receita - Fellipe Bernardes",valor:1750.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"24/07/2026",desc:"ASAAS - Taxa PIX/boleto",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"29/07/2026",desc:"Despesa pessoal - jul/2026",valor:-136.80,cat:"Despesas Pessoais",conta:"NuBank"},
+  {data:"31/07/2026",desc:"Pró-labore jul/2026",valor:-2622.68,cat:"Pró-labore",conta:"NuBank"},
+  {data:"31/07/2026",desc:"Contabilizei - Contabilidade",valor:-195.00,cat:"Contabilidade",conta:"NuBank"},
+  {data:"31/07/2026",desc:"OAB-RS - Anuidade/mensalidade",valor:-69.54,cat:"Anuidades e Taxas Profissionais",conta:"NuBank"},
+  {data:"31/07/2026",desc:"Claro - Internet/Telefone",valor:-85.98,cat:"Comunicação",conta:"NuBank"},
+  {data:"31/07/2026",desc:"Booking.com - Viagem a Trabalho",valor:-291.60,cat:"Viagem a Trabalho",conta:"NuBank"},
+  {data:"10/08/2026",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"10/08/2026",desc:"ASAAS - Taxas PIX/mensageria/WhatsApp",valor:-3.53,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"10/08/2026",desc:"Odete Lima de Paula - Serviço",valor:-252.05,cat:"Serviços de Terceiros",conta:"ASAAS"},
+  {data:"10/08/2026",desc:"MAYARA JANE JERONIMO TEIXEIRA - Serviço",valor:-160.00,cat:"Serviços de Terceiros",conta:"ASAAS"},
+  {data:"10/08/2026",desc:"Despesas pessoais ago/2026",valor:-469.16,cat:"Despesas Pessoais",conta:"ASAAS"},
+  {data:"10/08/2026",desc:"Alimentação ago/2026",valor:-200.12,cat:"Alimentação e Transporte",conta:"ASAAS"},
+  {data:"12/08/2026",desc:"CLARO S.A. - Internet",valor:-283.65,cat:"Comunicação",conta:"ASAAS"},
+  {data:"13/08/2026",desc:"Editora Verbo Juridico - Assinatura",valor:-189.00,cat:"Software e Assinaturas",conta:"ASAAS"},
+  {data:"13/08/2026",desc:"OAB-RS - Anuidade/mensalidade",valor:-69.54,cat:"Anuidades e Taxas Profissionais",conta:"ASAAS"},
+  {data:"13/08/2026",desc:"Claro - Telefone",valor:-85.98,cat:"Comunicação",conta:"ASAAS"},
+  {data:"13/08/2026",desc:"Pró-labore ago/2026",valor:-1621.00,cat:"Pró-labore",conta:"ASAAS"},
+  {data:"13/08/2026",desc:"CEEE-D - Energia elétrica",valor:-221.88,cat:"Despesas Pessoais",conta:"ASAAS"},
+  {data:"13/08/2026",desc:"Contabilizei - Contabilidade",valor:-210.90,cat:"Contabilidade",conta:"ASAAS"},
+  {data:"02/09/2026",desc:"Receita - LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA",valor:5000.00,cat:"Receita Serviços",conta:"ASAAS"},
+  {data:"02/09/2026",desc:"ASAAS - Taxa PIX/boleto",valor:-1.99,cat:"Tarifas Bancárias",conta:"ASAAS"},
+  {data:"02/09/2026",desc:"Pró-labore set/2026",valor:-2254.60,cat:"Pró-labore",conta:"NuBank"},
+  {data:"04/09/2026",desc:"Receita - GOES NICOLADELLI ADVOGADOS ASSOCIADOS",valor:720.00,cat:"Receita Serviços",conta:"NuBank"},
+  {data:"08/09/2026",desc:"Mercado Pago - Reembolso",valor:79.50,cat:"Reembolso",conta:"NuBank"},
+  {data:"08/09/2026",desc:"Mercado Pago - Pagamento",valor:-249.50,cat:"Despesas Pessoais",conta:"NuBank"},
+  {data:"11/09/2026",desc:"NIC.BR - Domínio kariagestao.com",valor:-40.00,cat:"Marketing / Presença Digital",conta:"NuBank"},
+  {data:"30/09/2026",desc:"Contabilizei - Contabilidade",valor:-195.00,cat:"Contabilidade",conta:"NuBank"},
+  {data:"30/09/2026",desc:"OAB-RS - Anuidade/mensalidade",valor:-69.54,cat:"Anuidades e Taxas Profissionais",conta:"NuBank"},
+];
+
+const CATS_RECEITA = ["Receita Serviços","Receita Outros"];
+const CATS_DESPESA = ["Pró-labore","Divisão de Lucros","Impostos","Contabilidade","Serviços de Terceiros","Alimentação e Transporte",
+  "Despesas Pessoais","Software e Assinaturas","Anuidades e Taxas Profissionais","Comunicação",
+  "Equipamentos e TI","Marketing / Presença Digital","Educação e Capacitação","Viagem a Trabalho","Tarifas Bancárias"];
+const CONTAS_LIST = ["NuBank","C6","ASAAS","Mercado Pago"];
+const CLIENTES_LIST = [
+  "LINZMEYER SOCIEDADE INDIVIDUAL DE ADVOCACIA","GOES NICOLADELLI ADVOGADOS ASSOCIADOS",
+  "CRISTIANO METZ & ADVOGADOS ASSOCIADOS","Bordas Advogados Associados",
+  "Daniel Hatzemberger Soc. Ind. de Advocacia","Becker e Victor Advogados Associados","Fellipe Bernardes",
+];
+const SERVICOS_LIST = [
+  "Acompanhamento Estratégico","Consultoria de Implantação","Diagnóstico Estruturado",
+  "Controladoria Terceirizada","Mentoria Individual","Outros Serviços",
+];
+const FIXAS = [
+  {desc:"Contabilizei", valor:195.00, dia:5, cat:"Contabilidade", conta:"NuBank"},
+  {desc:"OAB-RS - Anuidade/mensalidade", valor:69.54, dia:10, cat:"Anuidades e Taxas Profissionais", conta:"NuBank"},
+  {desc:"Claro - Internet/Telefone", valor:85.98, dia:10, cat:"Comunicação", conta:"NuBank"},
+  {desc:"Editora Verbo Juridico - Assinatura", valor:189.00, dia:5, cat:"Software e Assinaturas", conta:"NuBank"},
+];
+
+// Supabase Financeiro (reutiliza SB do OS)
+let lancamentos = [];
+let movReserva  = [];
+let metaReserva = 0;
+
+function lancToRow(l) {
+  let obsOut = l.obs||'';
+  if (l.valorPago != null && l.valorPago !== '') {
+    obsOut = obsOut.replace(/\|\|\$VP\$:[^|]*\|\|/g,'').trim();
+    obsOut += (obsOut?'\n':'') + `||$VP$:${l.valorPago}||`;
+  } else {
+    obsOut = obsOut.replace(/\|\|\$VP\$:[^|]*\|\|/g,'').trim();
+  }
+  return {
+    id: l.id, descricao: l.desc, valor: l.valor, vencimento: l.vencimento,
+    cat: l.cat, conta: l.conta, status: l.status,
+    cliente: l.cliente||null, servico: l.servico||null, obs: obsOut||null,
+    recorrente: l.recorrente||false,
+    recebido_em: l.dataPagamento||l.recebidoEm||null,
+    pago_em: l.dataPagamento||l.pagoEm||null
+  };
+}
+function rowToLanc(r) {
+  const obsRaw = r.obs||'';
+  const vpMatch = obsRaw.match(/\|\|\$VP\$:([^|]+)\|\|/);
+  const valorPago = vpMatch ? parseFloat(vpMatch[1]) : null;
+  const obsClean = obsRaw.replace(/\|\|\$VP\$:[^|]*\|\|/g,'').trim();
+  const dataPag = CATS_RECEITA_CHECK(r.cat) ? r.recebido_em : r.pago_em;
+  return {
+    id: r.id, desc: r.descricao, valor: r.valor, vencimento: r.vencimento,
+    cat: r.cat, conta: r.conta, status: r.status,
+    cliente: r.cliente, servico: r.servico, obs: obsClean,
+    recorrente: r.recorrente,
+    recebidoEm: r.recebido_em, pagoEm: r.pago_em,
+    dataPagamento: dataPag||null,
+    valorPago: valorPago
+  };
+}
+function CATS_RECEITA_CHECK(cat) { return cat==='Receita Serviços'||cat==='Receita Outros'; }
+function resToRow(m) { return { id: m.id, data: m.data, descricao: m.desc, valor: m.valor }; }
+function rowToRes(r) { return { id: r.id, data: r.data, desc: r.descricao, valor: r.valor }; }
+
+async function carregarDados() {
+  const [{ data: lData }, { data: rData }, { data: cData }] = await Promise.all([
+    SB.from('karia_lancamentos').select('*').order('vencimento'),
+    SB.from('karia_reserva').select('*').order('data'),
+    SB.from('karia_config').select('*')
+  ]);
+  lancamentos = (lData || []).map(rowToLanc);
+  movReserva  = (rData || []).map(rowToRes);
+  const meta  = (cData || []).find(c=>c.chave==='metaReserva');
+  metaReserva = meta ? parseFloat(meta.valor) : 0;
 }
 
-function finShowTab(tab,el){
-  _finTabAtual=tab;
-  document.querySelectorAll('.fin-tab-panel').forEach(p=>p.style.display='none');
-  document.querySelectorAll('.fin-tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('fin-tab-'+tab).style.display='block';
-  if(el) el.classList.add('active');
-  if(tab==='painel') finRenderCharts();
-  if(tab==='evolucao') finRenderEvolucao();
-  if(tab==='reserva') finRenderReserva();
-}
+async function salvarLancamento(l) { await SB.from('karia_lancamentos').upsert(lancToRow(l)); }
+async function deletarLancamento(id) { await SB.from('karia_lancamentos').delete().eq('id', id); }
+async function salvarMovRes(m) { await SB.from('karia_reserva').upsert(resToRow(m)); }
+async function deletarMovRes(id) { await SB.from('karia_reserva').delete().eq('id', id); }
+async function salvarMeta() { await SB.from('karia_config').upsert({ chave:'metaReserva', valor: String(metaReserva) }); }
 
-function finPopulateMesFiltro(){
-  const sel=document.getElementById('fin-fil-mes');
-  const meses=[...new Set(finData.map(r=>r.data?.slice(0,7)).filter(Boolean))].sort().reverse();
-  sel.innerHTML='<option value="">Todos os meses</option>'+meses.map(m=>`<option value="${m}">${m}</option>`).join('');
+// Helpers
+const fmt    = v => 'R$ ' + Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtSgn = v => (v>=0?'+ ':' ') + 'R$ ' + Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+function parseBR(d) { if (!d) return new Date(0); const [dd,mm,yy] = d.split('/'); return new Date(+yy,+mm-1,+dd); }
+function hoje()     { const n=new Date(); return pad(n.getDate())+'/'+pad(n.getMonth()+1)+'/'+n.getFullYear(); }
+function mesAtual() { const n=new Date(); return pad(n.getMonth()+1)+'/'+n.getFullYear(); }
+function getMesAno(d) {
+  if(!d) return '';
+  if(d.includes('-')&&d.indexOf('-')===4){ const p=d.split('-'); return p[1]+'/'+p[0]; }
+  const p=d.split('/'); return p[1]+'/'+p[2];
 }
-
-function finFiltered(){
-  const mes=document.getElementById('fin-fil-mes').value;
-  const tipo=document.getElementById('fin-fil-tipo').value;
-  const status=document.getElementById('fin-fil-status').value;
-  return finData.filter(r=>{
-    if(mes && !r.data?.startsWith(mes)) return false;
-    if(tipo && r.tipo!==tipo) return false;
-    if(status && r.status!==status) return false;
-    return true;
-  });
+function getMesLabel(ma) {
+  const ms=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const [m,y] = ma.split('/'); return ms[+m-1]+'/'+y.slice(2);
 }
-
-function finRenderKPIs(){
-  const d=finData;
-  const rec=d.filter(r=>r.tipo==='Receita').reduce((s,r)=>s+Number(r.valor||0),0);
-  const desp=d.filter(r=>['Despesa','Pro-labore','Imposto'].includes(r.tipo)).reduce((s,r)=>s+Number(r.valor||0),0);
-  const saldo=rec-desp;
-  document.getElementById('fin-kpis').innerHTML=`
-    <div class="kpi-card rec"><div class="kpi-label">Receitas</div><div class="kpi-val pos">${fmtBRL(rec)}</div><div class="kpi-sub">Total acumulado</div></div>
-    <div class="kpi-card desp"><div class="kpi-label">Despesas</div><div class="kpi-val neg">${fmtBRL(desp)}</div><div class="kpi-sub">Total acumulado</div></div>
-    <div class="kpi-card saldo"><div class="kpi-label">Saldo Líquido</div><div class="kpi-val ${saldo>=0?'cobre':'neg'}">${fmtBRL(saldo)}</div><div class="kpi-sub">Receitas - Despesas</div></div>
-    <div class="kpi-card"><div class="kpi-label">Lançamentos</div><div class="kpi-val">${d.length}</div><div class="kpi-sub">Total de registros</div></div>
-  `;
+function pad(n) { return String(n).padStart(2,'0'); }
+function isoToData(iso) { if(!iso) return hoje(); const [y,m,d]=iso.split('-'); return d+'/'+m+'/'+y; }
+function dataToIso(d) { if(!d) return ''; const [dd,mm,yy]=d.split('/'); return yy+'-'+mm+'-'+dd; }
+function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+function statusLanc(l) {
+  if (l.status==='pago'||l.status==='recebido') return l.status;
+  const v=parseBR(l.vencimento), h=new Date(); h.setHours(0,0,0,0); v.setHours(0,0,0,0);
+  return v<h ? 'vencido' : 'pendente';
 }
-
-function finRenderCharts(){
-  // Bar por mês
-  const mesMapa={};
-  finData.forEach(r=>{
-    const m=r.data?.slice(0,7)||'?';
-    if(!mesMapa[m]) mesMapa[m]={rec:0,desp:0};
-    if(r.tipo==='Receita') mesMapa[m].rec+=Number(r.valor||0);
-    else mesMapa[m].desp+=Number(r.valor||0);
-  });
-  const meses=Object.keys(mesMapa).sort().slice(-6);
-  if(_chartBarMes) _chartBarMes.destroy();
-  const ctx1=document.getElementById('chartBarMes');
-  if(ctx1) _chartBarMes=new Chart(ctx1,{
-    type:'bar',
-    data:{labels:meses,datasets:[
-      {label:'Receitas',data:meses.map(m=>mesMapa[m]?.rec||0),backgroundColor:'#16A34A88'},
-      {label:'Despesas',data:meses.map(m=>mesMapa[m]?.desp||0),backgroundColor:'#DC262688'}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:v=>fmtK(v)}}}}
-  });
-  // Pizza categorias
-  const catMapa={};
-  finData.filter(r=>r.tipo==='Despesa').forEach(r=>{
-    const c=r.categoria||'Outros';
-    catMapa[c]=(catMapa[c]||0)+Number(r.valor||0);
-  });
-  if(_chartPizza) _chartPizza.destroy();
-  const ctx2=document.getElementById('chartPizza');
-  if(ctx2) _chartPizza=new Chart(ctx2,{
-    type:'doughnut',
-    data:{labels:Object.keys(catMapa),datasets:[{data:Object.values(catMapa),backgroundColor:['#0D1F2D','#B87333','#16A34A','#DC2626','#D97706','#6B7280','#8B5CF6']}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}
-  });
+function atualizaStatusTodos() { lancamentos.forEach(l=>{ l.status=statusLanc(l); }); }
+const contaCls = c => ({'NuBank':'conta-nubank','C6':'conta-c6','ASAAS':'conta-asaas','Mercado Pago':'conta-mp'}[c]||'conta-c6');
+function catBadge(cat) {
+  if (CATS_RECEITA.includes(cat)) return `<span class="badge badge-receita">${cat}</span>`;
+  if (cat==='Pró-labore')         return `<span class="badge badge-prolabore">${cat}</span>`;
+  if (cat==='Impostos')           return `<span class="badge badge-imposto">${cat}</span>`;
+  if (cat==='Reembolso')          return `<span class="badge badge-neutro">${cat}</span>`;
+  return `<span class="badge badge-despesa">${cat}</span>`;
 }
-
-function finRenderEvolucao(){
-  const mesMapa={};
-  finData.forEach(r=>{
-    const m=r.data?.slice(0,7)||'?';
-    if(!mesMapa[m]) mesMapa[m]={rec:0,desp:0};
-    if(r.tipo==='Receita') mesMapa[m].rec+=Number(r.valor||0);
-    else mesMapa[m].desp+=Number(r.valor||0);
-  });
-  const meses=Object.keys(mesMapa).sort();
-  if(_chartEvolucao) _chartEvolucao.destroy();
-  const ctx=document.getElementById('chartEvolucao');
-  if(ctx) _chartEvolucao=new Chart(ctx,{
-    type:'line',
-    data:{labels:meses,datasets:[
-      {label:'Receitas',data:meses.map(m=>mesMapa[m].rec),borderColor:'#16A34A',backgroundColor:'#16A34A22',tension:.3,fill:true},
-      {label:'Despesas',data:meses.map(m=>mesMapa[m].desp),borderColor:'#DC2626',backgroundColor:'#DC262622',tension:.3,fill:true}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:v=>fmtK(v)}}}}
-  });
-  if(_chartSaldoMes) _chartSaldoMes.destroy();
-  const ctx2=document.getElementById('chartSaldoMes');
-  const saldos=meses.map(m=>mesMapa[m].rec-mesMapa[m].desp);
-  if(ctx2) _chartSaldoMes=new Chart(ctx2,{
-    type:'bar',
-    data:{labels:meses,datasets:[{label:'Saldo',data:saldos,backgroundColor:saldos.map(s=>s>=0?'#16A34A88':'#DC262688')}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>fmtK(v)}}}}
-  });
+function statusBadge(s) {
+  const m={pendente:'badge-pendente',vencido:'badge-vencido',pago:'badge-pago',recebido:'badge-recebido',historico:'badge-historico'};
+  const l={pendente:'Pendente',vencido:'Vencido',pago:'Pago',recebido:'Recebido',historico:'Histórico'};
+  return `<span class="badge ${m[s]||'badge-neutro'}">${l[s]||s}</span>`;
 }
+function opt(list,sel='') { return list.map(v=>`<option value="${v}"${v===sel?' selected':''}>${v}</option>`).join(''); }
 
-function finRenderReserva(){
-  const saldoAcum=finData.reduce((s,r)=>r.tipo==='Receita'?s+Number(r.valor||0):s-Number(r.valor||0),0);
-  const metaBase=finData.filter(r=>['Despesa','Pro-labore','Imposto'].includes(r.tipo));
-  const ultMes=metaBase.map(r=>r.data?.slice(0,7)).filter(Boolean).sort().reverse()[0]||'';
-  const despMes=metaBase.filter(r=>r.data?.startsWith(ultMes)).reduce((s,r)=>s+Number(r.valor||0),0);
-  const meta=despMes*3;
-  const pct=meta>0?Math.round((saldoAcum/meta)*100):0;
-  document.getElementById('res-total').textContent=fmtBRL(saldoAcum);
-  document.getElementById('res-meta').textContent=fmtBRL(meta);
-  document.getElementById('res-pct').textContent=pct+'%';
-  document.getElementById('res-pct').className='kpi-val '+(pct>=100?'pos':pct>=50?'cobre':'neg');
-  document.getElementById('res-pct-sub').textContent=pct>=100?'Meta atingida! ✓':pct>=50?'Metade do caminho':'Abaixo da meta';
-  // Chart evolução reserva
-  const mesMapa={};
-  finData.forEach(r=>{
-    const m=r.data?.slice(0,7)||'?';
-    if(!mesMapa[m]) mesMapa[m]={rec:0,desp:0};
-    if(r.tipo==='Receita') mesMapa[m].rec+=Number(r.valor||0);
-    else mesMapa[m].desp+=Number(r.valor||0);
-  });
-  const meses=Object.keys(mesMapa).sort();
-  let acum=0;
-  const reservas=meses.map(m=>{acum+=(mesMapa[m].rec-mesMapa[m].desp);return acum;});
-  if(_chartReserva) _chartReserva.destroy();
-  const ctx=document.getElementById('chartReserva');
-  if(ctx) _chartReserva=new Chart(ctx,{
-    type:'line',
-    data:{labels:meses,datasets:[{label:'Reserva',data:reservas,borderColor:'#B87333',backgroundColor:'#B8733322',tension:.4,fill:true}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>fmtK(v)}}}}
-  });
-}
-
-function finRender(){
-  const rows=finFiltered();
-  const total=rows.length;
-  const pages=Math.ceil(total/finPageSize)||1;
-  if(finPage>pages) finPage=1;
-  const slice=rows.slice((finPage-1)*finPageSize,finPage*finPageSize);
-  const badgeTipo={Receita:'badge-receita',Despesa:'badge-despesa','Pro-labore':'badge-prolabore',Imposto:'badge-imposto'};
-  const badgeSt={Pendente:'badge-pendente',Pago:'badge-pago',Recebido:'badge-recebido'};
-  document.getElementById('fin-tbody').innerHTML=slice.map(r=>`
-    <tr>
-      <td>${fmtDate(r.data)}</td>
-      <td>${r.descricao||''}</td>
-      <td>${r.categoria||''}</td>
-      <td><span class="badge ${badgeTipo[r.tipo]||''}">${r.tipo}</span></td>
-      <td><span class="badge ${badgeSt[r.status]||''}">${r.status}</span></td>
-      <td class="right ${r.tipo==='Receita'?'valor-pos':'valor-neg'}">${fmtBRL(Number(r.valor||0))}</td>
-      <td><button class="btn btn-ghost btn-sm" onclick="finOpenModal('${r.id}')">✎</button></td>
-    </tr>
-  `).join('');
-  document.getElementById('fin-pag-info').textContent=`${total} registros`;
-  const btns=document.getElementById('fin-pag-btns');
-  btns.innerHTML='';
-  for(let i=1;i<=pages;i++){
-    const b=document.createElement('button');
-    b.className='pag-btn'+(i===finPage?' active':'');
-    b.textContent=i;
-    b.onclick=()=>{finPage=i;finRender();};
-    btns.appendChild(b);
+// TABS
+const finRendered = {};
+function showTab(name, btn) {
+  document.querySelectorAll('#mod-financeiro .tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if (btn) btn.classList.add('active');
+  else document.querySelectorAll('.tab-btn').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+name+"'")) b.classList.add('active');});
+  try { localStorage.setItem('kariaTab', name); } catch(e){}
+  if (!finRendered[name]) {
+    finRendered[name]=true;
+    if (name==='transacoes') renderTransacoes();
+    if (name==='reserva')    renderReserva();
+    if (name==='evolucao')   renderEvolucao();
   }
 }
 
-function finOpenModal(id){
-  _finEditing=id||null;
-  const r=id?finData.find(x=>x.id===id):null;
-  document.getElementById('fin-modal-title').textContent=r?'Editar Lançamento':'Nova Transação';
-  document.getElementById('fin-tipo').value=r?.tipo||'Receita';
-  document.getElementById('fin-status').value=r?.status||'Pendente';
-  document.getElementById('fin-desc').value=r?.descricao||'';
-  document.getElementById('fin-valor').value=r?.valor||'';
-  document.getElementById('fin-data').value=r?.data||new Date().toISOString().slice(0,10);
-  document.getElementById('fin-categoria').value=r?.categoria||'';
-  document.getElementById('fin-obs').value=r?.observacao||'';
-  document.getElementById('fin-del-btn').style.display=r?'inline-block':'none';
-  document.getElementById('fin-modal').classList.add('open');
-}
-function finCloseModal(){ document.getElementById('fin-modal').classList.remove('open'); }
-
-async function finSave(){
-  const payload={
-    tipo:document.getElementById('fin-tipo').value,
-    status:document.getElementById('fin-status').value,
-    descricao:document.getElementById('fin-desc').value,
-    valor:parseFloat(document.getElementById('fin-valor').value)||0,
-    data:document.getElementById('fin-data').value,
-    categoria:document.getElementById('fin-categoria').value,
-    observacao:document.getElementById('fin-obs').value,
-    user_id:currentUser.id
-  };
-  try{
-    if(_finEditing){
-      const {error}=await SB.from('lancamentos').update(payload).eq('id',_finEditing);
-      if(error) throw error;
-    }else{
-      const {error}=await SB.from('lancamentos').insert([payload]);
-      if(error) throw error;
+// PAGINAÇÃO
+const PP=20;
+function renderPag(elId, pg, total, cb) {
+  const el=document.getElementById(elId); el.innerHTML='';
+  for (let p=1; p<=total; p++) {
+    if (total>8 && p>2 && p<total-1 && Math.abs(p-pg)>1) {
+      if (p===3||p===total-2) el.innerHTML+=`<span style="padding:4px 2px;color:var(--cinza)">…</span>`;
+      continue;
     }
-    finCloseModal();
-    await finLoad();
-    showToast('Lançamento salvo!');
-  }catch(e){ showToast('Erro: '+e.message,'err'); }
+    const b=document.createElement('button');
+    b.className='pag-btn'+(p===pg?' active':'');
+    b.textContent=p; b.onclick=()=>cb(p); el.appendChild(b);
+  }
 }
-async function finDelete(){
-  if(!_finEditing||!confirm('Excluir este lançamento?')) return;
-  try{
-    const {error}=await SB.from('lancamentos').delete().eq('id',_finEditing);
-    if(error) throw error;
-    finCloseModal();
-    await finLoad();
-    showToast('Lançamento excluído.');
-  }catch(e){ showToast('Erro: '+e.message,'err'); }
+
+// PAINEL
+let chartRec, chartDesp;
+function atualizaFiltroPainelMes() {
+  const todosMeses=[...new Set([
+    ...HISTORICO.map(t=>getMesAno(t.data)),
+    ...lancamentos.map(l=>getMesAno(l.vencimento))
+  ])].filter(Boolean).sort((a,b)=>parseBR('01/'+b)-parseBR('01/'+a));
+  const el=document.getElementById('filtroPainelMes');
+  const atual=el.value;
+  while(el.options.length>1) el.remove(1);
+  todosMeses.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=getMesLabel(m);el.appendChild(o);});
+  if([...el.options].some(o=>o.value===atual)) el.value=atual;
+}
+
+function renderPainel() {
+  atualizaStatusTodos();
+  atualizaFiltroPainelMes();
+  const selMes=document.getElementById('filtroPainelMes').value;
+  const ma = selMes || mesAtual();
+  const dreTitle=document.getElementById('dreMesTitulo');
+  if(dreTitle) dreTitle.textContent='DRE — '+getMesLabel(ma);
+  const histMes   = HISTORICO.filter(t=>getMesAno(t.data)===ma);
+  const lancMes   = lancamentos.filter(l=>getMesAno(l.vencimento)===ma);
+  const recHistProj  = histMes.filter(t=>CATS_RECEITA.includes(t.cat)).reduce((s,t)=>s+t.valor,0);
+  const recLancProj  = lancMes.filter(l=>CATS_RECEITA.includes(l.cat)).reduce((s,l)=>s+l.valor,0);
+  const despLancProj = lancMes.filter(l=>!CATS_RECEITA.includes(l.cat)).reduce((s,l)=>s+l.valor,0);
+  const despHistProj = histMes.filter(t=>!CATS_RECEITA.includes(t.cat)&&t.valor<0).reduce((s,t)=>s+t.valor,0);
+  const recProjetada = recHistProj + recLancProj;
+  const despProjetada= despHistProj + despLancProj;
+  const recLanc   = lancMes.filter(l=>CATS_RECEITA.includes(l.cat)&&l.status==='recebido').reduce((s,l)=>s+(l.valorPago!=null?Math.abs(l.valorPago):l.valor),0);
+  const despPagas = lancMes.filter(l=>!CATS_RECEITA.includes(l.cat)&&l.status==='pago').reduce((s,l)=>s+(l.valorPago!=null?l.valorPago:-Math.abs(l.valor)),0);
+  const recHistEfet = recHistProj; const despHistEfet= despHistProj;
+  const recEfetiva  = recHistEfet + recLanc;
+  const despEfetiva = despHistEfet + despPagas;
+  const aReceber  = lancMes.filter(l=>CATS_RECEITA.includes(l.cat)&&l.status!=='recebido').reduce((s,l)=>s+l.valor,0);
+  const aPagar    = lancMes.filter(l=>!CATS_RECEITA.includes(l.cat)&&l.status!=='pago').reduce((s,l)=>s+l.valor,0);
+  const vencidos  = lancMes.filter(l=>l.status==='vencido').length;
+  const alerta = document.getElementById('alertaVencidos');
+  if (vencidos>0) { alerta.style.display='flex'; alerta.textContent=`⚠ ${vencidos} lançamento${vencidos>1?'s':''} vencido${vencidos>1?'s':''} — verifique em Transações`; }
+  else { alerta.style.display='none'; }
+  document.getElementById('painelCards').innerHTML=`
+    <div class="card receita"><div class="card-label">Receita Projetada</div><div class="card-valor pos">${fmt(recProjetada)}</div><div class="card-sub">Previsto no mês</div></div>
+    <div class="card receita" style="border-left-color:#166534"><div class="card-label">Receita Efetiva</div><div class="card-valor pos">${fmt(recEfetiva)}</div><div class="card-sub">Efetivamente recebido</div></div>
+    <div class="card despesa"><div class="card-label">Despesa Projetada</div><div class="card-valor neg">${fmt(Math.abs(despProjetada))}</div><div class="card-sub">Prevista no mês</div></div>
+    <div class="card despesa" style="border-left-color:#7f1d1d"><div class="card-label">Despesa Efetiva</div><div class="card-valor neg">${fmt(Math.abs(despEfetiva))}</div><div class="card-sub">Efetivamente pago</div></div>
+    <div class="card" style="border-left-color:var(--cobre)"><div class="card-label">Saldo Projetado</div><div class="card-valor ${(recProjetada+despProjetada)>=0?'pos':'neg'}">${fmtSgn(recProjetada+despProjetada)}</div><div class="card-sub">Previsto</div></div>
+    <div class="card saldo"><div class="card-label">Saldo Efetivo</div><div class="card-valor ${(recEfetiva+despEfetiva)>=0?'pos':'neg'}">${fmtSgn(recEfetiva+despEfetiva)}</div><div class="card-sub">O que sobra na conta</div></div>
+    <div class="card receita"><div class="card-label">A Receber</div><div class="card-valor pos">${fmt(aReceber)}</div><div class="card-sub">${vencidos>0?`<span style="color:var(--vermelho)">${vencidos} vencido${vencidos>1?'s':''}</span>`:'Em aberto'}</div></div>
+    <div class="card despesa"><div class="card-label">A Pagar</div><div class="card-valor neg">${fmt(Math.abs(aPagar))}</div><div class="card-sub">Em aberto</div></div>`;
+  // Chart receita
+  const meses=[...new Set(HISTORICO.map(t=>getMesAno(t.data)))].sort((a,b)=>parseBR('01/'+a)-parseBR('01/'+b));
+  const recArr=meses.map(m=>HISTORICO.filter(t=>getMesAno(t.data)===m&&CATS_RECEITA.includes(t.cat)).reduce((s,t)=>s+t.valor,0));
+  const desArr=meses.map(m=>HISTORICO.filter(t=>getMesAno(t.data)===m&&t.valor<0&&!CATS_RECEITA.includes(t.cat)&&t.cat!=='Reembolso').reduce((s,t)=>s+Math.abs(t.valor),0));
+  if (chartRec) chartRec.destroy();
+  chartRec=new Chart(document.getElementById('chartReceita'),{type:'bar',
+    data:{labels:meses.map(getMesLabel),datasets:[
+      {label:'Receita',data:recArr,backgroundColor:'rgba(22,163,74,0.7)',borderRadius:4},
+      {label:'Despesas',data:desArr,backgroundColor:'rgba(220,38,38,0.45)',borderRadius:4}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{family:'Poppins',size:11}}}},scales:{y:{ticks:{callback:v=>'R$'+v.toLocaleString('pt-BR')}}}}
+  });
+  // Chart categorias
+  const catMap={};
+  HISTORICO.filter(t=>t.valor<0&&!CATS_RECEITA.includes(t.cat)&&t.cat!=='Reembolso').forEach(t=>{catMap[t.cat]=(catMap[t.cat]||0)+Math.abs(t.valor);});
+  const catL=Object.keys(catMap).sort((a,b)=>catMap[b]-catMap[a]);
+  const COLORS=['#B87333','#0D1F2D','#3B82F6','#8B5CF6','#F59E0B','#10B981','#EF4444','#6366F1','#EC4899','#14B8A6','#F97316','#84CC16'];
+  if (chartDesp) chartDesp.destroy();
+  chartDesp=new Chart(document.getElementById('chartDespesas'),{type:'doughnut',
+    data:{labels:catL,datasets:[{data:catL.map(c=>catMap[c]),backgroundColor:COLORS.slice(0,catL.length),borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:'Poppins',size:10},boxWidth:10}}}}
+  });
+  // DRE
+  const recS=histMes.filter(t=>t.cat==='Receita Serviços').reduce((s,t)=>s+t.valor,0)+lancamentos.filter(l=>getMesAno(l.vencimento)===ma&&l.cat==='Receita Serviços'&&l.status==='recebido').reduce((s,l)=>s+l.valor,0);
+  const recO=histMes.filter(t=>t.cat==='Receita Outros').reduce((s,t)=>s+t.valor,0)+lancamentos.filter(l=>getMesAno(l.vencimento)===ma&&l.cat==='Receita Outros'&&l.status==='recebido').reduce((s,l)=>s+l.valor,0);
+  const recT=recS+recO;
+  const desMap={};
+  [...histMes.filter(t=>t.valor<0&&!CATS_RECEITA.includes(t.cat)&&t.cat!=='Reembolso'),
+   ...lancamentos.filter(l=>getMesAno(l.vencimento)===ma&&!CATS_RECEITA.includes(l.cat)&&l.status==='pago').map(l=>({...l, valor: l.valorPago!=null?l.valorPago:-Math.abs(l.valor)}))]
+    .forEach(t=>{desMap[t.cat]=(desMap[t.cat]||0)+t.valor;});
+  const desT=Object.values(desMap).reduce((s,v)=>s+v,0);
+  const res=recT+desT;
+  let dre=`<div class="dre-section">Receita</div>
+    <div class="dre-row"><span>Receita de Serviços</span><span class="valor-pos">${fmt(recS)}</span></div>
+    ${recO?`<div class="dre-row"><span>Receita Outros</span><span class="valor-pos">${fmt(recO)}</span></div>`:''}
+    <div class="dre-row subtotal"><span>= Total Receita</span><span class="valor-pos">${fmt(recT)}</span></div>
+    <div class="dre-section">Despesas</div>`;
+  if (!Object.keys(desMap).length) dre+=`<div class="dre-row" style="color:var(--cinza)"><span>Sem despesas lançadas neste mês</span><span></span></div>`;
+  else Object.entries(desMap).sort((a,b)=>a[1]-b[1]).forEach(([cat,val])=>{dre+=`<div class="dre-row"><span>${cat}</span><span class="valor-neg">${fmt(Math.abs(val))}</span></div>`;});
+  dre+=`<div class="dre-row total"><span>RESULTADO ${getMesLabel(ma).toUpperCase()}</span><span class="${res>=0?'valor-pos':'valor-neg'}">${fmtSgn(res)}</span></div>`;
+  document.getElementById('dreMes').innerHTML=dre;
+}
+
+// TRANSAÇÕES
+let pgTx=1;
+function renderTransacoes() {
+  atualizaStatusTodos();
+  const tf  = document.getElementById('filtroTxTipo').value;
+  const mf  = document.getElementById('filtroTxMes').value;
+  const sf  = document.getElementById('filtroTxStatus').value;
+  const cf  = document.getElementById('filtroTxCat').value;
+  const cof = document.getElementById('filtroTxConta').value;
+  const bq  = (document.getElementById('txBusca')||{value:''}).value.trim().toLowerCase();
+  const hoje0=new Date(); hoje0.setHours(0,0,0,0);
+  const histRows = HISTORICO.map((t,i)=>{
+    const d=parseBR(t.data); d.setHours(0,0,0,0);
+    const isPast=d<hoje0; const isRec=CATS_RECEITA.includes(t.cat);
+    const status=isPast?(isRec?'recebido':'pago'):'pendente';
+    return {_hist:true, _histIdx:i, id:'hist_'+i, data:t.data, vencimento:t.data, desc:t.desc, cat:t.cat, conta:t.conta, valor:t.valor, status};
+  });
+  const opRows = lancamentos.map(l=>({...l, data:l.vencimento}));
+  const all=[...histRows,...opRows];
+  let list=all.filter(r=>{
+    const mes=getMesAno(r.data);
+    if (tf==='entrada'&&r.valor<0) return false;
+    if (tf==='saida'&&r.valor>=0) return false;
+    if (mf&&mes!==mf) return false;
+    if (sf&&r.status!==sf) return false;
+    if (cf&&r.cat!==cf) return false;
+    if (cof&&r.conta!==cof) return false;
+    if (bq) { const hay=[r.desc,r.cat,r.conta,String(Math.abs(r.valor))].join(' ').toLowerCase(); if (!hay.includes(bq)) return false; }
+    return true;
+  }).sort((a,b)=>parseBR(b.data)-parseBR(a.data));
+  const total=list.length, pages=Math.ceil(total/PP)||1;
+  if (pgTx>pages) pgTx=pages;
+  const slice=list.slice((pgTx-1)*PP,pgTx*PP);
+  document.getElementById('tabelaTx').innerHTML=slice.length
+    ? slice.map(r=>`
+      <tr class="${r._hist?'hist-row':''}">
+        <td style="white-space:nowrap;font-size:12px">
+          <div style="color:var(--cinza)">${r.data}</div>
+          ${(r.dataPagamento&&r.dataPagamento!==r.data)?`<div style="color:var(--verde);font-size:11px">💳 ${r.dataPagamento}</div>`:''}
+        </td>
+        <td><span style="font-size:13px">${r.desc}</span>${r.recorrente?` <span class="tag-mensal">↻ Mensal</span>`:''}</td>
+        <td>${catBadge(r.cat)}</td>
+        <td><span class="conta-badge ${contaCls(r.conta)}">${r.conta}</span></td>
+        <td style="text-align:center">${statusBadge(r.status)}</td>
+        <td style="text-align:right">
+          ${(r.valorPago!=null&&Math.abs(r.valorPago)!==Math.abs(r.valor))?
+            `<div class="${r.valorPago>=0?'valor-pos':'valor-neg'}" style="font-size:13px">${r.valor>=0?'+':'−'}${fmt(Math.abs(r.valorPago))}</div>
+             <div style="font-size:10px;color:var(--cinza);text-decoration:line-through">${fmtSgn(r.valor)}</div>`:
+            `<span class="${r.valor>=0?'valor-pos':'valor-neg'}">${fmtSgn(r.valor)}</span>`}
+        </td>
+        <td style="text-align:center;white-space:nowrap">
+          ${!r._hist && r.status!=='recebido' && CATS_RECEITA.includes(r.cat) ? `<button class="btn btn-sm btn-success" onclick="marcarRecebido('${r.id}')">✓ Recebido</button> ` : ''}
+          ${!r._hist && r.status!=='pago' && !CATS_RECEITA.includes(r.cat) ? `<button class="btn btn-sm btn-success" onclick="marcarPago('${r.id}')">✓ Pago</button> ` : ''}
+          <button class="btn btn-sm" style="background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE" onclick="editarLanc('${r.id}',${r._hist?'true':'false'})">✎</button>
+          ${!r._hist ? `<button class="btn btn-sm btn-danger" onclick="excluirLanc('${r.id}')">✕</button>` : `<button class="btn btn-sm btn-danger" onclick="excluirHist(${r._histIdx})">✕</button>`}
+        </td>
+      </tr>`).join('')
+    : `<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--cinza)">Nenhuma transação encontrada</td></tr>`;
+  const cardWrap=document.getElementById('txCardList');
+  cardWrap.innerHTML=slice.length
+    ? slice.map(r=>{
+        const isEnt=r.valor>=0; const tipoClass=r._hist?'hist':(isEnt?'entrada':'saida');
+        const acoes=r._hist?`
+          <button class="btn" style="background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE" onclick="editarLanc('${r.id}',true)">✎ Editar</button>
+          <button class="btn btn-danger" onclick="excluirHist(${r._histIdx})">✕ Excluir</button>`:
+          `${r.status!=='recebido'&&CATS_RECEITA.includes(r.cat)?`<button class="btn btn-success" onclick="marcarRecebido('${r.id}')">✓ Recebido</button>`:''}
+          ${r.status!=='pago'&&!CATS_RECEITA.includes(r.cat)?`<button class="btn btn-success" onclick="marcarPago('${r.id}')">✓ Pago</button>`:''}
+          <button class="btn" style="background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE" onclick="editarLanc('${r.id}',false)">✎ Editar</button>
+          <button class="btn btn-danger" onclick="excluirLanc('${r.id}')">✕ Excluir</button>`;
+        const temValorDif=r.valorPago!=null&&Math.abs(r.valorPago)!==Math.abs(r.valor);
+        return `<div class="tx-card ${tipoClass}">
+          <div class="tx-card-top">
+            <div class="tx-card-desc">${r.desc}${r.recorrente?' <span class="tag-mensal">↻</span>':''}</div>
+            <div class="tx-card-valor ${isEnt?'valor-pos':'valor-neg'}">
+              ${temValorDif?`${r.valor>=0?'+':'−'}${fmt(Math.abs(r.valorPago))}<br><span style="font-size:10px;text-decoration:line-through;opacity:0.6">${fmtSgn(r.valor)}</span>`:fmtSgn(r.valor)}
+            </div>
+          </div>
+          <div class="tx-card-meta">
+            <span style="font-size:11px;color:var(--cinza)">Venc: ${r.data}</span>
+            ${r.dataPagamento&&r.dataPagamento!==r.data?`<span style="font-size:11px;color:var(--verde)">💳 ${r.dataPagamento}</span>`:''}
+            ${statusBadge(r.status)}<span class="conta-badge ${contaCls(r.conta)}">${r.conta}</span>${catBadge(r.cat)}
+          </div>
+          <div class="tx-card-actions">${acoes}</div>
+        </div>`;
+      }).join('')
+    : `<div style="text-align:center;padding:32px;color:var(--cinza)">Nenhuma transação encontrada</div>`;
+  document.getElementById('txInfo').textContent=total===1?'1 transação':`${total} transações`;
+  renderPag('txPag',pgTx,pages,p=>{pgTx=p;renderTransacoes();});
+}
+
+function marcarRecebido(id) {
+  const l=lancamentos.find(x=>x.id===id); if(!l) return;
+  const valorAbs=Math.abs(l.valorPago||l.valor); const dataAtual=l.dataPagamento||hoje();
+  document.getElementById('modalTitulo').textContent='Confirmar Recebimento';
+  document.getElementById('modalConteudo').innerHTML=`
+    <p style="font-size:13px;color:var(--cinza);margin-bottom:16px">${l.desc}</p>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Data de Recebimento *</label><input class="form-control" type="date" id="mDataPag" value="${dataToIso(dataAtual)||new Date().toISOString().slice(0,10)}"></div>
+      <div class="form-group"><label class="form-label">Valor Recebido (R$) *</label><input class="form-control" type="number" id="mValorPago" value="${valorAbs}" step="0.01" min="0.01"></div>
+    </div>
+    <p style="font-size:11px;color:var(--cinza);margin-bottom:16px">Valor projetado: <strong>${fmt(l.valor)}</strong></p>
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-primary" style="background:#166534" onclick="confirmarRecebido('${id}')">✓ Confirmar Recebido</button>
+    </div>`;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+async function confirmarRecebido(id) {
+  const l=lancamentos.find(x=>x.id===id); if(!l) return;
+  l.status='recebido'; l.dataPagamento=isoToData(document.getElementById('mDataPag').value)||hoje();
+  l.recebidoEm=l.dataPagamento; l.valorPago=parseFloat(document.getElementById('mValorPago').value)||Math.abs(l.valor);
+  fecharModal(); await salvarLancamento(l); renderTransacoes(); renderPainel();
+}
+function marcarPago(id) {
+  const l=lancamentos.find(x=>x.id===id); if(!l) return;
+  const valorAbs=Math.abs(l.valorPago||l.valor); const dataAtual=l.dataPagamento||hoje();
+  document.getElementById('modalTitulo').textContent='Confirmar Pagamento';
+  document.getElementById('modalConteudo').innerHTML=`
+    <p style="font-size:13px;color:var(--cinza);margin-bottom:16px">${l.desc}</p>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Data de Pagamento *</label><input class="form-control" type="date" id="mDataPag" value="${dataToIso(dataAtual)||new Date().toISOString().slice(0,10)}"></div>
+      <div class="form-group"><label class="form-label">Valor Pago (R$) *</label><input class="form-control" type="number" id="mValorPago" value="${valorAbs}" step="0.01" min="0.01"></div>
+    </div>
+    <p style="font-size:11px;color:var(--cinza);margin-bottom:16px">Valor projetado: <strong>${fmt(Math.abs(l.valor))}</strong></p>
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="confirmarPago('${id}')">✓ Confirmar Pago</button>
+    </div>`;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+async function confirmarPago(id) {
+  const l=lancamentos.find(x=>x.id===id); if(!l) return;
+  l.status='pago'; l.dataPagamento=isoToData(document.getElementById('mDataPag').value)||hoje();
+  l.pagoEm=l.dataPagamento; l.valorPago=parseFloat(document.getElementById('mValorPago').value)||Math.abs(l.valor);
+  fecharModal(); await salvarLancamento(l); renderTransacoes(); renderPainel();
+}
+async function excluirLanc(id) { lancamentos=lancamentos.filter(x=>x.id!==id); await deletarLancamento(id); renderTransacoes(); renderPainel(); }
+async function excluirHist(idx) { if (!confirm('Remover este lançamento do histórico?')) return; HISTORICO.splice(idx,1); renderTransacoes(); renderPainel(); }
+
+function editarLanc(id, isHist) {
+  let l;
+  if (isHist) {
+    const idx=parseInt(id.replace('hist_',''));
+    const t=HISTORICO[idx]; if(!t) return;
+    l={_hist:true, _histIdx:idx, id:id, data:t.data, vencimento:t.data, desc:t.desc, cat:t.cat, conta:t.conta, valor:t.valor, status:'historico'};
+  } else { l=lancamentos.find(x=>x.id===id); if(!l) return; }
+  const isReceita=CATS_RECEITA.includes(l.cat);
+  document.getElementById('modalTitulo').textContent=(isHist?'[Histórico] ')+(isReceita?'Editar Receita':'Editar Despesa');
+  document.getElementById('modalConteudo').innerHTML=formModalEdicao(l, isReceita, isHist);
+  if (!isReceita) {
+    const dl=document.getElementById('sugestoesDescEdit');
+    if (dl) {
+      const descs=[...new Set([...HISTORICO.filter(t=>!CATS_RECEITA.includes(t.cat)).map(t=>t.desc),...lancamentos.filter(x=>!CATS_RECEITA.includes(x.cat)).map(x=>x.desc)])].filter(Boolean).sort();
+      dl.innerHTML=descs.map(d=>`<option value="${d.replace(/"/g,'&quot;')}">`).join('');
+    }
+  }
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function formModalEdicao(l, isReceita, isHist) {
+  const vencIso=dataToIso(l.vencimento); const valorAbs=Math.abs(l.valor);
+  if (isReceita) {
+    const clienteSel=CLIENTES_LIST.includes(l.cliente)?l.cliente:'_outro';
+    return `
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Vencimento *</label><input class="form-control" type="date" id="fVenc" value="${vencIso}"></div>
+      <div class="form-group"><label class="form-label">Valor (R$) *</label><input class="form-control" type="number" id="fValor" value="${valorAbs}" step="0.01" min="0.01"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Cliente *</label>
+        <select class="form-control" id="fCliente" onchange="toggleClienteOutro()">
+          <option value="">Selecione</option>
+          ${opt(CLIENTES_LIST, clienteSel!=='_outro'?l.cliente:'')}
+          <option value="_outro"${clienteSel==='_outro'?' selected':''}>Outro (digitar)</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Serviço *</label><select class="form-control" id="fServico">${opt(SERVICOS_LIST, l.servico||'')}</select></div>
+    </div>
+    <div class="form-group" id="fClienteOutroWrap" style="display:${clienteSel==='_outro'?'block':'none'}">
+      <label class="form-label">Nome do Cliente</label><input class="form-control" type="text" id="fClienteOutro" value="${clienteSel==='_outro'?l.cliente:''}">
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Categoria</label><select class="form-control" id="fCat">${opt(["Receita Serviços","Receita Outros"],l.cat)}</select></div>
+      <div class="form-group"><label class="form-label">Conta</label><select class="form-control" id="fConta">${opt(CONTAS_LIST,l.conta)}</select></div>
+    </div>
+    <div class="form-group"><label class="form-label">Status</label>
+      <select class="form-control" id="fStatus" onchange="toggleCamposPagto(this.value,'recebido')">
+        <option value="pendente"${l.status==='pendente'?' selected':''}>Pendente</option>
+        <option value="recebido"${l.status==='recebido'?' selected':''}>Recebido</option>
+      </select>
+    </div>
+    <div id="wrapPagtoEdit" style="display:${l.status==='recebido'?'block':'none'}">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Data de Recebimento</label><input class="form-control" type="date" id="fDataPag" value="${dataToIso(l.dataPagamento||l.recebidoEm||'')||''}"></div>
+        <div class="form-group"><label class="form-label">Valor Recebido (R$)</label><input class="form-control" type="number" id="fValorPago" value="${l.valorPago!=null?Math.abs(l.valorPago):Math.abs(l.valor)}" step="0.01" min="0.01"></div>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Observação</label><input class="form-control" type="text" id="fObs" value="${l.obs||''}"></div>
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-primary" style="background:#166534" onclick="salvarEdicao('${l.id}','receita',${isHist?'true':'false'},${isHist?l._histIdx:-1})">Salvar</button>
+    </div>`;
+  } else {
+    return `
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Vencimento *</label><input class="form-control" type="date" id="fVenc" value="${vencIso}"></div>
+      <div class="form-group"><label class="form-label">Valor (R$) *</label><input class="form-control" type="number" id="fValor" value="${valorAbs}" step="0.01" min="0.01"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Descrição *</label>
+      <input class="form-control" type="text" id="fDesc" value="${l.desc}" list="sugestoesDescEdit" autocomplete="off">
+      <datalist id="sugestoesDescEdit"></datalist>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Categoria</label><select class="form-control" id="fCat">${opt(CATS_DESPESA,l.cat)}</select></div>
+      <div class="form-group"><label class="form-label">Conta</label><select class="form-control" id="fConta">${opt(CONTAS_LIST,l.conta)}</select></div>
+    </div>
+    <div class="form-group"><label class="form-label">Status</label>
+      <select class="form-control" id="fStatus" onchange="toggleCamposPagto(this.value,'pago')">
+        <option value="pendente"${l.status==='pendente'?' selected':''}>Pendente</option>
+        <option value="pago"${l.status==='pago'?' selected':''}>Pago</option>
+      </select>
+    </div>
+    <div id="wrapPagtoEdit" style="display:${l.status==='pago'?'block':'none'}">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Data de Pagamento</label><input class="form-control" type="date" id="fDataPag" value="${dataToIso(l.dataPagamento||l.pagoEm||'')||''}"></div>
+        <div class="form-group"><label class="form-label">Valor Pago (R$)</label><input class="form-control" type="number" id="fValorPago" value="${l.valorPago!=null?Math.abs(l.valorPago):Math.abs(l.valor)}" step="0.01" min="0.01"></div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvarEdicao('${l.id}','despesa',${isHist?'true':'false'},${isHist?l._histIdx:-1})">Salvar</button>
+    </div>`;
+  }
+}
+
+async function salvarEdicao(id, tipo, isHist, histIdx) {
+  const valor=parseFloat(document.getElementById('fValor').value);
+  const venc=isoToData(document.getElementById('fVenc').value);
+  if (!valor||!venc) return alert('Preencha os campos obrigatórios (*).');
+  const cat=document.getElementById('fCat').value; const conta=document.getElementById('fConta').value; const status=document.getElementById('fStatus').value;
+  const fDataPagEl=document.getElementById('fDataPag'); const fValorPagoEl=document.getElementById('fValorPago');
+  const dataPagamento=fDataPagEl&&fDataPagEl.closest('#wrapPagtoEdit')&&fDataPagEl.closest('#wrapPagtoEdit').style.display!=='none'?isoToData(fDataPagEl.value)||null:null;
+  const valorPagoRaw=fValorPagoEl&&fValorPagoEl.closest('#wrapPagtoEdit')&&fValorPagoEl.closest('#wrapPagtoEdit').style.display!=='none'?parseFloat(fValorPagoEl.value):null;
+  if (isHist) {
+    const novoId=uid(); let desc, valorFinal;
+    if (tipo==='receita') {
+      const clienteSel=document.getElementById('fCliente').value;
+      const cliente=clienteSel==='_outro'?(document.getElementById('fClienteOutro').value.trim()):clienteSel;
+      const servico=document.getElementById('fServico').value;
+      desc=cliente+' — '+servico; valorFinal=valor;
+    } else { desc=document.getElementById('fDesc').value.trim(); valorFinal=-valor; }
+    const novo={id:novoId,desc,valor:valorFinal,vencimento:venc,cat,conta,status,recorrente:false,obs:'',cliente:'',servico:'',dataPagamento,valorPago:valorPagoRaw!=null?(tipo==='receita'?valorPagoRaw:-valorPagoRaw):null};
+    lancamentos.push(novo); await salvarLancamento(novo); HISTORICO.splice(histIdx,1);
+  } else {
+    const l=lancamentos.find(x=>x.id===id); if(!l) return;
+    l.vencimento=venc; l.cat=cat; l.conta=conta; l.status=status;
+    if (dataPagamento) { l.dataPagamento=dataPagamento; l.pagoEm=dataPagamento; l.recebidoEm=dataPagamento; }
+    if (valorPagoRaw!=null) l.valorPago=tipo==='receita'?valorPagoRaw:-valorPagoRaw;
+    if (tipo==='receita') {
+      const clienteSel=document.getElementById('fCliente').value;
+      l.cliente=clienteSel==='_outro'?(document.getElementById('fClienteOutro').value.trim()):clienteSel;
+      l.servico=document.getElementById('fServico').value;
+      l.desc=l.cliente+' — '+l.servico; l.obs=(document.getElementById('fObs')||{}).value||''; l.valor=valor;
+    } else { l.desc=document.getElementById('fDesc').value.trim(); l.valor=-valor; }
+    await salvarLancamento(l);
+  }
+  fecharModal(); atualizaFiltroMes(); renderTransacoes(); renderPainel();
+}
+
+async function gerarFixas() {
+  const n=new Date(), ano=n.getFullYear(), mes=n.getMonth()+1;
+  const ma=pad(mes)+'/'+ano; let geradas=0; const novas=[];
+  FIXAS.forEach(f=>{
+    const venc=pad(f.dia)+'/'+pad(mes)+'/'+ano;
+    const existe=lancamentos.some(l=>l.desc===f.desc&&getMesAno(l.vencimento)===ma);
+    if (!existe) { const novo={id:uid(),desc:f.desc,valor:-f.valor,vencimento:venc,cat:f.cat,conta:f.conta,status:statusLanc({vencimento:venc,status:'pendente'})}; lancamentos.push(novo); novas.push(novo); geradas++; }
+  });
+  await Promise.all(novas.map(salvarLancamento)); renderTransacoes(); renderPainel();
+  alert(geradas>0?`${geradas} despesa${geradas>1?'s':''} fixa${geradas>1?'s':''} gerada${geradas>1?'s':''} para ${getMesLabel(ma)}.`:`As despesas fixas de ${getMesLabel(ma)} já foram geradas.`);
+}
+
+// RESERVA
+function renderReserva() {
+  const saldo=movReserva.reduce((s,m)=>s+m.valor,0);
+  document.getElementById('reservaSaldo').textContent=fmt(saldo);
+  const pct=metaReserva>0?Math.min(100,Math.round(saldo/metaReserva*100)):0;
+  document.getElementById('reservaFill').style.width=pct+'%';
+  document.getElementById('reservaProgressLabel').textContent=metaReserva>0?`${pct}% da meta de ${fmt(metaReserva)}`:'Defina uma meta para acompanhar o progresso';
+  const list=[...movReserva].sort((a,b)=>parseBR(b.data)-parseBR(a.data));
+  document.getElementById('tabelaReserva').innerHTML=list.length
+    ? list.map(m=>`<tr><td style="color:var(--cinza)">${m.data}</td><td>${m.desc}</td><td style="text-align:right" class="${m.valor>=0?'valor-pos':'valor-neg'}">${fmtSgn(m.valor)}</td><td style="text-align:center"><button class="btn btn-sm btn-danger" onclick="excluirRes('${m.id}')">✕</button></td></tr>`).join('')
+    : `<tr><td colspan="4" style="text-align:center;padding:32px;color:var(--cinza)">Nenhum aporte registrado</td></tr>`;
+  const resCards=document.getElementById('resCardList');
+  resCards.innerHTML=list.length
+    ? list.map(m=>`<div class="tx-card ${m.valor>=0?'entrada':'saida'}"><div class="tx-card-top"><div class="tx-card-desc">${m.desc}</div><div class="tx-card-valor ${m.valor>=0?'valor-pos':'valor-neg'}">${fmtSgn(m.valor)}</div></div><div class="tx-card-meta"><span style="font-size:11px;color:var(--cinza)">${m.data}</span></div><div class="tx-card-actions"><button class="btn btn-danger" onclick="excluirRes('${m.id}')">✕ Excluir</button></div></div>`).join('')
+    : `<div style="text-align:center;padding:32px;color:var(--cinza)">Nenhum aporte registrado</div>`;
+}
+async function excluirRes(id) { movReserva=movReserva.filter(x=>x.id!==id); await deletarMovRes(id); renderReserva(); renderPainel(); }
+
+// EVOLUÇÃO
+let chartEvol;
+function atualizaFiltroEvolAno() {
+  const todosAnos=[...new Set([...HISTORICO.map(t=>t.data.slice(-4)),...lancamentos.map(l=>l.vencimento.slice(-4))])].filter(Boolean).sort().reverse();
+  const el=document.getElementById('filtroEvolAno'); const atual=el.value;
+  el.innerHTML='<option value="">Todos os anos</option>';
+  todosAnos.forEach(a=>{const o=document.createElement('option');o.value=a;o.textContent=a;el.appendChild(o);});
+  if(!atual){const anoAtual=new Date().getFullYear().toString();if(todosAnos.includes(anoAtual)) el.value=anoAtual;}
+  else if([...el.options].some(o=>o.value===atual)) el.value=atual;
+}
+function renderEvolucao() {
+  atualizaFiltroEvolAno();
+  const anoFiltro=document.getElementById('filtroEvolAno').value;
+  const todasTx=[...HISTORICO.map(t=>({...t,_hist:true})),...lancamentos.filter(l=>l.status==='recebido'||l.status==='pago').map(l=>({data:l.vencimento,desc:l.desc,cat:l.cat,conta:l.conta,valor:l.valor,_hist:false}))];
+  function getAno(d){ if(!d) return ''; return d.includes('-')&&d.indexOf('-')===4 ? d.slice(0,4) : d.slice(-4); }
+  const txFiltradas=anoFiltro?todasTx.filter(t=>getAno(t.data)===anoFiltro):todasTx;
+  const meses=[...new Set(txFiltradas.map(t=>getMesAno(t.data)))].sort((a,b)=>parseBR('01/'+a)-parseBR('01/'+b));
+  const recArr=meses.map(m=>txFiltradas.filter(t=>getMesAno(t.data)===m&&CATS_RECEITA.includes(t.cat)).reduce((s,t)=>s+t.valor,0));
+  const desArr=meses.map(m=>txFiltradas.filter(t=>getMesAno(t.data)===m&&t.valor<0&&!CATS_RECEITA.includes(t.cat)&&t.cat!=='Reembolso').reduce((s,t)=>s+t.valor,0));
+  const resArr=meses.map((_,i)=>recArr[i]+desArr[i]);
+  if (chartEvol) chartEvol.destroy();
+  chartEvol=new Chart(document.getElementById('chartEvolucao'),{type:'line',
+    data:{labels:meses.map(getMesLabel),datasets:[
+      {label:'Receita',data:recArr,borderColor:'#16A34A',backgroundColor:'rgba(22,163,74,0.1)',fill:true,tension:0.3,pointRadius:4},
+      {label:'Despesas',data:desArr.map(v=>Math.abs(v)),borderColor:'#EF4444',backgroundColor:'rgba(239,68,68,0.07)',fill:true,tension:0.3,pointRadius:4},
+      {label:'Resultado',data:resArr,borderColor:'#B87333',backgroundColor:'rgba(184,115,51,0.08)',fill:true,tension:0.3,pointRadius:4}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{family:'Poppins',size:11}}}},scales:{y:{ticks:{callback:v=>'R$'+v.toLocaleString('pt-BR')}}}}
+  });
+  const acRec=txFiltradas.filter(t=>CATS_RECEITA.includes(t.cat)).reduce((s,t)=>s+t.valor,0);
+  const acProl=txFiltradas.filter(t=>t.cat==='Pró-labore').reduce((s,t)=>s+t.valor,0);
+  const acDivL=txFiltradas.filter(t=>t.cat==='Divisão de Lucros').reduce((s,t)=>s+t.valor,0);
+  const acImp=txFiltradas.filter(t=>t.cat==='Impostos').reduce((s,t)=>s+t.valor,0);
+  const acDesp=txFiltradas.filter(t=>t.valor<0&&!CATS_RECEITA.includes(t.cat)&&t.cat!=='Reembolso'&&t.cat!=='Pró-labore'&&t.cat!=='Divisão de Lucros').reduce((s,t)=>s+t.valor,0);
+  const acRes=acRec+acProl+acDivL+acImp+acDesp; const label=anoFiltro?`Acumulado ${anoFiltro}`:'Acumulado Geral';
+  document.getElementById('evolucaoAcumulado').innerHTML=`<div class="table-wrap" style="padding:4px 0">
+    <div class="dre-row" style="background:var(--fundo);padding:10px 16px;border-radius:8px 8px 0 0"><span style="font-weight:700;color:var(--azul)">${label}</span><span></span></div>
+    <div class="dre-section">Receitas</div>
+    <div class="dre-row"><span>Receita Total de Serviços</span><span class="valor-pos">${fmt(acRec)}</span></div>
+    <div class="dre-section">Distribuições</div>
+    <div class="dre-row"><span>Pró-labore</span><span class="valor-neg">${fmt(Math.abs(acProl))}</span></div>
+    <div class="dre-row"><span>Divisão de Lucros</span><span class="valor-neg">${fmt(Math.abs(acDivL))}</span></div>
+    <div class="dre-row"><span>Impostos</span><span class="valor-neg">${fmt(Math.abs(acImp))}</span></div>
+    <div class="dre-section">Despesas Operacionais</div>
+    <div class="dre-row"><span>Total Despesas</span><span class="valor-neg">${fmt(Math.abs(acDesp))}</span></div>
+    <div class="dre-row total"><span>RESULTADO ${anoFiltro||'GERAL'}</span><span class="${acRes>=0?'valor-pos':'valor-neg'}">${fmtSgn(acRes)}</span></div>
+  </div>`;
+  const nMeses=anoFiltro?12:(meses.length||1); const nMesesLabel=anoFiltro?'12 meses':`${meses.length} meses`;
+  const medRec=acRec/nMeses; const medProl=acProl/nMeses; const medDivL=acDivL/nMeses;
+  const medImp=acImp/nMeses; const medDesp=acDesp/nMeses; const medRes=acRes/nMeses;
+  const margemAcum=acRec>0?(acRes/acRec*100):0;
+  document.getElementById('evolucaoMedias').innerHTML=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px">
+    <div class="card receita"><div class="card-label">Faturamento Médio</div><div class="card-valor pos">${fmt(medRec)}</div><div class="card-sub">por mês (${nMesesLabel})</div></div>
+    <div class="card despesa"><div class="card-label">Pró-labore Médio</div><div class="card-valor neg">${fmt(Math.abs(medProl))}</div><div class="card-sub">por mês</div></div>
+    ${acDivL?`<div class="card despesa"><div class="card-label">Div. Lucros Média</div><div class="card-valor neg">${fmt(Math.abs(medDivL))}</div><div class="card-sub">por mês</div></div>`:''}
+    <div class="card despesa"><div class="card-label">Impostos Médios</div><div class="card-valor neg">${fmt(Math.abs(medImp))}</div><div class="card-sub">por mês</div></div>
+    <div class="card despesa"><div class="card-label">Desp. Op. Média</div><div class="card-valor neg">${fmt(Math.abs(medDesp))}</div><div class="card-sub">por mês</div></div>
+    <div class="card saldo"><div class="card-label">Resultado Médio</div><div class="card-valor ${medRes>=0?'pos':'neg'}">${fmtSgn(medRes)}</div><div class="card-sub">por mês</div></div>
+    <div class="card" style="background:linear-gradient(135deg,#0D1F2D 0%,#1a3a52 100%);color:#fff;border:none">
+      <div class="card-label" style="color:rgba(255,255,255,0.7)">Margem de Lucro</div>
+      <div class="card-valor" style="color:${margemAcum>=0?'#4ade80':'#f87171'};font-size:1.6rem">${margemAcum.toFixed(1)}%</div>
+      <div class="card-sub" style="color:rgba(255,255,255,0.55)">do faturamento ${anoFiltro||'geral'}</div>
+    </div>
+  </div>`;
+  document.getElementById('evolucaoMeses').innerHTML=meses.slice().reverse().map(m=>{
+    const rec=txFiltradas.filter(t=>getMesAno(t.data)===m&&CATS_RECEITA.includes(t.cat)).reduce((s,t)=>s+t.valor,0);
+    const prol=txFiltradas.filter(t=>getMesAno(t.data)===m&&t.cat==='Pró-labore').reduce((s,t)=>s+t.valor,0);
+    const divl=txFiltradas.filter(t=>getMesAno(t.data)===m&&t.cat==='Divisão de Lucros').reduce((s,t)=>s+t.valor,0);
+    const imp=txFiltradas.filter(t=>getMesAno(t.data)===m&&t.cat==='Impostos').reduce((s,t)=>s+t.valor,0);
+    const desp=txFiltradas.filter(t=>getMesAno(t.data)===m&&t.valor<0&&!CATS_RECEITA.includes(t.cat)&&t.cat!=='Reembolso'&&t.cat!=='Pró-labore'&&t.cat!=='Divisão de Lucros').reduce((s,t)=>s+t.valor,0);
+    const res=rec+prol+divl+imp+desp; const marg=rec>0?(res/rec*100):0;
+    return `<div class="evolucao-month">
+      <div class="evolucao-mes-label">${getMesLabel(m)}</div>
+      <div class="evolucao-item"><div class="evolucao-item-label">Receita</div><div class="evolucao-item-val valor-pos">${fmt(rec)}</div></div>
+      <div class="evolucao-item"><div class="evolucao-item-label">Pró-labore</div><div class="evolucao-item-val valor-neg">${fmt(Math.abs(prol))}</div></div>
+      ${divl?`<div class="evolucao-item"><div class="evolucao-item-label">Div. Lucros</div><div class="evolucao-item-val valor-neg">${fmt(Math.abs(divl))}</div></div>`:''}
+      <div class="evolucao-item"><div class="evolucao-item-label">Impostos</div><div class="evolucao-item-val valor-neg">${fmt(Math.abs(imp))}</div></div>
+      <div class="evolucao-item"><div class="evolucao-item-label">Desp. Op.</div><div class="evolucao-item-val valor-neg">${fmt(Math.abs(desp))}</div></div>
+      <div class="evolucao-item"><div class="evolucao-item-label">Resultado</div><div class="evolucao-item-val" style="color:${res>=0?'var(--verde)':'var(--vermelho)'}">${fmtSgn(res)}</div></div>
+      <div class="evolucao-item"><div class="evolucao-item-label">Margem</div><div class="evolucao-item-val" style="color:${marg>=0?'var(--verde)':'var(--vermelho)'};font-weight:700">${marg.toFixed(1)}%</div></div>
+    </div>`;
+  }).join('');
+}
+
+// MODAIS
+function abrirModal(tipo) {
+  const tits={receita:'Nova Receita',despesa:'Nova Despesa',reserva:'Aporte / Retirada na Reserva',meta:'Definir Meta da Reserva'};
+  document.getElementById('modalTitulo').textContent=tits[tipo]||'';
+  document.getElementById('modalConteudo').innerHTML=formModal(tipo);
+  if (tipo==='despesa') {
+    const dl=document.getElementById('sugestoesDesc');
+    if (dl) {
+      const descs=[...new Set([...HISTORICO.filter(t=>!CATS_RECEITA.includes(t.cat)).map(t=>t.desc),...lancamentos.filter(l=>!CATS_RECEITA.includes(l.cat)).map(l=>l.desc)])].filter(Boolean).sort();
+      dl.innerHTML=descs.map(d=>`<option value="${d.replace(/"/g,'&quot;')}">`).join('');
+    }
+  }
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function fecharModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+function fecharModalBg(e) { if(e.target===document.getElementById('modalOverlay')) fecharModal(); }
+
+function formModal(tipo) {
+  const hj=dataToIso(hoje());
+  if (tipo==='receita') return `
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Vencimento *</label><input class="form-control" type="date" id="fVenc" value="${hj}"></div>
+      <div class="form-group"><label class="form-label">Valor (R$) *</label><input class="form-control" type="number" id="fValor" placeholder="0,00" step="0.01" min="0.01"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Cliente *</label>
+        <select class="form-control" id="fCliente" onchange="toggleClienteOutro()">
+          <option value="">Selecione</option>${opt(CLIENTES_LIST)}<option value="_outro">Outro (digitar)</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Serviço *</label><select class="form-control" id="fServico"><option value="">Selecione</option>${opt(SERVICOS_LIST)}</select></div>
+    </div>
+    <div class="form-group" id="fClienteOutroWrap" style="display:none"><label class="form-label">Nome do Cliente</label><input class="form-control" type="text" id="fClienteOutro" placeholder="Digite o nome do cliente"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Categoria</label><select class="form-control" id="fCat">${opt(["Receita Serviços","Receita Outros"],"Receita Serviços")}</select></div>
+      <div class="form-group"><label class="form-label">Conta</label><select class="form-control" id="fConta">${opt(CONTAS_LIST,"ASAAS")}</select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Status inicial</label><select class="form-control" id="fStatus"><option value="pendente">Pendente</option><option value="recebido">Já recebido</option></select></div>
+      <div class="form-group"><label class="form-label">Recorrência</label><select class="form-control" id="fRecorr" onchange="toggleRecorr()"><option value="unica">Única</option><option value="mensal">Mensal</option></select></div>
+    </div>
+    <div id="fRecorrMeses" style="display:none"><div class="form-group"><label class="form-label">Gerar para quantos meses?</label><select class="form-control" id="fNMeses" onchange="document.getElementById('recorrPreview').textContent=this.value"><option value="3">3 meses</option><option value="6" selected>6 meses</option><option value="12">12 meses</option></select></div><div class="alert-box alert-info" style="margin-bottom:0">💡 Serão criadas <span id="recorrPreview">6</span> cobranças.</div></div>
+    <div class="form-group"><label class="form-label">Observação</label><input class="form-control" type="text" id="fObs" placeholder="Opcional"></div>
+    <div class="form-actions"><button class="btn btn-outline" onclick="fecharModal()">Cancelar</button><button class="btn btn-primary" style="background:#166534" onclick="salvarReceita()">Salvar Receita</button></div>`;
+  if (tipo==='despesa') return `
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Vencimento *</label><input class="form-control" type="date" id="fVenc" value="${hj}"></div>
+      <div class="form-group"><label class="form-label">Valor (R$) *</label><input class="form-control" type="number" id="fValor" placeholder="0,00" step="0.01" min="0.01"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Descrição *</label><input class="form-control" type="text" id="fDesc" placeholder="Ex: Contabilizei, OAB, DARF..." list="sugestoesDesc" autocomplete="off"><datalist id="sugestoesDesc"></datalist></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Categoria</label><select class="form-control" id="fCat">${opt(CATS_DESPESA,CATS_DESPESA[0])}</select></div>
+      <div class="form-group"><label class="form-label">Conta</label><select class="form-control" id="fConta">${opt(CONTAS_LIST,"NuBank")}</select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Status inicial</label><select class="form-control" id="fStatus"><option value="pendente">Pendente</option><option value="pago">Já pago</option></select></div>
+      <div class="form-group"><label class="form-label">Recorrência</label><select class="form-control" id="fRecorr" onchange="toggleRecorr()"><option value="unica">Única</option><option value="mensal">Mensal (indefinido)</option><option value="parcelado">Parcelado</option></select></div>
+    </div>
+    <div id="fRecorrMeses" style="display:none"><div class="form-group"><label class="form-label">Gerar para quantos meses?</label><select class="form-control" id="fNMeses" onchange="document.getElementById('recorrPreview').textContent=this.value"><option value="3">3 meses</option><option value="6" selected>6 meses</option><option value="12">12 meses</option></select></div><div class="alert-box alert-info" style="margin-bottom:0">💡 Serão criadas <span id="recorrPreview">6</span> despesas.</div></div>
+    <div id="fRecorrParcelas" style="display:none"><div class="form-group"><label class="form-label">Número de parcelas</label><input class="form-control" type="number" id="fNParcelas" min="2" max="60" value="10" onchange="atualizaPreviewParcelas()"></div><div class="alert-box alert-info" style="margin-bottom:0" id="parcelasPreview">💡 Serão criadas 10 parcelas.</div></div>
+    <div class="form-actions"><button class="btn btn-outline" onclick="fecharModal()">Cancelar</button><button class="btn btn-primary" onclick="salvarDespesa()">Salvar Despesa</button></div>`;
+  if (tipo==='reserva') return `
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Data</label><input class="form-control" type="date" id="fData" value="${hj}"></div>
+      <div class="form-group"><label class="form-label">Tipo</label><select class="form-control" id="fTipo"><option value="aporte">Aporte (+)</option><option value="retirada">Retirada (−)</option></select></div>
+    </div>
+    <div class="form-group"><label class="form-label">Valor (R$) *</label><input class="form-control" type="number" id="fValor" placeholder="0,00" step="0.01" min="0.01"></div>
+    <div class="form-group"><label class="form-label">Descrição</label><input class="form-control" type="text" id="fDesc" placeholder="Ex: Aporte mensal..."></div>
+    <div class="form-actions"><button class="btn btn-outline" onclick="fecharModal()">Cancelar</button><button class="btn btn-primary" onclick="salvarRes()">Salvar</button></div>`;
+  if (tipo==='meta') return `
+    <div class="form-group"><label class="form-label">Meta da Reserva (R$)</label><input class="form-control" type="number" id="fMeta" placeholder="Ex: 30000" step="100" min="0" value="${metaReserva||''}"></div>
+    <p style="font-size:12px;color:var(--cinza);margin-top:4px">Sugestão: 3 a 6 meses de despesas fixas mensais.</p>
+    <div class="form-actions"><button class="btn btn-outline" onclick="fecharModal()">Cancelar</button><button class="btn btn-primary" onclick="salvarMetaReserva()">Salvar Meta</button></div>`;
+  return '';
+}
+function toggleClienteOutro() { const v=document.getElementById('fCliente').value; document.getElementById('fClienteOutroWrap').style.display=v==='_outro'?'block':'none'; }
+function toggleCamposPagto(val, statusPago) { const w=document.getElementById('wrapPagtoEdit'); if (w) w.style.display=val===statusPago?'block':'none'; }
+function toggleRecorr() {
+  const v=document.getElementById('fRecorr').value;
+  document.getElementById('fRecorrMeses').style.display=v==='mensal'?'block':'none';
+  const fParcelas=document.getElementById('fRecorrParcelas'); if(fParcelas) fParcelas.style.display=v==='parcelado'?'block':'none';
+}
+function atualizaPreviewParcelas() { const n=parseInt(document.getElementById('fNParcelas').value)||0; const el=document.getElementById('parcelasPreview'); if(el) el.textContent=`💡 Serão criadas ${n} parcelas.`; }
+
+async function salvarReceita() {
+  const clienteSel=document.getElementById('fCliente').value;
+  const cliente=clienteSel==='_outro'?(document.getElementById('fClienteOutro').value.trim()):clienteSel;
+  const servico=document.getElementById('fServico').value;
+  const valor=parseFloat(document.getElementById('fValor').value);
+  const venc=isoToData(document.getElementById('fVenc').value);
+  if (!cliente||!servico||!valor||!venc) return alert('Preencha os campos obrigatórios (*).');
+  const desc=cliente+' — '+servico; const cat=document.getElementById('fCat').value; const conta=document.getElementById('fConta').value;
+  const obs=(document.getElementById('fObs')||{}).value||''; const status=document.getElementById('fStatus').value;
+  const recorr=document.getElementById('fRecorr').value; const nMeses=recorr==='mensal'?parseInt(document.getElementById('fNMeses').value):1;
+  const vencIso=document.getElementById('fVenc').value; const novos=[];
+  for (let i=0;i<nMeses;i++) {
+    const d=new Date(vencIso); d.setMonth(d.getMonth()+i);
+    const v=isoToData(d.toISOString().slice(0,10));
+    const novo={id:uid(),desc,cliente,servico,valor,vencimento:v,cat,conta,obs,recorrente:recorr==='mensal',status:i===0?status:(recorr==='mensal'?'pendente':status)};
+    lancamentos.push(novo); novos.push(novo);
+  }
+  await Promise.all(novos.map(salvarLancamento)); fecharModal(); atualizaFiltroMes(); renderTransacoes(); renderPainel();
+}
+async function salvarDespesa() {
+  const desc=document.getElementById('fDesc').value.trim(); const valor=parseFloat(document.getElementById('fValor').value);
+  const venc=isoToData(document.getElementById('fVenc').value);
+  if (!desc||!valor||!venc) return alert('Preencha os campos obrigatórios (*).');
+  const cat=document.getElementById('fCat').value; const conta=document.getElementById('fConta').value; const status=document.getElementById('fStatus').value;
+  const recorr=document.getElementById('fRecorr').value;
+  const nMeses=recorr==='mensal'?parseInt(document.getElementById('fNMeses').value):recorr==='parcelado'?parseInt(document.getElementById('fNParcelas').value):1;
+  const vencIso=document.getElementById('fVenc').value; const novos=[];
+  for (let i=0;i<nMeses;i++) {
+    const d=new Date(vencIso); d.setMonth(d.getMonth()+i);
+    const v=isoToData(d.toISOString().slice(0,10));
+    const descFinal=recorr==='parcelado'?`${desc} (${i+1}/${nMeses})`:desc;
+    const stFinal=recorr==='parcelado'?(i===0?status:'pendente'):recorr==='mensal'?(i===0?status:'pendente'):status;
+    const novo={id:uid(),desc:descFinal,valor:-valor,vencimento:v,cat,conta,recorrente:recorr==='mensal',status:stFinal};
+    lancamentos.push(novo); novos.push(novo);
+  }
+  await Promise.all(novos.map(salvarLancamento)); fecharModal(); atualizaFiltroMes(); renderTransacoes(); renderPainel();
+}
+async function salvarRes() {
+  const valor=parseFloat(document.getElementById('fValor').value); if(!valor) return alert('Informe o valor.');
+  const tipo=document.getElementById('fTipo').value; const data=isoToData(document.getElementById('fData').value);
+  const desc=(document.getElementById('fDesc').value||'').trim()||(tipo==='aporte'?'Aporte':'Retirada');
+  const novo={id:uid(),data,desc,valor:tipo==='aporte'?valor:-valor};
+  movReserva.push(novo); await salvarMovRes(novo); fecharModal(); renderReserva(); renderPainel();
+}
+async function salvarMetaReserva() {
+  metaReserva=parseFloat(document.getElementById('fMeta').value)||0;
+  await salvarMeta(); fecharModal(); renderReserva(); renderPainel();
+}
+
+// FILTROS DINÂMICOS
+function atualizaFiltroMes() {
+  const todosMeses=[...new Set([...HISTORICO.map(t=>getMesAno(t.data)),...lancamentos.map(l=>getMesAno(l.vencimento))])].filter(Boolean).sort((a,b)=>parseBR('01/'+a)-parseBR('01/'+b)).reverse();
+  const mEl=document.getElementById('filtroTxMes'); const atual=mEl.value;
+  while(mEl.options.length>1) mEl.remove(1);
+  todosMeses.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=getMesLabel(m);mEl.appendChild(o);});
+  if([...mEl.options].some(o=>o.value===atual)) mEl.value=atual;
+}
+function salvarFiltros() {
+  try {
+    const f={txTipo:document.getElementById('filtroTxTipo').value,txMes:document.getElementById('filtroTxMes').value,txStatus:document.getElementById('filtroTxStatus').value,txCat:document.getElementById('filtroTxCat').value,txConta:document.getElementById('filtroTxConta').value,painelMes:document.getElementById('filtroPainelMes').value,evolAno:document.getElementById('filtroEvolAno').value};
+    localStorage.setItem('kariaFiltros', JSON.stringify(f));
+  } catch(e){}
+}
+function restaurarFiltros() {
+  try {
+    const f=JSON.parse(localStorage.getItem('kariaFiltros')||'{}');
+    if(f.txTipo) document.getElementById('filtroTxTipo').value=f.txTipo;
+    if(f.txMes) document.getElementById('filtroTxMes').value=f.txMes;
+    if(f.txStatus) document.getElementById('filtroTxStatus').value=f.txStatus;
+    if(f.txCat) document.getElementById('filtroTxCat').value=f.txCat;
+    if(f.txConta) document.getElementById('filtroTxConta').value=f.txConta;
+    if(f.painelMes) document.getElementById('filtroPainelMes').value=f.painelMes;
+    if(f.evolAno) document.getElementById('filtroEvolAno').value=f.evolAno;
+  } catch(e){}
+}
+function limparFiltrosTx() { ['filtroTxTipo','filtroTxMes','filtroTxStatus','filtroTxCat','filtroTxConta'].forEach(id=>document.getElementById(id).value=''); renderTransacoes(); }
+
+function initFinanceiro() {
+  atualizaFiltroMes();
+  const todasCats=[...new Set([...HISTORICO.map(t=>t.cat),...CATS_DESPESA,...CATS_RECEITA])].sort();
+  const cEl=document.getElementById('filtroTxCat');
+  todasCats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;cEl.appendChild(o);});
+  const todasContas=[...new Set([...HISTORICO.map(t=>t.conta),...CONTAS_LIST])].sort();
+  const coEl=document.getElementById('filtroTxConta');
+  todasContas.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;coEl.appendChild(o);});
+  atualizaStatusTodos();
+  restaurarFiltros();
+  const abaRestaurada=(() => { try { return localStorage.getItem('kariaTab')||'painel'; } catch(e){ return 'painel'; } })();
+  renderPainel(); finRendered['painel']=true;
+  if (abaRestaurada !== 'painel') showTab(abaRestaurada);
+  ['filtroTxTipo','filtroTxMes','filtroTxStatus','filtroTxCat','filtroTxConta','filtroPainelMes','filtroEvolAno'].forEach(id=>{ const el=document.getElementById(id); if(el) el.addEventListener('change', salvarFiltros); });
 }
 
 /* ========= CRM ========= */
