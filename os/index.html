@@ -1621,12 +1621,10 @@ function showTab(name, btn) {
   if (btn) btn.classList.add('active');
   else document.querySelectorAll('.tab-btn').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+name+"'")) b.classList.add('active');});
   try { localStorage.setItem('kariaTab', name); } catch(e){}
-  if (!finRendered[name]) {
-    finRendered[name]=true;
-    if (name==='transacoes') renderTransacoes();
-    if (name==='reserva')    renderReserva();
-    if (name==='evolucao')   renderEvolucao();
-  }
+  if (name==='painel')      renderPainel();
+  if (name==='transacoes')  renderTransacoes();
+  if (name==='reserva')     renderReserva();
+  if (name==='evolucao')    renderEvolucao();
 }
 
 // PAGINAÇÃO
@@ -2291,7 +2289,7 @@ function initFinanceiro() {
   atualizaStatusTodos();
   restaurarFiltros();
   const abaRestaurada=(() => { try { return localStorage.getItem('kariaTab')||'painel'; } catch(e){ return 'painel'; } })();
-  renderPainel(); finRendered['painel']=true;
+  renderPainel();
   if (abaRestaurada !== 'painel') showTab(abaRestaurada);
   ['filtroTxTipo','filtroTxMes','filtroTxStatus','filtroTxCat','filtroTxConta','filtroPainelMes','filtroEvolAno'].forEach(id=>{ const el=document.getElementById(id); if(el) el.addEventListener('change', salvarFiltros); });
 }
