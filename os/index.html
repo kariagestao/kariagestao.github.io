@@ -235,6 +235,144 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
 .fin-tab-btn{padding:8px 18px;font-size:12px;font-weight:600;cursor:pointer;border-radius:6px 6px 0 0;color:var(--gray);background:transparent;border:none;font-family:'Poppins',sans-serif;transition:all .15s}
 .fin-tab-btn.active{background:var(--musgo);color:var(--off)}
 
+/* ========= BASE DE CLIENTES ========= */
+let clientesData = [], _clienteEditing = null;
+
+async function clientesLoad(){
+  try{
+    const {data, error} = await SB.from('karia_clientes').select('*').order('nome_fantasia', {ascending:true});
+    if(error) throw error;
+    clientesData = data || [];
+    clientesRender();
+    crmAtualizarSelectClientes();
+  }catch(e){
+    console.warn('clientesLoad:', e.message);
+  }
+}
+
+function clientesRender(){
+  const q = (document.getElementById('cliente-search')?.value || '').toLowerCase();
+  const rows = clientesData.filter(c =>
+    (c.nome_fantasia||'').toLowerCase().includes(q) ||
+    (c.razao_social||'').toLowerCase().includes(q) ||
+    (c.cnpj||'').toLowerCase().includes(q) ||
+    (c.contato_responsavel||'').toLowerCase().includes(q)
+  );
+  const tbody = document.getElementById('clientes-tbody');
+  if(!tbody) return;
+  tbody.innerHTML = rows.length ? rows.map(c => `
+    <tr>
+      <td>
+        <strong>${c.nome_fantasia||''}</strong>
+        ${c.razao_social ? `<div style="font-size:11px;color:var(--gray)">${c.razao_social}</div>` : ''}
+      </td>
+      <td style="font-size:12px">${c.cnpj||'—'}</td>
+      <td style="font-size:12px">${c.contato_responsavel||'—'}</td>
+      <td style="font-size:12px">
+        ${c.email ? `<div>${c.email}</div>` : ''}
+        ${c.telefone ? `<div style="color:var(--cobre);font-size:11px">${c.telefone}</div>` : ''}
+      </td>
+      <td><span class="badge ${c.status==='Ativo'?'badge-pago':c.status==='Inativo'?'badge-despesa':'badge-pendente'}">${c.status||'Ativo'}</span></td>
+      <td style="text-align:center;white-space:nowrap">
+        <button class="btn btn-outline btn-sm" onclick="clienteEnviarParaPipeline('${c.id}')" title="Criar card no pipeline CRM">+ Pipeline</button>
+        <button class="btn btn-ghost btn-sm" onclick="clienteOpenModal('${c.id}')" title="Editar">✎</button>
+      </td>
+    </tr>
+  `).join('') : `<tr><td colspan="6" style="text-align:center;padding:32px;color:var(--gray)">Nenhum cliente encontrado. Clique em "+ Novo Cliente" para cadastrar.</td></tr>`;
+}
+
+function clienteOpenModal(id){
+  _clienteEditing = id || null;
+  const c = id ? clientesData.find(x => x.id === id) : null;
+  document.getElementById('cliente-modal-title').textContent = c ? 'Editar Cliente' : 'Novo Cliente';
+  document.getElementById('cli-fantasia').value = c?.nome_fantasia || '';
+  document.getElementById('cli-razao').value = c?.razao_social || '';
+  document.getElementById('cli-cnpj').value = c?.cnpj || '';
+  document.getElementById('cli-status').value = c?.status || 'Ativo';
+  document.getElementById('cli-resp').value = c?.contato_responsavel || '';
+  document.getElementById('cli-tel').value = c?.telefone || '';
+  document.getElementById('cli-email').value = c?.email || '';
+  document.getElementById('cli-obs').value = c?.observacoes || '';
+  document.getElementById('cli-del-btn').style.display = c ? 'inline-block' : 'none';
+  document.getElementById('cliente-modal').classList.add('open');
+}
+
+function clienteCloseModal(){
+  document.getElementById('cliente-modal').classList.remove('open');
+}
+
+async function clienteSave(){
+  const fantasia = document.getElementById('cli-fantasia').value.trim();
+  if(!fantasia){ showToast('Informe o Nome Fantasia / Escritório.', 'err'); return; }
+  const payload = {
+    nome_fantasia: fantasia,
+    razao_social: document.getElementById('cli-razao').value.trim(),
+    cnpj: document.getElementById('cli-cnpj').value.trim(),
+    status: document.getElementById('cli-status').value,
+    contato_responsavel: document.getElementById('cli-resp').value.trim(),
+    telefone: document.getElementById('cli-tel').value.trim(),
+    email: document.getElementById('cli-email').value.trim(),
+    observacoes: document.getElementById('cli-obs').value.trim(),
+    user_id: currentUser.id
+  };
+  try{
+    if(_clienteEditing){
+      const {error} = await SB.from('karia_clientes').update(payload).eq('id', _clienteEditing);
+      if(error) throw error;
+    } else {
+      const {error} = await SB.from('karia_clientes').insert([payload]);
+      if(error) throw error;
+    }
+    clienteCloseModal();
+    await clientesLoad();
+    showToast('Cliente salvo com sucesso!');
+  }catch(e){
+    showToast('Erro ao salvar cliente: ' + e.message, 'err');
+  }
+}
+
+async function clienteDelete(){
+  if(!_clienteEditing || !confirm('Excluir este cliente da base?')) return;
+  try{
+    const {error} = await SB.from('karia_clientes').delete().eq('id', _clienteEditing);
+    if(error) throw error;
+    clienteCloseModal();
+    await clientesLoad();
+    showToast('Cliente excluído.');
+  }catch(e){
+    showToast('Erro ao excluir: ' + e.message, 'err');
+  }
+}
+
+function clienteEnviarParaPipeline(clienteId){
+  const c = clientesData.find(x => x.id === clienteId);
+  if(!c) return;
+  switchModule('crm', document.getElementById('nav-crm'));
+  crmOpenModal();
+  const sel = document.getElementById('crm-cliente-select');
+  if(sel){
+    sel.value = c.id;
+    crmPreencherDeCliente(c.id);
+  }
+}
+
+function crmAtualizarSelectClientes(){
+  const sel = document.getElementById('crm-cliente-select');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">-- Novo lead avulso ou selecione da base --</option>' +
+    clientesData.map(c => `<option value="${c.id}">${c.nome_fantasia}${c.contato_responsavel ? ' ('+c.contato_responsavel+')' : ''}</option>`).join('');
+}
+
+function crmPreencherDeCliente(clienteId){
+  if(!clienteId) return;
+  const c = clientesData.find(x => x.id === clienteId);
+  if(!c) return;
+  document.getElementById('crm-firma').value = c.nome_fantasia || '';
+  if(c.contato_responsavel) document.getElementById('crm-nome').value = c.contato_responsavel;
+  if(c.telefone) document.getElementById('crm-wa').value = c.telefone;
+  if(c.email) document.getElementById('crm-email').value = c.email;
+}
+
 /* ========= CRM ========= */
 .crm-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
 .crm-search{flex:1;min-width:200px;padding:8px 14px;border:1px solid var(--gray-light);border-radius:7px;font-size:12px;font-family:'Poppins',sans-serif;outline:none}
@@ -406,6 +544,9 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       <div class="nav-section">Principal</div>
       <div class="nav-item active" id="nav-financeiro" onclick="switchModule('financeiro',this)">
         <span class="icon">💰</span> <span>Financeiro</span>
+      </div>
+      <div class="nav-item" id="nav-clientes" onclick="switchModule('clientes',this)">
+        <span class="icon">🏢</span> <span>Base de Clientes</span>
       </div>
       <div class="nav-item" id="nav-crm" onclick="switchModule('crm',this)">
         <span class="icon">👥</span> <span>Comercial CRM</span>
@@ -587,6 +728,31 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
         <div id="modalConteudo"></div>
       </div>
     </div>
+
+    <!-- ===== MÓDULO CLIENTES ===== -->
+    <div class="module" id="mod-clientes">
+      <div class="crm-toolbar">
+        <input class="crm-search" id="cliente-search" placeholder="Buscar cliente por nome, razão social, CNPJ ou responsável..." oninput="clientesRender()">
+        <button class="btn btn-primary btn-sm" onclick="clienteOpenModal()">+ Novo Cliente</button>
+      </div>
+      <div class="crm-table-wrap">
+        <div style="overflow-x:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Escritório / Nome</th>
+                <th>CNPJ / CPF</th>
+                <th>Responsável</th>
+                <th>Contato</th>
+                <th>Status</th>
+                <th style="text-align:center">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="clientes-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- /mod-clientes -->
 
     <!-- ===== MÓDULO CRM ===== -->
     <div class="module" id="mod-crm">
@@ -1200,6 +1366,12 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       <span id="crm-modal-title">Novo Contato</span>
       <button class="modal-close" onclick="crmCloseModal()">×</button>
     </div>
+    <div class="form-group" style="background:var(--off);padding:10px 12px;border-radius:8px;border:1px dashed var(--cobre)">
+      <label class="form-label" style="color:var(--cobre)">Vincular Cliente Cadastrado (Opcional)</label>
+      <select class="form-control" id="crm-cliente-select" onchange="crmPreencherDeCliente(this.value)">
+        <option value="">-- Novo lead avulso ou selecione da base --</option>
+      </select>
+    </div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Escritório / Empresa</label>
@@ -1263,6 +1435,63 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
   </div>
 </div>
 
+<!-- ========= MODAL CLIENTES ========= -->
+<div class="modal-overlay" id="cliente-modal">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="cliente-modal-title">Novo Cliente</span>
+      <button class="modal-close" onclick="clienteCloseModal()">×</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Nome Fantasia / Escritório *</label>
+        <input class="form-control" type="text" id="cli-fantasia" placeholder="Ex: Linzmeyer Advocacia">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Razão Social</label>
+        <input class="form-control" type="text" id="cli-razao" placeholder="Razão social completa">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">CNPJ / CPF</label>
+        <input class="form-control" type="text" id="cli-cnpj" placeholder="00.000.000/0001-00">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Status</label>
+        <select class="form-control" id="cli-status">
+          <option value="Ativo">Ativo</option>
+          <option value="Prospect">Prospect</option>
+          <option value="Inativo">Inativo</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Contato Responsável</label>
+        <input class="form-control" type="text" id="cli-resp" placeholder="Nome do sócio / gestor">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Telefone / WhatsApp</label>
+        <input class="form-control" type="tel" id="cli-tel" placeholder="(51) 99999-0000">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">E-mail</label>
+      <input class="form-control" type="email" id="cli-email" placeholder="contato@escritorio.com.br">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Observações</label>
+      <textarea class="form-control" id="cli-obs" rows="2" placeholder="Notas contratuais ou cadastrais..."></textarea>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="clienteCloseModal()">Cancelar</button>
+      <button class="btn btn-danger btn-sm" id="cli-del-btn" onclick="clienteDelete()" style="display:none">Excluir</button>
+      <button class="btn btn-primary" onclick="clienteSave()">Salvar Cliente</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1306,7 +1535,7 @@ function showApp(user){
   document.getElementById('sidebarUser').textContent=user.email;
   document.getElementById('dbStatus').textContent='● Conectado';
   carregarDados().then(()=>{ initFinanceiro(); });
-  crmLoad();
+  clientesLoad().then(()=>{ crmLoad(); });
   linzInit();
 }
 
@@ -1314,6 +1543,7 @@ function showApp(user){
 let _curMod='financeiro';
 const modTitles={
   financeiro:['Financeiro','Visão geral das finanças'],
+  clientes:['Base de Clientes','Cadastro e gestão de escritórios'],
   crm:['Comercial CRM','Pipeline de clientes'],
   linzmeyer:['Op. Linzmeyer','Controle de prazos e publicações']
 };
@@ -2353,7 +2583,7 @@ function crmRender(){
         <div class="kanban-col-header">${et}<span class="kanban-col-count">${cards.length}</span></div>
         ${cards.map(r=>`
           <div class="kanban-card ${ETAPA_CLASS[r.etapa]||''}" onclick="crmOpenModal('${r.id}')">
-            <div class="card__firm">${r.firma||'Sem nome'}</div>
+            <div class="card__firm">${r.cliente_id ? '🏢 ' : ''}${r.firma||'Sem nome'}</div>
             <div class="card__person">${r.nome||''}</div>
             <div class="card__tags">
               ${r.produto?`<span class="card__tag prod">${r.produto}</span>`:''}
@@ -2380,6 +2610,9 @@ function crmOpenModal(id){
   _crmEditing=id||null;
   const r=id?crmData.find(x=>x.id===id):null;
   document.getElementById('crm-modal-title').textContent=r?'Editar Contato':'Novo Contato';
+  crmAtualizarSelectClientes();
+  const selCli = document.getElementById('crm-cliente-select');
+  if(selCli) selCli.value = r?.cliente_id || '';
   document.getElementById('crm-firma').value=r?.firma||'';
   document.getElementById('crm-nome').value=r?.nome||'';
   document.getElementById('crm-wa').value=r?.wa||'';
@@ -2395,7 +2628,9 @@ function crmOpenModal(id){
 function crmCloseModal(){ document.getElementById('crm-modal').classList.remove('open'); }
 
 async function crmSave(){
+  const clienteIdVal = document.getElementById('crm-cliente-select')?.value || null;
   const payload={
+    cliente_id: clienteIdVal,
     firma:document.getElementById('crm-firma').value,
     nome:document.getElementById('crm-nome').value,
     wa:document.getElementById('crm-wa').value,
