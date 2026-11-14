@@ -22,7 +22,6 @@
   --yellow: #D97706;
   --sidebar-w: 220px;
   --sidebar-w-collapsed: 52px;
-  /* aliases financeiro */
   --azul: #0D1F2D;
   --creme: #F8F6F3;
   --branco: #FFFFFF;
@@ -90,7 +89,6 @@ body.sidebar-collapsed .nav-item{justify-content:center;padding:9px 0}
 body.sidebar-collapsed .nav-item .icon{width:auto;font-size:17px}
 body.sidebar-collapsed .nav-group-submenu{display:block!important}
 
-/* Financeiro Tokens & Cards */
 .card{background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 1px 6px rgba(13,31,45,.07);border-left:4px solid var(--gray-light)}
 .card.receita{border-left-color:var(--verde)}
 .card.despesa{border-left-color:var(--vermelho)}
@@ -105,17 +103,6 @@ body.sidebar-collapsed .nav-group-submenu{display:block!important}
 .tabs-bar{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--cinza-claro);padding:0}
 .tab-btn{padding:8px 18px;font-size:12px;font-weight:600;cursor:pointer;border-radius:6px 6px 0 0;color:var(--cinza);background:transparent;border:none;font-family:'Poppins',sans-serif;transition:all .15s}
 .tab-btn.active{background:var(--azul);color:var(--off)}
-.dre-section{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cobre);padding:8px 16px 4px;background:rgba(248,246,243,.5)}
-.dre-row{display:flex;justify-content:space-between;padding:6px 16px;font-size:12px;border-bottom:.5px solid var(--cinza-claro)}
-.dre-row.subtotal{background:rgba(22,163,74,.06);font-weight:600}
-.dre-row.total{background:var(--azul);color:#fff;font-weight:700;font-size:13px;padding:10px 16px;border-radius:0 0 8px 8px}
-.hist-row{background:rgba(248,246,243,.5);color:var(--cinza);font-size:12px}
-.tag-mensal{background:#EFF6FF;color:#1E40AF;font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600}
-.conta-badge{display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600}
-.badge-vencido{background:#FEE2E2;color:#991B1B}
-.badge-historico{background:#F3F4F6;color:#6B7280}
-.badge-neutro{background:#F3F4F6;color:#6B7280}
-.section-title{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cobre);margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid var(--cinza-claro)}
 
 .content{margin-left:var(--sidebar-w);min-height:100vh}
 .top-bar{background:var(--white);border-bottom:1px solid var(--gray-light);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
@@ -154,36 +141,6 @@ body.sidebar-collapsed .nav-group-submenu{display:block!important}
 .toast.show{opacity:1;transform:translateY(0)}
 .toast.ok{background:#DCFCE7;color:#166534;border:1px solid #BBF7D0}
 .toast.err{background:#FEE2E2;color:#991B1B;border:1px solid #FECACA}
-
-/* ========= FINANCEIRO ========= */
-.cards-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-bottom:24px}
-.kpi-card{background:var(--white);border-radius:12px;padding:18px 20px;box-shadow:0 1px 6px rgba(13,31,45,.07);border-left:4px solid var(--gray-light)}
-.kpi-card.rec{border-left-color:var(--green)}
-.kpi-card.desp{border-left-color:var(--red)}
-.kpi-card.saldo{border-left-color:var(--cobre)}
-.kpi-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--gray);margin-bottom:6px}
-.kpi-val{font-family:'Montserrat',sans-serif;font-size:21px;font-weight:700}
-.kpi-val.pos{color:var(--green)}
-.kpi-val.neg{color:var(--red)}
-.kpi-val.cobre{color:var(--cobre)}
-.kpi-sub{font-size:11px;color:var(--gray);margin-top:3px}
-
-.table-wrap{background:var(--white);border-radius:12px;box-shadow:0 1px 6px rgba(13,31,45,.07);overflow:hidden;margin-bottom:24px}
-.table-header{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--gray-light);gap:10px;flex-wrap:wrap}
-.table-title{font-size:13px;font-weight:600;color:var(--musgo)}
-.filtros{display:flex;gap:10px;flex-wrap:wrap;padding:12px 20px;background:rgba(248,246,243,.5);border-bottom:1px solid var(--gray-light);align-items:center}
-.filtro-select{font-family:'Poppins',sans-serif;font-size:12px;padding:6px 12px;border:1px solid var(--gray-light);border-radius:6px;background:var(--white);color:var(--musgo);cursor:pointer;outline:none}
-.filtro-select:focus{border-color:var(--cobre)}
-table{width:100%;border-collapse:collapse;font-size:13px}
-thead th{padding:10px 16px;text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--gray);background:rgba(248,246,243,.5);border-bottom:1px solid var(--gray-light)}
-thead th.right{text-align:right}
-tbody tr{border-bottom:1px solid rgba(229,231,235,.5);transition:background .15s}
-tbody tr:hover{background:rgba(248,246,243,.6)}
-tbody td{padding:10px 16px;vertical-align:middle}
-tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:500}
-.badge-pago{background:#DCFCE7;color:#166534}
-.badge-pendente{background:#FEF3C7;color:#92400E}
-.badge-despesa{background:#FEE2E2;color:#991B1B}
 
 /* ========= CRM ========= */
 .crm-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
@@ -527,8 +484,8 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
 
 <script>
 /* ========= CONFIGURAÇÃO SUPABASE & ESTADO ========= */
-const SUPABASE_URL = 'https://sua-url.supabase.co'; 
-const SUPABASE_ANON_KEY = 'sua-chave-anon';
+const SUPABASE_URL = 'https://sbsvjshswlrvkcvgswcr.supabase.co'; 
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNic3Zqc2hzd2xydmtjcmdzd2NyIiwicm9sZSI6ImFub24iLCJpWFAtQWdlbnRzIjoiaHJ1aHRsZXIiLCJpYXQiOjE3NzA1Nzc2MTQsImV4cCI6MjA4NjE1MzYxNH0.8d3y8hJ72E-V5Kz9N1xP6F3cQ8bW4vT2L0m1z5x7C9A';
 const SB = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let currentUser = null;
 
