@@ -6243,8 +6243,10 @@ function kariaInitDrag(){
 
   <!-- mensagens -->
   <div id="karia-msgs" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:16px 18px">
-    <div id="karia-welcome" style="text-align:center;color:#ccc;font-size:12px;padding:24px 0">
-      Selecione um contexto e faça sua pergunta.<br>O histórico é salvo por contato.
+    <div id="karia-welcome" style="text-align:center;padding:28px 16px">
+      <div style="font-size:28px;margin-bottom:8px">✦</div>
+      <div id="karia-saudacao" style="font-size:14px;font-weight:600;color:var(--musgo);margin-bottom:4px">Olá!</div>
+      <div id="karia-subtitulo" style="font-size:12px;color:#aaa">Selecione um contexto para começar.</div>
     </div>
   </div>
 
@@ -6275,7 +6277,16 @@ function kariaTogglePanel(){
   } else {
     panel.style.right = kariaPanelOpen ? '0' : '-420px';
   }
-  if(kariaPanelOpen) kariaContextoMudar();
+  if(kariaPanelOpen){
+    kariaContextoMudar();
+    // saudação com nome do usuário
+    const nomeEl = document.getElementById('sidebarUser');
+    const nome = nomeEl ? nomeEl.textContent.split(' ')[0] : '';
+    const saudEl = document.getElementById('karia-saudacao');
+    const subEl = document.getElementById('karia-subtitulo');
+    if(saudEl && nome) saudEl.textContent = `Olá, ${nome}! 👋`;
+    if(subEl) subEl.textContent = 'O que podemos conversar hoje?';
+  }
 }
 
 async function kariaCarregarKey(){
@@ -6326,7 +6337,13 @@ async function kariaContextoSelecionou(){
   kariaContatoNome = opt.dataset.nome || 'Contato';
 
   ctxInfo.style.display = '';
-  ctxInfo.textContent = `Contexto carregado: ${kariaContatoNome}`;
+  ctxInfo.textContent = `Contexto: ${kariaContatoNome}`;
+
+  // atualiza saudação para o contexto do contato
+  const saudEl = document.getElementById('karia-saudacao');
+  const subEl = document.getElementById('karia-subtitulo');
+  if(saudEl) saudEl.textContent = `Contexto carregado ✦`;
+  if(subEl) subEl.textContent = `O que você gostaria de falar sobre ${kariaContatoNome}?`;
 
   // carrega histórico do banco
   await kariaCarregarHistorico();
@@ -6334,7 +6351,13 @@ async function kariaContextoSelecionou(){
 
 function kariaLimparMsgs(){
   const msgs = document.getElementById('karia-msgs');
-  msgs.innerHTML = `<div id="karia-welcome" style="text-align:center;color:#ccc;font-size:12px;padding:24px 0">Selecione um contexto e faça sua pergunta.<br>O histórico é salvo por contato.</div>`;
+  const nomeEl = document.getElementById('sidebarUser');
+  const nome = nomeEl ? nomeEl.textContent.split(' ')[0] : '';
+  msgs.innerHTML = `<div id="karia-welcome" style="text-align:center;padding:28px 16px">
+    <div style="font-size:28px;margin-bottom:8px">✦</div>
+    <div id="karia-saudacao" style="font-size:14px;font-weight:600;color:var(--musgo);margin-bottom:4px">Olá${nome ? ', '+nome : ''}! 👋</div>
+    <div id="karia-subtitulo" style="font-size:12px;color:#aaa">O que podemos conversar hoje?</div>
+  </div>`;
 }
 
 async function kariaCarregarHistorico(){
