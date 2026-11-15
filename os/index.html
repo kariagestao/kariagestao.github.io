@@ -166,7 +166,7 @@ body.sidebar-collapsed .nav-group-submenu{display:block!important}
 .tx-card-valor{font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;white-space:nowrap}
 .tx-card-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .tx-card-actions{display:flex;gap:6px;flex-wrap:wrap}
-.content{margin-left:var(--sidebar-w);min-height:100vh}
+.content{margin-left:var(--sidebar-w);min-height:100vh;margin-right:0;transition:margin-right .3s ease}
 .top-bar{background:var(--white);border-bottom:1px solid var(--gray-light);padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
 .top-bar-title{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;color:var(--musgo)}
 .top-bar-sub{font-size:11px;color:var(--gray)}
@@ -6546,11 +6546,13 @@ let kariaContatoNome = null;
 function kariaTogglePanel(){
   kariaPanelOpen = !kariaPanelOpen;
   const panel = document.getElementById('karia-panel');
+  const content = document.querySelector('.content');
   const isMobile = window.innerWidth <= 768;
   if(isMobile){
     panel.classList.toggle('open', kariaPanelOpen);
   } else {
     panel.style.right = kariaPanelOpen ? '0' : '-420px';
+    if(content) content.style.marginRight = kariaPanelOpen ? '400px' : '0';
   }
   // evita que o painel intercepte cliques/scroll quando fechado
   panel.style.pointerEvents = kariaPanelOpen ? 'auto' : 'none';
