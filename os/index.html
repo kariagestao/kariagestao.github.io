@@ -1244,31 +1244,23 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
 
 <!-- ========= MODAIS CRM ========= -->
 
-<!-- MODAL CONTATO (agenda central) -->
+<!-- MODAL PESSOAS -->
 <div class="modal-overlay" id="cnt-modal">
-  <div class="modal">
+  <div class="modal" style="max-width:680px">
     <div class="modal-title">
-      <span id="cnt-modal-title">Novo Contato</span>
+      <span id="cnt-modal-title">Nova Pessoa</span>
       <button class="modal-close" onclick="cntCloseModal()">×</button>
     </div>
+
+    <!-- sempre visíveis -->
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Nome *</label>
         <input class="form-control" type="text" id="cnt-nome" placeholder="Nome completo">
       </div>
       <div class="form-group">
-        <label class="form-label">Empresa</label>
-        <input class="form-control" type="text" id="cnt-empresa" placeholder="Escritório, empresa...">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Cargo</label>
-        <input class="form-control" type="text" id="cnt-cargo" placeholder="Sócio, Gestor...">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Tipo</label>
-        <select class="form-control" id="cnt-categoria">
+        <label class="form-label">Tipo *</label>
+        <select class="form-control" id="cnt-categoria" onchange="cntAjustarCampos()">
           <option>Lead</option><option>Cliente</option>
           <option>Colaborador CLT</option><option>Colaborador PJ</option>
           <option>Fornecedor</option><option>Parceiro</option><option>Outro</option>
@@ -1277,21 +1269,116 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">WhatsApp</label>
-        <input class="form-control" type="tel" id="cnt-whatsapp" placeholder="(51) 99999-0000">
+        <label class="form-label">Empresa</label>
+        <input class="form-control" type="text" id="cnt-empresa" placeholder="Escritório, empresa...">
       </div>
       <div class="form-group">
-        <label class="form-label">E-mail</label>
-        <input class="form-control" type="email" id="cnt-email" placeholder="email@exemplo.com.br">
+        <label class="form-label">Cargo</label>
+        <input class="form-control" type="text" id="cnt-cargo" placeholder="Sócio, Gestor...">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">Origem</label>
-        <input class="form-control" type="text" id="cnt-origem" placeholder="Instagram, Indicação...">
+        <label class="form-label">WhatsApp</label>
+        <input class="form-control" type="tel" id="cnt-whatsapp" placeholder="(51) 99999-0000" oninput="maskPhone(this)" maxlength="15">
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-mail</label>
+        <input class="form-control" type="email" id="cnt-email" placeholder="email@exemplo.com.br" onblur="validarEmail(this)">
       </div>
     </div>
-    <div class="form-group">
+
+    <!-- Lead / Cliente -->
+    <div id="cnt-bloco-origem" style="display:none">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Origem</label>
+          <input class="form-control" type="text" id="cnt-origem" placeholder="Instagram, Indicação, LinkedIn...">
+        </div>
+      </div>
+    </div>
+
+    <!-- Colaborador CLT / PJ -->
+    <div id="cnt-bloco-colab" style="display:none">
+      <div style="font-size:11px;font-weight:600;color:var(--musgo);text-transform:uppercase;letter-spacing:.5px;margin:12px 0 8px">Dados pessoais</div>
+      <div class="form-row">
+        <div class="form-group" id="cnt-cpf-wrap">
+          <label class="form-label">CPF</label>
+          <input class="form-control" type="text" id="cnt-cpf" placeholder="000.000.000-00" oninput="maskCPF(this)" maxlength="14">
+        </div>
+        <div class="form-group" id="cnt-cnpj-wrap" style="display:none">
+          <label class="form-label">CNPJ</label>
+          <input class="form-control" type="text" id="cnt-cnpj-colab" placeholder="00.000.000/0001-00" oninput="maskCNPJ(this)" maxlength="18">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Data de nascimento</label>
+          <input class="form-control" type="date" id="cnt-nascimento">
+        </div>
+      </div>
+      <div id="cnt-bloco-pj-extra" style="display:none">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Razão Social</label>
+            <input class="form-control" type="text" id="cnt-razao-social" placeholder="Razão social da empresa">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Empresa emissora de NF</label>
+            <input class="form-control" type="text" id="cnt-empresa-nf" placeholder="Nome para emissão de nota">
+          </div>
+        </div>
+      </div>
+      <div style="font-size:11px;font-weight:600;color:var(--musgo);text-transform:uppercase;letter-spacing:.5px;margin:12px 0 8px">Endereço</div>
+      <div class="form-row">
+        <div class="form-group" style="max-width:160px">
+          <label class="form-label">CEP</label>
+          <input class="form-control" type="text" id="cnt-cep" placeholder="00000-000" oninput="maskCEP(this)" onblur="buscarCEP()" maxlength="9">
+        </div>
+        <div class="form-group" style="flex:2">
+          <label class="form-label">Logradouro</label>
+          <input class="form-control" type="text" id="cnt-logradouro" placeholder="Rua, Av...">
+        </div>
+        <div class="form-group" style="max-width:90px">
+          <label class="form-label">Número</label>
+          <input class="form-control" type="text" id="cnt-numero-end" placeholder="123">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Complemento</label>
+          <input class="form-control" type="text" id="cnt-complemento" placeholder="Apto, sala...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Bairro</label>
+          <input class="form-control" type="text" id="cnt-bairro" placeholder="Bairro">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group" style="flex:2">
+          <label class="form-label">Cidade</label>
+          <input class="form-control" type="text" id="cnt-cidade" placeholder="Cidade">
+        </div>
+        <div class="form-group" style="max-width:80px">
+          <label class="form-label">UF</label>
+          <input class="form-control" type="text" id="cnt-uf" placeholder="RS" maxlength="2">
+        </div>
+      </div>
+    </div>
+
+    <!-- Fornecedor / Parceiro -->
+    <div id="cnt-bloco-forn" style="display:none">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">CNPJ</label>
+          <input class="form-control" type="text" id="cnt-cnpj-forn" placeholder="00.000.000/0001-00" oninput="maskCNPJ(this)" maxlength="18">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Site</label>
+          <input class="form-control" type="url" id="cnt-site" placeholder="https://...">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-top:8px">
       <label class="form-label">Observações</label>
       <textarea class="form-control" id="cnt-obs" rows="2" placeholder="Notas livres..."></textarea>
     </div>
@@ -2502,6 +2589,70 @@ const ETAPA_CLASS={'Novo lead':'c-novo','1º contato':'c-contato','Proposta envi
 const ETAPA_STATUS={'Novo lead':'s-novo','1º contato':'s-contato','Proposta enviada':'s-proposta','Fechado':'s-fechado','Perdido':'s-perdido'};
 let _crmView='kanban';
 
+/* ========= UTILS: MÁSCARAS E VALIDAÇÕES ========= */
+function normalize(s){ return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[\s.\-\/]/g,''); }
+
+function maskPhone(el){
+  let v=el.value.replace(/\D/g,'').slice(0,11);
+  if(v.length<=10) v=v.replace(/^(\d{2})(\d{4})(\d{0,4}).*/,'($1) $2-$3');
+  else              v=v.replace(/^(\d{2})(\d{5})(\d{0,4}).*/,'($1) $2-$3');
+  el.value=v.replace(/-$/,'');
+}
+function maskCPF(el){
+  let v=el.value.replace(/\D/g,'').slice(0,11);
+  v=v.replace(/^(\d{3})(\d)/,'$1.$2').replace(/^(\d{3}\.\d{3})(\d)/,'$1.$2').replace(/^(\d{3}\.\d{3}\.\d{3})(\d)/,'$1-$2');
+  el.value=v;
+}
+function maskCNPJ(el){
+  let v=el.value.replace(/\D/g,'').slice(0,14);
+  v=v.replace(/^(\d{2})(\d)/,'$1.$2').replace(/^(\d{2}\.\d{3})(\d)/,'$1.$2').replace(/^(\d{2}\.\d{3}\.\d{3})(\d)/,'$1/$2').replace(/^(\d{2}\.\d{3}\.\d{3}\/\d{4})(\d)/,'$1-$2');
+  el.value=v;
+}
+function maskCEP(el){
+  let v=el.value.replace(/\D/g,'').slice(0,8);
+  if(v.length>5) v=v.replace(/^(\d{5})(\d)/,'$1-$2');
+  el.value=v;
+}
+function validarEmail(el){
+  const v=el.value.trim();
+  if(!v) return;
+  const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  el.style.borderColor=ok?'':'#e53e3e';
+  el.title=ok?'':'E-mail inválido';
+}
+async function buscarCEP(){
+  const cep=document.getElementById('cnt-cep').value.replace(/\D/g,'');
+  if(cep.length!==8) return;
+  try{
+    const r=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const d=await r.json();
+    if(d.erro) return;
+    document.getElementById('cnt-logradouro').value=d.logradouro||'';
+    document.getElementById('cnt-bairro').value=d.bairro||'';
+    document.getElementById('cnt-cidade').value=d.localidade||'';
+    document.getElementById('cnt-uf').value=d.uf||'';
+    document.getElementById('cnt-numero-end').focus();
+  }catch(e){}
+}
+
+function cntAjustarCampos(){
+  const tipo=document.getElementById('cnt-categoria').value;
+  const isLeadCli=['Lead','Cliente'].includes(tipo);
+  const isColab=['Colaborador CLT','Colaborador PJ'].includes(tipo);
+  const isPJ=tipo==='Colaborador PJ';
+  const isForn=['Fornecedor','Parceiro'].includes(tipo);
+
+  document.getElementById('cnt-bloco-origem').style.display=isLeadCli?'':'none';
+  document.getElementById('cnt-bloco-colab').style.display=isColab?'':'none';
+  document.getElementById('cnt-bloco-forn').style.display=isForn?'':'none';
+
+  if(isColab){
+    document.getElementById('cnt-cpf-wrap').style.display=isPJ?'none':'';
+    document.getElementById('cnt-cnpj-wrap').style.display=isPJ?'':'none';
+    document.getElementById('cnt-bloco-pj-extra').style.display=isPJ?'':'none';
+  }
+}
+
 /* --- CONTATOS (karia_contatos) --- */
 let cntData=[], _cntEditing=null;
 
@@ -2515,12 +2666,17 @@ async function cntLoad(){
   }catch(e){ console.error('cntLoad',e); }
 }
 function cntFiltered(){
-  const q=(document.getElementById('cnt-search')?.value||'').toLowerCase();
+  const q=normalize(document.getElementById('cnt-search')?.value||'');
   const cat=document.getElementById('cnt-fil-cat')?.value||'';
   return cntData.filter(r=>{
     if(cat && r.categoria!==cat) return false;
-    if(q && !(r.nome||'').toLowerCase().includes(q) && !(r.empresa||'').toLowerCase().includes(q)) return false;
-    return true;
+    if(!q) return true;
+    return normalize(r.nome).includes(q)
+        || normalize(r.empresa).includes(q)
+        || normalize(r.cpf).includes(q)
+        || normalize(r.cnpj).includes(q)
+        || normalize(r.whatsapp).includes(q)
+        || normalize(r.email).includes(q);
   });
 }
 function cntRender(){
@@ -2528,19 +2684,19 @@ function cntRender(){
   const tbody=document.getElementById('cnt-tbody');
   if(tbody) tbody.innerHTML=rows.length?rows.map(r=>`
     <tr onclick="cntOpenModal('${r.id}')">
-      <td><strong>${r.nome||'—'}</strong></td>
+      <td><strong>${r.nome||'—'}</strong>${r.is_usuario?` <span style="font-size:10px;background:#EFF6FF;color:#1E40AF;border-radius:4px;padding:1px 5px">usuário</span>`:''}</td>
       <td>${r.empresa||'—'}</td>
       <td><span class="badge">${r.categoria||'—'}</span></td>
       <td>${r.whatsapp?`<a href="${waLink(r.whatsapp)}" target="_blank" style="color:var(--cobre)">📱 ${r.whatsapp}</a>`:'—'}</td>
       <td>${r.email||'—'}</td>
       <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cntOpenModal('${r.id}')">✎</button></td>
     </tr>`).join('')
-  :'<tr><td colspan="6" style="text-align:center;color:#888;padding:32px">Nenhum contato encontrado.</td></tr>';
+  :'<tr><td colspan="6" style="text-align:center;color:#888;padding:32px">Nenhuma pessoa encontrada.</td></tr>';
 }
 function cntOpenModal(id){
   _cntEditing=id||null;
   const r=id?cntData.find(x=>x.id===id):null;
-  document.getElementById('cnt-modal-title').textContent=r?'Editar Contato':'Novo Contato';
+  document.getElementById('cnt-modal-title').textContent=r?'Editar Pessoa':'Nova Pessoa';
   document.getElementById('cnt-nome').value=r?.nome||'';
   document.getElementById('cnt-empresa').value=r?.empresa||'';
   document.getElementById('cnt-cargo').value=r?.cargo||'';
@@ -2550,22 +2706,56 @@ function cntOpenModal(id){
   document.getElementById('cnt-origem').value=r?.origem||'';
   document.getElementById('cnt-obs').value=r?.obs||'';
   document.getElementById('cnt-is-usuario').checked=r?.is_usuario||false;
+  // campos colaborador
+  document.getElementById('cnt-cpf').value=r?.cpf||'';
+  document.getElementById('cnt-cnpj-colab').value=r?.cnpj||'';
+  document.getElementById('cnt-nascimento').value=r?.data_nascimento||'';
+  document.getElementById('cnt-razao-social').value=r?.razao_social||'';
+  document.getElementById('cnt-empresa-nf').value=r?.empresa_nf||'';
+  document.getElementById('cnt-cep').value=r?.cep||'';
+  document.getElementById('cnt-logradouro').value=r?.logradouro||'';
+  document.getElementById('cnt-numero-end').value=r?.numero_end||'';
+  document.getElementById('cnt-complemento').value=r?.complemento||'';
+  document.getElementById('cnt-bairro').value=r?.bairro||'';
+  document.getElementById('cnt-cidade').value=r?.cidade||'';
+  document.getElementById('cnt-uf').value=r?.uf||'';
+  // campos fornecedor
+  document.getElementById('cnt-cnpj-forn').value=r?.cnpj||'';
+  document.getElementById('cnt-site').value=r?.site||'';
   document.getElementById('cnt-del-btn').style.display=r?'inline-block':'none';
+  cntAjustarCampos();
   document.getElementById('cnt-modal').classList.add('open');
 }
 function cntCloseModal(){ document.getElementById('cnt-modal').classList.remove('open'); }
 async function cntSave(){
   const nome=document.getElementById('cnt-nome').value.trim();
   if(!nome){ showToast('Nome é obrigatório','err'); return; }
+  const email=document.getElementById('cnt-email').value.trim();
+  if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showToast('E-mail inválido','err'); return; }
+  const tipo=document.getElementById('cnt-categoria').value;
+  const isColab=['Colaborador CLT','Colaborador PJ'].includes(tipo);
+  const isForn=['Fornecedor','Parceiro'].includes(tipo);
   const payload={
     nome, empresa:document.getElementById('cnt-empresa').value,
     cargo:document.getElementById('cnt-cargo').value,
-    categoria:document.getElementById('cnt-categoria').value,
-    whatsapp:document.getElementById('cnt-whatsapp').value,
-    email:document.getElementById('cnt-email').value,
-    origem:document.getElementById('cnt-origem').value,
+    categoria:tipo, whatsapp:document.getElementById('cnt-whatsapp').value,
+    email, origem:document.getElementById('cnt-origem').value,
     obs:document.getElementById('cnt-obs').value,
     is_usuario:document.getElementById('cnt-is-usuario').checked,
+    cpf: isColab&&tipo==='Colaborador CLT'?document.getElementById('cnt-cpf').value:null,
+    cnpj: isColab&&tipo==='Colaborador PJ'?document.getElementById('cnt-cnpj-colab').value
+         :isForn?document.getElementById('cnt-cnpj-forn').value:null,
+    data_nascimento: isColab?document.getElementById('cnt-nascimento').value||null:null,
+    razao_social: isColab?document.getElementById('cnt-razao-social').value:null,
+    empresa_nf: isColab?document.getElementById('cnt-empresa-nf').value:null,
+    cep: isColab?document.getElementById('cnt-cep').value:null,
+    logradouro: isColab?document.getElementById('cnt-logradouro').value:null,
+    numero_end: isColab?document.getElementById('cnt-numero-end').value:null,
+    complemento: isColab?document.getElementById('cnt-complemento').value:null,
+    bairro: isColab?document.getElementById('cnt-bairro').value:null,
+    cidade: isColab?document.getElementById('cnt-cidade').value:null,
+    uf: isColab?document.getElementById('cnt-uf').value:null,
+    site: isForn?document.getElementById('cnt-site').value:null,
     user_id:currentUser.id
   };
   try{
@@ -2579,7 +2769,7 @@ async function cntSave(){
     }
     cntCloseModal();
     await cntLoad();
-    showToast('Contato salvo!');
+    showToast('Pessoa salva!');
   }catch(e){ showToast('Erro: '+e.message,'err'); }
 }
 async function cntDelete(){
@@ -2687,10 +2877,10 @@ function pipRender(){
 
 /* busca contato no autocomplete (pipeline) */
 function pipBuscarContato(){
-  const q=document.getElementById('pip-cnt-busca').value.toLowerCase();
+  const q=normalize(document.getElementById('pip-cnt-busca').value);
   const sug=document.getElementById('pip-cnt-sugestoes');
   if(!q){ sug.style.display='none'; return; }
-  const matches=cntData.filter(c=>(c.nome||'').toLowerCase().includes(q)||(c.empresa||'').toLowerCase().includes(q)).slice(0,8);
+  const matches=cntData.filter(c=>normalize(c.nome).includes(q)||normalize(c.empresa).includes(q)||normalize(c.cpf).includes(q)||normalize(c.cnpj).includes(q)).slice(0,8);
   if(!matches.length){ sug.style.display='none'; return; }
   sug.style.display='block';
   sug.innerHTML=matches.map(c=>`<div style="padding:8px 12px;cursor:pointer;border-bottom:1px solid #f0f0f0;font-size:13px" onmousedown="pipSelecionarContato('${c.id}','${(c.nome||'').replace(/'/g,"\\'")}','${(c.empresa||'').replace(/'/g,"\\'")}')"><strong>${c.nome||''}</strong>${c.empresa?' · <span style="color:#888">'+c.empresa+'</span>':''}</div>`).join('');
@@ -2846,10 +3036,10 @@ function cliRender(){
 
 /* autocomplete contato no modal cliente */
 function cliBuscarContato(){
-  const q=document.getElementById('cli-cnt-busca').value.toLowerCase();
+  const q=normalize(document.getElementById('cli-cnt-busca').value);
   const sug=document.getElementById('cli-cnt-sugestoes');
   if(!q){ sug.style.display='none'; return; }
-  const matches=cntData.filter(c=>(c.nome||'').toLowerCase().includes(q)||(c.empresa||'').toLowerCase().includes(q)).slice(0,8);
+  const matches=cntData.filter(c=>normalize(c.nome).includes(q)||normalize(c.empresa).includes(q)||normalize(c.cpf).includes(q)||normalize(c.cnpj).includes(q)).slice(0,8);
   if(!matches.length){ sug.style.display='none'; return; }
   sug.style.display='block';
   sug.innerHTML=matches.map(c=>`<div style="padding:8px 12px;cursor:pointer;border-bottom:1px solid #f0f0f0;font-size:13px" onmousedown="cliSelecionarContato('${c.id}','${(c.nome||'').replace(/'/g,"\\'")}','${(c.empresa||'').replace(/'/g,"\\'")}')"><strong>${c.nome||''}</strong>${c.empresa?' · <span style="color:#888">'+c.empresa+'</span>':''}</div>`).join('');
