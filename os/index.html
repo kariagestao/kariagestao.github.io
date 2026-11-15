@@ -782,9 +782,10 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
         <div style="font-size:12px;color:#888;margin-bottom:20px">Base de conhecimento da karIA — somente administradores</div>
 
         <!-- abas -->
-        <div style="display:flex;gap:0;border-bottom:2px solid #e8e4de;margin-bottom:24px">
+        <div style="display:flex;gap:0;border-bottom:2px solid #e8e4de;margin-bottom:24px;flex-wrap:wrap">
           <button id="cfg-tab-geral" onclick="configAba('geral')" style="padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--musgo);border-bottom:2px solid var(--musgo);margin-bottom:-2px">Contexto Geral</button>
           <button id="cfg-tab-clientes" onclick="configAba('clientes')" style="padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;color:#aaa;border-bottom:2px solid transparent;margin-bottom:-2px">Histórico por Cliente</button>
+          <button id="cfg-tab-financeiro" onclick="configAba('financeiro')" style="padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;color:#aaa;border-bottom:2px solid transparent;margin-bottom:-2px">karIA Fin</button>
         </div>
 
         <!-- aba geral -->
@@ -804,6 +805,37 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
               <button onclick="configHistLimpar()" style="margin-left:auto;background:none;border:1px solid var(--red);color:var(--red);border-radius:6px;padding:4px 12px;cursor:pointer;font-size:12px">Limpar histórico</button>
             </div>
             <div id="cfg-hist-msgs" style="display:flex;flex-direction:column;gap:8px;max-height:500px;overflow-y:auto"></div>
+          </div>
+        </div>
+
+        <!-- aba karIA Fin -->
+        <div id="cfg-pane-financeiro" style="display:none">
+          <div style="display:flex;align-items:flex-start;gap:12px;background:#f0f4f8;border-radius:10px;padding:14px 16px;margin-bottom:20px">
+            <div style="font-size:20px">✦</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--musgo);margin-bottom:4px">karIA Fin — Assistente Financeira</div>
+              <div style="font-size:12px;color:#666;line-height:1.6">A karIA tem acesso em tempo real às suas transações, lançamentos, histórico e reserva. Adicione abaixo orientações, benchmarks e regras que ela deve usar ao interpretar os dados financeiros do seu escritório.</div>
+            </div>
+          </div>
+
+          <!-- resumo dos dados disponíveis -->
+          <div style="margin-bottom:20px">
+            <div style="font-size:12px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Dados disponíveis para a karIA</div>
+            <div id="cfg-fin-resumo" style="display:flex;gap:10px;flex-wrap:wrap">
+              <div style="background:#fff;border:1px solid #e8e4de;border-radius:8px;padding:10px 16px;font-size:12px;color:#555">
+                <span style="font-size:16px">⏳</span> Carregando...
+              </div>
+            </div>
+          </div>
+
+          <!-- contexto financeiro editável -->
+          <div style="font-size:12px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Orientações para interpretação financeira</div>
+          <div id="cfg-fin-lista" style="display:flex;flex-direction:column;gap:16px">
+            <!-- renderizado via JS -->
+          </div>
+          <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="configFinSalvar()">Salvar orientações</button>
+            <button class="btn btn-outline" onclick="configFinNovoBloco()" style="color:var(--cobre);border-color:var(--cobre)">+ Novo bloco</button>
           </div>
         </div>
       </div>
@@ -6142,15 +6174,17 @@ let configHistContatoId = null;
 
 function configAba(aba){
   configAbaAtual = aba;
-  document.getElementById('cfg-pane-geral').style.display = aba === 'geral' ? '' : 'none';
-  document.getElementById('cfg-pane-clientes').style.display = aba === 'clientes' ? '' : 'none';
-  document.getElementById('cfg-tab-geral').style.cssText = aba === 'geral'
-    ? 'padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--musgo);border-bottom:2px solid var(--musgo);margin-bottom:-2px'
-    : 'padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;color:#aaa;border-bottom:2px solid transparent;margin-bottom:-2px';
-  document.getElementById('cfg-tab-clientes').style.cssText = aba === 'clientes'
-    ? 'padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--musgo);border-bottom:2px solid var(--musgo);margin-bottom:-2px'
-    : 'padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;color:#aaa;border-bottom:2px solid transparent;margin-bottom:-2px';
-  if(aba === 'clientes') configHistCarregar();
+  const abas = ['geral','clientes','financeiro'];
+  abas.forEach(a => {
+    const pane = document.getElementById('cfg-pane-'+a);
+    const tab  = document.getElementById('cfg-tab-'+a);
+    if(pane) pane.style.display = a === aba ? '' : 'none';
+    if(tab)  tab.style.cssText = a === aba
+      ? 'padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--musgo);border-bottom:2px solid var(--musgo);margin-bottom:-2px'
+      : 'padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;color:#aaa;border-bottom:2px solid transparent;margin-bottom:-2px';
+  });
+  if(aba === 'clientes')   configHistCarregar();
+  if(aba === 'financeiro') configFinCarregar();
 }
 
 async function configCarregar(){
@@ -6252,6 +6286,106 @@ async function configHistLimpar(){
   showToast('Histórico apagado','ok');
   configHistVoltar();
   configHistCarregar();
+}
+
+/* ===== CONFIGURAÇÕES — ABA FINANCEIRO ===== */
+let configFinData = [];
+
+async function configFinCarregar(){
+  // Resumo de dados disponíveis
+  const resumo = document.getElementById('cfg-fin-resumo');
+  if(resumo){
+    const totalLanc = lancamentos ? lancamentos.length : 0;
+    const totalHist = typeof HISTORICO !== 'undefined' ? HISTORICO.length : 0;
+    const totalMovRes = typeof movReserva !== 'undefined' ? movReserva.length : 0;
+    const meses = typeof HISTORICO !== 'undefined'
+      ? [...new Set(HISTORICO.map(t=>getMesAno(t.data)))].length : 0;
+    resumo.innerHTML = [
+      {icon:'📋', label:'Lançamentos', val: totalLanc + ' registros'},
+      {icon:'📂', label:'Histórico', val: totalHist + ' transações · ' + meses + ' meses'},
+      {icon:'🏦', label:'Movimentos de Reserva', val: totalMovRes + ' registros'},
+    ].map(x=>`
+      <div style="background:#fff;border:1px solid #e8e4de;border-radius:8px;padding:10px 16px;font-size:12px;min-width:160px">
+        <div style="font-size:18px;margin-bottom:4px">${x.icon}</div>
+        <div style="font-weight:600;color:var(--musgo)">${x.label}</div>
+        <div style="color:#888">${x.val}</div>
+      </div>`).join('');
+  }
+
+  // Carrega blocos de contexto financeiro do Supabase (chave prefixada com 'fin_')
+  const {data} = await SB.from('karia_conhecimento')
+    .select('*').like('chave','fin_%').order('ordem');
+  configFinData = data || [];
+
+  const lista = document.getElementById('cfg-fin-lista');
+  if(!lista) return;
+
+  if(configFinData.length === 0){
+    // Seed inicial com blocos padrão
+    const blocosPadrao = [
+      { chave:'fin_benchmarks', titulo:'Benchmarks financeiros', ordem:10,
+        conteudo:'Custo fixo saudável para escritórios de advocacia: abaixo de 40% do faturamento bruto.\nMargem líquida saudável: acima de 30%.\nInadimplência preocupante: acima de 15% da carteira ativa.\nReserva de emergência ideal: 3 a 6 meses de custo fixo.' },
+      { chave:'fin_alertas', titulo:'Alertas e sinais de atenção', ordem:20,
+        conteudo:'Alertar se receita cair 2 meses consecutivos.\nAlertar se despesas administrativas ultrapassarem 20% do faturamento.\nSinalizar lançamentos vencidos há mais de 30 dias como risco operacional.' },
+      { chave:'fin_interpretacao', titulo:'Como interpretar os dados', ordem:30,
+        conteudo:'O Histórico contém transações já realizadas e confirmadas.\nOs Lançamentos são projeções e contas a pagar/receber ainda não liquidadas.\nSaldo Efetivo = receitas recebidas menos despesas pagas no período.\nSaldo Projetado inclui lançamentos pendentes.' },
+    ];
+    for(const b of blocosPadrao){
+      const {data: novo} = await SB.from('karia_conhecimento')
+        .insert({...b, user_id:(await SB.auth.getUser()).data.user?.id, updated_at: new Date().toISOString()})
+        .select().single();
+      if(novo) configFinData.push(novo);
+    }
+  }
+
+  renderConfigFinLista();
+}
+
+function renderConfigFinLista(){
+  const lista = document.getElementById('cfg-fin-lista');
+  if(!lista) return;
+  lista.innerHTML = configFinData.map(r => `
+    <div style="background:#fff;border:1px solid #e8e4de;border-radius:10px;padding:16px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <input class="form-control" id="cfg-fin-titulo-${r.id}" value="${(r.titulo||'').replace(/"/g,'&quot;')}"
+          style="font-size:11px;font-weight:600;color:var(--cobre);text-transform:uppercase;letter-spacing:.5px;border:none;background:transparent;padding:0;flex:1" placeholder="Nome do bloco">
+        <button onclick="configFinRemover('${r.id}')" style="background:none;border:none;cursor:pointer;color:#ccc;font-size:16px" title="Remover bloco">×</button>
+      </div>
+      <textarea class="form-control" id="cfg-fin-${r.id}" rows="5"
+        style="font-size:13px;line-height:1.6;resize:vertical;min-height:90px">${r.conteudo||''}</textarea>
+    </div>`).join('');
+}
+
+async function configFinSalvar(){
+  const user = (await SB.auth.getUser()).data.user;
+  for(const r of configFinData){
+    const tituloEl = document.getElementById('cfg-fin-titulo-'+r.id);
+    const conteudoEl = document.getElementById('cfg-fin-'+r.id);
+    if(!conteudoEl) continue;
+    await SB.from('karia_conhecimento').update({
+      titulo: tituloEl ? tituloEl.value : r.titulo,
+      conteudo: conteudoEl.value,
+      updated_at: new Date().toISOString()
+    }).eq('id', r.id);
+  }
+  showToast('Orientações financeiras salvas ✦','ok');
+}
+
+async function configFinNovoBloco(){
+  const user = (await SB.auth.getUser()).data.user;
+  const {data: novo} = await SB.from('karia_conhecimento')
+    .insert({ chave:'fin_custom_'+Date.now(), titulo:'Novo bloco', conteudo:'', ordem:99,
+      user_id: user?.id, updated_at: new Date().toISOString() })
+    .select().single();
+  if(novo){ configFinData.push(novo); renderConfigFinLista(); }
+}
+
+async function configFinRemover(id){
+  if(!confirm('Remover este bloco?')) return;
+  await SB.from('karia_conhecimento').delete().eq('id', id);
+  configFinData = configFinData.filter(r => r.id !== id);
+  renderConfigFinLista();
+  showToast('Bloco removido','ok');
 }
 
 /* ===== DRAG DO BOTÃO karIA ===== */
@@ -6548,6 +6682,50 @@ Nunca tente ajudar fora desse escopo, mesmo que o usuário insista ou reformule 
 REGRA DE PRIVACIDADE DE CONTATOS: O contexto desta conversa é exclusivo para leads do pipeline comercial e clientes ativos da KARIA Gestão. Se alguém perguntar sobre colaboradores, fornecedores, parceiros, usuários do sistema ou qualquer pessoa que não seja um lead ou cliente ativo, responda EXATAMENTE assim:
 "Só posso discutir informações de leads e clientes ativos. 💼"
 Nunca revele dados de outras categorias de contato, mesmo que o nome seja mencionado diretamente.`;
+
+  // contexto financeiro (sempre disponível)
+  if(typeof lancamentos !== 'undefined' || typeof HISTORICO !== 'undefined'){
+    const ma = mesAtual();
+    const histMes  = (HISTORICO||[]).filter(t=>getMesAno(t.data)===ma);
+    const lancMes  = (lancamentos||[]).filter(l=>getMesAno(l.vencimento)===ma);
+    const recEfet  = histMes.filter(t=>CATS_RECEITA.includes(t.cat)).reduce((s,t)=>s+t.valor,0)
+                   + lancMes.filter(l=>CATS_RECEITA.includes(l.cat)&&l.status==='recebido').reduce((s,l)=>s+(l.valorPago!=null?Math.abs(l.valorPago):l.valor),0);
+    const despEfet = histMes.filter(t=>!CATS_RECEITA.includes(t.cat)&&t.valor<0).reduce((s,t)=>s+t.valor,0)
+                   + lancMes.filter(l=>!CATS_RECEITA.includes(l.cat)&&l.status==='pago').reduce((s,l)=>s+(l.valorPago!=null?l.valorPago:-Math.abs(l.valor)),0);
+    const aReceber = lancMes.filter(l=>CATS_RECEITA.includes(l.cat)&&l.status!=='recebido').reduce((s,l)=>s+l.valor,0);
+    const aPagar   = lancMes.filter(l=>!CATS_RECEITA.includes(l.cat)&&l.status!=='pago').reduce((s,l)=>s+l.valor,0);
+    const vencidos = lancMes.filter(l=>l.status==='vencido').length;
+    const fmtN = v => 'R$ ' + Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    const mesLabel = getMesLabel ? getMesLabel(ma) : ma;
+
+    // lançamentos pendentes completos
+    const pendentes = (lancamentos||[]).filter(l=>['pendente','vencido'].includes(l.status));
+    const pendStr = pendentes.slice(0,20).map(l=>
+      `${l.desc} | ${CATS_RECEITA.includes(l.cat)?'Receita':'Despesa'} | ${fmtN(Math.abs(l.valor))} | Venc: ${l.vencimento} | Status: ${l.status}`
+    ).join('\n');
+
+    // histórico últimas transações
+    const ultHist = [...(HISTORICO||[])].sort((a,b)=>parseBR(b.data)-parseBR(a.data)).slice(0,20);
+    const histStr = ultHist.map(t=>`${t.data} | ${t.desc} | ${t.cat} | ${fmtN(Math.abs(t.valor))}`).join('\n');
+
+    // reserva
+    const saldoRes = (movReserva||[]).reduce((s,m)=>s+(m.tipo==='aporte'?m.valor:-m.valor),0);
+
+    sistema += `\n\n## DADOS FINANCEIROS — ${mesLabel.toUpperCase()}
+Receita efetiva: ${fmtN(recEfet)}
+Despesas efetivas: ${fmtN(Math.abs(despEfet))}
+Saldo efetivo: ${fmtN(recEfet+despEfet)}
+A receber no mês: ${fmtN(aReceber)}
+A pagar no mês: ${fmtN(Math.abs(aPagar))}
+Lançamentos vencidos: ${vencidos}
+Saldo da reserva de emergência: ${fmtN(saldoRes)}
+
+### Lançamentos pendentes/vencidos (até 20)
+${pendStr || 'Nenhum lançamento pendente.'}
+
+### Últimas transações do histórico (até 20)
+${histStr || 'Sem histórico registrado.'}`;
+  }
 
   // contexto dinâmico do contato
   const ctx = document.getElementById('karia-contexto').value;
