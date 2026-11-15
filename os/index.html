@@ -590,17 +590,17 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
 
     <!-- ===== MÓDULO CRM ===== -->
     <div class="module" id="mod-crm">
-      <!-- Abas CRM -->
       <div class="tabs-bar" style="margin-bottom:0;border-bottom:2px solid var(--cinza-claro)">
         <button class="tab-btn active" id="crm-tab-btn-pipeline" onclick="crmShowTab('pipeline',this)">Pipeline</button>
         <button class="tab-btn" id="crm-tab-btn-clientes" onclick="crmShowTab('clientes',this)">Clientes Ativos</button>
+        <button class="tab-btn" id="crm-tab-btn-contatos" onclick="crmShowTab('contatos',this)">Contatos</button>
       </div>
 
       <!-- ABA PIPELINE -->
       <div id="crm-tab-pipeline">
         <div class="crm-toolbar">
-          <input class="crm-search" id="crm-search" placeholder="Buscar lead..." oninput="crmRender()">
-          <select class="filtro-select" id="crm-fil-etapa" onchange="crmRender()">
+          <input class="crm-search" id="pip-search" placeholder="Buscar lead..." oninput="pipRender()">
+          <select class="filtro-select" id="pip-fil-etapa" onchange="pipRender()">
             <option value="">Todas as etapas</option>
             <option value="Novo lead">Novo lead</option>
             <option value="1º contato">1º contato</option>
@@ -612,14 +612,14 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
             <button class="crm-view-btn active" id="btn-kanban" onclick="crmSetView('kanban')">⊞</button>
             <button class="crm-view-btn" id="btn-lista" onclick="crmSetView('lista')">≡</button>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="crmOpenModal()">+ Novo Lead</button>
+          <button class="btn btn-primary btn-sm" onclick="pipOpenModal()">+ Novo Lead</button>
         </div>
         <div id="crm-kanban" class="kanban-board"></div>
         <div id="crm-lista" class="crm-table-wrap" style="display:none">
           <div style="overflow-x:auto">
             <table>
-              <thead><tr><th>Escritório</th><th>Contato</th><th>Etapa</th><th>Produto</th><th>Follow-up</th><th></th></tr></thead>
-              <tbody id="crm-tbody"></tbody>
+              <thead><tr><th>Empresa</th><th>Contato</th><th>Etapa</th><th>Produto</th><th>Valor</th><th>Follow-up</th><th></th></tr></thead>
+              <tbody id="pip-tbody"></tbody>
             </table>
           </div>
         </div>
@@ -628,7 +628,7 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       <!-- ABA CLIENTES ATIVOS -->
       <div id="crm-tab-clientes" style="display:none">
         <div class="crm-toolbar">
-          <input class="crm-search" id="cli-search" placeholder="Buscar cliente..." oninput="cliRender()">
+          <input id="cli-search" class="crm-search" placeholder="Buscar cliente..." oninput="cliRender()">
           <select class="filtro-select" id="cli-fil-status" onchange="cliRender()">
             <option value="">Todos</option>
             <option value="Ativo">Ativo</option>
@@ -639,11 +639,31 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
         </div>
         <div style="overflow-x:auto">
           <table>
-            <thead><tr><th>Escritório</th><th>Responsável</th><th>Serviço</th><th>Valor/mês</th><th>Venc.</th><th>Status</th><th></th></tr></thead>
+            <thead><tr><th>Empresa / Contato</th><th>Contrato</th><th>Serviço</th><th>Valor/mês</th><th>Venc.</th><th>Renovação</th><th>Status</th><th></th></tr></thead>
             <tbody id="cli-tbody"></tbody>
           </table>
         </div>
         <div id="cli-cards" class="tx-card-list"></div>
+      </div>
+
+      <!-- ABA CONTATOS -->
+      <div id="crm-tab-contatos" style="display:none">
+        <div class="crm-toolbar">
+          <input id="cnt-search" class="crm-search" placeholder="Buscar contato..." oninput="cntRender()">
+          <select class="filtro-select" id="cnt-fil-cat" onchange="cntRender()">
+            <option value="">Todas as categorias</option>
+            <option>Lead</option><option>Cliente</option><option>Fornecedor</option>
+            <option>Parceiro</option><option>Referência</option><option>Software</option><option>Outro</option>
+          </select>
+          <button class="btn btn-primary btn-sm" onclick="cntOpenModal()">+ Novo Contato</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Nome</th><th>Empresa</th><th>Categoria</th><th>WhatsApp</th><th>E-mail</th><th></th></tr></thead>
+            <tbody id="cnt-tbody"></tbody>
+          </table>
+        </div>
+        <div id="cnt-cards" class="tx-card-list"></div>
       </div>
     </div><!-- /mod-crm -->
 
@@ -1221,55 +1241,98 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
   </div><!-- /.content -->
 </div><!-- /#app -->
 
-<!-- ========= MODAL CRM ========= -->
-<!-- MODAL PIPELINE/LEAD -->
-<div class="modal-overlay" id="crm-modal">
+<!-- ========= MODAIS CRM ========= -->
+
+<!-- MODAL CONTATO (agenda central) -->
+<div class="modal-overlay" id="cnt-modal">
   <div class="modal">
     <div class="modal-title">
-      <span id="crm-modal-title">Novo Lead</span>
-      <button class="modal-close" onclick="crmCloseModal()">×</button>
+      <span id="cnt-modal-title">Novo Contato</span>
+      <button class="modal-close" onclick="cntCloseModal()">×</button>
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">Escritório / Empresa *</label>
-        <input class="form-control" type="text" id="crm-firm" placeholder="Nome do escritório">
+        <label class="form-label">Nome *</label>
+        <input class="form-control" type="text" id="cnt-nome" placeholder="Nome completo">
       </div>
       <div class="form-group">
-        <label class="form-label">Nome do Contato *</label>
-        <input class="form-control" type="text" id="crm-person" placeholder="Sócio / advogado">
+        <label class="form-label">Empresa</label>
+        <input class="form-control" type="text" id="cnt-empresa" placeholder="Escritório, empresa...">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Cargo</label>
-        <input class="form-control" type="text" id="crm-cargo" placeholder="Sócio, Gestor...">
+        <input class="form-control" type="text" id="cnt-cargo" placeholder="Sócio, Gestor...">
       </div>
       <div class="form-group">
-        <label class="form-label">WhatsApp</label>
-        <input class="form-control" type="tel" id="crm-whatsapp" placeholder="(51) 99999-0000">
+        <label class="form-label">Categoria</label>
+        <select class="form-control" id="cnt-categoria">
+          <option>Lead</option><option>Cliente</option><option>Fornecedor</option>
+          <option>Parceiro</option><option>Referência</option><option>Software</option><option>Outro</option>
+        </select>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">E-mail</label>
-        <input class="form-control" type="email" id="crm-email" placeholder="email@escritorio.com.br">
+        <label class="form-label">WhatsApp</label>
+        <input class="form-control" type="tel" id="cnt-whatsapp" placeholder="(51) 99999-0000">
       </div>
       <div class="form-group">
+        <label class="form-label">E-mail</label>
+        <input class="form-control" type="email" id="cnt-email" placeholder="email@exemplo.com.br">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
         <label class="form-label">Origem</label>
-        <input class="form-control" type="text" id="crm-origem" placeholder="Instagram, Indicação...">
+        <input class="form-control" type="text" id="cnt-origem" placeholder="Instagram, Indicação...">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Observações</label>
+      <textarea class="form-control" id="cnt-obs" rows="2" placeholder="Notas livres..."></textarea>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="cntCloseModal()">Cancelar</button>
+      <button class="btn btn-danger btn-sm" id="cnt-del-btn" onclick="cntDelete()" style="display:none">Excluir</button>
+      <button class="btn btn-primary" onclick="cntSave()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PIPELINE -->
+<div class="modal-overlay" id="pip-modal">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="pip-modal-title">Novo Lead</span>
+      <button class="modal-close" onclick="pipCloseModal()">×</button>
+    </div>
+    <!-- busca contato existente -->
+    <div class="form-group" id="pip-cnt-busca-wrap">
+      <label class="form-label">Contato existente</label>
+      <div style="display:flex;gap:8px">
+        <input class="form-control" type="text" id="pip-cnt-busca" placeholder="Buscar pelo nome..." oninput="pipBuscarContato()" autocomplete="off">
+        <button class="btn btn-ghost btn-sm" onclick="pipCntNovo()" title="Criar novo contato">+ Novo</button>
+      </div>
+      <div id="pip-cnt-sugestoes" style="border:1px solid #ddd;border-radius:6px;max-height:140px;overflow-y:auto;display:none;background:#fff;position:relative;z-index:10"></div>
+      <div id="pip-cnt-selecionado" style="display:none;padding:6px 10px;background:#f0fdf4;border-radius:6px;font-size:13px;margin-top:4px;display:flex;justify-content:space-between;align-items:center">
+        <span id="pip-cnt-nome-sel"></span>
+        <button class="btn btn-ghost btn-sm" onclick="pipCntLimpar()">×</button>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">Etapa</label>
-        <select class="form-control" id="crm-etapa">
+        <select class="form-control" id="pip-etapa">
           <option>Novo lead</option><option>1º contato</option>
           <option>Proposta enviada</option><option>Fechado</option><option>Perdido</option>
         </select>
       </div>
       <div class="form-group">
         <label class="form-label">Produto/Serviço</label>
-        <select class="form-control" id="crm-produto">
+        <select class="form-control" id="pip-produto">
+          <option value="">Selecione</option>
           <option>Diagnóstico Estratégico</option><option>Diagnóstico Estruturado</option>
           <option>Consultoria de Implantação</option><option>Acompanhamento Essencial</option>
           <option>Acompanhamento Evolução</option><option>Acompanhamento Estratégico</option>
@@ -1278,68 +1341,51 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">Follow-up</label>
-        <input class="form-control" type="date" id="crm-followup">
+        <label class="form-label">Valor estimado (R$)</label>
+        <input class="form-control" type="number" id="pip-valor" placeholder="0,00" step="0.01" min="0">
       </div>
       <div class="form-group">
-        <label class="form-label">Valor estimado (R$)</label>
-        <input class="form-control" type="number" id="crm-valor" placeholder="0,00" step="0.01" min="0">
+        <label class="form-label">Follow-up</label>
+        <input class="form-control" type="date" id="pip-followup">
       </div>
     </div>
     <div class="form-group">
       <label class="form-label">Observações</label>
-      <textarea class="form-control" id="crm-obs" rows="2" placeholder="Notas, contexto, próximos passos..."></textarea>
+      <textarea class="form-control" id="pip-obs" rows="2" placeholder="Contexto, próximos passos..."></textarea>
     </div>
     <div class="form-actions">
-      <button class="btn btn-ghost" onclick="crmCloseModal()">Cancelar</button>
-      <button class="btn btn-danger btn-sm" id="crm-del-btn" onclick="crmDelete()" style="display:none">Excluir</button>
-      <button class="btn btn-outline" id="crm-conv-btn" onclick="crmConverterCliente()" style="display:none;background:#EFF6FF;color:#1E40AF;border-color:#BFDBFE">↗ Converter em Cliente</button>
-      <button class="btn btn-primary" onclick="crmSave()">Salvar</button>
+      <button class="btn btn-ghost" onclick="pipCloseModal()">Cancelar</button>
+      <button class="btn btn-danger btn-sm" id="pip-del-btn" onclick="pipDelete()" style="display:none">Excluir</button>
+      <button class="btn btn-outline" id="pip-conv-btn" onclick="pipConverterCliente()" style="display:none;background:#EFF6FF;color:#1E40AF;border-color:#BFDBFE">↗ Converter em Cliente</button>
+      <button class="btn btn-primary" onclick="pipSave()">Salvar</button>
     </div>
   </div>
 </div>
 
 <!-- MODAL CLIENTE -->
 <div class="modal-overlay" id="cli-modal">
-  <div class="modal" style="max-width:640px">
+  <div class="modal" style="max-width:660px">
     <div class="modal-title">
       <span id="cli-modal-title">Novo Cliente</span>
       <button class="modal-close" onclick="cliCloseModal()">×</button>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Razão Social *</label>
-        <input class="form-control" type="text" id="cli-razao" placeholder="Nome completo / razão social">
+    <!-- busca contato existente -->
+    <div class="form-group">
+      <label class="form-label">Contato vinculado</label>
+      <div style="display:flex;gap:8px">
+        <input class="form-control" type="text" id="cli-cnt-busca" placeholder="Buscar pelo nome..." oninput="cliBuscarContato()" autocomplete="off">
+        <button class="btn btn-ghost btn-sm" onclick="cliCntNovo()">+ Novo</button>
       </div>
-      <div class="form-group">
-        <label class="form-label">Nome Fantasia</label>
-        <input class="form-control" type="text" id="cli-fantasia" placeholder="Como é conhecido">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">CNPJ</label>
-        <input class="form-control" type="text" id="cli-cnpj" placeholder="00.000.000/0001-00">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Responsável / Contato</label>
-        <input class="form-control" type="text" id="cli-responsavel" placeholder="Nome do sócio">
+      <div id="cli-cnt-sugestoes" style="border:1px solid #ddd;border-radius:6px;max-height:140px;overflow-y:auto;display:none;background:#fff;position:relative;z-index:10"></div>
+      <div id="cli-cnt-selecionado" style="display:none;padding:6px 10px;background:#f0fdf4;border-radius:6px;font-size:13px;margin-top:4px;display:flex;justify-content:space-between;align-items:center">
+        <span id="cli-cnt-nome-sel"></span>
+        <button class="btn btn-ghost btn-sm" onclick="cliCntLimpar()">×</button>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">E-mail</label>
-        <input class="form-control" type="email" id="cli-email" placeholder="email@escritorio.com.br">
-      </div>
-      <div class="form-group">
-        <label class="form-label">WhatsApp</label>
-        <input class="form-control" type="tel" id="cli-whatsapp" placeholder="(51) 99999-0000">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Cidade / UF</label>
-        <input class="form-control" type="text" id="cli-cidade" placeholder="Porto Alegre / RS">
+        <label class="form-label">Nº do Contrato</label>
+        <input class="form-control" type="text" id="cli-numero" placeholder="KARIA-2024-001">
       </div>
       <div class="form-group">
         <label class="form-label">Status</label>
@@ -1348,30 +1394,38 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
         </select>
       </div>
     </div>
+    <div class="form-group">
+      <label class="form-label">Serviço Contratado</label>
+      <select class="form-control" id="cli-servico">
+        <option value="">Selecione</option>
+        <option>Diagnóstico Estruturado</option><option>Diagnóstico Estratégico</option>
+        <option>Consultoria de Implantação</option><option>Acompanhamento Essencial</option>
+        <option>Acompanhamento Evolução</option><option>Acompanhamento Estratégico</option>
+      </select>
+    </div>
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">Serviço Contratado</label>
-        <select class="form-control" id="cli-servico">
-          <option value="">Selecione</option>
-          <option>Diagnóstico Estruturado</option><option>Diagnóstico Estratégico</option>
-          <option>Consultoria de Implantação</option><option>Acompanhamento Essencial</option>
-          <option>Acompanhamento Evolução</option><option>Acompanhamento Estratégico</option>
-        </select>
+        <label class="form-label">Valor mensal (R$)</label>
+        <input class="form-control" type="number" id="cli-valor" placeholder="0,00" step="0.01" min="0">
       </div>
-      <div class="form-row" style="gap:10px;margin:0;flex:1">
-        <div class="form-group">
-          <label class="form-label">Valor mensal (R$)</label>
-          <input class="form-control" type="number" id="cli-valor" placeholder="0,00" step="0.01" min="0">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Dia venc.</label>
-          <input class="form-control" type="number" id="cli-dia" placeholder="5" min="1" max="31" value="5" style="max-width:70px">
-        </div>
+      <div class="form-group">
+        <label class="form-label">Dia vencimento</label>
+        <input class="form-control" type="number" id="cli-dia" min="1" max="31" value="5" style="max-width:80px">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Início do contrato</label>
+        <input class="form-control" type="date" id="cli-inicio">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Renovação / Reajuste</label>
+        <input class="form-control" type="date" id="cli-renovacao">
       </div>
     </div>
     <div class="form-group">
       <label class="form-label">Observações</label>
-      <textarea class="form-control" id="cli-obs" rows="2" placeholder="Notas, histórico, particularidades..."></textarea>
+      <textarea class="form-control" id="cli-obs" rows="2" placeholder="Particularidades do contrato..."></textarea>
     </div>
     <div class="form-actions">
       <button class="btn btn-ghost" onclick="cliCloseModal()">Cancelar</button>
@@ -1424,7 +1478,7 @@ function showApp(user){
   document.getElementById('sidebarUser').textContent=user.email;
   document.getElementById('dbStatus').textContent='● Conectado';
   carregarDados().then(()=>{ initFinanceiro(); });
-  crmLoad();
+  cntLoad().then(()=>{ pipLoad(); });
   linzInit();
 }
 
@@ -2416,251 +2470,381 @@ function initFinanceiro() {
 }
 
 /* ========= CRM ========= */
-let crmData=[], _crmEditing=null, _crmView='kanban';
 const ETAPAS=['Novo lead','1º contato','Proposta enviada','Fechado','Perdido'];
-const ETAPA_CLASS={
-  'Novo lead':'c-novo','1º contato':'c-contato',
-  'Proposta enviada':'c-proposta','Fechado':'c-fechado','Perdido':'c-perdido'
-};
-const ETAPA_STATUS={
-  'Novo lead':'s-novo','1º contato':'s-contato',
-  'Proposta enviada':'s-proposta','Fechado':'s-fechado','Perdido':'s-perdido'
-};
+const ETAPA_CLASS={'Novo lead':'c-novo','1º contato':'c-contato','Proposta enviada':'c-proposta','Fechado':'c-fechado','Perdido':'c-perdido'};
+const ETAPA_STATUS={'Novo lead':'s-novo','1º contato':'s-contato','Proposta enviada':'s-proposta','Fechado':'s-fechado','Perdido':'s-perdido'};
+let _crmView='kanban';
 
-async function crmLoad(){
+/* --- CONTATOS (karia_contatos) --- */
+let cntData=[], _cntEditing=null;
+
+async function cntLoad(){
+  if(!SB) return;
   try{
-    const {data,error}=await SB.from('crm_contatos').select('*').order('created_at',{ascending:false});
+    const {data,error}=await SB.from('karia_contatos').select('*').order('nome');
     if(error) throw error;
-    crmData=data||[];
-    crmRender();
-  }catch(e){ console.error('crmLoad',e); }
+    cntData=data||[];
+    cntRender();
+  }catch(e){ console.error('cntLoad',e); }
 }
-
-function crmFiltered(){
-  const q=(document.getElementById('crm-search').value||'').toLowerCase();
-  const etapa=document.getElementById('crm-fil-etapa').value;
-  return crmData.filter(r=>{
-    if(q && !(r.firm||'').toLowerCase().includes(q) && !(r.person||'').toLowerCase().includes(q)) return false;
-    if(etapa && r.etapa!==etapa) return false;
+function cntFiltered(){
+  const q=(document.getElementById('cnt-search')?.value||'').toLowerCase();
+  const cat=document.getElementById('cnt-fil-cat')?.value||'';
+  return cntData.filter(r=>{
+    if(cat && r.categoria!==cat) return false;
+    if(q && !(r.nome||'').toLowerCase().includes(q) && !(r.empresa||'').toLowerCase().includes(q)) return false;
     return true;
   });
 }
-
-function isAlertFollowup(dt){
-  if(!dt) return false;
-  return new Date(dt)<=new Date();
+function cntRender(){
+  const rows=cntFiltered();
+  const tbody=document.getElementById('cnt-tbody');
+  if(tbody) tbody.innerHTML=rows.length?rows.map(r=>`
+    <tr onclick="cntOpenModal('${r.id}')">
+      <td><strong>${r.nome||'—'}</strong></td>
+      <td>${r.empresa||'—'}</td>
+      <td><span class="badge">${r.categoria||'—'}</span></td>
+      <td>${r.whatsapp?`<a href="${waLink(r.whatsapp)}" target="_blank" style="color:var(--cobre)">📱 ${r.whatsapp}</a>`:'—'}</td>
+      <td>${r.email||'—'}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cntOpenModal('${r.id}')">✎</button></td>
+    </tr>`).join('')
+  :'<tr><td colspan="6" style="text-align:center;color:#888;padding:32px">Nenhum contato encontrado.</td></tr>';
 }
-function waLink(wa){ return `https://wa.me/55${(wa||'').replace(/\D/g,'')}`; }
+function cntOpenModal(id){
+  _cntEditing=id||null;
+  const r=id?cntData.find(x=>x.id===id):null;
+  document.getElementById('cnt-modal-title').textContent=r?'Editar Contato':'Novo Contato';
+  document.getElementById('cnt-nome').value=r?.nome||'';
+  document.getElementById('cnt-empresa').value=r?.empresa||'';
+  document.getElementById('cnt-cargo').value=r?.cargo||'';
+  document.getElementById('cnt-categoria').value=r?.categoria||'Lead';
+  document.getElementById('cnt-whatsapp').value=r?.whatsapp||'';
+  document.getElementById('cnt-email').value=r?.email||'';
+  document.getElementById('cnt-origem').value=r?.origem||'';
+  document.getElementById('cnt-obs').value=r?.obs||'';
+  document.getElementById('cnt-del-btn').style.display=r?'inline-block':'none';
+  document.getElementById('cnt-modal').classList.add('open');
+}
+function cntCloseModal(){ document.getElementById('cnt-modal').classList.remove('open'); }
+async function cntSave(){
+  const nome=document.getElementById('cnt-nome').value.trim();
+  if(!nome){ showToast('Nome é obrigatório','err'); return; }
+  const payload={
+    nome, empresa:document.getElementById('cnt-empresa').value,
+    cargo:document.getElementById('cnt-cargo').value,
+    categoria:document.getElementById('cnt-categoria').value,
+    whatsapp:document.getElementById('cnt-whatsapp').value,
+    email:document.getElementById('cnt-email').value,
+    origem:document.getElementById('cnt-origem').value,
+    obs:document.getElementById('cnt-obs').value,
+    user_id:currentUser.id
+  };
+  try{
+    if(_cntEditing){
+      const {error}=await SB.from('karia_contatos').update(payload).eq('id',_cntEditing);
+      if(error) throw error;
+    }else{
+      const {data,error}=await SB.from('karia_contatos').insert([payload]).select().single();
+      if(error) throw error;
+      _cntEditing=data.id;
+    }
+    cntCloseModal();
+    await cntLoad();
+    showToast('Contato salvo!');
+  }catch(e){ showToast('Erro: '+e.message,'err'); }
+}
+async function cntDelete(){
+  if(!_cntEditing||!confirm('Excluir este contato?')) return;
+  try{
+    const {error}=await SB.from('karia_contatos').delete().eq('id',_cntEditing);
+    if(error) throw error;
+    cntCloseModal();
+    await cntLoad();
+    showToast('Contato excluído.');
+  }catch(e){ showToast('Erro: '+e.message,'err'); }
+}
 
+/* --- PIPELINE (karia_pipeline) --- */
+let pipData=[], _pipEditing=null, _pipContatoId=null;
+
+async function pipLoad(){
+  if(!SB) return;
+  try{
+    const {data,error}=await SB.from('karia_pipeline').select('*, contato:karia_contatos(nome,empresa,whatsapp)').order('created_at',{ascending:false});
+    if(error) throw error;
+    pipData=data||[];
+    pipRender();
+  }catch(e){ console.error('pipLoad',e); }
+}
+function pipFiltered(){
+  const q=(document.getElementById('pip-search')?.value||'').toLowerCase();
+  const et=document.getElementById('pip-fil-etapa')?.value||'';
+  return pipData.filter(r=>{
+    if(et && r.etapa!==et) return false;
+    const nome=(r.contato?.nome||'').toLowerCase();
+    const emp=(r.contato?.empresa||'').toLowerCase();
+    if(q && !nome.includes(q) && !emp.includes(q) && !(r.produto||'').toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
+function isAlertFollowup(dt){ if(!dt) return false; return new Date(dt)<=new Date(); }
+function waLink(wa){ return `https://wa.me/55${(wa||'').replace(/\D/g,'')}`; }
 function crmSetView(v){
   _crmView=v;
   document.getElementById('crm-kanban').style.display=v==='kanban'?'grid':'none';
   document.getElementById('crm-lista').style.display=v==='lista'?'block':'none';
   document.getElementById('btn-kanban').classList.toggle('active',v==='kanban');
   document.getElementById('btn-lista').classList.toggle('active',v==='lista');
-  crmRender();
+  pipRender();
 }
-
-function crmRender(){
-  const rows=crmFiltered();
+function pipRender(){
+  const rows=pipFiltered();
   if(_crmView==='kanban'){
-    const board=document.getElementById('crm-kanban');
-    board.innerHTML=ETAPAS.map(et=>{
+    document.getElementById('crm-kanban').innerHTML=ETAPAS.map(et=>{
       const cards=rows.filter(r=>r.etapa===et);
       return `<div class="kanban-col">
         <div class="kanban-col-header">${et}<span class="kanban-col-count">${cards.length}</span></div>
         ${cards.map(r=>`
-          <div class="kanban-card ${ETAPA_CLASS[r.etapa]||''}" onclick="crmOpenModal('${r.id}')">
-            <div class="card__firm">${r.firm||'Sem nome'}</div>
-            <div class="card__person">${r.person||''}</div>
+          <div class="kanban-card ${ETAPA_CLASS[r.etapa]||''}" onclick="pipOpenModal('${r.id}')">
+            <div class="card__firm">${r.contato?.empresa||r.contato?.nome||'Sem nome'}</div>
+            <div class="card__person">${r.contato?.nome||''}</div>
             <div class="card__tags">
               ${r.produto?`<span class="card__tag prod">${r.produto}</span>`:''}
               ${r.followup?`<span class="card__tag fu${isAlertFollowup(r.followup)?' alert':''}">${isAlertFollowup(r.followup)?'🔔 ':''} ${fmtDate(r.followup)}</span>`:''}
+              ${r.valor?`<span class="card__tag">${fmtBRL(r.valor)}</span>`:''}
             </div>
           </div>`).join('')}
       </div>`;
     }).join('');
   }else{
-    document.getElementById('crm-tbody').innerHTML=rows.map(r=>`
-      <tr>
-        <td><strong>${r.firm||''}</strong></td>
-        <td>${r.person||''}${r.whatsapp?` <a href="${waLink(r.whatsapp)}" target="_blank" style="color:var(--cobre);font-size:11px">📱</a>`:''}</td>
+    document.getElementById('pip-tbody').innerHTML=rows.map(r=>`
+      <tr onclick="pipOpenModal('${r.id}')">
+        <td><strong>${r.contato?.empresa||r.contato?.nome||'—'}</strong></td>
+        <td>${r.contato?.nome||'—'}${r.contato?.whatsapp?` <a href="${waLink(r.contato.whatsapp)}" target="_blank" style="color:var(--cobre)">📱</a>`:''}</td>
         <td><span class="td-status-badge ${ETAPA_STATUS[r.etapa]||''}">${r.etapa||''}</span></td>
-        <td>${r.produto||''}</td>
+        <td>${r.produto||'—'}</td>
+        <td>${r.valor?fmtBRL(r.valor):'—'}</td>
         <td style="${isAlertFollowup(r.followup)?'color:var(--red);font-weight:600':''}">${r.followup?fmtDate(r.followup):'—'}</td>
-        <td><button class="btn btn-ghost btn-sm" onclick="crmOpenModal('${r.id}')">✎</button></td>
-      </tr>
-    `).join('');
+        <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();pipOpenModal('${r.id}')">✎</button></td>
+      </tr>`).join('');
   }
+}
+
+/* busca contato no autocomplete (pipeline) */
+function pipBuscarContato(){
+  const q=document.getElementById('pip-cnt-busca').value.toLowerCase();
+  const sug=document.getElementById('pip-cnt-sugestoes');
+  if(!q){ sug.style.display='none'; return; }
+  const matches=cntData.filter(c=>(c.nome||'').toLowerCase().includes(q)||(c.empresa||'').toLowerCase().includes(q)).slice(0,8);
+  if(!matches.length){ sug.style.display='none'; return; }
+  sug.style.display='block';
+  sug.innerHTML=matches.map(c=>`<div style="padding:8px 12px;cursor:pointer;border-bottom:1px solid #f0f0f0;font-size:13px" onmousedown="pipSelecionarContato('${c.id}','${(c.nome||'').replace(/'/g,"\\'")}','${(c.empresa||'').replace(/'/g,"\\'")}')"><strong>${c.nome||''}</strong>${c.empresa?' · <span style="color:#888">'+c.empresa+'</span>':''}</div>`).join('');
+}
+function pipSelecionarContato(id, nome, empresa){
+  _pipContatoId=id;
+  document.getElementById('pip-cnt-busca').value='';
+  document.getElementById('pip-cnt-sugestoes').style.display='none';
+  document.getElementById('pip-cnt-nome-sel').textContent=nome+(empresa?' · '+empresa:'');
+  document.getElementById('pip-cnt-selecionado').style.display='flex';
+  document.getElementById('pip-cnt-busca-wrap').querySelector('input').style.display='none';
+}
+function pipCntLimpar(){
+  _pipContatoId=null;
+  document.getElementById('pip-cnt-busca').value='';
+  document.getElementById('pip-cnt-busca').style.display='';
+  document.getElementById('pip-cnt-selecionado').style.display='none';
+}
+function pipCntNovo(){
+  pipCloseModal();
+  cntOpenModal(null);
+}
+
+function pipOpenModal(id){
+  _pipEditing=id||null;
+  _pipContatoId=null;
+  pipCntLimpar();
+  const r=id?pipData.find(x=>x.id===id):null;
+  document.getElementById('pip-modal-title').textContent=r?'Editar Lead':'Novo Lead';
+  if(r?.contato_id){
+    const c=cntData.find(x=>x.id===r.contato_id);
+    if(c) pipSelecionarContato(c.id, c.nome||'', c.empresa||'');
+    else _pipContatoId=r.contato_id;
+  }
+  document.getElementById('pip-etapa').value=r?.etapa||'Novo lead';
+  document.getElementById('pip-produto').value=r?.produto||'';
+  document.getElementById('pip-valor').value=r?.valor||'';
+  document.getElementById('pip-followup').value=r?.followup||'';
+  document.getElementById('pip-obs').value=r?.obs||'';
+  document.getElementById('pip-del-btn').style.display=r?'inline-block':'none';
+  const cb=document.getElementById('pip-conv-btn');
+  if(cb) cb.style.display=(r&&r.etapa==='Fechado')?'inline-block':'none';
+  document.getElementById('pip-modal').classList.add('open');
+}
+function pipCloseModal(){ document.getElementById('pip-modal').classList.remove('open'); }
+async function pipSave(){
+  if(!_pipContatoId){ showToast('Selecione ou crie um contato','err'); return; }
+  const payload={
+    contato_id:_pipContatoId,
+    etapa:document.getElementById('pip-etapa').value,
+    produto:document.getElementById('pip-produto').value,
+    valor:parseFloat(document.getElementById('pip-valor').value)||null,
+    followup:document.getElementById('pip-followup').value||null,
+    obs:document.getElementById('pip-obs').value,
+    user_id:currentUser.id
+  };
+  try{
+    if(_pipEditing){
+      const {error}=await SB.from('karia_pipeline').update(payload).eq('id',_pipEditing);
+      if(error) throw error;
+    }else{
+      const {error}=await SB.from('karia_pipeline').insert([payload]);
+      if(error) throw error;
+    }
+    pipCloseModal();
+    await pipLoad();
+    showToast('Lead salvo!');
+  }catch(e){ showToast('Erro: '+e.message,'err'); }
+}
+async function pipDelete(){
+  if(!_pipEditing||!confirm('Excluir este lead?')) return;
+  try{
+    const {error}=await SB.from('karia_pipeline').delete().eq('id',_pipEditing);
+    if(error) throw error;
+    pipCloseModal();
+    await pipLoad();
+    showToast('Lead excluído.');
+  }catch(e){ showToast('Erro: '+e.message,'err'); }
+}
+async function pipConverterCliente(){
+  const r=_pipEditing?pipData.find(x=>x.id===_pipEditing):null;
+  pipCloseModal();
+  cliOpenModal(null, r);
 }
 
 function crmShowTab(tab, btn){
   document.getElementById('crm-tab-pipeline').style.display = tab==='pipeline'?'':'none';
   document.getElementById('crm-tab-clientes').style.display = tab==='clientes'?'':'none';
+  document.getElementById('crm-tab-contatos').style.display = tab==='contatos'?'':'none';
   document.querySelectorAll('#mod-crm .tab-btn').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
   if(tab==='clientes') cliLoad();
+  if(tab==='contatos') cntLoad();
 }
 
-function crmOpenModal(id){
-  _crmEditing=id||null;
-  const r=id?crmData.find(x=>x.id===id):null;
-  document.getElementById('crm-modal-title').textContent=r?'Editar Lead':'Novo Lead';
-  document.getElementById('crm-firm').value=r?.firm||'';
-  document.getElementById('crm-person').value=r?.person||'';
-  document.getElementById('crm-cargo').value=r?.cargo||'';
-  document.getElementById('crm-whatsapp').value=r?.whatsapp||'';
-  document.getElementById('crm-email').value=r?.email||'';
-  document.getElementById('crm-etapa').value=r?.etapa||'Novo lead';
-  document.getElementById('crm-produto').value=r?.produto||'Diagnóstico Estratégico';
-  document.getElementById('crm-followup').value=r?.followup||'';
-  document.getElementById('crm-origem').value=r?.origem||'';
-  document.getElementById('crm-valor').value=r?.valor||'';
-  document.getElementById('crm-obs').value=r?.obs||'';
-  document.getElementById('crm-del-btn').style.display=r?'inline-block':'none';
-  const convBtn=document.getElementById('crm-conv-btn');
-  if(convBtn) convBtn.style.display=(r&&r.etapa==='Fechado')?'inline-block':'none';
-  document.getElementById('crm-modal').classList.add('open');
-}
-function crmCloseModal(){ document.getElementById('crm-modal').classList.remove('open'); }
-
-async function crmSave(){
-  const payload={
-    firm:document.getElementById('crm-firm').value,
-    person:document.getElementById('crm-person').value,
-    cargo:document.getElementById('crm-cargo').value,
-    whatsapp:document.getElementById('crm-whatsapp').value,
-    email:document.getElementById('crm-email').value,
-    etapa:document.getElementById('crm-etapa').value,
-    produto:document.getElementById('crm-produto').value,
-    followup:document.getElementById('crm-followup').value||null,
-    origem:document.getElementById('crm-origem').value,
-    valor:parseFloat(document.getElementById('crm-valor').value)||null,
-    obs:document.getElementById('crm-obs').value,
-    user_id:currentUser.id
-  };
-  try{
-    if(_crmEditing){
-      const {error}=await SB.from('crm_contatos').update(payload).eq('id',_crmEditing);
-      if(error) throw error;
-    }else{
-      const {error}=await SB.from('crm_contatos').insert([payload]);
-      if(error) throw error;
-    }
-    crmCloseModal();
-    await crmLoad();
-    showToast('Lead salvo!');
-  }catch(e){ showToast('Erro: '+e.message,'err'); }
-}
-async function crmDelete(){
-  if(!_crmEditing||!confirm('Excluir este lead?')) return;
-  try{
-    const {error}=await SB.from('crm_contatos').delete().eq('id',_crmEditing);
-    if(error) throw error;
-    crmCloseModal();
-    await crmLoad();
-    showToast('Lead excluído.');
-  }catch(e){ showToast('Erro: '+e.message,'err'); }
-}
-async function crmConverterCliente(){
-  const r=_crmEditing?crmData.find(x=>x.id===_crmEditing):null;
-  if(!r) return;
-  crmCloseModal();
-  cliOpenModal(null, r);
-}
-
-/* ========= CLIENTES (karia_clientes) ========= */
-let cliData=[], _cliEditing=null, _cliLoaded=false;
+/* ========= CLIENTES (karia_clientes nova estrutura) ========= */
+let cliData=[], _cliEditing=null, _cliContatoId=null;
 
 async function cliLoad(){
   if(!SB) return;
   try{
-    const {data,error}=await SB.from('karia_clientes').select('*').order('razao_social');
+    const {data,error}=await SB.from('karia_clientes').select('*, contato:karia_contatos(nome,empresa,whatsapp)').order('created_at',{ascending:false});
     if(error) throw error;
     cliData=data||[];
-    _cliLoaded=true;
     cliRender();
   }catch(e){ console.error('cliLoad',e); }
 }
-
 function cliFiltered(){
   const q=(document.getElementById('cli-search')?.value||'').toLowerCase();
   const st=document.getElementById('cli-fil-status')?.value||'';
   return cliData.filter(r=>{
     if(st && r.status!==st) return false;
-    if(q && !(r.razao_social||'').toLowerCase().includes(q) &&
-            !(r.nome_fantasia||'').toLowerCase().includes(q) &&
-            !(r.responsavel||'').toLowerCase().includes(q)) return false;
+    const nome=(r.contato?.nome||'').toLowerCase();
+    const emp=(r.contato?.empresa||'').toLowerCase();
+    if(q && !nome.includes(q) && !emp.includes(q) && !(r.numero_contrato||'').toLowerCase().includes(q)) return false;
     return true;
   });
 }
-
 function cliRender(){
   const rows=cliFiltered();
   const tbody=document.getElementById('cli-tbody');
   const cards=document.getElementById('cli-cards');
-  if(tbody){
-    tbody.innerHTML=rows.length?rows.map(r=>`
-      <tr onclick="cliOpenModal('${r.id}')">
-        <td>${r.razao_social||'—'}<br><small style="color:#888">${r.nome_fantasia||''}</small></td>
-        <td>${r.responsavel||'—'}</td>
-        <td>${r.servico_contratado||'—'}</td>
-        <td>${r.valor_mensal?fmtBRL(r.valor_mensal):'—'}</td>
-        <td>${r.dia_vencimento||'—'}</td>
-        <td><span class="badge ${r.status==='Ativo'?'badge-green':r.status==='Pausado'?'badge-yellow':'badge-red'}">${r.status||'Ativo'}</span></td>
-        <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cliOpenModal('${r.id}')">Editar</button></td>
-      </tr>`).join('')
-    :'<tr><td colspan="7" style="text-align:center;color:#888;padding:32px">Nenhum cliente encontrado.</td></tr>';
-  }
-  if(cards){
-    cards.innerHTML=rows.map(r=>`
-      <div class="tx-card" onclick="cliOpenModal('${r.id}')">
-        <div class="tx-card-top"><strong>${r.razao_social||'—'}</strong>
-          <span class="badge ${r.status==='Ativo'?'badge-green':r.status==='Pausado'?'badge-yellow':'badge-red'}">${r.status||'Ativo'}</span>
-        </div>
-        <div>${r.servico_contratado||''} · ${r.valor_mensal?fmtBRL(r.valor_mensal):''}</div>
-        <div style="color:#888;font-size:12px">${r.responsavel||''}</div>
-      </div>`).join('');
-  }
+  if(tbody) tbody.innerHTML=rows.length?rows.map(r=>`
+    <tr onclick="cliOpenModal('${r.id}')">
+      <td><strong>${r.contato?.empresa||r.contato?.nome||'—'}</strong><br><small style="color:#888">${r.contato?.nome||''}</small></td>
+      <td>${r.numero_contrato||'—'}</td>
+      <td>${r.servico_contratado||'—'}</td>
+      <td>${r.valor_mensal?fmtBRL(r.valor_mensal):'—'}</td>
+      <td>${r.dia_vencimento||'—'}</td>
+      <td>${r.data_renovacao?fmtDate(r.data_renovacao):'—'}</td>
+      <td><span class="badge ${r.status==='Ativo'?'badge-green':r.status==='Pausado'?'badge-yellow':'badge-red'}">${r.status||'Ativo'}</span></td>
+      <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cliOpenModal('${r.id}')">✎</button></td>
+    </tr>`).join('')
+  :'<tr><td colspan="8" style="text-align:center;color:#888;padding:32px">Nenhum cliente encontrado.</td></tr>';
+  if(cards) cards.innerHTML=rows.map(r=>`
+    <div class="tx-card" onclick="cliOpenModal('${r.id}')">
+      <div class="tx-card-top"><strong>${r.contato?.empresa||r.contato?.nome||'—'}</strong>
+        <span class="badge ${r.status==='Ativo'?'badge-green':r.status==='Pausado'?'badge-yellow':'badge-red'}">${r.status||'Ativo'}</span>
+      </div>
+      <div>${r.servico_contratado||''} · ${r.valor_mensal?fmtBRL(r.valor_mensal):''}</div>
+      <div style="color:#888;font-size:12px">${r.contato?.nome||''}</div>
+    </div>`).join('');
 }
 
-function cliOpenModal(id, fromLead){
+/* autocomplete contato no modal cliente */
+function cliBuscarContato(){
+  const q=document.getElementById('cli-cnt-busca').value.toLowerCase();
+  const sug=document.getElementById('cli-cnt-sugestoes');
+  if(!q){ sug.style.display='none'; return; }
+  const matches=cntData.filter(c=>(c.nome||'').toLowerCase().includes(q)||(c.empresa||'').toLowerCase().includes(q)).slice(0,8);
+  if(!matches.length){ sug.style.display='none'; return; }
+  sug.style.display='block';
+  sug.innerHTML=matches.map(c=>`<div style="padding:8px 12px;cursor:pointer;border-bottom:1px solid #f0f0f0;font-size:13px" onmousedown="cliSelecionarContato('${c.id}','${(c.nome||'').replace(/'/g,"\\'")}','${(c.empresa||'').replace(/'/g,"\\'")}')"><strong>${c.nome||''}</strong>${c.empresa?' · <span style="color:#888">'+c.empresa+'</span>':''}</div>`).join('');
+}
+function cliSelecionarContato(id, nome, empresa){
+  _cliContatoId=id;
+  document.getElementById('cli-cnt-busca').style.display='none';
+  document.getElementById('cli-cnt-sugestoes').style.display='none';
+  document.getElementById('cli-cnt-nome-sel').textContent=nome+(empresa?' · '+empresa:'');
+  document.getElementById('cli-cnt-selecionado').style.display='flex';
+}
+function cliCntLimpar(){
+  _cliContatoId=null;
+  document.getElementById('cli-cnt-busca').value='';
+  document.getElementById('cli-cnt-busca').style.display='';
+  document.getElementById('cli-cnt-selecionado').style.display='none';
+}
+function cliCntNovo(){ cliCloseModal(); cntOpenModal(null); }
+
+function cliOpenModal(id, fromPip){
   _cliEditing=id||null;
+  _cliContatoId=null;
+  cliCntLimpar();
   const r=id?cliData.find(x=>x.id===id):null;
   document.getElementById('cli-modal-title').textContent=r?'Editar Cliente':'Novo Cliente';
-  document.getElementById('cli-razao').value=r?.razao_social||fromLead?.firm||'';
-  document.getElementById('cli-fantasia').value=r?.nome_fantasia||'';
-  document.getElementById('cli-cnpj').value=r?.cnpj||'';
-  document.getElementById('cli-responsavel').value=r?.responsavel||fromLead?.person||'';
-  document.getElementById('cli-email').value=r?.email||fromLead?.email||'';
-  document.getElementById('cli-whatsapp').value=r?.whatsapp||fromLead?.whatsapp||'';
-  document.getElementById('cli-cidade').value=r?.cidade_uf||'';
+  if(r?.contato_id){
+    const c=cntData.find(x=>x.id===r.contato_id);
+    if(c) cliSelecionarContato(c.id, c.nome||'', c.empresa||'');
+    else _cliContatoId=r.contato_id;
+  } else if(fromPip?.contato_id){
+    const c=cntData.find(x=>x.id===fromPip.contato_id);
+    if(c) cliSelecionarContato(c.id, c.nome||'', c.empresa||'');
+    else _cliContatoId=fromPip.contato_id;
+  }
+  document.getElementById('cli-numero').value=r?.numero_contrato||'';
   document.getElementById('cli-status').value=r?.status||'Ativo';
-  document.getElementById('cli-servico').value=r?.servico_contratado||fromLead?.produto||'';
-  document.getElementById('cli-valor').value=r?.valor_mensal||fromLead?.valor||'';
+  document.getElementById('cli-servico').value=r?.servico_contratado||fromPip?.produto||'';
+  document.getElementById('cli-valor').value=r?.valor_mensal||fromPip?.valor||'';
   document.getElementById('cli-dia').value=r?.dia_vencimento||5;
-  document.getElementById('cli-obs').value=r?.observacoes||'';
+  document.getElementById('cli-inicio').value=r?.data_inicio||'';
+  document.getElementById('cli-renovacao').value=r?.data_renovacao||'';
+  document.getElementById('cli-obs').value=r?.obs||'';
   document.getElementById('cli-del-btn').style.display=r?'inline-block':'none';
   document.getElementById('cli-modal').classList.add('open');
 }
 function cliCloseModal(){ document.getElementById('cli-modal').classList.remove('open'); }
 
 async function cliSave(){
-  const razao=document.getElementById('cli-razao').value.trim();
-  if(!razao){ showToast('Razão social é obrigatória','err'); return; }
+  if(!_cliContatoId){ showToast('Selecione ou crie um contato','err'); return; }
   const payload={
-    razao_social:razao,
-    nome_fantasia:document.getElementById('cli-fantasia').value,
-    cnpj:document.getElementById('cli-cnpj').value,
-    responsavel:document.getElementById('cli-responsavel').value,
-    email:document.getElementById('cli-email').value,
-    whatsapp:document.getElementById('cli-whatsapp').value,
-    cidade_uf:document.getElementById('cli-cidade').value,
+    contato_id:_cliContatoId,
+    numero_contrato:document.getElementById('cli-numero').value,
     status:document.getElementById('cli-status').value,
     servico_contratado:document.getElementById('cli-servico').value,
     valor_mensal:parseFloat(document.getElementById('cli-valor').value)||null,
     dia_vencimento:parseInt(document.getElementById('cli-dia').value)||5,
-    observacoes:document.getElementById('cli-obs').value,
+    data_inicio:document.getElementById('cli-inicio').value||null,
+    data_renovacao:document.getElementById('cli-renovacao').value||null,
+    obs:document.getElementById('cli-obs').value,
     user_id:currentUser.id
   };
   try{
