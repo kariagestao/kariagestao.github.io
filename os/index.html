@@ -90,6 +90,22 @@ body.sidebar-collapsed .nav-item{justify-content:center;padding:9px 0}
 body.sidebar-collapsed .nav-item .icon{width:auto;font-size:17px}
 body.sidebar-collapsed .nav-group-submenu{display:block!important}
 
+/* ===== karIA chat ===== */
+.karia-msg{display:flex;gap:10px;max-width:90%}
+.karia-msg.user{align-self:flex-end;flex-direction:row-reverse}
+.karia-msg.assistant{align-self:flex-start}
+.karia-bubble{padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.6;white-space:pre-wrap}
+.karia-msg.user .karia-bubble{background:var(--musgo);color:#fff;border-bottom-right-radius:3px}
+.karia-msg.assistant .karia-bubble{background:#f0ece6;color:#222;border-bottom-left-radius:3px}
+.karia-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px}
+.karia-msg.user .karia-avatar{background:var(--musgo);color:var(--cobre)}
+.karia-msg.assistant .karia-avatar{background:var(--cobre);color:#fff}
+.karia-typing{display:flex;gap:4px;align-items:center;padding:10px 14px}
+.karia-typing span{width:6px;height:6px;background:#bbb;border-radius:50%;animation:kbounce 1.2s infinite}
+.karia-typing span:nth-child(2){animation-delay:.2s}
+.karia-typing span:nth-child(3){animation-delay:.4s}
+@keyframes kbounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
 /* Financeiro adicional (ported from financeiro.html) */
 .card{background:#fff;border-radius:10px;padding:16px 18px;box-shadow:0 1px 6px rgba(13,31,45,.07);border-left:4px solid var(--gray-light)}
 .card.receita{border-left-color:var(--verde)}
@@ -413,6 +429,9 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       <div class="nav-item" id="nav-pessoas" onclick="switchModule('pessoas',this)">
         <span class="icon">🧑‍🤝‍🧑</span> <span>Pessoas</span>
       </div>
+      <div class="nav-item" id="nav-karia" onclick="switchModule('karia',this)">
+        <span class="icon">✦</span> <span>karIA</span>
+      </div>
       <div class="nav-group-label open" onclick="toggleNavGroup(this)" id="grp-operacao">
         <div class="nav-section">Operação Clientes</div>
         <span class="nav-group-arrow">›</span>
@@ -675,6 +694,47 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
         </table>
       </div>
     </div><!-- /mod-pessoas -->
+
+    <!-- ===== MÓDULO karIA ===== -->
+    <div class="module" id="mod-karia">
+      <div style="max-width:720px;margin:0 auto;height:calc(100vh - 120px);display:flex;flex-direction:column">
+        <!-- header -->
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+          <div style="width:40px;height:40px;background:var(--musgo);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--cobre);font-weight:700;flex-shrink:0">✦</div>
+          <div>
+            <div style="font-size:18px;font-weight:700;color:var(--musgo)">kar<span style="color:var(--cobre)">IA</span></div>
+            <div style="font-size:11px;color:#888">Assistente estratégica da KARIA Gestão</div>
+          </div>
+          <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+            <select id="karia-contexto" class="filtro-select" style="font-size:12px" onchange="kariaContextoMudar()">
+              <option value="geral">Contexto geral</option>
+              <option value="pipeline">Lead do pipeline</option>
+              <option value="cliente">Cliente ativo</option>
+            </select>
+            <select id="karia-ref-id" class="filtro-select" style="font-size:12px;display:none">
+              <option value="">Selecione...</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- mensagens -->
+        <div id="karia-msgs" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:4px 0 16px">
+          <div style="text-align:center;color:#bbb;font-size:12px;padding:32px 0">
+            Olá! Sou a <strong>kar<span style="color:var(--cobre)">IA</span></strong>, sua assistente estratégica.<br>
+            Selecione um contexto acima e faça sua pergunta.
+          </div>
+        </div>
+
+        <!-- input -->
+        <div style="display:flex;gap:8px;padding-top:12px;border-top:1px solid #eee">
+          <textarea id="karia-input" class="form-control" rows="2" placeholder="Digite sua pergunta..." style="resize:none;flex:1;font-size:13px" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();kariaEnviar()}"></textarea>
+          <button class="btn btn-primary" onclick="kariaEnviar()" style="align-self:flex-end;padding:10px 18px" id="karia-send-btn">
+            Enviar
+          </button>
+        </div>
+        <div style="font-size:10px;color:#ccc;text-align:center;margin-top:6px">Enter para enviar · Shift+Enter para nova linha</div>
+      </div>
+    </div><!-- /mod-karia -->
 
     <!-- ===== MÓDULO LINZMEYER ===== -->
     <div class="module" id="mod-linzmeyer">
@@ -5970,6 +6030,157 @@ document.addEventListener('input',function(e){
   el.value=v;
 });
 
+/* ===== karIA ===== */
+let kariaHistorico = [];
+let kariaApiKey = null;
+
+async function kariaCarregarKey(){
+  if(kariaApiKey) return kariaApiKey;
+  const {data} = await SB.from('karia_config').select('valor').eq('chave','anthropic_api_key').single();
+  kariaApiKey = data?.valor || null;
+  return kariaApiKey;
+}
+
+function kariaContextoMudar(){
+  const ctx = document.getElementById('karia-contexto').value;
+  const refSel = document.getElementById('karia-ref-id');
+  if(ctx === 'geral'){ refSel.style.display='none'; return; }
+  refSel.style.display='';
+  refSel.innerHTML='<option value="">Selecione...</option>';
+  if(ctx === 'pipeline'){
+    pipData.forEach(r => {
+      const nome = r.contato?.nome || r.contato?.empresa || r.numero || '—';
+      refSel.innerHTML += `<option value="${r.id}">${r.numero||''} ${nome}</option>`;
+    });
+  } else if(ctx === 'cliente'){
+    cliData.forEach(r => {
+      const nome = r.contato?.nome || r.contato?.empresa || r.numero_contrato || '—';
+      refSel.innerHTML += `<option value="${r.id}">${r.numero_contrato||''} ${nome}</option>`;
+    });
+  }
+}
+
+function kariaMontarContexto(){
+  const ctx = document.getElementById('karia-contexto').value;
+  const refId = document.getElementById('karia-ref-id').value;
+
+  let sistema = `Você é a karIA, assistente estratégica interna da KARIA Gestão.
+A KARIA Gestão é uma consultoria especializada em Controladoria Jurídica para escritórios de advocacia, fundada por Nathalya Pereira, controller jurídico com quase 10 anos de experiência no setor jurídico.
+Serviços: Diagnóstico Estratégico, Implantação de Controladoria Jurídica, Acompanhamento Estratégico (Essencial, Evolução, Estratégico), Terceirização de Controladoria e Mentoria Individual.
+Posicionamento: atuação 100% consultiva e estratégica, sem execução operacional. Especialização exclusiva em escritórios de advocacia.
+Tom: profissional, estratégico e humano. Respostas objetivas, diretas e orientadas para ação.
+Responda sempre em português brasileiro.`;
+
+  if(ctx === 'pipeline' && refId){
+    const r = pipData.find(x => x.id === refId);
+    if(r){
+      sistema += `\n\nCONTEXTO DO LEAD ATUAL:
+Nome/Empresa: ${r.contato?.nome||''} ${r.contato?.empresa ? '/ '+r.contato.empresa : ''}
+Etapa: ${r.etapa||'—'}
+Produto de interesse: ${r.produto||'—'}
+Valor: ${r.valor ? 'R$ '+r.valor : '—'}
+Follow-up: ${r.followup ? new Date(r.followup).toLocaleDateString('pt-BR') : '—'}
+Observações: ${r.obs||'—'}
+Número: ${r.numero||'—'}`;
+    }
+  } else if(ctx === 'cliente' && refId){
+    const r = cliData.find(x => x.id === refId);
+    if(r){
+      sistema += `\n\nCONTEXTO DO CLIENTE ATIVO:
+Nome/Empresa: ${r.contato?.nome||''} ${r.contato?.empresa ? '/ '+r.contato.empresa : ''}
+Serviço contratado: ${r.servico_contratado||'—'}
+Valor mensal: ${r.valor_mensal ? 'R$ '+r.valor_mensal : '—'}
+Contrato nº: ${r.numero_contrato||'—'}
+Início: ${r.data_inicio ? new Date(r.data_inicio).toLocaleDateString('pt-BR') : '—'}
+Renovação: ${r.data_renovacao ? new Date(r.data_renovacao).toLocaleDateString('pt-BR') : '—'}
+Status: ${r.status||'—'}
+Observações: ${r.obs||'—'}`;
+    }
+  }
+  return sistema;
+}
+
+function kariaAdicionarMensagem(role, texto){
+  const container = document.getElementById('karia-msgs');
+  const isUser = role === 'user';
+  const div = document.createElement('div');
+  div.className = `karia-msg ${role}`;
+  div.innerHTML = `
+    <div class="karia-avatar">${isUser ? '👤' : '✦'}</div>
+    <div class="karia-bubble">${texto.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return div;
+}
+
+function kariaAdicionarTyping(){
+  const container = document.getElementById('karia-msgs');
+  const div = document.createElement('div');
+  div.className = 'karia-msg assistant';
+  div.id = 'karia-typing';
+  div.innerHTML = `<div class="karia-avatar">✦</div><div class="karia-bubble karia-typing"><span></span><span></span><span></span></div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+async function kariaEnviar(){
+  const input = document.getElementById('karia-input');
+  const texto = input.value.trim();
+  if(!texto) return;
+
+  const key = await kariaCarregarKey();
+  if(!key){ showToast('Chave da API não configurada','err'); return; }
+
+  input.value = '';
+  document.getElementById('karia-send-btn').disabled = true;
+
+  const msgs = document.getElementById('karia-msgs');
+  const inicial = msgs.querySelector('div[style*="text-align:center"]');
+  if(inicial) inicial.remove();
+
+  kariaAdicionarMensagem('user', texto);
+  kariaHistorico.push({role:'user', content: texto});
+  kariaAdicionarTyping();
+
+  try{
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key': key,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1024,
+        system: kariaMontarContexto(),
+        messages: kariaHistorico
+      })
+    });
+
+    const typing = document.getElementById('karia-typing');
+    if(typing) typing.remove();
+
+    if(!resp.ok){
+      const err = await resp.json();
+      throw new Error(err.error?.message || resp.statusText);
+    }
+
+    const data = await resp.json();
+    const resposta = data.content[0].text;
+    kariaHistorico.push({role:'assistant', content: resposta});
+    kariaAdicionarMensagem('assistant', resposta);
+
+  }catch(e){
+    const typing = document.getElementById('karia-typing');
+    if(typing) typing.remove();
+    kariaAdicionarMensagem('assistant', '⚠️ Erro ao conectar: ' + e.message);
+  }finally{
+    document.getElementById('karia-send-btn').disabled = false;
+    input.focus();
+  }
+}
 </script>
 </body>
 </html>
