@@ -2770,6 +2770,33 @@ async function cntSave(){
   if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showToast('E-mail inválido','err'); return; }
   const tipo=document.getElementById('cnt-categoria').value;
   const isColab=['Colaborador CLT','Colaborador PJ'].includes(tipo);
+  const isFornCli=['Fornecedor','Cliente','Parceiro'].includes(tipo);
+  // validações de documento obrigatório
+  if(tipo==='Colaborador CLT'){
+    const cpf=document.getElementById('cnt-cpf').value.replace(/\D/g,'');
+    if(cpf.length!==11){ showToast('CPF obrigatório para Colaborador CLT','err'); return; }
+  }
+  if(['Colaborador PJ','Fornecedor','Cliente','Parceiro'].includes(tipo)){
+    const cnpjEl=tipo==='Colaborador PJ'?'cnt-cnpj-colab':'cnt-cnpj-forn';
+    const cnpj=document.getElementById(cnpjEl).value.replace(/\D/g,'');
+    if(cnpj.length!==14){ showToast('CNPJ obrigatório para '+tipo,'err'); return; }
+  }
+  // verificação de duplicidade
+  if(!_cntEditing){
+    const cpfVal=document.getElementById('cnt-cpf').value.replace(/\D/g,'');
+    const cnpjVal=(document.getElementById('cnt-cnpj-colab').value||document.getElementById('cnt-cnpj-forn').value).replace(/\D/g,'');
+    const dupes=cntData.filter(r=>{
+      if(normalize(r.nome)===normalize(nome)) return true;
+      if(cpfVal && r.cpf && r.cpf.replace(/\D/g,'')===cpfVal) return true;
+      if(cnpjVal && r.cnpj && r.cnpj.replace(/\D/g,'')===cnpjVal) return true;
+      return false;
+    });
+    if(dupes.length){
+      const nomes=dupes.map(d=>d.nome).join(', ');
+      const continuar=confirm(`Atenção: já existe um cadastro similar (${nomes}).\n\nDeseja continuar mesmo assim?`);
+      if(!continuar) return;
+    }
+  }
   const isForn=['Fornecedor','Parceiro'].includes(tipo);
   const payload={
     nome, empresa:document.getElementById('cnt-empresa').value,
@@ -2967,7 +2994,8 @@ function pipOpenModal(id){
 function pipCloseModal(){ document.getElementById('pip-modal').classList.remove('open'); }
 async function pipSave(){
   if(!_pipContatoId){ showToast('Selecione ou crie um contato','err'); return; }
-  const respId=document.getElementById('pip-responsavel')?.value||currentUser.id;
+  const respId=document.getElementById('pip-responsavel')?.value;
+  if(!respId){ showToast('Selecione um responsável','err'); return; }
   const payload={
     contato_id:_pipContatoId,
     etapa:document.getElementById('pip-etapa').value,
