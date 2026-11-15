@@ -593,7 +593,7 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       <div class="tabs-bar" style="margin-bottom:0;border-bottom:2px solid var(--cinza-claro)">
         <button class="tab-btn active" id="crm-tab-btn-pipeline" onclick="crmShowTab('pipeline',this)">Pipeline</button>
         <button class="tab-btn" id="crm-tab-btn-clientes" onclick="crmShowTab('clientes',this)">Clientes Ativos</button>
-        <button class="tab-btn" id="crm-tab-btn-contatos" onclick="crmShowTab('contatos',this)">Contatos</button>
+        <button class="tab-btn" id="crm-tab-btn-contatos" onclick="crmShowTab('contatos',this)">Pessoas</button>
       </div>
 
       <!-- ABA PIPELINE -->
@@ -618,7 +618,7 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
         <div id="crm-lista" class="crm-table-wrap" style="display:none">
           <div style="overflow-x:auto">
             <table>
-              <thead><tr><th>Empresa</th><th>Contato</th><th>Etapa</th><th>Produto</th><th>Valor</th><th>Follow-up</th><th></th></tr></thead>
+              <thead><tr><th>Nº</th><th>Empresa</th><th>Contato</th><th>Responsável</th><th>Etapa</th><th>Produto</th><th>Valor</th><th>Follow-up</th><th></th></tr></thead>
               <tbody id="pip-tbody"></tbody>
             </table>
           </div>
@@ -646,20 +646,21 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
         <div id="cli-cards" class="tx-card-list"></div>
       </div>
 
-      <!-- ABA CONTATOS -->
+      <!-- ABA PESSOAS -->
       <div id="crm-tab-contatos" style="display:none">
         <div class="crm-toolbar">
-          <input id="cnt-search" class="crm-search" placeholder="Buscar contato..." oninput="cntRender()">
+          <input id="cnt-search" class="crm-search" placeholder="Buscar pessoa..." oninput="cntRender()">
           <select class="filtro-select" id="cnt-fil-cat" onchange="cntRender()">
-            <option value="">Todas as categorias</option>
-            <option>Lead</option><option>Cliente</option><option>Fornecedor</option>
-            <option>Parceiro</option><option>Referência</option><option>Software</option><option>Outro</option>
+            <option value="">Todos os tipos</option>
+            <option>Lead</option><option>Cliente</option>
+            <option>Colaborador CLT</option><option>Colaborador PJ</option>
+            <option>Fornecedor</option><option>Parceiro</option><option>Outro</option>
           </select>
-          <button class="btn btn-primary btn-sm" onclick="cntOpenModal()">+ Novo Contato</button>
+          <button class="btn btn-primary btn-sm" onclick="cntOpenModal()">+ Nova Pessoa</button>
         </div>
         <div style="overflow-x:auto">
           <table>
-            <thead><tr><th>Nome</th><th>Empresa</th><th>Categoria</th><th>WhatsApp</th><th>E-mail</th><th></th></tr></thead>
+            <thead><tr><th>Nome</th><th>Empresa</th><th>Tipo</th><th>WhatsApp</th><th>E-mail</th><th></th></tr></thead>
             <tbody id="cnt-tbody"></tbody>
           </table>
         </div>
@@ -1266,10 +1267,11 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
         <input class="form-control" type="text" id="cnt-cargo" placeholder="Sócio, Gestor...">
       </div>
       <div class="form-group">
-        <label class="form-label">Categoria</label>
+        <label class="form-label">Tipo</label>
         <select class="form-control" id="cnt-categoria">
-          <option>Lead</option><option>Cliente</option><option>Fornecedor</option>
-          <option>Parceiro</option><option>Referência</option><option>Software</option><option>Outro</option>
+          <option>Lead</option><option>Cliente</option>
+          <option>Colaborador CLT</option><option>Colaborador PJ</option>
+          <option>Fornecedor</option><option>Parceiro</option><option>Outro</option>
         </select>
       </div>
     </div>
@@ -1347,6 +1349,14 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       <div class="form-group">
         <label class="form-label">Follow-up</label>
         <input class="form-control" type="date" id="pip-followup">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Responsável</label>
+        <select class="form-control" id="pip-responsavel">
+          <option value="">— Selecione —</option>
+        </select>
       </div>
     </div>
     <div class="form-group">
@@ -1478,7 +1488,7 @@ function showApp(user){
   document.getElementById('sidebarUser').textContent=user.email;
   document.getElementById('dbStatus').textContent='● Conectado';
   carregarDados().then(()=>{ initFinanceiro(); });
-  cntLoad().then(()=>{ pipLoad(); });
+  cntLoad().then(()=>{ pipLoad(); pipCarregarUsuarios(); });
   linzInit();
 }
 
@@ -2567,14 +2577,27 @@ async function cntDelete(){
 /* --- PIPELINE (karia_pipeline) --- */
 let pipData=[], _pipEditing=null, _pipContatoId=null;
 
+let pipUsuarios=[]; // lista de usuários para o select de responsável
+
 async function pipLoad(){
   if(!SB) return;
   try{
-    const {data,error}=await SB.from('karia_pipeline').select('*, contato:karia_contatos(nome,empresa,whatsapp)').order('created_at',{ascending:false});
+    const {data,error}=await SB.from('karia_pipeline')
+      .select('*, contato:karia_contatos(nome,empresa,whatsapp)')
+      .order('created_at',{ascending:false});
     if(error) throw error;
     pipData=data||[];
     pipRender();
   }catch(e){ console.error('pipLoad',e); }
+}
+
+async function pipCarregarUsuarios(){
+  // Por enquanto usa só o usuário atual; futuramente listará todos com acesso
+  pipUsuarios=[{id: currentUser.id, email: currentUser.email, nome: currentUser.user_metadata?.nome||currentUser.email}];
+  const sel=document.getElementById('pip-responsavel');
+  if(!sel) return;
+  sel.innerHTML='<option value="">— Selecione —</option>'+
+    pipUsuarios.map(u=>`<option value="${u.id}">${u.nome}</option>`).join('');
 }
 function pipFiltered(){
   const q=(document.getElementById('pip-search')?.value||'').toLowerCase();
@@ -2606,6 +2629,7 @@ function pipRender(){
         <div class="kanban-col-header">${et}<span class="kanban-col-count">${cards.length}</span></div>
         ${cards.map(r=>`
           <div class="kanban-card ${ETAPA_CLASS[r.etapa]||''}" onclick="pipOpenModal('${r.id}')">
+            <div style="font-size:10px;color:#aaa;margin-bottom:2px">${r.numero||''}</div>
             <div class="card__firm">${r.contato?.empresa||r.contato?.nome||'Sem nome'}</div>
             <div class="card__person">${r.contato?.nome||''}</div>
             <div class="card__tags">
@@ -2617,10 +2641,13 @@ function pipRender(){
       </div>`;
     }).join('');
   }else{
+    const respNome=(id)=>{ const u=pipUsuarios.find(u=>u.id===id); return u?u.nome.split('@')[0]:'—'; };
     document.getElementById('pip-tbody').innerHTML=rows.map(r=>`
       <tr onclick="pipOpenModal('${r.id}')">
+        <td style="color:#888;font-size:11px">${r.numero||'—'}</td>
         <td><strong>${r.contato?.empresa||r.contato?.nome||'—'}</strong></td>
         <td>${r.contato?.nome||'—'}${r.contato?.whatsapp?` <a href="${waLink(r.contato.whatsapp)}" target="_blank" style="color:var(--cobre)">📱</a>`:''}</td>
+        <td style="font-size:12px">${respNome(r.responsavel_id)}</td>
         <td><span class="td-status-badge ${ETAPA_STATUS[r.etapa]||''}">${r.etapa||''}</span></td>
         <td>${r.produto||'—'}</td>
         <td>${r.valor?fmtBRL(r.valor):'—'}</td>
@@ -2675,6 +2702,10 @@ function pipOpenModal(id){
   document.getElementById('pip-valor').value=r?.valor||'';
   document.getElementById('pip-followup').value=r?.followup||'';
   document.getElementById('pip-obs').value=r?.obs||'';
+  pipCarregarUsuarios().then(()=>{
+    const sel=document.getElementById('pip-responsavel');
+    if(sel) sel.value=r?.responsavel_id||currentUser.id||'';
+  });
   document.getElementById('pip-del-btn').style.display=r?'inline-block':'none';
   const cb=document.getElementById('pip-conv-btn');
   if(cb) cb.style.display=(r&&r.etapa==='Fechado')?'inline-block':'none';
@@ -2683,6 +2714,7 @@ function pipOpenModal(id){
 function pipCloseModal(){ document.getElementById('pip-modal').classList.remove('open'); }
 async function pipSave(){
   if(!_pipContatoId){ showToast('Selecione ou crie um contato','err'); return; }
+  const respId=document.getElementById('pip-responsavel')?.value||currentUser.id;
   const payload={
     contato_id:_pipContatoId,
     etapa:document.getElementById('pip-etapa').value,
@@ -2690,6 +2722,7 @@ async function pipSave(){
     valor:parseFloat(document.getElementById('pip-valor').value)||null,
     followup:document.getElementById('pip-followup').value||null,
     obs:document.getElementById('pip-obs').value,
+    responsavel_id:respId||null,
     user_id:currentUser.id
   };
   try{
@@ -2697,6 +2730,9 @@ async function pipSave(){
       const {error}=await SB.from('karia_pipeline').update(payload).eq('id',_pipEditing);
       if(error) throw error;
     }else{
+      // gera número sequencial PIP-XXX
+      const count=(pipData.length||0)+1;
+      payload.numero=`PIP-${String(count).padStart(3,'0')}`;
       const {error}=await SB.from('karia_pipeline').insert([payload]);
       if(error) throw error;
     }
