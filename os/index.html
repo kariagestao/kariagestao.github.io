@@ -389,6 +389,20 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
 .hamburger span{display:block;width:20px;height:2px;background:var(--musgo)}
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:49}
 .sidebar-overlay.open{display:block}
+/* karIA painel */
+#karia-fab{display:flex;align-items:center;justify-content:center}
+#karia-fab:hover{transform:scale(1.08)}
+.karia-msg{display:flex;gap:8px;align-items:flex-start}
+.karia-msg.user{flex-direction:row-reverse}
+.karia-avatar{width:28px;height:28px;border-radius:50%;background:var(--musgo);color:var(--cobre);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.karia-msg.user .karia-avatar{background:var(--cobre);color:#fff}
+.karia-bubble{background:#f4f1ee;border-radius:12px;padding:8px 12px;font-size:13px;line-height:1.5;max-width:85%;color:var(--musgo)}
+.karia-msg.user .karia-bubble{background:var(--musgo);color:#fff;border-radius:12px 12px 4px 12px}
+.karia-msg.assistant .karia-bubble{border-radius:12px 12px 12px 4px}
+.karia-typing span{display:inline-block;width:6px;height:6px;background:#aaa;border-radius:50%;margin:0 2px;animation:kbounce 1s infinite}
+.karia-typing span:nth-child(2){animation-delay:.2s}
+.karia-typing span:nth-child(3){animation-delay:.4s}
+@keyframes kbounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
 </style>
 </head>
 <body>
@@ -429,8 +443,8 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       <div class="nav-item" id="nav-pessoas" onclick="switchModule('pessoas',this)">
         <span class="icon">🧑‍🤝‍🧑</span> <span>Pessoas</span>
       </div>
-      <div class="nav-item" id="nav-karia" onclick="switchModule('karia',this)">
-        <span class="icon">✦</span> <span>karIA</span>
+      <div class="nav-item" id="nav-config" onclick="switchModule('config',this)" style="display:none">
+        <span class="icon">⚙️</span> <span>Configurações</span>
       </div>
       <div class="nav-group-label open" onclick="toggleNavGroup(this)" id="grp-operacao">
         <div class="nav-section">Operação Clientes</div>
@@ -695,46 +709,15 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       </div>
     </div><!-- /mod-pessoas -->
 
-    <!-- ===== MÓDULO karIA ===== -->
-    <div class="module" id="mod-karia">
-      <div style="max-width:720px;margin:0 auto;height:calc(100vh - 120px);display:flex;flex-direction:column">
-        <!-- header -->
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-          <div style="width:40px;height:40px;background:var(--musgo);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--cobre);font-weight:700;flex-shrink:0">✦</div>
-          <div>
-            <div style="font-size:18px;font-weight:700;color:var(--musgo)">kar<span style="color:var(--cobre)">IA</span></div>
-            <div style="font-size:11px;color:#888">Assistente estratégica da KARIA Gestão</div>
-          </div>
-          <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-            <select id="karia-contexto" class="filtro-select" style="font-size:12px" onchange="kariaContextoMudar()">
-              <option value="geral">Contexto geral</option>
-              <option value="pipeline">Lead do pipeline</option>
-              <option value="cliente">Cliente ativo</option>
-            </select>
-            <select id="karia-ref-id" class="filtro-select" style="font-size:12px;display:none">
-              <option value="">Selecione...</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- mensagens -->
-        <div id="karia-msgs" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:4px 0 16px">
-          <div style="text-align:center;color:#bbb;font-size:12px;padding:32px 0">
-            Olá! Sou a <strong>kar<span style="color:var(--cobre)">IA</span></strong>, sua assistente estratégica.<br>
-            Selecione um contexto acima e faça sua pergunta.
-          </div>
-        </div>
-
-        <!-- input -->
-        <div style="display:flex;gap:8px;padding-top:12px;border-top:1px solid #eee">
-          <textarea id="karia-input" class="form-control" rows="2" placeholder="Digite sua pergunta..." style="resize:none;flex:1;font-size:13px" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();kariaEnviar()}"></textarea>
-          <button class="btn btn-primary" onclick="kariaEnviar()" style="align-self:flex-end;padding:10px 18px" id="karia-send-btn">
-            Enviar
-          </button>
-        </div>
-        <div style="font-size:10px;color:#ccc;text-align:center;margin-top:6px">Enter para enviar · Shift+Enter para nova linha</div>
+    <!-- ===== MÓDULO CONFIGURAÇÕES (admin) ===== -->
+    <div class="module" id="mod-config">
+      <div style="max-width:800px;margin:0 auto">
+        <div style="font-size:18px;font-weight:700;color:var(--musgo);margin-bottom:4px">Configurações</div>
+        <div style="font-size:12px;color:#888;margin-bottom:24px">Base de conhecimento da karIA — somente administradores</div>
+        <div id="config-lista" style="display:flex;flex-direction:column;gap:16px"></div>
+        <button class="btn btn-primary" style="margin-top:20px" onclick="configSalvar()">Salvar alterações</button>
       </div>
-    </div><!-- /mod-karia -->
+    </div><!-- /mod-config -->
 
     <!-- ===== MÓDULO LINZMEYER ===== -->
     <div class="module" id="mod-linzmeyer">
@@ -1676,6 +1659,13 @@ function showApp(user){
   carregarDados().then(()=>{ initFinanceiro(); });
   cntLoad().then(()=>{ pipLoad(); pipCarregarUsuarios(); });
   linzInit();
+  // mostra botão karIA e verifica admin
+  document.getElementById('karia-fab').style.display = 'flex';
+  SB.from('karia_contatos').select('is_admin').eq('email', user.email).limit(1).then(({data})=>{
+    if(data && data[0]?.is_admin){
+      document.getElementById('nav-config').style.display = '';
+    }
+  });
   // restaura último módulo visitado
   try{
     const lastMod=localStorage.getItem('kariaModule');
@@ -1691,7 +1681,8 @@ const modTitles={
   financeiro:['Financeiro','Visão geral das finanças'],
   crm:['Comercial CRM','Pipeline de clientes'],
   pessoas:['Pessoas','Colaboradores, fornecedores e usuários do sistema'],
-  linzmeyer:['Op. Linzmeyer','Controle de prazos e publicações']
+  linzmeyer:['Op. Linzmeyer','Controle de prazos e publicações'],
+  config:['Configurações','Base de conhecimento da karIA']
 };
 function switchModule(mod,el){
   document.querySelectorAll('.module').forEach(m=>m.classList.remove('active'));
@@ -1706,6 +1697,7 @@ function switchModule(mod,el){
   closeSidebar();
   if(mod==='linzmeyer') linzInit();
   if(mod==='pessoas') cntLoad();
+  if(mod==='config') configCarregar();
 }
 function toggleSidebar(){
   document.getElementById('sidebar').classList.toggle('open');
@@ -6030,9 +6022,130 @@ document.addEventListener('input',function(e){
   el.value=v;
 });
 
-/* ===== karIA ===== */
+
+/* ===== CONFIGURAÇÕES ===== */
+let configData = [];
+
+async function configCarregar(){
+  const {data} = await SB.from('karia_conhecimento').select('*').order('ordem');
+  configData = data || [];
+  const lista = document.getElementById('config-lista');
+  if(!lista) return;
+  lista.innerHTML = configData.map(r => `
+    <div style="background:#fff;border:1px solid #e8e4de;border-radius:10px;padding:16px">
+      <div style="font-size:11px;font-weight:600;color:var(--cobre);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">${r.titulo}</div>
+      <textarea class="form-control" id="cfg-${r.id}" rows="5" style="font-size:13px;line-height:1.6">${r.conteudo}</textarea>
+    </div>`).join('');
+}
+
+async function configSalvar(){
+  for(const r of configData){
+    const el = document.getElementById('cfg-'+r.id);
+    if(!el) continue;
+    await SB.from('karia_conhecimento').update({conteudo: el.value, updated_at: new Date().toISOString()}).eq('id', r.id);
+  }
+  showToast('Base de conhecimento salva!','ok');
+}
+
+</script>
+
+<!-- ===== BOTÃO FLUTUANTE karIA ===== -->
+<button id="karia-fab" onclick="kariaTogglePanel()" title="Abrir karIA" style="
+  display:none;
+  position:fixed;bottom:28px;right:28px;z-index:200;
+  width:52px;height:52px;border-radius:50%;
+  background:var(--musgo);color:var(--cobre);
+  border:none;cursor:pointer;font-size:22px;
+  box-shadow:0 4px 16px rgba(0,0,0,.25);
+  transition:transform .2s;
+">✦</button>
+
+<!-- ===== PAINEL LATERAL karIA ===== -->
+<div id="karia-panel" style="
+  position:fixed;top:0;right:-420px;width:400px;height:100vh;z-index:199;
+  background:#fff;border-left:1px solid #e8e4de;
+  display:flex;flex-direction:column;
+  transition:right .3s ease;
+  box-shadow:-4px 0 20px rgba(0,0,0,.08);
+">
+  <!-- header painel -->
+  <div style="padding:16px 18px;border-bottom:1px solid #eee;display:flex;align-items:center;gap:10px;flex-shrink:0">
+    <div style="width:34px;height:34px;background:var(--musgo);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--cobre);font-size:16px;flex-shrink:0">✦</div>
+    <div style="flex:1">
+      <div style="font-size:14px;font-weight:700;color:var(--musgo)">kar<span style="color:var(--cobre)">IA</span></div>
+      <div style="font-size:10px;color:#aaa">Assistente estratégica</div>
+    </div>
+    <button onclick="kariaTogglePanel()" style="background:none;border:none;cursor:pointer;font-size:18px;color:#aaa;padding:4px">×</button>
+  </div>
+
+  <!-- seletor de contexto -->
+  <div style="padding:12px 18px;border-bottom:1px solid #f0ece8;flex-shrink:0;background:#faf9f7">
+    <div style="font-size:10px;color:#aaa;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Contexto</div>
+    <div style="display:flex;gap:6px">
+      <select id="karia-contexto" class="filtro-select" style="font-size:12px;flex:1" onchange="kariaContextoMudar()">
+        <option value="geral">Geral</option>
+        <option value="contato">Por contato</option>
+      </select>
+      <select id="karia-ref-id" class="filtro-select" style="font-size:12px;flex:1;display:none" onchange="kariaContextoSelecionou()">
+        <option value="">Selecione...</option>
+      </select>
+    </div>
+    <div id="karia-ctx-info" style="font-size:11px;color:var(--cobre);margin-top:6px;display:none"></div>
+  </div>
+
+  <!-- mensagens -->
+  <div id="karia-msgs" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:16px 18px">
+    <div id="karia-welcome" style="text-align:center;color:#ccc;font-size:12px;padding:24px 0">
+      Selecione um contexto e faça sua pergunta.<br>O histórico é salvo por contato.
+    </div>
+  </div>
+
+  <!-- sugestões + input -->
+  <div style="padding:12px 18px;border-top:1px solid #eee;flex-shrink:0">
+    <div style="margin-bottom:8px">
+      <select id="karia-sugestao" class="filtro-select" style="font-size:12px;width:100%" onchange="kariaSugestaoSelecionou()">
+        <option value="">💡 Selecione uma sugestão...</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:6px">
+      <textarea id="karia-input" class="form-control" rows="2" placeholder="Ou escreva aqui..." style="resize:none;flex:1;font-size:13px" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();kariaEnviar()}"></textarea>
+      <button class="btn btn-primary" onclick="kariaEnviar()" style="align-self:flex-end;padding:8px 14px;font-size:13px" id="karia-send-btn">↑</button>
+    </div>
+    <div style="font-size:10px;color:#ccc;margin-top:4px">Enter envia · Shift+Enter nova linha</div>
+  </div>
+</div>
+
+<script>
+/* ===== karIA PAINEL ===== */
+let kariaPanelOpen = false;
 let kariaHistorico = [];
 let kariaApiKey = null;
+let kariaContatoId = null;
+let kariaContatoNome = null;
+
+const kariaSugestoes = {
+  geral: [
+    'Como posso melhorar minha abordagem comercial?',
+    'Me ajuda a estruturar uma proposta',
+    'Como responder a uma objeção de preço?',
+    'Que métricas devo acompanhar no meu negócio?'
+  ],
+  contato: [
+    'Me dê um resumo desse contato',
+    'Qual a melhor abordagem para o próximo contato?',
+    'Me sugira um texto de follow-up',
+    'Quais pontos de atenção tenho com esse lead?',
+    'Me ajuda a preparar a reunião com esse cliente',
+    'Sugira ideias para estruturar a operação dele'
+  ]
+};
+
+function kariaTogglePanel(){
+  kariaPanelOpen = !kariaPanelOpen;
+  const panel = document.getElementById('karia-panel');
+  panel.style.right = kariaPanelOpen ? '0' : '-420px';
+  if(kariaPanelOpen) kariaContextoMudar();
+}
 
 async function kariaCarregarKey(){
   if(kariaApiKey) return kariaApiKey;
@@ -6044,72 +6157,138 @@ async function kariaCarregarKey(){
 function kariaContextoMudar(){
   const ctx = document.getElementById('karia-contexto').value;
   const refSel = document.getElementById('karia-ref-id');
-  if(ctx === 'geral'){ refSel.style.display='none'; return; }
-  refSel.style.display='';
-  refSel.innerHTML='<option value="">Selecione...</option>';
-  if(ctx === 'pipeline'){
-    pipData.forEach(r => {
-      const nome = r.contato?.nome || r.contato?.empresa || r.numero || '—';
-      refSel.innerHTML += `<option value="${r.id}">${r.numero||''} ${nome}</option>`;
-    });
-  } else if(ctx === 'cliente'){
-    cliData.forEach(r => {
-      const nome = r.contato?.nome || r.contato?.empresa || r.numero_contrato || '—';
-      refSel.innerHTML += `<option value="${r.id}">${r.numero_contrato||''} ${nome}</option>`;
-    });
+  const sugestoes = document.getElementById('karia-sugestao');
+
+  // popula sugestões
+  sugestoes.innerHTML = '<option value="">💡 Selecione uma sugestão...</option>';
+  (kariaSugestoes[ctx] || kariaSugestoes.geral).forEach(s => {
+    sugestoes.innerHTML += `<option value="${s}">${s}</option>`;
+  });
+
+  if(ctx === 'geral'){
+    refSel.style.display = 'none';
+    document.getElementById('karia-ctx-info').style.display = 'none';
+    kariaContatoId = null;
+    kariaContatoNome = null;
+    kariaHistorico = [];
+    kariaLimparMsgs();
+    return;
   }
+
+  // popula contatos (leads + clientes)
+  refSel.style.display = '';
+  refSel.innerHTML = '<option value="">Selecione...</option>';
+
+  // leads do pipeline
+  if(typeof pipData !== 'undefined') pipData.forEach(r => {
+    const nome = r.contato?.nome || r.contato?.empresa || r.numero || '—';
+    refSel.innerHTML += `<option value="cnt-${r.contato_id}" data-nome="${nome}">[Lead] ${r.numero||''} ${nome}</option>`;
+  });
+  // clientes ativos
+  if(typeof cliData !== 'undefined') cliData.forEach(r => {
+    const nome = r.contato?.nome || r.contato?.empresa || r.numero_contrato || '—';
+    refSel.innerHTML += `<option value="cnt-${r.contato_id}" data-nome="${nome}">[Cliente] ${r.numero_contrato||''} ${nome}</option>`;
+  });
 }
 
-function kariaMontarContexto(){
-  const ctx = document.getElementById('karia-contexto').value;
-  const refId = document.getElementById('karia-ref-id').value;
+async function kariaContextoSelecionou(){
+  const refSel = document.getElementById('karia-ref-id');
+  const val = refSel.value;
+  const ctxInfo = document.getElementById('karia-ctx-info');
+  if(!val){ kariaContatoId = null; kariaContatoNome = null; kariaHistorico = []; kariaLimparMsgs(); ctxInfo.style.display='none'; return; }
 
-  let sistema = `Você é a karIA, assistente estratégica interna da KARIA Gestão.
-A KARIA Gestão é uma consultoria especializada em Controladoria Jurídica para escritórios de advocacia, fundada por Nathalya Pereira, controller jurídico com quase 10 anos de experiência no setor jurídico.
-Serviços: Diagnóstico Estratégico, Implantação de Controladoria Jurídica, Acompanhamento Estratégico (Essencial, Evolução, Estratégico), Terceirização de Controladoria e Mentoria Individual.
-Posicionamento: atuação 100% consultiva e estratégica, sem execução operacional. Especialização exclusiva em escritórios de advocacia.
-Tom: profissional, estratégico e humano. Respostas objetivas, diretas e orientadas para ação.
-Responda sempre em português brasileiro.`;
+  kariaContatoId = val.replace('cnt-','');
+  const opt = refSel.options[refSel.selectedIndex];
+  kariaContatoNome = opt.dataset.nome || 'Contato';
 
-  if(ctx === 'pipeline' && refId){
-    const r = pipData.find(x => x.id === refId);
-    if(r){
-      sistema += `\n\nCONTEXTO DO LEAD ATUAL:
-Nome/Empresa: ${r.contato?.nome||''} ${r.contato?.empresa ? '/ '+r.contato.empresa : ''}
-Etapa: ${r.etapa||'—'}
-Produto de interesse: ${r.produto||'—'}
-Valor: ${r.valor ? 'R$ '+r.valor : '—'}
-Follow-up: ${r.followup ? new Date(r.followup).toLocaleDateString('pt-BR') : '—'}
-Observações: ${r.obs||'—'}
-Número: ${r.numero||'—'}`;
+  ctxInfo.style.display = '';
+  ctxInfo.textContent = `Contexto carregado: ${kariaContatoNome}`;
+
+  // carrega histórico do banco
+  await kariaCarregarHistorico();
+}
+
+function kariaLimparMsgs(){
+  const msgs = document.getElementById('karia-msgs');
+  msgs.innerHTML = `<div id="karia-welcome" style="text-align:center;color:#ccc;font-size:12px;padding:24px 0">Selecione um contexto e faça sua pergunta.<br>O histórico é salvo por contato.</div>`;
+}
+
+async function kariaCarregarHistorico(){
+  const msgs = document.getElementById('karia-msgs');
+  msgs.innerHTML = '';
+  kariaHistorico = [];
+
+  if(!kariaContatoId){ kariaLimparMsgs(); return; }
+
+  const {data} = await SB.from('karia_chat_historico')
+    .select('*')
+    .eq('contato_id', kariaContatoId)
+    .order('created_at');
+
+  if(!data || data.length === 0){
+    msgs.innerHTML = `<div style="text-align:center;color:#ccc;font-size:12px;padding:24px 0">Nenhuma conversa anterior sobre <strong>${kariaContatoNome}</strong>.<br>Comece agora!</div>`;
+    return;
+  }
+
+  data.forEach(r => {
+    if(r.role !== 'system'){
+      kariaAdicionarMensagem(r.role, r.conteudo, false);
+      kariaHistorico.push({role: r.role, content: r.conteudo});
     }
-  } else if(ctx === 'cliente' && refId){
-    const r = cliData.find(x => x.id === refId);
-    if(r){
-      sistema += `\n\nCONTEXTO DO CLIENTE ATIVO:
-Nome/Empresa: ${r.contato?.nome||''} ${r.contato?.empresa ? '/ '+r.contato.empresa : ''}
-Serviço contratado: ${r.servico_contratado||'—'}
-Valor mensal: ${r.valor_mensal ? 'R$ '+r.valor_mensal : '—'}
-Contrato nº: ${r.numero_contrato||'—'}
-Início: ${r.data_inicio ? new Date(r.data_inicio).toLocaleDateString('pt-BR') : '—'}
-Renovação: ${r.data_renovacao ? new Date(r.data_renovacao).toLocaleDateString('pt-BR') : '—'}
-Status: ${r.status||'—'}
-Observações: ${r.obs||'—'}`;
+  });
+}
+
+function kariaSugestaoSelecionou(){
+  const sel = document.getElementById('karia-sugestao');
+  if(!sel.value) return;
+  document.getElementById('karia-input').value = sel.value;
+  sel.value = '';
+  document.getElementById('karia-input').focus();
+}
+
+async function kariaMontarContexto(){
+  // carrega base de conhecimento do Supabase
+  const {data: conhecimento} = await SB.from('karia_conhecimento').select('titulo,conteudo').order('ordem');
+
+  let sistema = `Você é a karIA, assistente estratégica interna da KARIA Gestão.\n\n`;
+
+  if(conhecimento && conhecimento.length > 0){
+    conhecimento.forEach(r => {
+      sistema += `## ${r.titulo}\n${r.conteudo}\n\n`;
+    });
+  }
+
+  sistema += `Responda sempre em português brasileiro. Tom profissional, estratégico e humano. Respostas objetivas e orientadas para ação.`;
+
+  // contexto dinâmico do contato
+  const ctx = document.getElementById('karia-contexto').value;
+  if(ctx === 'contato' && kariaContatoId){
+    // busca dados do pipeline
+    const pipItem = (typeof pipData !== 'undefined') ? pipData.find(r => r.contato_id === kariaContatoId) : null;
+    if(pipItem){
+      sistema += `\n\n## CONTEXTO DO LEAD ATUAL\nNome/Empresa: ${pipItem.contato?.nome||''} ${pipItem.contato?.empresa ? '/ '+pipItem.contato.empresa : ''}\nEtapa: ${pipItem.etapa||'—'}\nProduto: ${pipItem.produto||'—'}\nValor estimado: ${pipItem.valor ? 'R$ '+pipItem.valor : '—'}\nFollow-up: ${pipItem.followup ? new Date(pipItem.followup).toLocaleDateString('pt-BR') : '—'}\nObservações: ${pipItem.obs||'—'}`;
+    }
+    // busca dados de cliente
+    const cliItem = (typeof cliData !== 'undefined') ? cliData.find(r => r.contato_id === kariaContatoId) : null;
+    if(cliItem){
+      sistema += `\n\n## CONTEXTO DO CLIENTE ATIVO\nNome/Empresa: ${cliItem.contato?.nome||''} ${cliItem.contato?.empresa ? '/ '+cliItem.contato.empresa : ''}\nServiço: ${cliItem.servico_contratado||'—'}\nValor mensal: ${cliItem.valor_mensal ? 'R$ '+cliItem.valor_mensal : '—'}\nStatus: ${cliItem.status||'—'}\nObservações: ${cliItem.obs||'—'}`;
     }
   }
+
   return sistema;
 }
 
-function kariaAdicionarMensagem(role, texto){
+function kariaAdicionarMensagem(role, texto, scroll=true){
   const container = document.getElementById('karia-msgs');
+  const welcome = document.getElementById('karia-welcome');
+  if(welcome) welcome.remove();
+
   const isUser = role === 'user';
   const div = document.createElement('div');
   div.className = `karia-msg ${role}`;
-  div.innerHTML = `
-    <div class="karia-avatar">${isUser ? '👤' : '✦'}</div>
-    <div class="karia-bubble">${texto.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
+  div.innerHTML = `<div class="karia-avatar">${isUser ? '👤' : '✦'}</div><div class="karia-bubble">${texto.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>`;
   container.appendChild(div);
-  container.scrollTop = container.scrollHeight;
+  if(scroll) container.scrollTop = container.scrollHeight;
   return div;
 }
 
@@ -6134,15 +6313,17 @@ async function kariaEnviar(){
   input.value = '';
   document.getElementById('karia-send-btn').disabled = true;
 
-  const msgs = document.getElementById('karia-msgs');
-  const inicial = msgs.querySelector('div[style*="text-align:center"]');
-  if(inicial) inicial.remove();
-
   kariaAdicionarMensagem('user', texto);
   kariaHistorico.push({role:'user', content: texto});
   kariaAdicionarTyping();
 
+  // salva msg user no banco
+  if(kariaContatoId && currentUser){
+    await SB.from('karia_chat_historico').insert({user_id: currentUser.id, contato_id: kariaContatoId, role:'user', conteudo: texto});
+  }
+
   try{
+    const sistema = await kariaMontarContexto();
     const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method:'POST',
       headers:{
@@ -6154,7 +6335,7 @@ async function kariaEnviar(){
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 1024,
-        system: kariaMontarContexto(),
+        system: sistema,
         messages: kariaHistorico
       })
     });
@@ -6172,10 +6353,15 @@ async function kariaEnviar(){
     kariaHistorico.push({role:'assistant', content: resposta});
     kariaAdicionarMensagem('assistant', resposta);
 
+    // salva resposta no banco
+    if(kariaContatoId && currentUser){
+      await SB.from('karia_chat_historico').insert({user_id: currentUser.id, contato_id: kariaContatoId, role:'assistant', conteudo: resposta});
+    }
+
   }catch(e){
     const typing = document.getElementById('karia-typing');
     if(typing) typing.remove();
-    kariaAdicionarMensagem('assistant', '⚠️ Erro ao conectar: ' + e.message);
+    kariaAdicionarMensagem('assistant', '⚠️ Erro: ' + e.message);
   }finally{
     document.getElementById('karia-send-btn').disabled = false;
     input.focus();
