@@ -258,18 +258,23 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
 .crm-view-toggle{display:flex;gap:4px;border:1px solid var(--gray-light);border-radius:7px;overflow:hidden}
 .crm-view-btn{padding:7px 12px;background:var(--white);border:none;cursor:pointer;font-size:13px;transition:all .15s}
 .crm-view-btn.active{background:var(--musgo);color:var(--off)}
-.kanban-board{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;align-items:start}
-.kanban-col{background:rgba(13,31,45,.04);border-radius:10px;padding:12px;transition:all .2s}
-.kanban-col.collapsed{padding:10px 8px;min-width:48px;width:48px!important;cursor:pointer}
+.kanban-board{display:flex;flex-wrap:wrap;gap:16px;align-items:start}
+.kanban-col{background:rgba(13,31,45,.04);border-radius:10px;padding:12px;transition:all .2s;min-width:220px;flex:1}
+.kanban-col.collapsed{padding:8px 12px;min-width:0;flex:0 0 auto;width:auto}
 .kanban-col.collapsed .kanban-cards{display:none}
-.kanban-col.collapsed .kanban-col-header{flex-direction:column;gap:6px;align-items:center;writing-mode:vertical-rl;text-orientation:mixed;min-height:80px}
-.kanban-col.collapsed .kanban-col-header .col-toggle{transform:rotate(180deg)}
-.kanban-col-header{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--musgo);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.kanban-col.collapsed .kanban-col-header{margin-bottom:0}
+.kanban-col.collapsed .col-toggle{transform:rotate(180deg)}
+.kanban-col-header{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--musgo);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;user-select:none;white-space:nowrap}
 .kanban-col-header:hover .col-toggle{opacity:1}
-.col-toggle{font-size:13px;opacity:.4;transition:transform .2s, opacity .2s;margin-left:4px}
-.kanban-col-count{background:var(--musgo);color:var(--off);font-size:10px;padding:1px 7px;border-radius:10px}
+.col-toggle{font-size:11px;opacity:.35;transition:transform .2s,opacity .2s;flex-shrink:0}
+.kanban-col-count{background:var(--musgo);color:var(--off);font-size:10px;padding:1px 7px;border-radius:10px;flex-shrink:0}
 .kanban-card{background:var(--white);border-radius:8px;padding:12px;margin-bottom:8px;cursor:pointer;box-shadow:0 1px 4px rgba(13,31,45,.08);border-left:3px solid var(--gray-light);transition:all .15s}
 .kanban-card:hover{box-shadow:0 3px 12px rgba(13,31,45,.12);transform:translateY(-1px)}
+.kanban-card.card-min .card__person,.kanban-card.card-min .card__tags{display:none}
+.kanban-card.card-min{padding:7px 12px}
+.card-min-header{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card-min-btn{background:none;border:none;cursor:pointer;font-size:11px;color:#ccc;padding:0;line-height:1;flex-shrink:0;transition:color .15s}
+.card-min-btn:hover{color:var(--musgo)}
 .kanban-card.c-novo{border-left-color:#3B82F6}
 .kanban-card.c-contato{border-left-color:#8B5CF6}
 .kanban-card.c-proposta{border-left-color:var(--yellow)}
@@ -3117,34 +3122,53 @@ function pipToggleCol(etapa){
   pipRender();
 }
 
+function pipToggleCard(id, e){
+  e.stopPropagation();
+  let minCards = JSON.parse(localStorage.getItem('pipMinCards')||'[]');
+  if(minCards.includes(id)) minCards=minCards.filter(x=>x!==id);
+  else minCards.push(id);
+  localStorage.setItem('pipMinCards', JSON.stringify(minCards));
+  pipRender();
+}
+
 function pipRender(){
   const rows=pipFiltered();
   if(_crmView==='kanban'){
-    // restaura estado de colunas colapsadas
-    let _pipCollapsed = JSON.parse(localStorage.getItem('pipCollapsed')||'[]');
+    const _pipCollapsed = JSON.parse(localStorage.getItem('pipCollapsed')||'[]');
+    const _pipMinCards  = JSON.parse(localStorage.getItem('pipMinCards')||'[]');
     document.getElementById('crm-kanban').innerHTML=ETAPAS.map(et=>{
       const cards=rows.filter(r=>r.etapa===et);
-      const colId='pip-col-'+et.replace(/\s+/g,'-');
       const isCollapsed=_pipCollapsed.includes(et);
-      return `<div class="kanban-col${isCollapsed?' collapsed':''}" id="${colId}">
-        <div class="kanban-col-header" onclick="pipToggleCol('${et}')">
-          ${isCollapsed
-            ? `<span class="kanban-col-count">${cards.length}</span><span style="font-size:10px;writing-mode:vertical-rl">${et}</span>`
-            : `${et}<span style="display:flex;align-items:center;gap:6px"><span class="kanban-col-count">${cards.length}</span><span class="col-toggle">‹</span></span>`
-          }
+      return `<div class="kanban-col${isCollapsed?' collapsed':''}">
+        <div class="kanban-col-header" onclick="pipToggleCol('${et.replace(/'/g,"\\'")}')">
+          <span>${et}</span>
+          <span style="display:flex;align-items:center;gap:6px">
+            <span class="kanban-col-count">${cards.length}</span>
+            <span class="col-toggle">‹</span>
+          </span>
         </div>
         <div class="kanban-cards">
-          ${cards.map(r=>`
-            <div class="kanban-card ${ETAPA_CLASS[r.etapa]||''}" onclick="pipOpenModal('${r.id}')">
-              <div style="font-size:10px;color:#aaa;margin-bottom:2px">${r.numero||''}</div>
-              <div class="card__firm">${r.contato?.empresa||r.contato?.nome||'Sem nome'}</div>
-              <div class="card__person">${r.contato?.nome||''}</div>
-              <div class="card__tags">
+          ${cards.map(r=>{
+            const isMin=_pipMinCards.includes(r.id);
+            const nome=r.contato?.empresa||r.contato?.nome||'Sem nome';
+            return `<div class="kanban-card ${ETAPA_CLASS[r.etapa]||''}${isMin?' card-min':''}">
+              <div class="card-min-header">
+                <div onclick="pipOpenModal('${r.id}')" style="flex:1;min-width:0">
+                  <div style="font-size:10px;color:#aaa;margin-bottom:1px">${r.numero||''}</div>
+                  <div class="card__firm" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${nome}</div>
+                </div>
+                <button class="card-min-btn" onclick="pipToggleCard('${r.id}',event)" title="${isMin?'Expandir':'Minimizar'}">
+                  ${isMin?'▾':'▴'}
+                </button>
+              </div>
+              <div class="card__person" onclick="pipOpenModal('${r.id}')">${r.contato?.nome||''}</div>
+              <div class="card__tags" onclick="pipOpenModal('${r.id}')">
                 ${r.produto?`<span class="card__tag prod">${r.produto}</span>`:''}
                 ${r.followup?`<span class="card__tag fu${isAlertFollowup(r.followup)?' alert':''}">${isAlertFollowup(r.followup)?'🔔 ':''} ${fmtDate(r.followup)}</span>`:''}
                 ${r.valor?`<span class="card__tag">${fmtBRL(r.valor)}</span>`:''}
               </div>
-            </div>`).join('')}
+            </div>`;
+          }).join('')}
         </div>
       </div>`;
     }).join('');
