@@ -1551,7 +1551,7 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       <label class="form-label">Observações</label>
       <textarea class="form-control" id="cnt-obs" rows="2" placeholder="Notas livres..."></textarea>
     </div>
-    <div style="border-top:1px solid #f0f0f0;margin-top:4px;padding-top:10px;display:flex;flex-direction:column;gap:10px">
+    <div id="cnt-bloco-sistema" style="border-top:1px solid #f0f0f0;margin-top:4px;padding-top:10px;display:none;flex-direction:column;gap:10px">
       <div style="display:flex;align-items:center;gap:10px">
         <input type="checkbox" id="cnt-is-usuario" style="width:16px;height:16px;accent-color:var(--musgo)" onchange="document.getElementById('cnt-acesso-wrap').style.display=this.checked?'block':'none'">
         <label for="cnt-is-usuario" style="font-size:13px;color:#333;cursor:pointer;margin:0">Usuário do sistema <span style="color:#888;font-size:11px">(pode fazer login)</span></label>
@@ -2871,6 +2871,7 @@ function cntAjustarCampos(){
   document.getElementById('cnt-bloco-origem').style.display=isLeadCli?'':'none';
   document.getElementById('cnt-bloco-colab').style.display=isColab?'':'none';
   document.getElementById('cnt-bloco-forn').style.display=isForn?'':'none';
+  document.getElementById('cnt-bloco-sistema').style.display=isColab?'flex':'none';
 
   if(isColab){
     document.getElementById('cnt-cpf-wrap').style.display=isPJ?'none':'';
