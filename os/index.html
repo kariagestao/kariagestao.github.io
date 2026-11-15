@@ -2844,12 +2844,8 @@ async function pipCarregarUsuarios(){
   try{
     const {data}=await SB.from('karia_contatos').select('nome,user_id_vinculado').eq('pode_ser_responsavel',true).not('user_id_vinculado','is',null);
     pipUsuarios=data||[];
-    // garante que o usuário atual sempre apareça, mesmo sem cadastro em karia_contatos
-    if(!pipUsuarios.find(u=>u.user_id_vinculado===currentUser.id)){
-      pipUsuarios.unshift({user_id_vinculado:currentUser.id, nome: currentUser.email.split('@')[0]});
-    }
   }catch(e){
-    pipUsuarios=[{user_id_vinculado:currentUser.id, nome: currentUser.email.split('@')[0]}];
+    pipUsuarios=[];
   }
   const sel=document.getElementById('pip-responsavel');
   if(!sel) return;
