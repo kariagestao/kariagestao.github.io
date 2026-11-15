@@ -6144,15 +6144,10 @@ async function configSalvar(){
     </div>
   </div>
 
-  <!-- sugestões + input -->
+  <!-- input -->
   <div style="padding:12px 18px;border-top:1px solid #eee;flex-shrink:0">
-    <div style="margin-bottom:8px">
-      <select id="karia-sugestao" class="filtro-select" style="font-size:12px;width:100%" onchange="kariaSugestaoSelecionou()">
-        <option value="">💡 Selecione uma sugestão...</option>
-      </select>
-    </div>
     <div style="display:flex;gap:6px">
-      <textarea id="karia-input" class="form-control" rows="2" placeholder="Ou escreva aqui..." style="resize:none;flex:1;font-size:13px" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();kariaEnviar()}"></textarea>
+      <textarea id="karia-input" class="form-control" rows="2" placeholder="Digite sua pergunta..." style="resize:none;flex:1;font-size:13px" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();kariaEnviar()}"></textarea>
       <button class="btn btn-primary" onclick="kariaEnviar()" style="align-self:flex-end;padding:8px 14px;font-size:13px" id="karia-send-btn">↑</button>
     </div>
     <div style="font-size:10px;color:#ccc;margin-top:4px">Enter envia · Shift+Enter nova linha</div>
@@ -6166,23 +6161,6 @@ let kariaHistorico = [];
 let kariaApiKey = null;
 let kariaContatoId = null;
 let kariaContatoNome = null;
-
-const kariaSugestoes = {
-  geral: [
-    'Como posso melhorar minha abordagem comercial?',
-    'Me ajuda a estruturar uma proposta',
-    'Como responder a uma objeção de preço?',
-    'Que métricas devo acompanhar no meu negócio?'
-  ],
-  contato: [
-    'Me dê um resumo desse contato',
-    'Qual a melhor abordagem para o próximo contato?',
-    'Me sugira um texto de follow-up',
-    'Quais pontos de atenção tenho com esse lead?',
-    'Me ajuda a preparar a reunião com esse cliente',
-    'Sugira ideias para estruturar a operação dele'
-  ]
-};
 
 function kariaTogglePanel(){
   kariaPanelOpen = !kariaPanelOpen;
@@ -6201,13 +6179,6 @@ async function kariaCarregarKey(){
 function kariaContextoMudar(){
   const ctx = document.getElementById('karia-contexto').value;
   const refSel = document.getElementById('karia-ref-id');
-  const sugestoes = document.getElementById('karia-sugestao');
-
-  // popula sugestões
-  sugestoes.innerHTML = '<option value="">💡 Selecione uma sugestão...</option>';
-  (kariaSugestoes[ctx] || kariaSugestoes.geral).forEach(s => {
-    sugestoes.innerHTML += `<option value="${s}">${s}</option>`;
-  });
 
   if(ctx === 'geral'){
     refSel.style.display = 'none';
@@ -6280,14 +6251,6 @@ async function kariaCarregarHistorico(){
       kariaHistorico.push({role: r.role, content: r.conteudo});
     }
   });
-}
-
-function kariaSugestaoSelecionou(){
-  const sel = document.getElementById('karia-sugestao');
-  if(!sel.value) return;
-  document.getElementById('karia-input').value = sel.value;
-  sel.value = '';
-  document.getElementById('karia-input').focus();
 }
 
 async function kariaMontarContexto(){
