@@ -552,6 +552,11 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
           <select id="filtroPainelMes" class="filtro-select" style="min-width:160px" onchange="renderPainel()">
             <option value="">Mês atual</option>
           </select>
+          <button id="btnOlhinho" onclick="toggleValores()" title="Mostrar/ocultar valores" style="
+            background:none;border:1px solid #ddd;border-radius:8px;padding:5px 10px;
+            cursor:pointer;font-size:16px;color:var(--musgo);display:flex;align-items:center;gap:5px;
+            transition:all .2s;font-family:Poppins;font-size:12px;font-weight:500;
+          ">👁 Ocultar valores</button>
         </div>
         <div class="cards-row" id="painelCards"></div>
         <div class="charts-row">
@@ -1751,6 +1756,7 @@ function showApp(user){
   // mostra botão karIA e verifica admin
   document.getElementById('karia-fab').style.display = 'flex';
   kariaInitDrag();
+  initOlhinho();
   SB.from('karia_contatos').select('is_admin').eq('email', user.email).limit(1).then(({data})=>{
     if(data && data[0]?.is_admin){
       document.getElementById('nav-config').style.display = '';
@@ -2035,8 +2041,21 @@ async function deletarMovRes(id) { await SB.from('karia_reserva').delete().eq('i
 async function salvarMeta() { await SB.from('karia_config').upsert({ chave:'metaReserva', valor: String(metaReserva) }); }
 
 // Helpers
-const fmt    = v => 'R$ ' + Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-const fmtSgn = v => (v>=0?'+ ':' ') + 'R$ ' + Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+let valoresOcultos = localStorage.getItem('kariaValoresOcultos') === 'true';
+function toggleValores() {
+  valoresOcultos = !valoresOcultos;
+  localStorage.setItem('kariaValoresOcultos', valoresOcultos);
+  const btn = document.getElementById('btnOlhinho');
+  if (btn) btn.innerHTML = valoresOcultos ? '🙈 Mostrar valores' : '👁 Ocultar valores';
+  renderPainel();
+  renderReserva();
+}
+function initOlhinho() {
+  const btn = document.getElementById('btnOlhinho');
+  if (btn && valoresOcultos) btn.innerHTML = '🙈 Mostrar valores';
+}
+const fmt    = v => valoresOcultos ? 'R$ ••••' : 'R$ ' + Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtSgn = v => valoresOcultos ? '• R$ ••••' : (v>=0?'+ ':' ') + 'R$ ' + Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 function parseBR(d) { if (!d) return new Date(0); const [dd,mm,yy] = d.split('/'); return new Date(+yy,+mm-1,+dd); }
 function hoje()     { const n=new Date(); return pad(n.getDate())+'/'+pad(n.getMonth()+1)+'/'+n.getFullYear(); }
 function mesAtual() { const n=new Date(); return pad(n.getMonth()+1)+'/'+n.getFullYear(); }
