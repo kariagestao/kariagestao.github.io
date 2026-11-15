@@ -1465,7 +1465,7 @@
       <button class="tab" data-painel="biblioteca">Biblioteca</button>
       <button class="tab" data-painel="casoreal">Caso Real</button>
       <button class="tab" data-painel="aulas">Aulas</button>
-      <button class="tab" data-painel="membros">Membros</button>
+      <button class="tab" data-painel="membros">Membros<span id="contador-membros" style="display:none;margin-left:5px;font-size:10px;font-weight:500;opacity:0.55;letter-spacing:0.03em;"></span></button>
       <button class="tab" data-painel="perfil">Meu Perfil</button>
     </div>
 
@@ -2239,6 +2239,8 @@
       grid.innerHTML = '<p class="membros-vazio">Nenhum membro ativo encontrado.</p>';
       return;
     }
+    const contadorEl = document.getElementById('contador-membros');
+    if (contadorEl) { contadorEl.textContent = membros.length; contadorEl.style.display = 'inline'; }
     grid.innerHTML = '';
     membros.forEach(m => {
       const initials = m.name.trim().split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
