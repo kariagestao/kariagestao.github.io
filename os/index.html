@@ -1498,6 +1498,13 @@ function showApp(user){
   carregarDados().then(()=>{ initFinanceiro(); });
   cntLoad().then(()=>{ pipLoad(); pipCarregarUsuarios(); });
   linzInit();
+  // restaura último módulo visitado
+  try{
+    const lastMod=localStorage.getItem('kariaModule');
+    if(lastMod && document.getElementById('mod-'+lastMod)){
+      switchModule(lastMod);
+    }
+  }catch(e){}
 }
 
 /* ========= SIDEBAR ========= */
@@ -1512,9 +1519,11 @@ function switchModule(mod,el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('mod-'+mod).classList.add('active');
   if(el) el.classList.add('active');
+  else{ const ni=document.getElementById('nav-'+mod); if(ni) ni.classList.add('active'); }
   _curMod=mod;
   document.getElementById('topBarTitle').textContent=modTitles[mod][0];
   document.getElementById('topBarSub').textContent=modTitles[mod][1];
+  try{ localStorage.setItem('kariaModule', mod); }catch(e){}
   closeSidebar();
   if(mod==='linzmeyer') linzInit();
 }
