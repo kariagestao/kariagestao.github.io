@@ -432,8 +432,8 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
   /* modal no mobile */
   .modal-box{ width:95vw !important;max-height:90vh;overflow-y:auto; }
   /* painel karIA no mobile — tela cheia */
-  #karia-panel{ width:100vw !important;right:-100vw !important; }
-  #karia-panel.open{ right:0 !important; }
+  #karia-panel{ width:100vw !important;right:-100vw !important;pointer-events:none;visibility:hidden; }
+  #karia-panel.open{ right:0 !important;pointer-events:auto;visibility:visible; }
   /* crm toolbar empilha no mobile */
   .crm-toolbar{ flex-direction:column !important;align-items:flex-start !important;gap:10px !important; }
   .crm-toolbar > div:last-child{ flex-wrap:wrap !important;width:100%; }
@@ -6487,8 +6487,9 @@ function kariaInitDrag(){
   position:fixed;top:0;right:-420px;width:400px;height:100vh;z-index:199;
   background:#fff;border-left:1px solid #e8e4de;
   display:flex;flex-direction:column;
-  transition:right .3s ease;
+  transition:right .3s ease, visibility .3s;
   box-shadow:-4px 0 20px rgba(0,0,0,.08);
+  pointer-events:none;visibility:hidden;
 ">
   <!-- header painel -->
   <div style="padding:16px 18px;border-bottom:1px solid #eee;display:flex;align-items:center;gap:10px;flex-shrink:0">
@@ -6551,6 +6552,9 @@ function kariaTogglePanel(){
   } else {
     panel.style.right = kariaPanelOpen ? '0' : '-420px';
   }
+  // evita que o painel intercepte cliques/scroll quando fechado
+  panel.style.pointerEvents = kariaPanelOpen ? 'auto' : 'none';
+  panel.style.visibility    = kariaPanelOpen ? 'visible' : 'hidden';
   if(kariaPanelOpen){
     kariaContextoMudar();
     // saudação com nome do usuário
