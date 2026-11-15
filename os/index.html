@@ -408,7 +408,10 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
         <span class="icon">💰</span> <span>Financeiro</span>
       </div>
       <div class="nav-item" id="nav-crm" onclick="switchModule('crm',this)">
-        <span class="icon">👥</span> <span>Comercial CRM</span>
+        <span class="icon">📊</span> <span>Comercial CRM</span>
+      </div>
+      <div class="nav-item" id="nav-pessoas" onclick="switchModule('pessoas',this)">
+        <span class="icon">🧑‍🤝‍🧑</span> <span>Pessoas</span>
       </div>
       <div class="nav-group-label open" onclick="toggleNavGroup(this)" id="grp-operacao">
         <div class="nav-section">Operação Clientes</div>
@@ -593,7 +596,6 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       <div class="tabs-bar" style="margin-bottom:0;border-bottom:2px solid var(--cinza-claro)">
         <button class="tab-btn active" id="crm-tab-btn-pipeline" onclick="crmShowTab('pipeline',this)">Pipeline</button>
         <button class="tab-btn" id="crm-tab-btn-clientes" onclick="crmShowTab('clientes',this)">Clientes Ativos</button>
-        <button class="tab-btn" id="crm-tab-btn-contatos" onclick="crmShowTab('contatos',this)">Pessoas</button>
       </div>
 
       <!-- ABA PIPELINE -->
@@ -646,10 +648,17 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
         <div id="cli-cards" class="tx-card-list"></div>
       </div>
 
-      <!-- ABA PESSOAS -->
-      <div id="crm-tab-contatos" style="display:none">
-        <div class="crm-toolbar">
-          <input id="cnt-search" class="crm-search" placeholder="Buscar pessoa..." oninput="cntRender()">
+    </div><!-- /mod-crm -->
+
+    <!-- ===== MÓDULO PESSOAS ===== -->
+    <div class="module" id="mod-pessoas" style="display:none">
+      <div class="crm-toolbar" style="margin-bottom:16px">
+        <div>
+          <div style="font-size:18px;font-weight:700;color:var(--musgo)">Pessoas</div>
+          <div style="font-size:12px;color:#888;margin-top:2px">Colaboradores, fornecedores, parceiros e usuários do sistema</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="cnt-search" class="crm-search" placeholder="Buscar por nome, CPF, CNPJ..." oninput="cntRender()">
           <select class="filtro-select" id="cnt-fil-cat" onchange="cntRender()">
             <option value="">Todos os tipos</option>
             <option>Lead</option><option>Cliente</option>
@@ -658,15 +667,14 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
           </select>
           <button class="btn btn-primary btn-sm" onclick="cntOpenModal()">+ Nova Pessoa</button>
         </div>
-        <div style="overflow-x:auto">
-          <table>
-            <thead><tr><th>Nome</th><th>Empresa</th><th>Tipo</th><th>WhatsApp</th><th>E-mail</th><th></th></tr></thead>
-            <tbody id="cnt-tbody"></tbody>
-          </table>
-        </div>
-        <div id="cnt-cards" class="tx-card-list"></div>
       </div>
-    </div><!-- /mod-crm -->
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Nome</th><th>Empresa</th><th>Tipo</th><th>WhatsApp</th><th>E-mail</th><th></th></tr></thead>
+          <tbody id="cnt-tbody"></tbody>
+        </table>
+      </div>
+    </div><!-- /mod-pessoas -->
 
     <!-- ===== MÓDULO LINZMEYER ===== -->
     <div class="module" id="mod-linzmeyer">
@@ -1321,10 +1329,6 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
             <label class="form-label">Razão Social</label>
             <input class="form-control" type="text" id="cnt-razao-social" placeholder="Razão social da empresa">
           </div>
-          <div class="form-group">
-            <label class="form-label">Empresa emissora de NF</label>
-            <input class="form-control" type="text" id="cnt-empresa-nf" placeholder="Nome para emissão de nota">
-          </div>
         </div>
       </div>
       <div style="font-size:11px;font-weight:600;color:var(--musgo);text-transform:uppercase;letter-spacing:.5px;margin:12px 0 8px">Endereço</div>
@@ -1382,14 +1386,31 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       <label class="form-label">Observações</label>
       <textarea class="form-control" id="cnt-obs" rows="2" placeholder="Notas livres..."></textarea>
     </div>
-    <div style="border-top:1px solid #f0f0f0;margin-top:4px;padding-top:8px;display:flex;flex-direction:column;gap:8px">
+    <div style="border-top:1px solid #f0f0f0;margin-top:4px;padding-top:10px;display:flex;flex-direction:column;gap:10px">
       <div style="display:flex;align-items:center;gap:10px">
-        <input type="checkbox" id="cnt-is-usuario" style="width:16px;height:16px;accent-color:var(--musgo)">
+        <input type="checkbox" id="cnt-is-usuario" style="width:16px;height:16px;accent-color:var(--musgo)" onchange="document.getElementById('cnt-acesso-wrap').style.display=this.checked?'block':'none'">
         <label for="cnt-is-usuario" style="font-size:13px;color:#333;cursor:pointer;margin:0">Usuário do sistema <span style="color:#888;font-size:11px">(pode fazer login)</span></label>
       </div>
       <div style="display:flex;align-items:center;gap:10px">
         <input type="checkbox" id="cnt-pode-responsavel" style="width:16px;height:16px;accent-color:var(--musgo)">
-        <label for="cnt-pode-responsavel" style="font-size:13px;color:#333;cursor:pointer;margin:0">Pode ser responsável <span style="color:#888;font-size:11px">(aparece no campo Responsável do Pipeline)</span></label>
+        <label for="cnt-pode-responsavel" style="font-size:13px;color:#333;cursor:pointer;margin:0">Pode ser responsável <span style="color:#888;font-size:11px">(aparece no Pipeline)</span></label>
+      </div>
+      <div id="cnt-acesso-wrap" style="background:#f8f6f3;border-radius:8px;padding:10px;display:none">
+        <div style="font-size:11px;font-weight:600;color:#666;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Acesso aos módulos</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer">
+            <input type="checkbox" id="cnt-ac-financeiro" style="accent-color:var(--musgo)"> Financeiro
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer">
+            <input type="checkbox" id="cnt-ac-crm" style="accent-color:var(--musgo)"> Comercial CRM
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer">
+            <input type="checkbox" id="cnt-ac-pessoas" style="accent-color:var(--musgo)"> Pessoas
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer">
+            <input type="checkbox" id="cnt-ac-operacao" style="accent-color:var(--musgo)"> Operação
+          </label>
+        </div>
       </div>
     </div>
     <div class="form-actions">
@@ -1605,6 +1626,7 @@ let _curMod='financeiro';
 const modTitles={
   financeiro:['Financeiro','Visão geral das finanças'],
   crm:['Comercial CRM','Pipeline de clientes'],
+  pessoas:['Pessoas','Colaboradores, fornecedores e usuários do sistema'],
   linzmeyer:['Op. Linzmeyer','Controle de prazos e publicações']
 };
 function switchModule(mod,el){
@@ -1614,11 +1636,12 @@ function switchModule(mod,el){
   if(el) el.classList.add('active');
   else{ const ni=document.getElementById('nav-'+mod); if(ni) ni.classList.add('active'); }
   _curMod=mod;
-  document.getElementById('topBarTitle').textContent=modTitles[mod][0];
-  document.getElementById('topBarSub').textContent=modTitles[mod][1];
+  document.getElementById('topBarTitle').textContent=modTitles[mod]?.[0]||mod;
+  document.getElementById('topBarSub').textContent=modTitles[mod]?.[1]||'';
   try{ localStorage.setItem('kariaModule', mod); }catch(e){}
   closeSidebar();
   if(mod==='linzmeyer') linzInit();
+  if(mod==='pessoas') cntLoad();
 }
 function toggleSidebar(){
   document.getElementById('sidebar').classList.toggle('open');
@@ -2713,12 +2736,18 @@ function cntOpenModal(id){
   document.getElementById('cnt-obs').value=r?.obs||'';
   document.getElementById('cnt-is-usuario').checked=r?.is_usuario||false;
   document.getElementById('cnt-pode-responsavel').checked=r?.pode_ser_responsavel||false;
+  // acesso por módulo
+  const acessos=r?.acesso_modulos||[];
+  document.getElementById('cnt-ac-financeiro').checked=acessos.includes('financeiro');
+  document.getElementById('cnt-ac-crm').checked=acessos.includes('crm');
+  document.getElementById('cnt-ac-pessoas').checked=acessos.includes('pessoas');
+  document.getElementById('cnt-ac-operacao').checked=acessos.includes('operacao');
+  document.getElementById('cnt-acesso-wrap').style.display=(r?.is_usuario)?'block':'none';
   // campos colaborador
   document.getElementById('cnt-cpf').value=r?.cpf||'';
   document.getElementById('cnt-cnpj-colab').value=r?.cnpj||'';
   document.getElementById('cnt-nascimento').value=r?.data_nascimento||'';
   document.getElementById('cnt-razao-social').value=r?.razao_social||'';
-  document.getElementById('cnt-empresa-nf').value=r?.empresa_nf||'';
   document.getElementById('cnt-cep').value=r?.cep||'';
   document.getElementById('cnt-logradouro').value=r?.logradouro||'';
   document.getElementById('cnt-numero-end').value=r?.numero_end||'';
@@ -2755,7 +2784,9 @@ async function cntSave(){
          :isForn?document.getElementById('cnt-cnpj-forn').value:null,
     data_nascimento: isColab?document.getElementById('cnt-nascimento').value||null:null,
     razao_social: isColab?document.getElementById('cnt-razao-social').value:null,
-    empresa_nf: isColab?document.getElementById('cnt-empresa-nf').value:null,
+    acesso_modulos: document.getElementById('cnt-is-usuario').checked
+      ? ['financeiro','crm','pessoas','operacao'].filter(m=>document.getElementById('cnt-ac-'+m).checked)
+      : null,
     cep: isColab?document.getElementById('cnt-cep').value:null,
     logradouro: isColab?document.getElementById('cnt-logradouro').value:null,
     numero_end: isColab?document.getElementById('cnt-numero-end').value:null,
@@ -2986,11 +3017,9 @@ async function pipConverterCliente(){
 function crmShowTab(tab, btn){
   document.getElementById('crm-tab-pipeline').style.display = tab==='pipeline'?'':'none';
   document.getElementById('crm-tab-clientes').style.display = tab==='clientes'?'':'none';
-  document.getElementById('crm-tab-contatos').style.display = tab==='contatos'?'':'none';
   document.querySelectorAll('#mod-crm .tab-btn').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
   if(tab==='clientes') cliLoad();
-  if(tab==='contatos') cntLoad();
 }
 
 /* ========= CLIENTES (karia_clientes nova estrutura) ========= */
