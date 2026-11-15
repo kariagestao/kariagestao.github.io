@@ -772,11 +772,35 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
 
     <!-- ===== MÓDULO CONFIGURAÇÕES (admin) ===== -->
     <div class="module" id="mod-config">
-      <div style="max-width:800px;margin:0 auto">
+      <div style="max-width:860px;margin:0 auto">
         <div style="font-size:18px;font-weight:700;color:var(--musgo);margin-bottom:4px">Configurações</div>
-        <div style="font-size:12px;color:#888;margin-bottom:24px">Base de conhecimento da karIA — somente administradores</div>
-        <div id="config-lista" style="display:flex;flex-direction:column;gap:16px"></div>
-        <button class="btn btn-primary" style="margin-top:20px" onclick="configSalvar()">Salvar alterações</button>
+        <div style="font-size:12px;color:#888;margin-bottom:20px">Base de conhecimento da karIA — somente administradores</div>
+
+        <!-- abas -->
+        <div style="display:flex;gap:0;border-bottom:2px solid #e8e4de;margin-bottom:24px">
+          <button id="cfg-tab-geral" onclick="configAba('geral')" style="padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--musgo);border-bottom:2px solid var(--musgo);margin-bottom:-2px">Contexto Geral</button>
+          <button id="cfg-tab-clientes" onclick="configAba('clientes')" style="padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;color:#aaa;border-bottom:2px solid transparent;margin-bottom:-2px">Histórico por Cliente</button>
+        </div>
+
+        <!-- aba geral -->
+        <div id="cfg-pane-geral">
+          <div id="config-lista" style="display:flex;flex-direction:column;gap:16px"></div>
+          <button class="btn btn-primary" style="margin-top:20px" onclick="configSalvar()">Salvar alterações</button>
+        </div>
+
+        <!-- aba clientes -->
+        <div id="cfg-pane-clientes" style="display:none">
+          <div style="font-size:12px;color:#888;margin-bottom:16px">Histórico de conversas salvo por contato. Clique para ver e editar.</div>
+          <div id="cfg-hist-lista" style="display:flex;flex-direction:column;gap:10px"></div>
+          <div id="cfg-hist-detalhe" style="display:none;margin-top:24px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+              <button onclick="configHistVoltar()" style="background:none;border:1px solid #ddd;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:12px">← Voltar</button>
+              <div id="cfg-hist-nome" style="font-size:14px;font-weight:600;color:var(--musgo)"></div>
+              <button onclick="configHistLimpar()" style="margin-left:auto;background:none;border:1px solid var(--red);color:var(--red);border-radius:6px;padding:4px 12px;cursor:pointer;font-size:12px">Limpar histórico</button>
+            </div>
+            <div id="cfg-hist-msgs" style="display:flex;flex-direction:column;gap:8px;max-height:500px;overflow-y:auto"></div>
+          </div>
+        </div>
       </div>
     </div><!-- /mod-config -->
 
@@ -6094,6 +6118,22 @@ document.addEventListener('input',function(e){
 /* ===== CONFIGURAÇÕES ===== */
 let configData = [];
 
+let configAbaAtual = 'geral';
+let configHistContatoId = null;
+
+function configAba(aba){
+  configAbaAtual = aba;
+  document.getElementById('cfg-pane-geral').style.display = aba === 'geral' ? '' : 'none';
+  document.getElementById('cfg-pane-clientes').style.display = aba === 'clientes' ? '' : 'none';
+  document.getElementById('cfg-tab-geral').style.cssText = aba === 'geral'
+    ? 'padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--musgo);border-bottom:2px solid var(--musgo);margin-bottom:-2px'
+    : 'padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;color:#aaa;border-bottom:2px solid transparent;margin-bottom:-2px';
+  document.getElementById('cfg-tab-clientes').style.cssText = aba === 'clientes'
+    ? 'padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--musgo);border-bottom:2px solid var(--musgo);margin-bottom:-2px'
+    : 'padding:8px 20px;border:none;background:none;cursor:pointer;font-size:13px;color:#aaa;border-bottom:2px solid transparent;margin-bottom:-2px';
+  if(aba === 'clientes') configHistCarregar();
+}
+
 async function configCarregar(){
   const {data} = await SB.from('karia_conhecimento').select('*').order('ordem');
   configData = data || [];
@@ -6113,6 +6153,86 @@ async function configSalvar(){
     await SB.from('karia_conhecimento').update({conteudo: el.value, updated_at: new Date().toISOString()}).eq('id', r.id);
   }
   showToast('Base de conhecimento salva!','ok');
+}
+
+async function configHistCarregar(){
+  const lista = document.getElementById('cfg-hist-lista');
+  const detalhe = document.getElementById('cfg-hist-detalhe');
+  lista.innerHTML = '<div style="color:#aaa;font-size:12px">Carregando...</div>';
+  detalhe.style.display = 'none';
+
+  // busca contatos únicos que têm histórico
+  const {data} = await SB.from('karia_chat_historico')
+    .select('contato_id, karia_contatos(nome, empresa)')
+    .order('created_at', {ascending:false});
+
+  if(!data || data.length === 0){
+    lista.innerHTML = '<div style="color:#aaa;font-size:12px;padding:16px 0">Nenhuma conversa salva ainda.</div>';
+    return;
+  }
+
+  // deduplica por contato_id
+  const vistos = new Set();
+  const contatos = [];
+  data.forEach(r => {
+    if(!vistos.has(r.contato_id)){
+      vistos.add(r.contato_id);
+      contatos.push(r);
+    }
+  });
+
+  lista.innerHTML = contatos.map(r => {
+    const nome = r.karia_contatos?.nome || r.karia_contatos?.empresa || r.contato_id;
+    return `<div onclick="configHistAbrir('${r.contato_id}','${nome.replace(/'/g,"\\'")}',this)"
+      style="background:#fff;border:1px solid #e8e4de;border-radius:8px;padding:12px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--musgo)">
+      <span>${nome}</span>
+      <span style="font-size:11px;color:#aaa">Ver histórico →</span>
+    </div>`;
+  }).join('');
+}
+
+async function configHistAbrir(contatoId, nome){
+  configHistContatoId = contatoId;
+  document.getElementById('cfg-hist-lista').style.display = 'none';
+  const detalhe = document.getElementById('cfg-hist-detalhe');
+  detalhe.style.display = '';
+  document.getElementById('cfg-hist-nome').textContent = nome;
+
+  const {data} = await SB.from('karia_chat_historico')
+    .select('*').eq('contato_id', contatoId).order('created_at');
+
+  const msgsEl = document.getElementById('cfg-hist-msgs');
+  if(!data || data.length === 0){
+    msgsEl.innerHTML = '<div style="color:#aaa;font-size:12px">Sem mensagens.</div>';
+    return;
+  }
+
+  msgsEl.innerHTML = data.map(r => {
+    const isUser = r.role === 'user';
+    const data_fmt = new Date(r.created_at).toLocaleString('pt-BR');
+    return `<div style="display:flex;gap:8px;align-items:flex-start${isUser?';flex-direction:row-reverse':''}">
+      <div style="font-size:10px;color:#aaa;white-space:nowrap;padding-top:4px">${isUser?'Você':'karIA'}</div>
+      <div style="background:${isUser?'var(--musgo)':'#f4f1ee'};color:${isUser?'#fff':'var(--musgo)'};border-radius:8px;padding:8px 12px;font-size:12px;line-height:1.5;max-width:85%">
+        ${r.conteudo.replace(/</g,'&lt;').replace(/\n/g,'<br>')}
+        <div style="font-size:10px;opacity:.5;margin-top:4px">${data_fmt}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function configHistVoltar(){
+  document.getElementById('cfg-hist-lista').style.display = '';
+  document.getElementById('cfg-hist-detalhe').style.display = 'none';
+  configHistContatoId = null;
+}
+
+async function configHistLimpar(){
+  if(!configHistContatoId) return;
+  if(!confirm('Apagar todo o histórico deste contato com a karIA?')) return;
+  await SB.from('karia_chat_historico').delete().eq('contato_id', configHistContatoId);
+  showToast('Histórico apagado','ok');
+  configHistVoltar();
+  configHistCarregar();
 }
 
 /* ===== DRAG DO BOTÃO karIA ===== */
@@ -6413,15 +6533,20 @@ Nunca revele dados de outras categorias de contato, mesmo que o nome seja mencio
   // contexto dinâmico do contato
   const ctx = document.getElementById('karia-contexto').value;
   if(ctx === 'contato' && kariaContatoId){
+    // busca dados do contato base (CNPJ, telefone, endereço etc)
+    const {data: cnt} = await SB.from('karia_contatos').select('*').eq('id', kariaContatoId).single();
+    if(cnt){
+      sistema += `\n\n## DADOS DO CONTATO\nNome: ${cnt.nome||'—'}\nEmpresa: ${cnt.empresa||'—'}\nCargo: ${cnt.cargo||'—'}\nCPF: ${cnt.cpf||'—'}\nCNPJ: ${cnt.cnpj||'—'}\nRazão Social: ${cnt.razao_social||'—'}\nWhatsApp: ${cnt.whatsapp||'—'}\nE-mail: ${cnt.email||'—'}\nEndereço: ${[cnt.logradouro, cnt.numero_end, cnt.complemento, cnt.cep].filter(Boolean).join(', ')||'—'}`;
+    }
     // busca dados do pipeline
     const pipItem = (typeof pipData !== 'undefined') ? pipData.find(r => r.contato_id === kariaContatoId) : null;
     if(pipItem){
-      sistema += `\n\n## CONTEXTO DO LEAD ATUAL\nNome/Empresa: ${pipItem.contato?.nome||''} ${pipItem.contato?.empresa ? '/ '+pipItem.contato.empresa : ''}\nEtapa: ${pipItem.etapa||'—'}\nProduto: ${pipItem.produto||'—'}\nValor estimado: ${pipItem.valor ? 'R$ '+pipItem.valor : '—'}\nFollow-up: ${pipItem.followup ? new Date(pipItem.followup).toLocaleDateString('pt-BR') : '—'}\nObservações: ${pipItem.obs||'—'}`;
+      sistema += `\n\n## CONTEXTO DO LEAD NO PIPELINE\nEtapa: ${pipItem.etapa||'—'}\nProduto de interesse: ${pipItem.produto||'—'}\nValor estimado: ${pipItem.valor ? 'R$ '+pipItem.valor : '—'}\nFollow-up: ${pipItem.followup ? new Date(pipItem.followup).toLocaleDateString('pt-BR') : '—'}\nObservações: ${pipItem.obs||'—'}`;
     }
-    // busca dados de cliente
+    // busca dados de cliente ativo
     const cliItem = (typeof cliData !== 'undefined') ? cliData.find(r => r.contato_id === kariaContatoId) : null;
     if(cliItem){
-      sistema += `\n\n## CONTEXTO DO CLIENTE ATIVO\nNome/Empresa: ${cliItem.contato?.nome||''} ${cliItem.contato?.empresa ? '/ '+cliItem.contato.empresa : ''}\nServiço: ${cliItem.servico_contratado||'—'}\nValor mensal: ${cliItem.valor_mensal ? 'R$ '+cliItem.valor_mensal : '—'}\nStatus: ${cliItem.status||'—'}\nObservações: ${cliItem.obs||'—'}`;
+      sistema += `\n\n## CONTEXTO DO CLIENTE ATIVO\nServiço contratado: ${cliItem.servico_contratado||'—'}\nValor mensal: ${cliItem.valor_mensal ? 'R$ '+cliItem.valor_mensal : '—'}\nContrato nº: ${cliItem.numero_contrato||'—'}\nInício: ${cliItem.data_inicio ? new Date(cliItem.data_inicio).toLocaleDateString('pt-BR') : '—'}\nStatus: ${cliItem.status||'—'}\nObservações: ${cliItem.obs||'—'}`;
     }
   }
 
