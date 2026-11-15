@@ -1726,6 +1726,7 @@ function showApp(user){
   linzInit();
   // mostra botão karIA e verifica admin
   document.getElementById('karia-fab').style.display = 'flex';
+  kariaInitDrag();
   SB.from('karia_contatos').select('is_admin').eq('email', user.email).limit(1).then(({data})=>{
     if(data && data[0]?.is_admin){
       document.getElementById('nav-config').style.display = '';
@@ -6101,7 +6102,7 @@ async function configCarregar(){
   lista.innerHTML = configData.map(r => `
     <div style="background:#fff;border:1px solid #e8e4de;border-radius:10px;padding:16px">
       <div style="font-size:11px;font-weight:600;color:var(--cobre);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">${r.titulo}</div>
-      <textarea class="form-control" id="cfg-${r.id}" rows="5" style="font-size:13px;line-height:1.6">${r.conteudo}</textarea>
+      <textarea class="form-control" id="cfg-${r.id}" rows="6" style="font-size:13px;line-height:1.6;resize:vertical;min-height:100px">${r.conteudo}</textarea>
     </div>`).join('');
 }
 
@@ -6114,17 +6115,97 @@ async function configSalvar(){
   showToast('Base de conhecimento salva!','ok');
 }
 
+/* ===== DRAG DO BOTÃO karIA ===== */
+function kariaInitDrag(){
+  const fab = document.getElementById('karia-fab');
+  if(!fab) return;
+
+  // restaura posição salva
+  try{
+    const saved = JSON.parse(localStorage.getItem('kariaFabPos'));
+    if(saved){
+      fab.style.bottom = 'auto';
+      fab.style.right = 'auto';
+      fab.style.top = saved.top + 'px';
+      fab.style.left = saved.left + 'px';
+    }
+  }catch(e){}
+
+  let dragging = false;
+  let startX, startY, startLeft, startTop;
+  let moved = false;
+
+  function getPos(){
+    const r = fab.getBoundingClientRect();
+    return { top: r.top, left: r.left };
+  }
+
+  function onStart(e){
+    dragging = true;
+    moved = false;
+    fab.style.cursor = 'grabbing';
+    fab.style.transition = 'none';
+    const pos = getPos();
+    fab.style.top = pos.top + 'px';
+    fab.style.left = pos.left + 'px';
+    fab.style.bottom = 'auto';
+    fab.style.right = 'auto';
+    const touch = e.touches ? e.touches[0] : e;
+    startX = touch.clientX;
+    startY = touch.clientY;
+    startLeft = pos.left;
+    startTop = pos.top;
+    e.preventDefault();
+  }
+
+  function onMove(e){
+    if(!dragging) return;
+    const touch = e.touches ? e.touches[0] : e;
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    if(Math.abs(dx) > 4 || Math.abs(dy) > 4) moved = true;
+    const newLeft = Math.max(8, Math.min(window.innerWidth - 60, startLeft + dx));
+    const newTop = Math.max(8, Math.min(window.innerHeight - 60, startTop + dy));
+    fab.style.left = newLeft + 'px';
+    fab.style.top = newTop + 'px';
+    e.preventDefault();
+  }
+
+  function onEnd(e){
+    if(!dragging) return;
+    dragging = false;
+    fab.style.cursor = 'grab';
+    fab.style.transition = 'transform .15s';
+    if(moved){
+      try{
+        const r = fab.getBoundingClientRect();
+        localStorage.setItem('kariaFabPos', JSON.stringify({top: r.top, left: r.left}));
+      }catch(e){}
+    } else {
+      kariaTogglePanel();
+    }
+  }
+
+  fab.addEventListener('mousedown', onStart);
+  fab.addEventListener('touchstart', onStart, {passive:false});
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('touchmove', onMove, {passive:false});
+  window.addEventListener('mouseup', onEnd);
+  window.addEventListener('touchend', onEnd);
+}
+
 </script>
 
 <!-- ===== BOTÃO FLUTUANTE karIA ===== -->
-<button id="karia-fab" onclick="kariaTogglePanel()" title="Abrir karIA" style="
+<button id="karia-fab" title="Abrir karIA" style="
   display:none;
   position:fixed;bottom:28px;right:28px;z-index:200;
   width:52px;height:52px;border-radius:50%;
   background:var(--musgo);color:var(--cobre);
-  border:none;cursor:pointer;font-size:22px;
+  border:none;cursor:grab;font-size:22px;
   box-shadow:0 4px 16px rgba(0,0,0,.25);
-  transition:transform .2s;
+  transition:transform .15s;
+  touch-action:none;user-select:none;
 ">✦</button>
 
 <!-- ===== PAINEL LATERAL karIA ===== -->
