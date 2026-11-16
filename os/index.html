@@ -5770,7 +5770,7 @@ function fatCarregarCard(row){
   fatProc={
     proc:row.proc,
     distrib:row.distrib||'',
-    reus:JSON.parse(row.reus||'[]'),
+    reus:Array.isArray(row.reus)?row.reus:(typeof row.reus==='string'?JSON.parse(row.reus||'[]'):[]),
     fatCit:row.fat_cit||'',
     datFatCit:row.dat_fat_cit||'',
     datBloq:row.dat_bloq||'',
@@ -6010,7 +6010,7 @@ async function fatSalvar(silencioso=false){
   const row={
     proc:fatProc.proc,
     distrib:fatProc.distrib||'',
-    reus:JSON.stringify(fatProc.reus||[]),
+    reus:fatProc.reus||[],
     fat_cit:fatProc.fatCit||'',
     dat_fat_cit:fatProc.datFatCit||'',
     dat_bloq:fatProc.datBloq||'',
@@ -6081,7 +6081,7 @@ async function fatImportarExcel(e){
         reus.push({nome,dataCit:dcit==='nan'?'':dcit,evento:ev==='nan'?'':ev});
       }
       const datFatCit=excelDateStr(r[23])||'';
-      upserts.push({proc,distrib,reus:JSON.stringify(reus),fat_cit:'',dat_fat_cit:datFatCit,dat_bloq:'',valor_bloq:'',dat_fat_bloq:''});
+      upserts.push({proc,distrib,reus:reus,fat_cit:'',dat_fat_cit:datFatCit,dat_bloq:'',valor_bloq:'',dat_fat_bloq:''});
     }
 
     // Inserir em lotes de 100
@@ -6136,7 +6136,7 @@ function fatBaseRender(data){
       <th>Fat. Bloqueio</th><th></th>
     </tr></thead>
     <tbody>${data.map(r=>{
-      const reus=JSON.parse(r.reus||'[]');
+      const reus=Array.isArray(r.reus)?r.reus:(typeof r.reus==='string'?JSON.parse(r.reus||'[]'):[]);
       const citados=reus.filter(x=>x.dataCit).length;
       const rid=r.proc.replace(/[^a-z0-9]/gi,'_');
       return`<tr id="fatBaseRow-${rid}">
@@ -6188,7 +6188,7 @@ async function fatCarregarLista(){
   el.innerHTML=`<table class="et" style="max-width:900px">
     <thead><tr><th>Processo</th><th>Distribuição</th><th>Réus</th><th>Fat. Citação</th><th>Fat. Bloqueio</th><th></th></tr></thead>
     <tbody>${data.map(r=>{
-      const reus=JSON.parse(r.reus||'[]');
+      const reus=Array.isArray(r.reus)?r.reus:(typeof r.reus==='string'?JSON.parse(r.reus||'[]'):[]);
       const citados=reus.filter(x=>x.dataCit).length;
       return`<tr>
         <td style="font-size:10px"><button onclick="fatAbrirProc('${r.proc}')" style="background:none;border:none;color:#0D1F2D;cursor:pointer;font-weight:600;font-size:10px;font-family:inherit;text-align:left">${r.proc}</button></td>
