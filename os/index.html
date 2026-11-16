@@ -3458,6 +3458,7 @@ async function carregarTramDB(){
 
 async function salvarTramitacoes(rows){
   if(!SB) return;
+  const uid=(await SB.auth.getUser())?.data?.user?.id||'';
   const data=document.getElementById('refDate').value;
   const upserts=rows
     .filter(r=>r.tramId)
@@ -3478,7 +3479,7 @@ async function salvarTramitacoes(rows){
   for(const row of upserts){
     const {data:ex}=await SB.from('tramitacoes').select('id').eq('id',row.id).limit(1);
     if(ex&&ex.length>0){ await SB.from('tramitacoes').update(row).eq('id',row.id); }
-    else { await SB.from('tramitacoes').insert([row]); }
+    else { await SB.from('tramitacoes').insert([{...row,user_id:uid}]); }
   }
 }
 
@@ -3857,6 +3858,8 @@ function makeRow(r,i,ns,showCheck){
 
 async function salvarLinha(r){
   if(!SB||!r.tramId){ alert('Preencha o número da tramitação antes de salvar.'); return; }
+  const uid=(await SB.auth.getUser())?.data?.user?.id;
+  if(!uid){ alert('Usuário não autenticado.'); return; }
   const row={
     id:r.tramId, processo:r.processo, tipo_acao:r.tipoAcao,
     parte_adv:r.parteAdv, grupo:r.grupo, setor:r.setor,
@@ -3866,7 +3869,7 @@ async function salvarLinha(r){
   const {data:exLinha}=await SB.from('tramitacoes').select('id').eq('id',r.tramId).limit(1);
   let errorLinha;
   if(exLinha&&exLinha.length>0){ ({error:errorLinha}=await SB.from('tramitacoes').update(row).eq('id',r.tramId)); }
-  else { ({error:errorLinha}=await SB.from('tramitacoes').insert([row])); }
+  else { ({error:errorLinha}=await SB.from('tramitacoes').insert([{...row,user_id:uid}])); }
   if(errorLinha){ alert('Erro ao salvar: '+errorLinha.message); return; }
   tramDB[r.tramId]=row;
   r._nova=false;
@@ -4568,10 +4571,11 @@ async function tratSalvar(){
   };
 
   // Salvar em tramitacoes para cruzamento futuro
+  const uidTrat=(await SB.auth.getUser())?.data?.user?.id;
   const {data:exTrat}=await SB.from('tramitacoes').select('id').eq('id',row.id).eq('setor','Publicação Tratada').limit(1);
   let errorTrat;
   if(exTrat&&exTrat.length>0){ ({error:errorTrat}=await SB.from('tramitacoes').update(row).eq('id',row.id).eq('setor','Publicação Tratada')); }
-  else { ({error:errorTrat}=await SB.from('tramitacoes').insert([row])); }
+  else { ({error:errorTrat}=await SB.from('tramitacoes').insert([{...row,user_id:uidTrat||''}])); }
   if(errorTrat){alert('Erro: '+errorTrat.message);return;}
 
   // Salvar na base de processos se solicitado
@@ -5387,6 +5391,8 @@ async function pubPendSalvar(i){
   if(!SB){alert('Banco indisponível.');return;}
   const r=pubPend[i];
   if(!r.tramId){alert('Preencha o ID da tramitação antes de salvar.');return;}
+  const uidPub=(await SB.auth.getUser())?.data?.user?.id;
+  if(!uidPub){alert('Usuário não autenticado.');return;}
   const row={id:'PUB_'+r.tramId,processo:r.proc,tipo_acao:r.tipoAcao,
     parte_adv:r.parteAdv,grupo:r.grupo||'',setor:'Publicação Pendente',
     responsavel:'',fatal:r.d2,sit:'Pendente',ultima_data:r.d2,obs:r.obs||r.prazo||''};
@@ -5395,7 +5401,7 @@ async function pubPendSalvar(i){
   if(existePend&&existePend.length>0){
     ({error}=await SB.from('tramitacoes').update({obs:row.obs,sit:row.sit,ultima_data:row.ultima_data,fatal:row.fatal,processo:row.processo,tipo_acao:row.tipo_acao,parte_adv:row.parte_adv,grupo:row.grupo}).eq('id','PUB_'+r.tramId));
   } else {
-    ({error}=await SB.from('tramitacoes').insert([row]));
+    ({error}=await SB.from('tramitacoes').insert([{...row,user_id:uidPub}]));
   }
   if(error){alert('Erro: '+error.message);return;}
   const btn=event.target;
