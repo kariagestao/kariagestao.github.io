@@ -3619,7 +3619,12 @@ function parseRows(text, origem, isExcel){
     const tipoPrazo=extrairTipo(desc);
     let setor='',obsBase='';
     if(origem==='busca'){ setor='Interno'; obsBase='Realizar Busca de Bens'; }
-    else if(origem==='financeiro'){ setor='Interno'; obsBase='Solicitar Faturamento: Citação Positiva'; }
+    else if(origem==='financeiro'){
+      setor='Interno';
+      // Usa o tipoAcao real da planilha para identificar o tipo de faturamento
+      const tipoFat = tipoAcao ? tipoAcao.trim() : '';
+      obsBase = tipoFat ? `Solicitar Faturamento: ${tipoFat}` : 'Solicitar Faturamento';
+    }
     else if(origem==='validacao'){
       setor='Validar';
       // desc formato: "Embargos de Declaração\Revisar" ou "Embargos\Avaliar reagendamento"
