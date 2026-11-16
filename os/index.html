@@ -5985,6 +5985,7 @@ function fatRegistrarCit(){
   if(!dat){ alert('Preencha a data da solicitação.'); return; }
   fatProc.datFatCit=dat;
   fatRenderCard();
+  fatSalvar(true);
 }
 
 function fatSalvarBloq(){
@@ -5993,6 +5994,7 @@ function fatSalvarBloq(){
   fatProc.datBloq=dat;
   fatProc.valorBloq=val;
   fatRenderCard();
+  fatSalvar(true);
 }
 
 function fatRegistrarFatBloq(){
@@ -6000,10 +6002,11 @@ function fatRegistrarFatBloq(){
   if(!dat){ alert('Preencha a data da solicitação de faturamento.'); return; }
   fatProc.datFatBloq=dat;
   fatRenderCard();
+  fatSalvar(true);
 }
 
-async function fatSalvar(){
-  if(!SB||!fatProc){ alert('Nenhum processo carregado.'); return; }
+async function fatSalvar(silencioso=false){
+  if(!SB||!fatProc){ if(!silencioso) alert('Nenhum processo carregado.'); return; }
   const row={
     proc:fatProc.proc,
     distrib:fatProc.distrib||'',
@@ -6016,7 +6019,7 @@ async function fatSalvar(){
   };
   const {error}=await SB.from('faturamento').upsert([row],{onConflict:'proc'});
   if(error){ alert('Erro ao salvar: '+error.message); return; }
-  alert('Salvo com sucesso!');
+  if(!silencioso){ alert('Salvo com sucesso!'); }
   fatCarregarLista();
 }
 
