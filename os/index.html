@@ -4794,6 +4794,8 @@ function baseNovoProcesso(){
 
 async function baseSalvarNovo(r){
   if(!SB) return;
+  const uid=(await SB.auth.getUser())?.data?.user?.id;
+  if(uid) r={...r,user_id:uid};
   const {error}=await SB.from('base_processos').upsert([r],{onConflict:'pj,proc'});
   if(error){alert('Erro: '+error.message);return;}
   // Atualizar local
@@ -4807,6 +4809,7 @@ async function baseImportar(e){
   if(!SB){alert('Banco indisponível.');return;}
   const reader=new FileReader();
   reader.onload=async ev=>{
+    const uid=(await SB.auth.getUser())?.data?.user?.id||'';
     const wb=XLSX.read(ev.target.result,{type:'array',raw:false,cellDates:true});
     const ws=wb.Sheets[wb.SheetNames[0]];
     const rows=XLSX.utils.sheet_to_json(ws,{header:1,raw:false});
@@ -4848,7 +4851,8 @@ async function baseImportar(e){
         autor:String(r[iAutor]||'').trim(),
         reu:String(r[iReu]||'').trim(),
         ajuizamento:ajuiz,
-        obs_nao_pertence:''
+        obs_nao_pertence:'',
+        user_id:uid
       });
     }
 
