@@ -3580,6 +3580,8 @@ function parseRows(text, origem, isExcel){
   const iTram    = hiContains('numero da tramitacao');
   const iSigla   = hiContains('sigla do evento');
   const iDesc    = hiContains('tra.evento descricao','evento descricao');
+  // Coluna "Evento" duplicada no CSV: a segunda ocorrência (índice 13) é o nome da tarefa
+  const iEventoNome = (() => { let found=-1; hdrN.forEach((h,i)=>{ if(h===norm('Evento')) found=i; }); return found; })();
   const iAgenda  = hiContains('agendado para.1','agendado para.2')>=0 ? hiContains('agendado para.1','agendado para.2') : 14;
   const iAtrib   = hiContains('atribuida para')>=0 ? hiContains('atribuida para') : 15;
   const iGrupo   = hiContains('grupo de trabalho');
@@ -3621,9 +3623,9 @@ function parseRows(text, origem, isExcel){
     if(origem==='busca'){ setor='Interno'; obsBase='Realizar Busca de Bens'; }
     else if(origem==='financeiro'){
       setor='Interno';
-      // Usa o tipoAcao real da planilha para identificar o tipo de faturamento
-      const tipoFat = tipoAcao ? tipoAcao.trim() : '';
-      obsBase = tipoFat ? `Solicitar Faturamento: ${tipoFat}` : 'Solicitar Faturamento';
+      // Usa o nome da tarefa direto da coluna Evento (ex: "Solicitar faturamento - liminar deferida")
+      const nomeEvento = iEventoNome>=0 ? vl(c[iEventoNome]) : '';
+      obsBase = nomeEvento ? nomeEvento : 'Solicitar Faturamento';
     }
     else if(origem==='validacao'){
       setor='Validar';
