@@ -3658,6 +3658,7 @@ function parseRows(text, origem, isExcel){
 }
 
 // ===== LOAD FILE =====
+let loaded = {};
 function loadFile(e, origem){
   const file=e.target.files[0]; if(!file)return;
   const isExcel=!!file.name.match(/\.(xlsx|xls)$/i);
