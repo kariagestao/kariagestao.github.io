@@ -6007,6 +6007,8 @@ function fatRegistrarFatBloq(){
 
 async function fatSalvar(silencioso=false){
   if(!SB||!fatProc){ if(!silencioso) alert('Nenhum processo carregado.'); return; }
+  const uid=(await SB.auth.getUser())?.data?.user?.id;
+  if(!uid){ if(!silencioso) alert('Usuário não autenticado.'); return; }
   const row={
     proc:fatProc.proc,
     distrib:fatProc.distrib||'',
@@ -6015,7 +6017,8 @@ async function fatSalvar(silencioso=false){
     dat_fat_cit:fatProc.datFatCit||'',
     dat_bloq:fatProc.datBloq||'',
     valor_bloq:fatProc.valorBloq||'',
-    dat_fat_bloq:fatProc.datFatBloq||''
+    dat_fat_bloq:fatProc.datFatBloq||'',
+    user_id:uid
   };
   const {error}=await SB.from('faturamento').upsert([row],{onConflict:'proc'});
   if(error){ alert('Erro ao salvar: '+error.message); return; }
@@ -6051,6 +6054,8 @@ async function fatImportarExcel(e){
   if(!SB){ alert('Banco indisponível.'); return; }
   const reader=new FileReader();
   reader.onload=async ev=>{
+    const uid=(await SB.auth.getUser())?.data?.user?.id;
+    if(!uid){ alert('Usuário não autenticado.'); return; }
     const wb=XLSX.read(ev.target.result,{type:'array',raw:true});
     const sheetName=wb.SheetNames.find(n=>n.toLowerCase().includes('evento')||n.toLowerCase().includes('faturamento'))||wb.SheetNames[0];
     const ws=wb.Sheets[sheetName];
@@ -6081,7 +6086,7 @@ async function fatImportarExcel(e){
         reus.push({nome,dataCit:dcit==='nan'?'':dcit,evento:ev==='nan'?'':ev});
       }
       const datFatCit=excelDateStr(r[23])||'';
-      upserts.push({proc,distrib,reus:reus,fat_cit:'',dat_fat_cit:datFatCit,dat_bloq:'',valor_bloq:'',dat_fat_bloq:''});
+      upserts.push({proc,distrib,reus:reus,fat_cit:'',dat_fat_cit:datFatCit,dat_bloq:'',valor_bloq:'',dat_fat_bloq:'',user_id:uid});
     }
 
     // Inserir em lotes de 100
