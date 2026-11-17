@@ -3,322 +3,315 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>K Controllers - Lista VIP</title>
+<title>K Controllers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap">
 <style>
 :root {
-  --musgo: #0D1F2D; --musgo2: #162C3F;
-  --cobre: #B87333; --cobre-light: #D4924A;
-  --cream: #F8F6F3; --cream2: #EDE9E3;
-  --white: #FFFFFF; --muted: #8A9BAB; --text: #2A3D4E;
+  --musgo: #0D1F2D;
+  --cobre: #B87333;
+  --cobre-light: #D4924A;
+  --cream: #F8F6F3;
+  --cream2: #EDE9E3;
+  --muted: #8A9BAB;
+  --text: #2A3D4E;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
-  background: #E8E4DF;
+  background: var(--musgo);
   font-family: 'Poppins', sans-serif;
-  color: var(--text);
-  padding: max(24px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(32px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  color: var(--cream);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: max(64px, env(safe-area-inset-top, 0px)) max(24px, env(safe-area-inset-right, 0px)) max(64px, env(safe-area-inset-bottom, 0px)) max(24px, env(safe-area-inset-left, 0px));
+  position: relative;
 }
-.email-wrap {
-  max-width: 640px;
-  margin: 0 auto;
-  background: var(--white);
-  border-radius: 4px;
+
+/* fundo decorativo */
+body::before {
+  content: '';
+  position: fixed;
+  top: -120px; right: -120px;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,115,51,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -80px; left: -80px;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184,115,51,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.wrap {
+  max-width: 540px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* logo */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 56px;
+}
+.brand-k {
+  width: 36px; height: 36px;
+  background: var(--cobre);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900; font-size: 18px;
+  color: #fff;
+}
+.brand-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+
+/* ícone central */
+.icon-wrap {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: rgba(184,115,51,0.12);
+  border: 1px solid rgba(184,115,51,0.25);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 32px;
+  font-size: 28px;
+}
+
+/* label */
+.label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--cobre);
+  margin-bottom: 16px;
+}
+
+/* título */
+.titulo {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(22px, 5vw, 32px);
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.25;
+  letter-spacing: 0.03em;
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+
+/* subtítulo */
+.subtitulo {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(248,246,243,0.6);
+  line-height: 1.75;
+  max-width: 420px;
+  margin: 0 auto 48px;
+}
+
+/* divisor */
+.divisor {
+  width: 48px; height: 1px;
+  background: rgba(184,115,51,0.4);
+  margin: 0 auto 48px;
+}
+
+/* card público */
+.card-publico {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(248,246,243,0.1);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 32px;
+  position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 48px rgba(13,31,45,0.18);
+}
+.card-publico::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cobre), var(--cobre-light), var(--cobre));
+}
+.card-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cobre);
+  margin-bottom: 10px;
+}
+.card-preco {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 36px; font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.card-preco sup { font-size: 16px; font-weight: 700; vertical-align: super; line-height: 0; }
+.card-preco .cents { font-size: 22px; font-weight: 700; }
+.card-desc {
+  font-size: 12px;
+  color: rgba(248,246,243,0.45);
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 16px;
+}
+.card-texto {
+  font-size: 13px;
+  color: rgba(248,246,243,0.55);
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  text-align: left;
 }
 
-/* HEADER */
-.email-header { background: var(--musgo); padding: 48px 48px 40px; position: relative; overflow: hidden; }
-.email-header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; border-radius: 50%; background: rgba(184,115,51,0.08); }
-.brand-row { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; }
-.brand-k { width: 36px; height: 36px; background: var(--cobre); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 18px; color: var(--white); flex-shrink: 0; }
-.brand-name { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
-.vip-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(184,115,51,0.15); border: 1px solid rgba(184,115,51,0.3); border-radius: 20px; padding: 5px 14px; margin-bottom: 20px; font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cobre-light); }
-.vip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cobre); animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
-.header-h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(22px,5vw,30px); color: var(--white); line-height: 1.2; margin-bottom: 16px; position: relative; z-index: 1; letter-spacing: -0.01em; }
-.header-h1 span { color: var(--cobre-light); }
-.header-sub { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.65; position: relative; z-index: 1; max-width: 480px; }
+/* botão */
+.btn {
+  display: inline-block;
+  background: var(--cobre);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px; font-weight: 800;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 15px 36px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 20px rgba(184,115,51,0.3);
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(184,115,51,0.5); }
 
-/* COUNTDOWN */
-.countdown-wrap { background: var(--musgo2); padding: 24px 48px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-.countdown-label { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cobre); flex-shrink: 0; }
-.countdown-units { display: flex; gap: 8px; flex-wrap: wrap; }
-.c-unit { text-align: center; min-width: 52px; }
-.c-num { font-family: 'Montserrat', sans-serif; font-size: 26px; font-weight: 800; color: var(--white); display: block; line-height: 1; }
-.c-label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 4px; display: block; }
-.c-sep { font-size: 24px; font-weight: 300; color: rgba(255,255,255,0.2); line-height: 1; padding-top: 2px; align-self: flex-start; }
+/* redes */
+.redes-titulo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 20px;
+}
 
-/* BODY */
-.email-body { padding: 48px; }
-.section-title { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cobre); margin-bottom: 16px; }
-.para { font-size: 14px; color: var(--text); line-height: 1.75; margin-bottom: 16px; font-family: 'Poppins', sans-serif; }
-.para strong { color: var(--musgo); font-weight: 600; }
-hr.divider { border: none; border-top: 1px solid var(--cream2); margin: 36px 0; }
+.redes {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
 
-/* INTRO ANCHOR */
-.intro-anchor { background: var(--cream); border-radius: 10px; padding: 18px 22px; margin-bottom: 32px; border-left: 3px solid var(--cobre); font-size: 13px; color: var(--text); line-height: 1.65; font-family: 'Poppins', sans-serif; }
-.intro-anchor strong { color: var(--musgo); font-weight: 600; }
+.rede-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 12px 20px;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: rgba(248,246,243,0.7);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.rede-btn:hover {
+  background: rgba(184,115,51,0.12);
+  border-color: rgba(184,115,51,0.35);
+  color: var(--cobre-light);
+}
+.rede-destaque {
+  background: rgba(184,115,51,0.1);
+  border-color: rgba(184,115,51,0.3);
+  color: var(--cobre-light);
+}
+.rede-destaque:hover {
+  background: rgba(184,115,51,0.2);
+  border-color: rgba(184,115,51,0.5);
+}
+.rede-btn svg { flex-shrink: 0; }
 
-/* DELIVERABLES */
-.deliverables { margin-bottom: 36px; display: flex; flex-direction: column; gap: 2px; }
-.deliv-item { background: var(--cream); border-radius: 10px; padding: 22px 24px; display: flex; gap: 18px; align-items: flex-start; }
-.deliv-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
-.deliv-title { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: var(--musgo); margin-bottom: 5px; }
-.deliv-desc { font-size: 13px; color: #5A6E7C; line-height: 1.6; font-family: 'Poppins', sans-serif; }
-.deliv-desc strong { color: var(--musgo); font-weight: 600; }
-.deliv-tag { display: inline-block; margin-top: 8px; background: rgba(184,115,51,0.12); border-radius: 20px; padding: 3px 10px; font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cobre); }
+/* footer */
+.footer {
+  font-size: 11px;
+  color: rgba(255,255,255,0.18);
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.7;
+}
+.footer a { color: rgba(255,255,255,0.3); text-decoration: none; }
+.footer a:hover { color: rgba(255,255,255,0.5); }
 
-/* OFFER */
-.offer-card { background: var(--musgo); border-radius: 12px; padding: 36px; margin-bottom: 32px; position: relative; overflow: hidden; }
-.offer-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg,var(--cobre),var(--cobre-light),var(--cobre)); }
-.offer-label { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cobre); margin-bottom: 20px; }
-.price-row { display: flex; align-items: flex-end; gap: 20px; margin-bottom: 8px; flex-wrap: wrap; }
-.price-new { font-family: 'Montserrat', sans-serif; font-size: clamp(40px,10vw,54px); font-weight: 900; color: var(--white); line-height: 1; }
-.price-new sup { font-size: 22px; font-weight: 700; vertical-align: super; line-height: 0; }
-.price-new .cents { font-size: 28px; font-weight: 700; }
-.price-old-wrap { padding-bottom: 6px; }
-.price-old-label { font-size: 10px; color: rgba(255,255,255,0.4); margin-bottom: 2px; font-weight: 500; letter-spacing: 0.04em; font-family: 'Montserrat', sans-serif; }
-.price-old { font-size: 20px; font-weight: 600; color: rgba(255,255,255,0.3); text-decoration: line-through; font-family: 'Montserrat', sans-serif; }
-.price-period { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 24px; font-family: 'Poppins', sans-serif; }
-.savings-pill { display: inline-flex; align-items: center; gap: 10px; background: rgba(184,115,51,0.15); border: 1px solid rgba(184,115,51,0.25); border-radius: 8px; padding: 12px 18px; }
-.savings-icon { font-size: 20px; }
-.savings-text { font-size: 13px; color: var(--cream); line-height: 1.4; font-family: 'Poppins', sans-serif; }
-.savings-text strong { color: var(--cobre-light); font-weight: 700; font-size: 15px; font-family: 'Montserrat', sans-serif; }
-
-/* VIP BENEFITS */
-.vip-benefits { margin-bottom: 36px; }
-.vip-item { display: flex; gap: 14px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid var(--cream2); }
-.vip-item:last-child { border-bottom: none; }
-.vip-num { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800; color: var(--cobre); flex-shrink: 0; min-width: 28px; margin-top: 1px; }
-.vip-title { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: var(--musgo); margin-bottom: 4px; }
-.vip-desc { font-size: 13px; color: #5A6E7C; line-height: 1.6; font-family: 'Poppins', sans-serif; }
-.vip-desc strong { color: var(--musgo); font-weight: 600; }
-
-/* ALERT */
-.alert-box { background: #FEF8F0; border: 1px solid rgba(184,115,51,0.3); border-left: 4px solid var(--cobre); border-radius: 8px; padding: 16px 20px; margin-bottom: 32px; display: flex; gap: 12px; align-items: flex-start; }
-.alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
-.alert-text { font-size: 13px; color: #5A4A30; line-height: 1.6; font-family: 'Poppins', sans-serif; }
-.alert-text strong { color: #3A2A10; font-weight: 700; }
-
-/* DEADLINE */
-.deadline-row { background: var(--cream); border-radius: 10px; padding: 18px 22px; margin-bottom: 32px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.deadline-icon { font-size: 20px; flex-shrink: 0; }
-.deadline-text { font-size: 13px; color: var(--text); line-height: 1.55; flex: 1; min-width: 200px; font-family: 'Poppins', sans-serif; }
-.deadline-text strong { color: var(--musgo); font-weight: 700; }
-
-/* CTA */
-.cta-wrap { text-align: center; margin-bottom: 32px; }
-.cta-btn { display: inline-block; background: var(--cobre); color: var(--white); font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; padding: 18px 44px; border-radius: 8px; text-decoration: none; cursor: pointer; border: none; box-shadow: 0 4px 20px rgba(184,115,51,0.35); transition: transform 0.15s, box-shadow 0.15s; }
-.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(184,115,51,0.5); }
-.cta-sub { margin-top: 12px; font-size: 12px; color: var(--muted); font-family: 'Poppins', sans-serif; }
-.cta-sub strong { color: var(--text); font-weight: 600; }
-
-/* SIGNATURE */
-.signature { padding-top: 24px; border-top: 1px solid var(--cream2); }
-.sig-text { font-size: 14px; color: var(--text); line-height: 1.75; margin-bottom: 20px; font-family: 'Poppins', sans-serif; }
-.sig-name { font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 800; color: var(--musgo); margin-bottom: 2px; letter-spacing: -0.01em; }
-.sig-role { font-size: 12px; color: var(--muted); margin-bottom: 16px; font-family: 'Poppins', sans-serif; }
-.sig-logo { display: flex; align-items: center; gap: 8px; }
-.sig-k { width: 28px; height: 28px; background: var(--musgo); border-radius: 5px; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 15px; color: var(--white); }
-.sig-brand { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--musgo); }
-
-.email-footer { background: var(--musgo); padding: 24px 48px; text-align: center; }
-.footer-text { font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.7; font-family: 'Poppins', sans-serif; }
-
-@media (max-width: 520px) {
-  .email-header,.email-body,.email-footer { padding: 32px 24px; }
-  .countdown-wrap { padding: 20px 24px; }
-  .offer-card { padding: 24px; }
+@media (max-width: 480px) {
+  .card-publico { padding: 24px 20px; }
+  .btn { width: 100%; text-align: center; }
 }
 </style>
 </head>
 <body>
 
-<div class="email-wrap">
+<div class="wrap">
 
-  <div class="email-header">
-    <div class="brand-row">
-      <div class="brand-k">K</div>
-      <span class="brand-name">K Controllers</span>
-    </div>
-    <div class="vip-badge"><span class="vip-dot"></span> Para quem esteve desde o início</div>
-    <h1 class="header-h1">A comunidade que faltava<br><span>para o Controller Jurídico.</span></h1>
-    <p class="header-sub">Hoje a K Controllers está pronta e sua condição especial também.</p>
+  <!-- Logo -->
+  <div class="brand">
+    <div class="brand-k">K</div>
+    <span class="brand-name">K Controllers</span>
   </div>
 
-  <div class="countdown-wrap">
-    <span class="countdown-label">Oferta encerra em</span>
-    <div class="countdown-units">
-      <div class="c-unit"><span class="c-num" id="c-dias">--</span><span class="c-label">dias</span></div>
-      <span class="c-sep">:</span>
-      <div class="c-unit"><span class="c-num" id="c-horas">--</span><span class="c-label">horas</span></div>
-      <span class="c-sep">:</span>
-      <div class="c-unit"><span class="c-num" id="c-min">--</span><span class="c-label">min</span></div>
-      <span class="c-sep">:</span>
-      <div class="c-unit"><span class="c-num" id="c-seg">--</span><span class="c-label">seg</span></div>
-    </div>
+  <!-- Ícone -->
+  <div class="icon-wrap">🔒</div>
+
+  <!-- Label -->
+  <p class="label">Acesso antecipado encerrado</p>
+
+  <!-- Título -->
+  <h1 class="titulo">A oferta da lista VIP<br>chegou ao fim.</h1>
+
+  <!-- Subtítulo -->
+  <p class="subtitulo">O período de acesso antecipado por R$ 29,90 se encerrou. A K Controllers está aberta para o público com o valor padrão da assinatura.</p>
+
+  <div class="divisor"></div>
+
+  <!-- Card público -->
+  <div class="card-publico">
+    <p class="card-label">A comunidade está aberta</p>
+    <div class="card-preco"><sup>R$</sup>49<span class="cents">,90</span></div>
+    <p class="card-desc">por mês · cancele quando quiser</p>
+    <p class="card-texto">A K Controllers é o único espaço pensado exclusivamente para Controllers Jurídicos. Biblioteca de conteúdos, aulas temáticas mensais, caso real trabalhado com a Nathalya e uma comunidade que fala a mesma língua que você.</p>
+    <a href="https://www.kariagestao.com/k-controllers/" target="_blank" class="btn">Conhecer a K Controllers</a>
   </div>
 
-  <div class="email-body">
+  <!-- Rede K Controllers -->
+  <p class="redes-titulo">Acompanhe a comunidade</p>
 
-    <div class="intro-anchor">
-      Alguns dias atrás realizamos uma pesquisa sobre as dificuldades do dia a dia na Controladoria Jurídica. Uma das coisas que ficou clara nas respostas foi a <strong>falta de um espaço pensado especificamente para quem atua nessa função dentro de escritórios de advocacia</strong>, com conteúdo relevante, troca real e referência prática. É isso que eu construí.
-    </div>
-
-    <div class="section-title">O que é a K Controllers</div>
-    <p class="para">A K Controllers é uma <strong>comunidade exclusiva para Controllers Jurídicos</strong>. Um espaço onde você encontra conteúdo produzido especificamente para a realidade de quem atua na Controladoria de escritórios de advocacia, pessoas que falam a mesma língua e suporte de quem viveu essa função em diferentes formatos de escritório.</p>
-    <p class="para" style="margin-bottom:32px">Não é um curso. Não é um grupo genérico de gestão. É um ambiente construído para quem trabalha com a Controladoria Jurídica como função estruturada.</p>
-
-    <div class="section-title">O que você encontra dentro</div>
-    <div class="deliverables">
-      <div class="deliv-item">
-        <div class="deliv-icon">📚</div>
-        <div class="deliv-body">
-          <div class="deliv-title">Biblioteca de Conteúdos</div>
-          <div class="deliv-desc">Materiais práticos, checklists, modelos, roteiros e guias desenvolvidos para o dia a dia da Controladoria Jurídica. Uma base que cresce a cada mês junto com a comunidade.</div>
-        </div>
-      </div>
-      <div class="deliv-item">
-        <div class="deliv-icon">🎓</div>
-        <div class="deliv-body">
-          <div class="deliv-title">Aulas Temáticas Mensais</div>
-          <div class="deliv-desc">Uma aula exclusiva adicionada à biblioteca todo mês, com conteúdo estratégico voltado para os desafios reais da Controladoria Jurídica. Você assiste no seu ritmo, quantas vezes quiser.</div>
-        </div>
-      </div>
-      <div class="deliv-item">
-        <div class="deliv-icon">🤝</div>
-        <div class="deliv-body">
-          <div class="deliv-title">Comunidade Ativa</div>
-          <div class="deliv-desc">Acesso a um grupo com todos os membros para troca de experiências entre Controllers Jurídicos que lidam com os mesmos desafios. Com a minha presença constante para contribuir com as discussões.</div>
-        </div>
-      </div>
-      <div class="deliv-item">
-        <div class="deliv-icon">⭐</div>
-        <div class="deliv-body">
-          <div class="deliv-title">Experts Convidados</div>
-          <div class="deliv-desc">A K Controllers conta com <strong>Experts</strong> selecionados pela Nathalya: profissionais com trajetória reconhecida em áreas que impactam diretamente o trabalho do Controller Jurídico. Eles participam da comunidade, contribuem com conteúdo e estão disponíveis para trocar com os membros. <strong>Você não fica só dentro do seu próprio universo.</strong><br><br>E não é uma promessa futura: já tem Experts presentes na área de membros desde o primeiro acesso.</div>
-          <div class="deliv-tag">Acesso direto aos Experts</div>
-        </div>
-      </div>
-      <div class="deliv-item">
-        <div class="deliv-icon">🎯</div>
-        <div class="deliv-body">
-          <div class="deliv-title">Caso Real do Mês</div>
-          <div class="deliv-desc">Todo mês, um caso submetido por um membro é selecionado para uma <strong>sessão individual de 1 hora comigo</strong>. Analisamos juntos o que aconteceu e como a Controladoria Jurídica se aplica àquele contexto. Ao final, você recebe uma <strong>ata escrita</strong> com as considerações da sessão. Sigilo absoluto.</div>
-          <div class="deliv-tag">Sorteio mensal entre membros</div>
-        </div>
-      </div>
-      <div class="deliv-item">
-        <div class="deliv-icon">🎁</div>
-        <div class="deliv-body">
-          <div class="deliv-title">50% de Desconto na Mentoria Individual</div>
-          <div class="deliv-desc">Membros ativos têm 50% de desconto nas sessões de Mentoria Individual com a Nathalya. Para utilizar, basta entrar em contato informando que é membro ativo da K Controllers.</div>
-          <div class="deliv-tag">Válido enquanto a assinatura estiver ativa</div>
-        </div>
-      </div>
-    </div>
-
-    <hr class="divider">
-
-    <div class="section-title">Sua condição por ter chegado primeiro</div>
-    <div class="offer-card">
-      <div class="offer-label">Preço exclusivo · Lista de espera</div>
-      <div class="price-row">
-        <div class="price-new"><sup>R$</sup>29<span class="cents">,90</span></div>
-        <div class="price-old-wrap">
-          <div class="price-old-label">Valor para o público</div>
-          <div class="price-old">R$ 49,90</div>
-        </div>
-      </div>
-      <div class="price-period">por mês · preço garantido enquanto sua assinatura estiver ativa</div>
-      <div class="savings-pill">
-        <span class="savings-icon">💰</span>
-        <div class="savings-text"><strong>R$ 240,00 a menos por ano.</strong><br>Esse é o desconto que você garante por ter levantado a mão antes de todo mundo.</div>
-      </div>
-    </div>
-
-    <div class="section-title">O que muda por entrar pela lista</div>
-    <div class="vip-benefits">
-      <div class="vip-item">
-        <span class="vip-num">01</span>
-        <div>
-          <div class="vip-title">Acesso antecipado exclusivo</div>
-          <div class="vip-desc">A K Controllers abre para a lista de espera no dia <strong>11 de novembro</strong>. O público em geral só entra a partir do dia 17. Você está alguns dias à frente.</div>
-        </div>
-      </div>
-      <div class="vip-item">
-        <span class="vip-num">02</span>
-        <div>
-          <div class="vip-title">Mais chances no Caso Real do Mês</div>
-          <div class="vip-desc">Quem entra pela lista participa do sorteio do primeiro Caso Real com muito menos competidores. A K Controllers abre oficialmente para o mercado no dia 17. Quem entrar a partir dessa data só concorre no ciclo seguinte.</div>
-        </div>
-      </div>
-      <div class="vip-item">
-        <span class="vip-num">03</span>
-        <div>
-          <div class="vip-title">Preço travado para sempre</div>
-          <div class="vip-desc">R$ 29,90 é o seu preço enquanto você permanecer na comunidade. <strong>Mesmo que o valor suba no futuro, o seu não muda.</strong></div>
-        </div>
-      </div>
-      <div class="vip-item">
-        <span class="vip-num">04</span>
-        <div>
-          <div class="vip-title">Você está fundando essa comunidade</div>
-          <div class="vip-desc">Os primeiros membros definem o tom e a identidade da K Controllers. <strong>Sua voz tem mais peso aqui do que terá depois.</strong></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="alert-box">
-      <span class="alert-icon">⚠️</span>
-      <div class="alert-text"><strong>Importante:</strong> o valor de R$ 29,90 é válido enquanto sua assinatura estiver ativa e sem interrupções. Se você cancelar e quiser retornar, o valor cobrado será o vigente na data do retorno.</div>
-    </div>
-
-    <div class="deadline-row">
-      <span class="deadline-icon">📅</span>
-      <div class="deadline-text">Esta condição está disponível <strong>até 13 de novembro às 23h59.</strong><br>A partir do dia 17, a K Controllers abre oficialmente para o público e o valor passa a ser <strong>R$ 49,90/mês</strong>, inclusive para quem estava na lista e não assinou.</div>
-    </div>
-
-    <div class="cta-wrap">
-      <a class="cta-btn" href="https://www.asaas.com/000/c/erwhdcyj3ctk11cb" target="_blank" rel="noopener">Quero entrar por R$ 29,90/mês</a>
-      <div class="cta-sub">Acesso liberado a partir de <strong>11 de novembro</strong></div>
-    </div>
-
-    <div class="signature">
-      <div class="sig-text">Construí a K Controllers para ser o espaço que eu gostaria de ter tido quando estava começando na Controladoria Jurídica. Estou animada para te ter aqui desde o início.</div>
-      <div class="sig-name">Nathalya Pereira</div>
-      <div class="sig-role">Fundadora · KARIA Gestão</div>
-      <div class="sig-logo">
-        <div class="sig-k">K</div>
-        <span class="sig-brand">KARIA Gestão</span>
-      </div>
-    </div>
-
+  <div class="redes">
+    <a href="https://www.instagram.com/ck.controllers" target="_blank" class="rede-btn rede-destaque">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      @ck.controllers
+    </a>
+    <a href="https://www.instagram.com/kariagestao" target="_blank" class="rede-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      @kariagestao
+    </a>
   </div>
 
-  <div class="email-footer">
-    <div class="footer-text">
-      K Controllers · por KARIA Gestão · kariagestao.com
-    </div>
-  </div>
+  <!-- Footer -->
+  <p class="footer">
+    K Controllers · por KARIA Gestão<br>
+    <a href="https://kariagestao.com">kariagestao.com</a>
+  </p>
 
 </div>
 
-<script>
-const deadline = new Date('2026-11-13T23:59:00-03:00');
-function updateCountdown() {
-  const now = new Date(), diff = deadline - now;
-  if (diff <= 0) { ['c-dias','c-horas','c-min','c-seg'].forEach(id => document.getElementById(id).textContent = '00'); return; }
-  const pad = n => String(n).padStart(2,'0');
-  document.getElementById('c-dias').textContent = pad(Math.floor(diff/86400000));
-  document.getElementById('c-horas').textContent = pad(Math.floor((diff%86400000)/3600000));
-  document.getElementById('c-min').textContent = pad(Math.floor((diff%3600000)/60000));
-  document.getElementById('c-seg').textContent = pad(Math.floor((diff%60000)/1000));
-}
-updateCountdown(); setInterval(updateCountdown, 1000);
-</script>
 </body>
 </html>
