@@ -402,13 +402,13 @@ p { max-width: var(--max-prose); }
 @media (max-width: 640px) { :root { --space-xl: 4rem; } .nav__links, .nav__cta { display: none; } .nav__burger { display: flex; } .nav__mobile.open { display: flex; } .hero__title { font-size: clamp(1.8rem, 7vw, 2.8rem); } .footer__grid { grid-template-columns: 1fr; } .footer__bottom { flex-direction: column; text-align: center; } .sobre__img-wrap::after { display: none; }
 } @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; }
 } /* ── HERO COM FOTO ── */
-.hero { background: var(--musgo); display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; padding-top: 68px; position: relative; overflow: hidden;
+.hero { background: var(--musgo); display: grid; grid-template-columns: 5fr 6fr; align-items: stretch; padding-top: 68px; position: relative; overflow: hidden;
 }
-.hero__content { display: flex; align-items: center; padding: 1.5rem 2rem 1.5rem 4rem; max-width: 620px;
+.hero__content { display: flex; align-items: center; padding: 1.5rem 1rem 1.5rem 4rem; max-width: 580px;
 }
 .hero__photo { position: relative; overflow: hidden; max-height: calc(100vh - 68px);
 }
-.hero__photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; filter: brightness(1.02) contrast(1.02) saturate(1.08); mix-blend-mode: normal; transform: scale(1.06); transform-origin: center 15%;
+.hero__photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 8%; display: block; filter: brightness(1.02) contrast(1.02) saturate(1.08); mix-blend-mode: normal; transform: scale(1.08); transform-origin: center 8%;
 }
 .hero__photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, var(--musgo) 0%, transparent 30%), linear-gradient(to top, var(--musgo) 0%, transparent 20%); pointer-events: none;
 }
