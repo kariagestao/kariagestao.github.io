@@ -2214,8 +2214,8 @@
     <h2 style="font-family:'Cinzel',serif;font-size:20px;color:#0D1F2D;margin:0 0 16px;font-weight:600;">Antes de continuar</h2>
     <p style="font-family:'Poppins',sans-serif;font-size:14px;color:#444;line-height:1.75;margin:0 0 20px;text-align:justify;">Percebemos que você ainda não aceitou nossos Termos de Uso e Política de Privacidade. Para continuar acessando a plataforma, precisamos do seu aceite.</p>
     <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;">
-      <button onclick="document.getElementById('modal-termos-gate').classList.add('ativo')" style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#0D1F2D;border:1px solid #0D1F2D;border-radius:6px;padding:8px 14px;cursor:pointer;background:none;">Ler Termos de Uso</button>
-      <button onclick="document.getElementById('modal-privacidade-gate').classList.add('ativo')" style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#0D1F2D;border:1px solid #0D1F2D;border-radius:6px;padding:8px 14px;cursor:pointer;background:none;">Ler Política de Privacidade</button>
+      <button onclick="document.getElementById('modal-termos-gate').classList.add('aberto')" style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#0D1F2D;border:1px solid #0D1F2D;border-radius:6px;padding:8px 14px;cursor:pointer;background:none;">Ler Termos de Uso</button>
+      <button onclick="document.getElementById('modal-privacidade-gate').classList.add('aberto')" style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#0D1F2D;border:1px solid #0D1F2D;border-radius:6px;padding:8px 14px;cursor:pointer;background:none;">Ler Política de Privacidade</button>
     </div>
     <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:24px;">
       <input type="checkbox" id="chk-consent-gate" style="width:16px;height:16px;margin-top:2px;accent-color:#0D1F2D;flex-shrink:0;cursor:pointer;">
@@ -2229,7 +2229,7 @@
 <!-- Modal termos — gate -->
 <div id="modal-termos-gate" class="modal-overlay">
   <div class="modal-box">
-    <button class="modal-fechar" onclick="document.getElementById('modal-termos-gate').classList.remove('ativo')">×</button>
+    <button class="modal-fechar" onclick="document.getElementById('modal-termos-gate').classList.remove('aberto')">×</button>
     <p class="modal-label">Termos de Uso</p>
     <p class="modal-sub">K Controllers · NATHALYA DA SILVA PEREIRA LTDA · CNPJ 60.942.073/0001-24</p>
     <div class="modal-body">
@@ -2247,7 +2247,7 @@
 <!-- Modal privacidade — gate -->
 <div id="modal-privacidade-gate" class="modal-overlay">
   <div class="modal-box">
-    <button class="modal-fechar" onclick="document.getElementById('modal-privacidade-gate').classList.remove('ativo')">×</button>
+    <button class="modal-fechar" onclick="document.getElementById('modal-privacidade-gate').classList.remove('aberto')">×</button>
     <p class="modal-label">Política de Privacidade</p>
     <p class="modal-sub">K Controllers · NATHALYA DA SILVA PEREIRA LTDA · CNPJ 60.942.073/0001-24</p>
     <div class="modal-body">
