@@ -720,15 +720,80 @@ body { padding-top: 0 !important; }
   </div>
 </section>
 
-<footer>
-  <div class="footer-logo"><span>KARIA</span> Gestão</div>
-  <div class="footer-links">
-    <a href="https://www.kariagestao.com" class="footer-link">kariagestao.com</a>
-    <a href="https://instagram.com/kariagestao" class="footer-link" target="_blank">Instagram</a>
-    <a href="https://www.linkedin.com/company/kariagestao" class="footer-link" target="_blank">LinkedIn</a>
+<footer class="kfooter">
+  <div class="kfooter__watermark" aria-hidden="true">KARIA</div>
+  <div class="kfooter__inner">
+    <div class="kfooter__brand">
+      <a href="https://www.kariagestao.com" class="kfooter__logo"><span class="kfooter__logo-k">KARIA</span><span class="kfooter__logo-g"> Gestão</span></a>
+      <p class="kfooter__slogan">Gestão que entrega.<br>Estratégia que transforma.</p>
+      <p class="kfooter__desc">Consultoria em Controladoria Jurídica exclusiva para escritórios de advocacia.</p>
+    </div>
+    <div class="kfooter__nav">
+      <div class="kfooter__col">
+        <p class="kfooter__label">Serviços</p>
+        <ul>
+          <li><a href="/servicos/diagnostico.html">Diagnóstico Estruturado</a></li>
+          <li><a href="/servicos/implantacao.html">Consultoria de Implantação</a></li>
+          <li><a href="/servicos/acompanhamento.html">Acompanhamento Estratégico</a></li>
+          <li><a href="/controladoria-juridica-terceirizada.html">Controladoria Terceirizada</a></li>
+          <li><a href="/mentoria.html">Mentoria Individual</a></li>
+        </ul>
+      </div>
+      <div class="kfooter__col">
+        <p class="kfooter__label">KARIA</p>
+        <ul>
+          <li><a href="/sobre.html">Sobre</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/faq.html">FAQ</a></li>
+          <li><a href="https://www.instagram.com/kariagestao" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/company/kariagestao" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="kfooter__contact">
+      <p class="kfooter__label">Fale com a KARIA</p>
+      <p class="kfooter__sub">Pronto para estruturar a gestão do seu escritório?</p>
+      <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="kfooter__cta" target="_blank" rel="noopener">Agendar uma conversa</a>
+      <a href="mailto:contato@kariagestao.com" class="kfooter__email">contato@kariagestao.com</a>
+    </div>
   </div>
-  <div class="footer-copy">© 2025 KARIA Gestão. Todos os direitos reservados.</div>
+  <div class="kfooter__legal">
+    <div class="kfooter__legal-inner">
+      <p>© 2026 NATHALYA DA SILVA PEREIRA LTDA &nbsp;·&nbsp; CNPJ 60.942.073/0001-24</p>
+      <p><a href="/politica-de-privacidade.html">Política de Privacidade</a> &nbsp;·&nbsp; kariagestao.com</p>
+    </div>
+  </div>
 </footer>
+<style>
+.kfooter{background:#0D1F2D;position:relative;overflow:hidden;}
+.kfooter__watermark{position:absolute;bottom:-0.1em;right:-0.05em;font-family:'Montserrat',sans-serif;font-size:clamp(7rem,18vw,16rem);font-weight:900;letter-spacing:-0.04em;color:rgba(255,255,255,0.028);line-height:1;pointer-events:none;user-select:none;white-space:nowrap;}
+.kfooter__inner{max-width:1100px;margin:0 auto;padding:5rem 2rem 3.5rem;display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:4rem;position:relative;}
+.kfooter__logo{display:inline-block;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.35rem;letter-spacing:0.04em;margin-bottom:1.25rem;}
+.kfooter__logo-k{color:#B87333;}
+.kfooter__logo-g{color:#F8F6F3;}
+.kfooter__slogan{font-family:'Montserrat',sans-serif;font-size:1.05rem;font-weight:700;line-height:1.4;color:#F8F6F3;letter-spacing:-0.01em;margin-bottom:1rem;}
+.kfooter__desc{font-size:0.82rem;color:rgba(200,212,220,0.6);line-height:1.7;max-width:260px;}
+.kfooter__nav{display:grid;grid-template-columns:1fr 1fr;gap:2rem;padding-top:0.25rem;}
+.kfooter__label{font-family:'Montserrat',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#B87333;margin-bottom:1.25rem;}
+.kfooter__col ul{list-style:none;display:flex;flex-direction:column;gap:0.65rem;}
+.kfooter__col ul a{font-size:0.85rem;color:rgba(200,212,220,0.7);text-decoration:none;transition:color 0.15s;}
+.kfooter__col ul a:hover{color:#F8F6F3;}
+.kfooter__contact{padding-top:0.25rem;display:flex;flex-direction:column;}
+.kfooter__sub{font-size:0.85rem;color:rgba(200,212,220,0.6);line-height:1.6;margin-bottom:1.5rem;max-width:220px;}
+.kfooter__cta{display:inline-flex;align-items:center;gap:0.55rem;background:#B87333;color:#fff;font-family:'Montserrat',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.04em;padding:0.85rem 1.4rem;border-radius:3px;text-decoration:none;transition:background 0.15s,transform 0.15s;white-space:nowrap;align-self:flex-start;margin-bottom:1rem;}
+.kfooter__cta:hover{background:#9A5F28;transform:translateY(-1px);}
+.kfooter__email{font-size:0.78rem;color:rgba(200,212,220,0.45);text-decoration:none;transition:color 0.15s;}
+.kfooter__email:hover{color:#B87333;}
+.kfooter__legal{border-top:1px solid rgba(184,115,51,0.12);}
+.kfooter__legal-inner{max-width:1100px;margin:0 auto;padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;}
+.kfooter__legal p{font-size:0.72rem;color:rgba(200,212,220,0.3);}
+.kfooter__legal a{color:rgba(200,212,220,0.3);text-decoration:none;transition:color 0.15s;}
+.kfooter__legal a:hover{color:rgba(200,212,220,0.6);}
+@media(max-width:900px){.kfooter__inner{grid-template-columns:1fr 1fr;gap:3rem;padding:4rem 2rem 3rem;}.kfooter__brand{grid-column:1/-1;}}
+@media(max-width:600px){.kfooter__inner{grid-template-columns:1fr;gap:2.5rem;padding:3.5rem 1.25rem 2.5rem;}.kfooter__nav{grid-template-columns:1fr 1fr;}.kfooter__watermark{font-size:7rem;}.kfooter__legal-inner{flex-direction:column;text-align:center;padding:1.25rem;}}
+</style>
+<a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." style="position:fixed!important;bottom:2rem!important;right:2rem!important;z-index:99999!important;width:56px!important;height:56px!important;background:#25D366!important;border-radius:50%!important;display:flex!important;align-items:center!important;justify-content:center!important;box-shadow:0 4px 20px rgba(37,211,102,0.4)!important;text-decoration:none!important;" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+
 
 <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="wpp-float" target="_blank" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
