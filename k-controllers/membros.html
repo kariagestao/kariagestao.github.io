@@ -2207,18 +2207,6 @@
   </div>
 </div>
 
-<!-- Modal de consentimento — gate para membros existentes -->
-<div id="modal-consent-gate" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(13,31,45,0.96);align-items:center;justify-content:center;padding:20px;box-sizing:border-box;">
-  <div style="background:#fff;border-radius:12px;max-width:520px;width:100%;padding:40px 36px;box-shadow:0 24px 64px rgba(0,0,0,0.3);">
-    <div style="font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#B87333;margin-bottom:16px;">K Controllers · Atualização de termos</div>
-    <h2 style="font-family:'Cinzel',serif;font-size:22px;color:#0D1F2D;margin:0 0 16px;">Antes de continuar</h2>
-    <p style="font-family:'Poppins',sans-serif;font-size:14px;color:#444;line-height:1.7;margin:0 0 12px;text-align:justify;">Atualizamos nossos <strong>Termos de Uso</strong> e <strong>Política de Privacidade</strong> para incluir informações sobre como os dados de perfil dos membros são exibidos dentro da plataforma.</p>
-    <p style="font-family:'Poppins',sans-serif;font-size:14px;color:#444;line-height:1.7;margin:0 0 20px;text-align:justify;">As informações que você inserir voluntariamente no seu perfil (nome, foto, bio, estado e redes sociais) são exibidas <strong>exclusivamente para outros membros ativos</strong> da K Controllers, dentro da plataforma fechada. Nenhum dado é compartilhado publicamente. O preenchimento de qualquer campo é opcional.</p>
-    <p style="font-family:'Poppins',sans-serif;font-size:13px;color:#777;line-height:1.6;margin:0 0 28px;text-align:justify;">Para continuar acessando a plataforma, confirme que leu e concorda com os termos atualizados.</p>
-    <button id="btn-aceitar-termos" style="width:100%;background:#0D1F2D;color:#F8F6F3;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:none;border-radius:8px;padding:14px 24px;cursor:pointer;transition:background 0.2s;">Aceitar e continuar</button>
-  </div>
-</div>
-
 <!-- Modal de confirmação de cancelamento -->
 <div class="modal-overlay" id="modal-cancelamento">
   <div class="modal-box">
@@ -2751,7 +2739,7 @@
       // Busca membro: aceita active OU cancelled ainda dentro do período
       const { data: membro, error: erroMembro } = await sb
         .from('members')
-        .select('name, status, plan_end_date, consent_at')
+        .select('name, status, plan_end_date')
         .eq('email', session.user.email)
         .maybeSingle();
 
@@ -2805,32 +2793,6 @@
 
       // Carrega dados do perfil (falha silenciosamente — não bloqueia o app)
       try { await carregarPerfil(session); preencherCasoReal(); } catch(e) { console.warn('Perfil não carregado:', e); }
-
-      // Gate de consentimento — TESTE: apenas para nathalya@kariagestao.com
-      const emailTeste = 'nathalya@kariagestao.com';
-      if (session.user.email === emailTeste && !membro.consent_at) {
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('modal-consent-gate').style.display = 'flex';
-        document.getElementById('btn-aceitar-termos').addEventListener('click', async () => {
-          const btn = document.getElementById('btn-aceitar-termos');
-          btn.disabled = true;
-          btn.textContent = 'Salvando...';
-          const { error: errConsent } = await sb.from('members')
-            .update({ consent_at: new Date().toISOString() })
-            .eq('email', session.user.email);
-          if (errConsent) {
-            btn.disabled = false;
-            btn.textContent = 'Aceitar e continuar';
-            console.error('Erro ao salvar consentimento:', errConsent);
-            return;
-          }
-          document.getElementById('modal-consent-gate').style.display = 'none';
-          document.getElementById('app').style.display = 'block';
-          try { carregarExperts(); } catch(e) {}
-          try { carregarMembros(); } catch(e) {}
-        });
-        return;
-      }
 
       // Mostra o app
       document.getElementById('loading').style.display = 'none';
