@@ -444,6 +444,8 @@ function initNav() {
     }
   });
 }
+function openPrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.add('open');document.body.style.overflow='hidden';} }
+function closePrivacyModal(){ var m=document.getElementById('privacyModal'); if(m){m.classList.remove('open');document.body.style.overflow='';} }
 function initFooter() {
   var privacyLink = document.getElementById('privacyLink');
   if (privacyLink) {
