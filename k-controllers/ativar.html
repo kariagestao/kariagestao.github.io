@@ -188,6 +188,106 @@
   @media (max-width: 500px) {
     .card { padding: 32px 24px; }
   }
+
+  .consent-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+    margin-top: 4px;
+  }
+  .consent-wrap input[type="checkbox"] {
+    width: 16px;
+    min-width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    padding: 0;
+    border: 1.5px solid var(--borda);
+    border-radius: 3px;
+    cursor: pointer;
+    accent-color: var(--musgo);
+  }
+  .consent-wrap label {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--texto-suave);
+    cursor: pointer;
+    line-height: 1.5;
+  }
+  .consent-wrap label button {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--cobre);
+    font-size: 12px;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .modal-overlay.ativo { display: flex; }
+  .modal-box {
+    background: #fff;
+    border-radius: 12px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 36px 32px;
+    position: relative;
+  }
+  .modal-box .modal-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cobre);
+    margin-bottom: 6px;
+  }
+  .modal-box .modal-sub {
+    font-size: 11px;
+    color: var(--texto-suave);
+    margin-bottom: 24px;
+  }
+  .modal-box .modal-body {
+    font-size: 13px;
+    color: var(--texto);
+    line-height: 1.75;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .modal-box .modal-body strong {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--musgo);
+    font-weight: 600;
+  }
+  .modal-fechar {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: var(--texto-suave);
+    cursor: pointer;
+    line-height: 1;
+  }
 </style>
 
 <div class="card">
@@ -222,7 +322,12 @@
       <input type="password" id="senha2" placeholder="Repita a senha" minlength="8" required>
     </div>
 
-    <button type="submit" class="btn" id="btn-ativar">
+    <div class="consent-wrap">
+      <input type="checkbox" id="consent" onchange="document.getElementById('btn-ativar').disabled = !this.checked">
+      <label for="consent">Li e concordo com a <button type="button" onclick="document.getElementById('modal-privacidade').classList.add('ativo')">Política de Privacidade</button> e os <button type="button" onclick="document.getElementById('modal-termos').classList.add('ativo')">Termos de Uso</button> da K Controllers.</label>
+    </div>
+
+    <button type="submit" class="btn" id="btn-ativar" disabled>
       <span class="loading" id="spin"><span class="spinner"></span></span>
       Ativar minha conta
     </button>
@@ -284,6 +389,9 @@
       const { error } = await sb.auth.updateUser({ password: senha });
       if (error) throw error;
 
+      // Grava consentimento
+      await sb.from('members').update({ consent_at: new Date().toISOString() }).eq('email', session.user.email);
+
       msg.className = 'msg ok';
       msg.textContent = 'Senha criada! Redirecionando para a área de membros...';
       setTimeout(() => { location.href = '/k-controllers/membros'; }, 1200);
@@ -302,5 +410,39 @@
     }
   });
 </script>
+
+<!-- MODAL PRIVACIDADE -->
+<div id="modal-privacidade" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-fechar" onclick="document.getElementById('modal-privacidade').classList.remove('ativo')">×</button>
+    <p class="modal-label">Política de Privacidade</p>
+    <p class="modal-sub">K Controllers · NATHALYA DA SILVA PEREIRA LTDA · CNPJ 60.942.073/0001-24</p>
+    <div class="modal-body">
+      <div><strong>Quais dados coletamos</strong>Nome completo, e-mail, endereço e telefone, fornecidos no momento do cadastro ou na área de membros. Dados de pagamento são processados diretamente pelo Asaas e não ficam armazenados em nossos servidores.</div>
+      <div><strong>Para que usamos</strong>Para criar e gerenciar seu acesso à área de membros da K Controllers e para enviar comunicações relacionadas à sua assinatura, como confirmações e avisos importantes.</div>
+      <div><strong>Com quem compartilhamos</strong>Seus dados são compartilhados apenas com os serviços necessários para o funcionamento da plataforma: Asaas (pagamentos), Supabase (banco de dados de membros) e Resend (e-mails transacionais). Não vendemos nem cedemos seus dados a terceiros.</div>
+      <div><strong>Seus direitos (LGPD)</strong>Você pode solicitar acesso, correção ou exclusão dos seus dados a qualquer momento pelo e-mail contato@kariagestao.com.</div>
+      <div><strong>Nossas redes</strong>Instagram: @kariagestao e @ck.controllers</div>
+      <div><strong>Atualizações</strong>Esta política pode ser atualizada. Mudanças relevantes serão comunicadas por e-mail.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL TERMOS DE USO -->
+<div id="modal-termos" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-fechar" onclick="document.getElementById('modal-termos').classList.remove('ativo')">×</button>
+    <p class="modal-label">Termos de Uso</p>
+    <p class="modal-sub">K Controllers · NATHALYA DA SILVA PEREIRA LTDA · CNPJ 60.942.073/0001-24</p>
+    <div class="modal-body">
+      <div><strong>Aceitação</strong>Ao ativar sua conta, você declara ter lido e concordado com estes Termos de Uso. O acesso à plataforma está condicionado à aceitação integral deste documento.</div>
+      <div><strong>Acesso pessoal e intransferível</strong>Sua conta é de uso exclusivamente pessoal. É vedado compartilhar credenciais de acesso ou permitir que terceiros utilizem sua conta.</div>
+      <div><strong>Propriedade intelectual</strong>Todo o conteúdo disponível na K Controllers, incluindo guias, checklists, modelos, roteiros, e-books e demais materiais, é de propriedade exclusiva da NATHALYA DA SILVA PEREIRA LTDA. É proibido reproduzir, distribuir, compartilhar ou utilizar comercialmente qualquer material da plataforma sem autorização prévia e por escrito.</div>
+      <div><strong>Conduta na comunidade</strong>Esperamos que todos os membros contribuam para um ambiente respeitoso e profissional. São vedados comportamentos que prejudiquem, exponham ou constranjam outros membros, bem como divulgação de spam ou conteúdo publicitário não autorizado dentro dos espaços da comunidade.</div>
+      <div><strong>Suspensão e encerramento</strong>O descumprimento destes termos pode resultar na suspensão ou cancelamento do acesso, a critério da K Controllers, sem direito a reembolso do período não utilizado.</div>
+      <div><strong>Dúvidas</strong>contato@kariagestao.com</div>
+    </div>
+  </div>
+</div>
 
 </html>
