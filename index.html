@@ -251,11 +251,11 @@ p { max-width: var(--max-prose); }
 .privacy-modal__body a { color: #B87333; text-decoration: underline; }
 @media (max-width: 900px) { .footer__top-inner { grid-template-columns: 1fr 1fr; } .footer__links-block { grid-column: 1 / -1; } }
 @media (max-width: 600px) { .footer__top-inner { grid-template-columns: 1fr; } .footer__bottom-inner { flex-direction: column; text-align: center; } }
-.hero { min-height: 100svh; background: var(--musgo); display: flex; align-items: center; padding-top: 68px; position: relative; overflow: hidden;
+.hero { background: var(--musgo); display: flex; align-items: center; padding-top: 68px; position: relative; overflow: hidden;
 }
 .hero::before { content: ''; position: absolute; top: -10%; right: -5%; width: 55%; height: 120%; background: radial-gradient(ellipse at 70% 40%, rgba(184,115,51,0.08) 0%, transparent 65%); pointer-events: none;
 }
-.hero__inner { max-width: var(--max-wide); margin: 0 auto; padding: var(--space-xl) var(--space-md); width: 100%;
+.hero__inner { max-width: var(--max-wide); margin: 0 auto; padding: 3rem var(--space-md); width: 100%;
 }
 .hero__pre { font-family: var(--font-data); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.16em; color: var(--cobre); text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;
 }
@@ -402,7 +402,7 @@ p { max-width: var(--max-prose); }
 @media (max-width: 640px) { :root { --space-xl: 4rem; } .nav__links, .nav__cta { display: none; } .nav__burger { display: flex; } .nav__mobile.open { display: flex; } .hero__title { font-size: clamp(1.8rem, 7vw, 2.8rem); } .footer__grid { grid-template-columns: 1fr; } .footer__bottom { flex-direction: column; text-align: center; } .sobre__img-wrap::after { display: none; }
 } @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; }
 } /* ── HERO COM FOTO ── */
-.hero { min-height: 100svh; background: var(--musgo); display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; padding-top: 68px; position: relative; overflow: hidden;
+.hero { background: var(--musgo); display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; padding-top: 68px; position: relative; overflow: hidden;
 }
 .hero__content { display: flex; align-items: center; padding: 2.5rem 3rem 2.5rem 5rem; max-width: 620px;
 }
