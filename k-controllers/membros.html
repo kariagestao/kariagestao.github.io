@@ -2207,6 +2207,61 @@
   </div>
 </div>
 
+<!-- Gate de consentimento — membros existentes -->
+<div id="modal-consent-gate" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(13,31,45,0.97);align-items:center;justify-content:center;padding:20px;box-sizing:border-box;">
+  <div style="background:#fff;border-radius:12px;max-width:500px;width:100%;padding:36px 32px;box-shadow:0 24px 64px rgba(0,0,0,0.4);">
+    <span style="font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#B87333;margin-bottom:14px;display:block;">K Controllers · Termos de uso</span>
+    <h2 style="font-family:'Cinzel',serif;font-size:20px;color:#0D1F2D;margin:0 0 16px;font-weight:600;">Antes de continuar</h2>
+    <p style="font-family:'Poppins',sans-serif;font-size:14px;color:#444;line-height:1.75;margin:0 0 20px;text-align:justify;">Percebemos que você ainda não aceitou nossos Termos de Uso e Política de Privacidade. Para continuar acessando a plataforma, precisamos do seu aceite.</p>
+    <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;">
+      <button onclick="document.getElementById('modal-termos-gate').classList.add('ativo')" style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#0D1F2D;border:1px solid #0D1F2D;border-radius:6px;padding:8px 14px;cursor:pointer;background:none;">Ler Termos de Uso</button>
+      <button onclick="document.getElementById('modal-privacidade-gate').classList.add('ativo')" style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#0D1F2D;border:1px solid #0D1F2D;border-radius:6px;padding:8px 14px;cursor:pointer;background:none;">Ler Política de Privacidade</button>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:24px;">
+      <input type="checkbox" id="chk-consent-gate" style="width:16px;height:16px;margin-top:2px;accent-color:#0D1F2D;flex-shrink:0;cursor:pointer;">
+      <label for="chk-consent-gate" style="font-family:'Poppins',sans-serif;font-size:13px;color:#444;line-height:1.6;cursor:pointer;">Li e concordo com os <strong style="color:#0D1F2D;">Termos de Uso</strong> e a <strong style="color:#0D1F2D;">Política de Privacidade</strong> da K Controllers.</label>
+    </div>
+    <button id="btn-aceitar-termos" disabled style="width:100%;background:#0D1F2D;color:#F8F6F3;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border:none;border-radius:8px;padding:14px 24px;cursor:pointer;opacity:0.4;transition:opacity 0.2s;" onmouseover="if(!this.disabled)this.style.background='#162d40'" onmouseout="this.style.background='#0D1F2D'">Aceitar e continuar</button>
+    <style>#btn-aceitar-termos:not([disabled]){opacity:1;cursor:pointer;}#btn-aceitar-termos[disabled]{opacity:0.4;cursor:not-allowed;}</style>
+  </div>
+</div>
+
+<!-- Modal termos — gate -->
+<div id="modal-termos-gate" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-fechar" onclick="document.getElementById('modal-termos-gate').classList.remove('ativo')">×</button>
+    <p class="modal-label">Termos de Uso</p>
+    <p class="modal-sub">K Controllers · NATHALYA DA SILVA PEREIRA LTDA · CNPJ 60.942.073/0001-24</p>
+    <div class="modal-body">
+      <div><strong>Aceitação</strong>Ao ativar sua conta, você declara ter lido e concordado com estes Termos de Uso. O acesso à plataforma está condicionado à aceitação integral deste documento.</div>
+      <div><strong>Acesso pessoal e intransferível</strong>Sua conta é de uso exclusivamente pessoal. É vedado compartilhar credenciais de acesso ou permitir que terceiros utilizem sua conta.</div>
+      <div><strong>Propriedade intelectual</strong>Todo o conteúdo disponível na K Controllers, incluindo guias, checklists, modelos, roteiros, e-books e demais materiais, é de propriedade exclusiva da NATHALYA DA SILVA PEREIRA LTDA. É proibido reproduzir, distribuir, compartilhar ou utilizar comercialmente qualquer material da plataforma sem autorização prévia e por escrito.</div>
+      <div><strong>Conduta na comunidade</strong>Esperamos que todos os membros contribuam para um ambiente respeitoso e profissional. São vedados comportamentos que prejudiquem, exponham ou constranjam outros membros, bem como divulgação de spam ou conteúdo publicitário não autorizado dentro dos espaços da comunidade.</div>
+      <div><strong>Perfil e visibilidade dentro da comunidade</strong>Ao preencher seu perfil na área de membros, você autoriza que as informações inseridas voluntariamente, como nome, foto, bio, estado (UF) e links de redes sociais, sejam exibidas para os demais membros ativos da K Controllers dentro da plataforma. Nenhum dado de perfil é exibido publicamente fora da área de membros. O preenchimento do perfil é opcional, e você pode deixar qualquer campo em branco se preferir não compartilhá-lo com a comunidade.</div>
+      <div><strong>Suspensão e encerramento</strong>O descumprimento destes termos pode resultar na suspensão ou cancelamento do acesso, a critério da K Controllers, sem direito a reembolso do período não utilizado.</div>
+      <div><strong>Dúvidas</strong>contato@kariagestao.com</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal privacidade — gate -->
+<div id="modal-privacidade-gate" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-fechar" onclick="document.getElementById('modal-privacidade-gate').classList.remove('ativo')">×</button>
+    <p class="modal-label">Política de Privacidade</p>
+    <p class="modal-sub">K Controllers · NATHALYA DA SILVA PEREIRA LTDA · CNPJ 60.942.073/0001-24</p>
+    <div class="modal-body">
+      <div><strong>Quais dados coletamos</strong>Nome completo, e-mail, endereço e telefone, fornecidos no momento do cadastro ou na área de membros. Dados de pagamento são processados diretamente pelo Asaas e não ficam armazenados em nossos servidores.</div>
+      <div><strong>Para que usamos</strong>Para criar e gerenciar seu acesso à área de membros da K Controllers e para enviar comunicações relacionadas à sua assinatura, como confirmações e avisos importantes.</div>
+      <div><strong>Com quem compartilhamos</strong>Seus dados são compartilhados apenas com os serviços necessários para o funcionamento da plataforma: Asaas (pagamentos), Supabase (banco de dados de membros) e Resend (e-mails transacionais). Não vendemos nem cedemos seus dados a terceiros.</div>
+      <div><strong>Seus direitos (LGPD)</strong>Você pode solicitar acesso, correção ou exclusão dos seus dados a qualquer momento pelo e-mail contato@kariagestao.com.</div>
+      <div><strong>Dados de perfil dos membros</strong>Ao preencher o perfil na área de membros, você poderá inserir voluntariamente informações como nome, foto, bio, estado (UF) e links de redes sociais. Essas informações são exibidas exclusivamente para outros membros ativos da K Controllers dentro da plataforma fechada, e não são compartilhadas publicamente ou com terceiros. O preenchimento de qualquer campo do perfil é opcional. Você pode atualizar ou remover essas informações a qualquer momento acessando sua área de perfil.</div>
+      <div><strong>Nossas redes</strong>Instagram: @kariagestao e @ck.controllers</div>
+      <div><strong>Atualizações</strong>Esta política pode ser atualizada. Mudanças relevantes serão comunicadas por e-mail.</div>
+    </div>
+  </div>
+</div>
+
 <!-- Modal de confirmação de cancelamento -->
 <div class="modal-overlay" id="modal-cancelamento">
   <div class="modal-box">
@@ -2793,6 +2848,34 @@
 
       // Carrega dados do perfil (falha silenciosamente — não bloqueia o app)
       try { await carregarPerfil(session); preencherCasoReal(); } catch(e) { console.warn('Perfil não carregado:', e); }
+
+      // Gate de consentimento — exibe para quem ainda não aceitou os termos
+      if (!membro.consent_at) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('modal-consent-gate').style.display = 'flex';
+        document.getElementById('chk-consent-gate').addEventListener('change', function() {
+          document.getElementById('btn-aceitar-termos').disabled = !this.checked;
+        });
+        document.getElementById('btn-aceitar-termos').addEventListener('click', async () => {
+          const btn = document.getElementById('btn-aceitar-termos');
+          btn.disabled = true;
+          btn.textContent = 'Salvando...';
+          const { error: errConsent } = await sb.from('members')
+            .update({ consent_at: new Date().toISOString() })
+            .eq('email', session.user.email);
+          if (errConsent) {
+            btn.disabled = false;
+            btn.textContent = 'Aceitar e continuar';
+            console.error('Erro ao salvar consentimento:', errConsent);
+            return;
+          }
+          document.getElementById('modal-consent-gate').style.display = 'none';
+          document.getElementById('app').style.display = 'block';
+          try { carregarExperts(); } catch(e) {}
+          try { carregarMembros(); } catch(e) {}
+        });
+        return;
+      }
 
       // Mostra o app
       document.getElementById('loading').style.display = 'none';
