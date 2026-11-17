@@ -2221,8 +2221,19 @@
       <input type="checkbox" id="chk-consent-gate" style="width:16px;height:16px;margin-top:2px;accent-color:#0D1F2D;flex-shrink:0;cursor:pointer;">
       <label for="chk-consent-gate" style="font-family:'Poppins',sans-serif;font-size:13px;color:#444;line-height:1.6;cursor:pointer;">Li e concordo com os <strong style="color:#0D1F2D;">Termos de Uso</strong> e a <strong style="color:#0D1F2D;">Política de Privacidade</strong> da K Controllers.</label>
     </div>
-    <button id="btn-aceitar-termos" disabled style="width:100%;background:#0D1F2D;color:#F8F6F3;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border:none;border-radius:8px;padding:14px 24px;cursor:pointer;opacity:0.4;transition:opacity 0.2s;" onmouseover="if(!this.disabled)this.style.background='#162d40'" onmouseout="this.style.background='#0D1F2D'">Aceitar e continuar</button>
-    <style>#btn-aceitar-termos:not([disabled]){opacity:1;cursor:pointer;}#btn-aceitar-termos[disabled]{opacity:0.4;cursor:not-allowed;}</style>
+    <button id="btn-aceitar-termos" disabled style="width:100%;background:#0D1F2D;color:#F8F6F3;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border:none;border-radius:8px;padding:14px 24px;cursor:not-allowed;transition:opacity 0.2s;">Aceitar e continuar</button>
+    <style>
+      #btn-aceitar-termos[disabled]{opacity:0.4;}
+      #btn-aceitar-termos:not([disabled]){opacity:1;cursor:pointer;}
+      #btn-aceitar-termos:not([disabled]):hover{background:#162d40;}
+      .modal-body{display:flex;flex-direction:column;gap:16px;}
+      .modal-body div{font-size:13px;color:#444;line-height:1.75;text-align:justify;}
+      .modal-body strong{display:block;color:#0D1F2D;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px;}
+      .modal-label{font-family:'Cinzel',serif;font-size:16px;color:#0D1F2D;font-weight:600;margin-bottom:4px;}
+      .modal-sub{font-family:'Montserrat',sans-serif;font-size:10px;color:#B87333;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:20px;}
+      .modal-fechar{position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;color:#999;cursor:pointer;line-height:1;}
+      .modal-fechar:hover{color:#333;}
+    </style>
   </div>
 </div>
 
