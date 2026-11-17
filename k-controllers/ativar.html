@@ -345,10 +345,10 @@
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
   // Esta página só funciona via link enviado por e-mail após o pagamento.
-  // Sem sessão ativa → redireciona para login imediatamente.
-  sb.auth.getSession().then(({ data }) => {
-    if (!data.session) location.replace('/k-controllers/login');
-  });
+  // Sem o token no hash → redireciona para login imediatamente.
+  if (!location.hash.includes('access_token')) {
+    location.replace('/k-controllers/login');
+  }
 
   // Mostra formulário simplificado (só senha, sem e-mail/nome)
   document.getElementById('grupo-nome').style.display = 'none';
