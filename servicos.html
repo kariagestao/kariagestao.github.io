@@ -50,9 +50,9 @@ p { max-width: var(--max-prose); } /* --- Layout helpers --- */
 .nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.35); }
 .nav__inner { max-width: var(--max-wide); margin: 0 auto; padding: 0 var(--space-md); height: 68px; display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm);
 }
-.nav__logo { font-family: var(--font-title); font-size: 1.25rem; font-weight: 700; color: var(--off); letter-spacing: 0.08em; flex-shrink: 0;
-}
-.nav__logo span { color: var(--cobre); }
+.nav__logo { flex-shrink: 0; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.nav__logo-label { font-family: var(--font-title); font-size: 1.1rem; font-weight: 800; color: var(--off); letter-spacing: 0.06em; }
+.nav__logo-label span { color: var(--cobre); }
 .nav__links { display: flex; align-items: center; gap: 0.25rem; list-style: none;
 }
 .nav__links a { font-size: 0.875rem; font-weight: 400; color: var(--text-light); padding: 0.4rem 0.75rem; border-radius: var(--radius-sm); transition: color 0.15s;
@@ -708,7 +708,6 @@ p { max-width: var(--max-prose); } /* --- Layout helpers --- */
 <body>
 
 <div id="karia-nav"></div>
-</header>
 
 <!-- HERO -->
 <section class="servicos-hero">
