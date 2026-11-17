@@ -319,56 +319,15 @@ p { max-width: var(--max-prose); }
 
     .nav-link:hover { opacity: 1; }
 
-    /* HERO */
-    .hero {
-      background: var(--azul);
-      color: var(--offwhite);
-      padding: 5rem 2rem 4rem;
-      text-align: center;
-    }
-
-    .hero-eyebrow {
-      font-family: var(--fonte-corpo);
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      color: var(--cobre);
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero h1 {
-      font-family: var(--fonte-titulo);
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      font-weight: 700;
-      line-height: 1.3;
-      max-width: 780px;
-      margin: 0 auto 1.5rem;
-      color: var(--offwhite);
-    }
-
-    .hero-sub {
-      font-size: 1.05rem;
-      color: rgba(248,246,243,0.75);
-      max-width: 560px;
-      margin: 0 auto 2.5rem;
-      font-weight: 300;
-    }
-
-    .btn-hero {
-      display: inline-block;
-      background: var(--cobre);
-      color: var(--offwhite);
-      padding: 0.9rem 2rem;
-      font-family: var(--fonte-corpo);
-      font-size: 0.95rem;
-      font-weight: 500;
-      text-decoration: none;
-      border-radius: 2px;
-      transition: background 0.2s;
-    }
-
-    .btn-hero:hover { background: var(--cobre-claro); }
+    /* PAGE HERO — padrão compartilhado */
+    .page-hero { background: var(--musgo); padding: 140px 0 80px; position: relative; overflow: hidden; }
+    .page-hero::before { content:''; position:absolute; top:-10%;right:-5%; width:50%;height:120%; background:radial-gradient(ellipse at 70% 40%,rgba(184,115,51,0.09) 0%,transparent 65%); pointer-events:none; }
+    .page-hero__inner { max-width:var(--max-wide);margin:0 auto;padding:0 var(--space-md); display:grid;grid-template-columns:1fr 460px;gap:4rem;align-items:center; }
+    .page-hero__pre { font-family:var(--font-data);font-size:0.78rem;font-weight:600; letter-spacing:0.16em;color:var(--cobre);text-transform:uppercase; margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem; }
+    .page-hero h1 { color:var(--off);margin-bottom:1.25rem; }
+    .page-hero__sub { color:var(--text-light);font-size:1.05rem;line-height:1.8; margin-bottom:2rem;max-width:520px; }
+    .page-hero__visual { border-radius:var(--radius-md);overflow:hidden; border:1px solid rgba(184,115,51,0.2); background:var(--musgo-mid); aspect-ratio: 13/10; }
+    @media (max-width: 900px) { .page-hero { padding: 100px 0 50px; } .page-hero__inner { grid-template-columns: 1fr !important; } .page-hero__visual { display: none; } }
 
     /* DORES */
     .dores {
@@ -790,17 +749,76 @@ p { max-width: var(--max-prose); }
 </head>
 <body>
 <div id="karia-nav"></div>
-<div style="padding-top:72px">
-<!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <div class="badge-pocket">● Serviço Pocket</div>
-      <p class="hero-eyebrow">Terceirização de Controladoria Jurídica</p>
+<section class="page-hero">
+  <div class="page-hero__inner">
+    <div>
+      <p class="page-hero__pre">Controladoria Terceirizada</p>
       <h1>Seu escritório não pode depender de alguém lembrar de checar as publicações.</h1>
-      <p class="hero-sub">Monitoramento diário de publicações, controle de prazos e cadastro de processos terceirizados para escritórios de advocacia cível.</p>
-      <a href="#verificar" class="btn-hero">Verificar se meu escritório se qualifica</a>
+      <p class="page-hero__sub">Monitoramento diário de publicações, controle de prazos e cadastro de processos terceirizados para escritórios de advocacia cível.</p>
+      <a href="#verificar" class="btn btn-primary">Verificar se meu escritório se qualifica</a>
     </div>
-  </section>
+    <div class="page-hero__visual" aria-hidden="true">
+      <svg viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="display:block">
+        <rect width="520" height="420" fill="#0D1F2D" rx="0"/>
+        <g opacity="0.04" stroke="#fff" stroke-width="1">
+          <line x1="0" y1="70" x2="520" y2="70"/><line x1="0" y1="140" x2="520" y2="140"/>
+          <line x1="0" y1="210" x2="520" y2="210"/><line x1="0" y1="280" x2="520" y2="280"/>
+          <line x1="0" y1="350" x2="520" y2="350"/>
+          <line x1="86" y1="0" x2="86" y2="420"/><line x1="173" y1="0" x2="173" y2="420"/>
+          <line x1="260" y1="0" x2="260" y2="420"/><line x1="347" y1="0" x2="347" y2="420"/>
+          <line x1="434" y1="0" x2="434" y2="420"/>
+        </g>
+        <circle cx="420" cy="80" r="120" fill="#B87333" fill-opacity="0.06"/>
+        <circle cx="80" cy="360" r="90" fill="#B87333" fill-opacity="0.05"/>
+        <!-- Calendário / publicações -->
+        <rect x="130" y="80" width="260" height="210" rx="10" fill="none" stroke="#B87333" stroke-width="1.2" stroke-opacity="0.3"/>
+        <rect x="130" y="80" width="260" height="40" rx="10" fill="#B87333" fill-opacity="0.15"/>
+        <!-- Header do calendário -->
+        <text x="260" y="107" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="11" font-weight="700" fill="#B87333" letter-spacing="1.5">PUBLICAÇÕES</text>
+        <!-- Grade de dias -->
+        <g fill="#C8D4DC" opacity="0.25" font-family="Montserrat,sans-serif" font-size="10">
+          <text x="155" y="145">Seg</text><text x="195" y="145">Ter</text><text x="235" y="145">Qua</text>
+          <text x="275" y="145">Qui</text><text x="315" y="145">Sex</text>
+        </g>
+        <!-- Dias com marcação -->
+        <g font-family="Montserrat,sans-serif" font-size="11" font-weight="600">
+          <text x="155" y="175" fill="#C8D4DC" opacity="0.5">3</text>
+          <text x="195" y="175" fill="#C8D4DC" opacity="0.5">4</text>
+          <!-- Dia com alerta (prazo) -->
+          <circle cx="241" cy="168" r="13" fill="#B87333" fill-opacity="0.9"/>
+          <text x="241" y="173" text-anchor="middle" fill="#fff">5</text>
+          <text x="275" y="175" fill="#C8D4DC" opacity="0.5">6</text>
+          <text x="315" y="175" fill="#C8D4DC" opacity="0.5">7</text>
+
+          <text x="155" y="207" fill="#C8D4DC" opacity="0.5">10</text>
+          <text x="192" y="207" fill="#C8D4DC" opacity="0.5">11</text>
+          <text x="232" y="207" fill="#C8D4DC" opacity="0.5">12</text>
+          <!-- Outro dia com check -->
+          <circle cx="278" cy="200" r="13" fill="#B87333" fill-opacity="0.2" stroke="#B87333" stroke-width="1"/>
+          <text x="278" y="205" text-anchor="middle" fill="#B87333">13</text>
+          <text x="315" y="207" fill="#C8D4DC" opacity="0.5">14</text>
+
+          <text x="155" y="239" fill="#C8D4DC" opacity="0.5">17</text>
+          <text x="192" y="239" fill="#C8D4DC" opacity="0.5">18</text>
+          <text x="232" y="239" fill="#C8D4DC" opacity="0.5">19</text>
+          <text x="272" y="239" fill="#C8D4DC" opacity="0.5">20</text>
+          <!-- Prazo crítico -->
+          <circle cx="318" cy="232" r="13" fill="#B87333" fill-opacity="0.9"/>
+          <text x="318" y="237" text-anchor="middle" fill="#fff">21</text>
+        </g>
+        <!-- Label alerta -->
+        <rect x="130" y="310" width="260" height="34" rx="6" fill="#B87333" fill-opacity="0.1" stroke="#B87333" stroke-width="0.8" stroke-opacity="0.4"/>
+        <circle cx="152" cy="327" r="6" fill="#B87333" fill-opacity="0.9"/>
+        <text x="165" y="331" font-family="Montserrat,sans-serif" font-size="10" font-weight="600" fill="#B87333" letter-spacing="0.5">3 publicações monitoradas hoje</text>
+        <!-- Checkmarks -->
+        <g stroke="#B87333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7">
+          <polyline points="356,318 360,324 370,312"/>
+          <polyline points="376,318 380,324 390,312"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
 
   <!-- DORES -->
   <section class="dores">
