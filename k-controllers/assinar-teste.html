@@ -702,12 +702,12 @@
 
   <!-- TELA SUCESSO -->
   <div class="tela-sucesso" id="telaSucesso">
-    <div class="sucesso-icone">
+    <div class="sucesso-icone" id="sucessoIcone">
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
-    <h2>Bem-vindo!</h2>
+    <h2 id="sucessoTitulo">Pronto!</h2>
     <p id="sucessoTexto">Sua assinatura foi criada. Verifique seu e-mail para ativar o acesso.</p>
-    <a href="/k-controllers/login" class="btn-acessar">Acessar a área de membros</a>
+    <a href="/k-controllers/login" class="btn-acessar" id="btnAcessar">Acessar a área de membros</a>
   </div>
 
 </div>
@@ -922,11 +922,14 @@
 
       // Sucesso
       if (data.checkout_url) {
-        // Redirecionar para pagamento Asaas
-        document.getElementById('sucessoTexto').textContent =
-          'Redirecionando para o pagamento...';
+        // Redirecionar para pagamento Asaas — tela de transição sem botão
+        document.getElementById('sucessoTitulo').textContent = 'Quase lá!';
+        document.getElementById('sucessoTexto').innerHTML =
+          'Estamos te direcionando para o nosso portal seguro de pagamento (Asaas).<br><br>' +
+          '<span style="font-size:12px;color:var(--texto-suave)">Você será redirecionado em instantes...</span>';
+        document.getElementById('btnAcessar').style.display = 'none';
         exibirSucesso();
-        setTimeout(() => { window.location.href = data.checkout_url; }, 100);
+        setTimeout(() => { window.location.href = data.checkout_url; }, 2500);
       } else if (data.free_access) {
         // Cupom 100% — acesso direto
         document.getElementById('sucessoTexto').textContent =
