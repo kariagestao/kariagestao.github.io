@@ -804,7 +804,7 @@
         document.getElementById('sucessoTexto').textContent =
           'Redirecionando para o pagamento...';
         exibirSucesso();
-        setTimeout(() => { window.location.href = data.checkout_url; }, 1200);
+        setTimeout(() => { window.location.href = data.checkout_url; }, 100);
       } else if (data.free_access) {
         // Cupom 100% — acesso direto
         document.getElementById('sucessoTexto').textContent =
