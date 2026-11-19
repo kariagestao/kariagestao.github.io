@@ -419,6 +419,163 @@
     color: #1e7e44;
   }
 
+  /* ── TELA PIX QR CODE ── */
+  .tela-pix {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .tela-pix.ativa {
+    display: flex;
+  }
+
+  .pix-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pix-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #27ae60;
+    background: rgba(39,174,96,0.08);
+    border: 1px solid rgba(39,174,96,0.22);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  .pix-titulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--musgo);
+  }
+
+  .pix-subtitulo {
+    font-size: 13px;
+    color: var(--texto-suave);
+    max-width: 340px;
+    line-height: 1.6;
+  }
+
+  .pix-qr-box {
+    background: var(--branco);
+    border-radius: 16px;
+    border: 1.5px solid var(--borda);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    box-shadow: 0 2px 20px rgba(13,31,45,0.07);
+  }
+
+  .pix-qr-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+  }
+
+  .pix-expiracao {
+    font-size: 11px;
+    color: var(--texto-suave);
+  }
+
+  .pix-copia-cola-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--texto);
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.04em;
+    text-align: left;
+    width: 100%;
+  }
+
+  .pix-copia-cola-row {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .pix-copia-cola-input {
+    flex: 1;
+    border: 1.5px solid var(--borda);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 11px;
+    font-family: 'Poppins', sans-serif;
+    color: var(--texto-suave);
+    background: var(--claro);
+    outline: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: default;
+  }
+
+  .btn-copiar {
+    flex-shrink: 0;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1.5px solid var(--cobre);
+    background: transparent;
+    color: var(--cobre);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-copiar:hover {
+    background: var(--cobre);
+    color: var(--branco);
+  }
+
+  .btn-copiar.copiado {
+    background: #27ae60;
+    border-color: #27ae60;
+    color: var(--branco);
+  }
+
+  .pix-aguardando {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--texto-suave);
+  }
+
+  .pix-aguardando-dot {
+    width: 8px;
+    height: 8px;
+    background: #27ae60;
+    border-radius: 50%;
+    animation: pulso 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulso {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
   /* ── TELA SUCESSO ── */
   .tela-sucesso {
     display: none;
@@ -648,8 +805,8 @@
         <label class="metodo-opcao" id="opcaoPix" onclick="selecionarMetodo('PIX')">
           <input type="radio" name="metodo" value="PIX">
           <span class="metodo-icone">⚡</span>
-          <span class="metodo-label">Pix Automático</span>
-          <span class="metodo-desc">Autorize uma vez, renova sozinho</span>
+          <span class="metodo-label">Pix</span>
+          <span class="metodo-desc">Pague via QR Code a cada mês</span>
         </label>
       </div>
     </div>
@@ -680,6 +837,37 @@
     <p style="font-size:11px;color:var(--texto-suave);text-align:center;line-height:1.6">
       Cobrança mensal recorrente. Cancele a qualquer momento.
     </p>
+  </div>
+
+  <!-- TELA PIX QR CODE -->
+  <div class="tela-pix" id="telaPix">
+    <div class="pix-header">
+      <div class="pix-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Pix gerado
+      </div>
+      <div class="pix-titulo">Escaneie para pagar</div>
+      <div class="pix-subtitulo">Abra o app do seu banco e escaneie o QR Code. Após confirmar o pagamento, seu acesso será ativado em instantes.</div>
+    </div>
+
+    <div class="pix-qr-box">
+      <img id="pixQrImg" class="pix-qr-img" src="" alt="QR Code Pix">
+
+      <div class="pix-expiracao" id="pixExpiracao"></div>
+
+      <div style="width:100%">
+        <div class="pix-copia-cola-label">Pix Copia e Cola</div>
+        <div style="margin-top:8px" class="pix-copia-cola-row">
+          <input type="text" class="pix-copia-cola-input" id="pixPayload" readonly>
+          <button class="btn-copiar" id="btnCopiar" onclick="copiarPayload()">Copiar</button>
+        </div>
+      </div>
+
+      <div class="pix-aguardando">
+        <div class="pix-aguardando-dot"></div>
+        Aguardando confirmação do pagamento...
+      </div>
+    </div>
   </div>
 
   <!-- TELA SUCESSO -->
@@ -916,16 +1104,19 @@
       }
 
       // Sucesso
-      if (data.checkout_url) {
-        // Redirecionar para pagamento Asaas — tela de transição sem botão
+      if (data.qr_code) {
+        // PIX com QR Code embutido — exibe inline sem sair da pagina
+        exibirQrCode(data.qr_code);
+      } else if (data.checkout_url) {
+        // Fallback: redirecionar para pagamento Asaas
         document.getElementById('sucessoTitulo').textContent = 'Quase lá!';
         document.getElementById('sucessoTexto').innerHTML =
-          'Estamos te direcionando para o nosso portal seguro de pagamento (Asaas).<br><br>' +
+          'Estamos te direcionando para o nosso portal seguro de pagamento.<br><br>' +
           '<span style="font-size:12px;color:var(--texto-suave)">Você será redirecionado em instantes...</span>';
         document.getElementById('btnAcessar').style.display = 'none';
         exibirSucesso();
         setTimeout(() => { window.location.href = data.checkout_url; }, 2500);
-      } else if (data.free_access) {
+      } else if (data.free_access || data.free) {
         // Cupom 100% — acesso direto
         document.getElementById('sucessoTexto').textContent =
           'Seu acesso foi ativado! Verifique seu e-mail para definir a senha.';
@@ -956,6 +1147,55 @@
     spinner.style.display = on ? 'block' : 'none';
     texto.textContent = on ? 'Processando...' : 'Assinar agora';
   }
+
+  function exibirQrCode(qr) {
+    document.getElementById('cardPlano').style.display = 'none';
+    document.getElementById('descontoAplicado').style.display = 'none';
+    document.getElementById('cardForm').style.display = 'none';
+
+    // Preenche QR Code
+    const img = document.getElementById('pixQrImg');
+    img.src = 'data:image/png;base64,' + qr.encodedImage;
+
+    const payloadInput = document.getElementById('pixPayload');
+    payloadInput.value = qr.payload;
+
+    if (qr.expirationDate) {
+      try {
+        const exp = new Date(qr.expirationDate);
+        const opts = { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+        document.getElementById('pixExpiracao').textContent =
+          'Expira em ' + exp.toLocaleString('pt-BR', opts);
+      } catch (e) { /* ignora */ }
+    }
+
+    document.getElementById('telaPix').classList.add('ativa');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  window.copiarPayload = function() {
+    const payload = document.getElementById('pixPayload').value;
+    const btn = document.getElementById('btnCopiar');
+    navigator.clipboard.writeText(payload).then(() => {
+      btn.textContent = 'Copiado!';
+      btn.classList.add('copiado');
+      setTimeout(() => {
+        btn.textContent = 'Copiar';
+        btn.classList.remove('copiado');
+      }, 2500);
+    }).catch(() => {
+      // Fallback: seleciona o campo
+      const input = document.getElementById('pixPayload');
+      input.select();
+      document.execCommand('copy');
+      btn.textContent = 'Copiado!';
+      btn.classList.add('copiado');
+      setTimeout(() => {
+        btn.textContent = 'Copiar';
+        btn.classList.remove('copiado');
+      }, 2500);
+    });
+  };
 
   function exibirSucesso() {
     document.getElementById('cardPlano').style.display = 'none';
