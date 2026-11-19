@@ -639,11 +639,17 @@
     <div>
       <div class="metodo-titulo">Forma de pagamento</div>
       <div class="metodo-opcoes" id="metodoOpcoes">
-        <label class="metodo-opcao selecionado" id="opcaoCartao" onclick="selecionarMetodo('CREDIT_CARD')">
-          <input type="radio" name="metodo" value="CREDIT_CARD" checked>
+        <label class="metodo-opcao" id="opcaoCartao" onclick="selecionarMetodo('CREDIT_CARD')">
+          <input type="radio" name="metodo" value="CREDIT_CARD">
           <span class="metodo-icone">💳</span>
           <span class="metodo-label">Cartão de crédito</span>
           <span class="metodo-desc">Pagamento recorrente mensal</span>
+        </label>
+        <label class="metodo-opcao" id="opcaoPix" onclick="selecionarMetodo('PIX')">
+          <input type="radio" name="metodo" value="PIX">
+          <span class="metodo-icone">⚡</span>
+          <span class="metodo-label">Pix Automático</span>
+          <span class="metodo-desc">Autorize uma vez, renova sozinho</span>
         </label>
       </div>
     </div>
@@ -711,7 +717,7 @@
     document.getElementById('valorExibido').innerHTML = 'R 29,90 <span>/mês</span>';
   }
 
-  let metodoPagamento = 'CREDIT_CARD';
+  let metodoPagamento = null;
 
   window.selecionarMetodo = function(metodo) {
     metodoPagamento = metodo;
