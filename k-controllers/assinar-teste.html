@@ -9,7 +9,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
 
 <style>
@@ -19,7 +19,7 @@
     --claro: #F8F6F3;
     --branco: #fff;
     --texto: #1a2e3f;
-    --texto-suave: #4a6070;
+    --texto-suave: #2a4258;
     --borda: rgba(13,31,45,0.14);
     --erro: #c0392b;
     --sucesso: #27ae60;
@@ -62,7 +62,7 @@
   }
 
   .topo h1 {
-    font-family: 'Cinzel', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: clamp(20px, 4vw, 30px);
     font-weight: 600;
     color: var(--branco);
@@ -445,7 +445,7 @@
   }
 
   .tela-sucesso h2 {
-    font-family: 'Cinzel', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 20px;
     font-weight: 600;
     color: var(--musgo);
@@ -532,20 +532,20 @@
     position: relative;
   }
   .modal-box-termos h3 {
-    font-family: 'Cinzel', serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     color: var(--musgo);
     margin: 0 0 4px;
   }
   .modal-box-termos .modal-sub {
     font-size: 11px;
-    color: #888;
+    color: var(--texto-suave);
     margin: 0 0 20px;
   }
   .modal-box-termos .modal-item {
     margin-bottom: 14px;
     font-size: 13px;
-    color: #444;
+    color: var(--texto);
     line-height: 1.7;
   }
   .modal-box-termos .modal-item strong {
@@ -561,7 +561,7 @@
     background: none;
     border: none;
     font-size: 22px;
-    color: #888;
+    color: var(--texto-suave);
     cursor: pointer;
     line-height: 1;
   }
@@ -639,17 +639,11 @@
     <div>
       <div class="metodo-titulo">Forma de pagamento</div>
       <div class="metodo-opcoes" id="metodoOpcoes">
-        <label class="metodo-opcao" id="opcaoCartao" onclick="selecionarMetodo('CREDIT_CARD')">
-          <input type="radio" name="metodo" value="CREDIT_CARD">
+        <label class="metodo-opcao selecionado" id="opcaoCartao" onclick="selecionarMetodo('CREDIT_CARD')">
+          <input type="radio" name="metodo" value="CREDIT_CARD" checked>
           <span class="metodo-icone">💳</span>
-          <span class="metodo-label">Cartão</span>
-          <span class="metodo-desc">Crédito ou débito</span>
-        </label>
-        <label class="metodo-opcao" id="opcaoPix" onclick="selecionarMetodo('PIX')">
-          <input type="radio" name="metodo" value="PIX">
-          <span class="metodo-icone">⚡</span>
-          <span class="metodo-label">Pix Automático</span>
-          <span class="metodo-desc">Autorize uma vez, renova sozinho</span>
+          <span class="metodo-label">Cartão de crédito</span>
+          <span class="metodo-desc">Pagamento recorrente mensal</span>
         </label>
       </div>
     </div>
@@ -717,7 +711,7 @@
     document.getElementById('valorExibido').innerHTML = 'R 29,90 <span>/mês</span>';
   }
 
-  let metodoPagamento = null;
+  let metodoPagamento = 'CREDIT_CARD';
 
   window.selecionarMetodo = function(metodo) {
     metodoPagamento = metodo;
