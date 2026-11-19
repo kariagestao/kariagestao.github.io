@@ -803,14 +803,11 @@
       return;
     }
 
-    let final = desconto.final_price;
-    if (typeof final !== 'number') {
-      // calcular localmente como fallback
-      if (desconto.discount_type === 'percentage') {
-        final = valorBase * (1 - desconto.discount_value / 100);
-      } else {
-        final = Math.max(0, valorBase - desconto.discount_value);
-      }
+    // Worker retorna: valor_final (numero), desconto (valor abatido), discount_type
+    let final = typeof desconto.valor_final === 'number' ? desconto.valor_final : desconto.final_price;
+    if (typeof final !== 'number' || isNaN(final)) {
+      const abatimento = typeof desconto.desconto === 'number' ? desconto.desconto : 0;
+      final = Math.max(0, valorBase - abatimento);
     }
     final = Math.max(0, final);
 
@@ -825,9 +822,12 @@
 
     let textoDesc = '';
     if (desconto.discount_type === 'percentage') {
-      textoDesc = desconto.discount_value + '% de desconto aplicado';
+      const pct = typeof desconto.discount_value === 'number' ? desconto.discount_value
+        : Math.round((desconto.desconto / valorBase) * 100);
+      textoDesc = pct + '% de desconto aplicado';
     } else {
-      textoDesc = 'R ' + desconto.discount_value.toFixed(2).replace('.', ',') + ' de desconto aplicado';
+      const abatimento = typeof desconto.desconto === 'number' ? desconto.desconto : 0;
+      textoDesc = 'R ' + abatimento.toFixed(2).replace('.', ',') + ' de desconto aplicado';
     }
     if (final === 0) textoDesc = 'Acesso gratuito aplicado via cupom';
     descontoTexto.textContent = textoDesc;
