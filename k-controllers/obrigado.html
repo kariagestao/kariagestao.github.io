@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>K Controllers - Obrigado</title>
+<link rel="icon" type="image/png" href="../images/favicon-karia.png">
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap">
+
+<style>
+  :root {
+    --musgo: #0D1F2D;
+    --cobre: #B87333;
+    --claro: #F8F6F3;
+    --texto: #1a2e3f;
+    --texto-suave: #4a6070;
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--claro);
+    color: var(--texto);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: max(24px, env(safe-area-inset-top, 0px)) max(24px, env(safe-area-inset-right, 0px)) max(24px, env(safe-area-inset-bottom, 0px)) max(24px, env(safe-area-inset-left, 0px));
+  }
+
+  .container {
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .logo {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: var(--cobre);
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+
+  .icone {
+    width: 72px;
+    height: 72px;
+    background: rgba(184,115,51,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+  }
+
+  .icone svg {
+    width: 32px;
+    height: 32px;
+    color: var(--cobre);
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 5vw, 30px);
+    font-weight: 600;
+    color: var(--musgo);
+    letter-spacing: 0.03em;
+    margin-bottom: 16px;
+    text-wrap: balance;
+  }
+
+  .mensagem {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--texto-suave);
+    line-height: 1.7;
+    max-width: 380px;
+    margin: 0 auto 32px;
+  }
+
+  .mensagem strong {
+    color: var(--texto);
+    font-weight: 600;
+  }
+
+  .dica {
+    background: rgba(13,31,45,0.04);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--texto-suave);
+    line-height: 1.6;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  .dica strong {
+    color: var(--texto);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="logo">K Controllers</div>
+
+  <div class="icone">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+      <polyline points="22,6 12,13 2,6"/>
+    </svg>
+  </div>
+
+  <h1>Verifique seu e-mail</h1>
+
+  <p class="mensagem">
+    Seu pagamento foi confirmado.<br>
+    Enviamos um link para o seu e-mail com as instruções para <strong>criar sua senha</strong> e acessar a K Controllers.
+  </p>
+
+  <div class="dica">
+    <strong>Não encontrou?</strong> Verifique a caixa de spam ou lixo eletrônico. O e-mail vem de <strong>noreply@updates.kariagestao.com</strong>.
+  </div>
+
+</div>
+
+</body>
+</html>
