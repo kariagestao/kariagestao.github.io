@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>K Controllers - Assinar</title>
+<meta property="og:image" content="https://kariagestao.com/images/og-karia.png">
+<link rel="icon" type="image/png" href="../images/favicon-karia.png">
+<meta name="claude:viewport-fit-sides" content="cover">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+
+<style>
+  :root {
+    --musgo: #0D1F2D;
+    --cobre: #B87333;
+    --claro: #F8F6F3;
+    --branco: #fff;
+    --texto: #1a2e3f;
+    --texto-suave: #4a6070;
+    --borda: rgba(13,31,45,0.14);
+    --erro: #c0392b;
+    --sucesso: #27ae60;
+    color-scheme: light;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--claro);
+    color: var(--texto);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-left: max(0px, env(safe-area-inset-left, 0px));
+    padding-right: max(0px, env(safe-area-inset-right, 0px));
+  }
+
+  /* ── TOPO ── */
+  .topo {
+    background: var(--musgo);
+    text-align: center;
+    padding: 40px 24px 36px;
+  }
+
+  .topo-badge {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cobre);
+    background: rgba(184,115,51,0.12);
+    border: 1px solid rgba(184,115,51,0.28);
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .topo h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(20px, 4vw, 30px);
+    font-weight: 600;
+    color: var(--branco);
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+    text-wrap: balance;
+  }
+
+  .topo p {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(248,246,243,0.65);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+
+  /* ── CONTEUDO ── */
+  .conteudo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px max(24px, env(safe-area-inset-left, 0px)) 60px;
+    gap: 24px;
+    max-width: 540px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* ── CARD PLANO ── */
+  .card-plano {
+    width: 100%;
+    background: var(--branco);
+    border-radius: 16px;
+    border: 1.5px solid var(--borda);
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(13,31,45,0.07);
+  }
+
+  .plano-header {
+    background: var(--musgo);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .plano-nome {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(248,246,243,0.6);
+  }
+
+  .plano-preco {
+    text-align: right;
+  }
+
+  .plano-preco .valor {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--branco);
+    line-height: 1.1;
+  }
+
+  .plano-preco .valor span {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(248,246,243,0.55);
+  }
+
+  .plano-preco .valor-riscado {
+    font-size: 11px;
+    color: rgba(248,246,243,0.4);
+    text-decoration: line-through;
+    margin-top: 2px;
+  }
+
+  .plano-body {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .plano-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--texto-suave);
+    line-height: 1.5;
+  }
+
+  .plano-item svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--cobre);
+  }
+
+  /* ── DESCONTO APLICADO ── */
+  .desconto-aplicado {
+    display: none;
+    width: 100%;
+    background: rgba(39,174,96,0.08);
+    border: 1px solid rgba(39,174,96,0.25);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #1e7e44;
+    font-weight: 500;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .desconto-aplicado.visivel {
+    display: flex;
+  }
+
+  /* ── CARD FORM ── */
+  .card-form {
+    width: 100%;
+    background: var(--branco);
+    border-radius: 16px;
+    border: 1.5px solid var(--borda);
+    padding: 28px 24px;
+    box-shadow: 0 2px 20px rgba(13,31,45,0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-titulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+  }
+
+  .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .campo label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--texto);
+    letter-spacing: 0.01em;
+  }
+
+  .campo input {
+    width: 100%;
+    border: 1.5px solid var(--borda);
+    border-radius: 8px;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    color: var(--texto);
+    background: var(--claro);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .campo input:focus {
+    border-color: var(--cobre);
+    background: var(--branco);
+  }
+
+  .campo input.erro-campo {
+    border-color: var(--erro);
+  }
+
+  /* ── CUPOM ── */
+  .cupom-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+  }
+
+  .cupom-row .campo {
+    flex: 1;
+    gap: 6px;
+  }
+
+  .btn-cupom {
+    flex-shrink: 0;
+    padding: 11px 16px;
+    border-radius: 8px;
+    border: 1.5px solid var(--cobre);
+    background: transparent;
+    color: var(--cobre);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-cupom:hover:not(:disabled) {
+    background: var(--cobre);
+    color: var(--branco);
+  }
+
+  .btn-cupom:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .cupom-msg {
+    font-size: 12px;
+    margin-top: 4px;
+    min-height: 16px;
+  }
+
+  .cupom-msg.ok { color: var(--sucesso); }
+  .cupom-msg.fail { color: var(--erro); }
+
+  /* ── BOTAO ASSINAR ── */
+  .btn-assinar {
+    width: 100%;
+    padding: 15px;
+    background: var(--cobre);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--branco);
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .btn-assinar:hover:not(:disabled) { opacity: 0.9; }
+  .btn-assinar:active:not(:disabled) { transform: scale(0.99); }
+  .btn-assinar:disabled { opacity: 0.55; cursor: default; }
+
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── ERRO / MENSAGEM ── */
+  .msg-global {
+    display: none;
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .msg-global.erro {
+    display: block;
+    background: rgba(192,57,43,0.08);
+    border: 1px solid rgba(192,57,43,0.25);
+    color: var(--erro);
+  }
+
+  .msg-global.sucesso {
+    display: block;
+    background: rgba(39,174,96,0.08);
+    border: 1px solid rgba(39,174,96,0.25);
+    color: #1e7e44;
+  }
+
+  /* ── TELA SUCESSO ── */
+  .tela-sucesso {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    padding: 20px 0;
+  }
+
+  .tela-sucesso.ativa {
+    display: flex;
+  }
+
+  .sucesso-icone {
+    width: 64px;
+    height: 64px;
+    background: rgba(39,174,96,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sucesso);
+  }
+
+  .tela-sucesso h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--musgo);
+  }
+
+  .tela-sucesso p {
+    font-size: 14px;
+    color: var(--texto-suave);
+    max-width: 340px;
+    line-height: 1.6;
+  }
+
+  .btn-acessar {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 13px 32px;
+    background: var(--musgo);
+    border-radius: 10px;
+    color: var(--branco);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .btn-acessar:hover { opacity: 0.85; }
+
+  /* ── RODAPE ── */
+  .rodape {
+    text-align: center;
+    padding: 0 24px 32px;
+    font-size: 11px;
+    color: rgba(13,31,45,0.4);
+    line-height: 1.6;
+  }
+
+  .rodape a {
+    color: var(--cobre);
+    text-decoration: none;
+  }
+
+  @media (max-width: 480px) {
+    .topo { padding: 32px 20px 28px; }
+    .card-form { padding: 24px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topo">
+  <div class="topo-badge">K Controllers</div>
+  <h1>Comece agora</h1>
+  <p>Acesso completo à biblioteca, aos materiais práticos e à comunidade com a Nathalya presente.</p>
+</div>
+
+<div class="conteudo">
+
+  <!-- CARD PLANO -->
+  <div class="card-plano" id="cardPlano">
+    <div class="plano-header">
+      <div class="plano-nome">K Controllers</div>
+      <div class="plano-preco">
+        <div class="valor" id="valorExibido">R$&nbsp;49,90 <span>/mês</span></div>
+        <div class="valor-riscado" id="valorOriginal" style="display:none">R$&nbsp;49,90/mês</div>
+      </div>
+    </div>
+    <div class="plano-body">
+      <div class="plano-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Biblioteca completa de Controladoria Jurídica
+      </div>
+      <div class="plano-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        2 novos materiais por mês
+      </div>
+      <div class="plano-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Comunidade com presença ativa da Nathalya
+      </div>
+      <div class="plano-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Cancele quando quiser, sem burocracia
+      </div>
+    </div>
+  </div>
+
+  <!-- DESCONTO APLICADO -->
+  <div class="desconto-aplicado" id="descontoAplicado">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="descontoTexto"></span>
+  </div>
+
+  <!-- FORM -->
+  <div class="card-form" id="cardForm">
+    <div class="form-titulo">Seus dados</div>
+
+    <div class="campo">
+      <label for="nome">Nome completo</label>
+      <input type="text" id="nome" placeholder="Seu nome" autocomplete="name">
+    </div>
+
+    <div class="campo">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" placeholder="seu@email.com" autocomplete="email">
+    </div>
+
+    <div class="campo">
+      <label for="cpf">CPF</label>
+      <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14" autocomplete="off">
+    </div>
+
+    <div class="campo">
+      <label for="telefone">Telefone (opcional)</label>
+      <input type="tel" id="telefone" placeholder="(51) 99999-9999" autocomplete="tel">
+    </div>
+
+    <div>
+      <div class="form-titulo" style="margin-bottom:12px">Cupom de desconto</div>
+      <div class="cupom-row">
+        <div class="campo">
+          <input type="text" id="cupom" placeholder="Código do cupom" style="text-transform:uppercase" autocomplete="off">
+        </div>
+        <button class="btn-cupom" id="btnCupom" onclick="validarCupom()">Aplicar</button>
+      </div>
+      <div class="cupom-msg" id="cupomMsg"></div>
+    </div>
+
+    <div class="msg-global" id="msgGlobal"></div>
+
+    <button class="btn-assinar" id="btnAssinar" onclick="iniciarCheckout()">
+      <div class="spinner" id="spinner"></div>
+      <span id="btnTexto">Assinar agora</span>
+    </button>
+
+    <p style="font-size:11px;color:var(--texto-suave);text-align:center;line-height:1.6">
+      Ao assinar, você concorda com os <a href="#" style="color:var(--cobre)">Termos de Uso</a>.
+      Cobrança mensal recorrente. Cancele a qualquer momento.
+    </p>
+  </div>
+
+  <!-- TELA SUCESSO -->
+  <div class="tela-sucesso" id="telaSucesso">
+    <div class="sucesso-icone">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>Bem-vindo!</h2>
+    <p id="sucessoTexto">Sua assinatura foi criada. Verifique seu e-mail para ativar o acesso.</p>
+    <a href="/k-controllers/login" class="btn-acessar">Acessar a área de membros</a>
+  </div>
+
+</div>
+
+<div class="rodape">
+  Já tem acesso? <a href="/k-controllers/login">Entrar na área de membros</a><br>
+  <span style="margin-top:6px;display:inline-block">© KARIA Gestão · K Controllers</span>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  const WORKER_URL = 'https://k-controllers-webhook-staging.kariagestao25.workers.dev';
+
+  let cupomAplicado = null; // { code, discount_type, discount_value, final_price }
+  const VALOR_NORMAL = 49.90;
+  const VALOR_VIP = 29.90;
+
+  // Detectar se veio da lista VIP (via param ?vip=1 ou hash)
+  const isVip = new URLSearchParams(location.search).get('vip') === '1'
+    || location.hash === '#vip';
+
+  if (isVip) {
+    document.getElementById('valorExibido').innerHTML = 'R 29,90 <span>/mês</span>';
+  }
+
+  // Mascara CPF
+  document.getElementById('cpf').addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length > 9) v = v.replace(/^(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+    else if (v.length > 6) v = v.replace(/^(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+    else if (v.length > 3) v = v.replace(/^(\d{3})(\d{1,3})/, '$1.$2');
+    e.target.value = v;
+  });
+
+  // Mascara telefone
+  document.getElementById('telefone').addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length > 10) v = v.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    else if (v.length > 6) v = v.replace(/^(\d{2})(\d{4,5})(\d{0,4})/, '($1) $2-$3');
+    else if (v.length > 2) v = v.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+    e.target.value = v;
+  });
+
+  window.validarCupom = async function() {
+    const code = document.getElementById('cupom').value.trim().toUpperCase();
+    const msgEl = document.getElementById('cupomMsg');
+    const btn = document.getElementById('btnCupom');
+
+    if (!code) {
+      msgEl.textContent = 'Digite um cupom.';
+      msgEl.className = 'cupom-msg fail';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Validando...';
+    msgEl.textContent = '';
+    msgEl.className = 'cupom-msg';
+
+    try {
+      const res = await fetch(WORKER_URL + '/validate-coupon', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code })
+      });
+      const data = await res.json();
+
+      if (!res.ok || !data.valid) {
+        msgEl.textContent = data.error || 'Cupom invalido.';
+        msgEl.className = 'cupom-msg fail';
+        cupomAplicado = null;
+        atualizarPreco(null);
+      } else {
+        cupomAplicado = { code, ...data };
+        msgEl.textContent = 'Cupom aplicado!';
+        msgEl.className = 'cupom-msg ok';
+        atualizarPreco(data);
+      }
+    } catch (err) {
+      msgEl.textContent = 'Erro ao validar cupom. Tente novamente.';
+      msgEl.className = 'cupom-msg fail';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Aplicar';
+    }
+  };
+
+  function atualizarPreco(desconto) {
+    const valorBase = isVip ? VALOR_VIP : VALOR_NORMAL;
+    const exibido = document.getElementById('valorExibido');
+    const original = document.getElementById('valorOriginal');
+    const descontoEl = document.getElementById('descontoAplicado');
+    const descontoTexto = document.getElementById('descontoTexto');
+
+    if (!desconto) {
+      exibido.innerHTML = 'R ' + valorBase.toFixed(2).replace('.', ',') + ' <span>/mês</span>';
+      original.style.display = 'none';
+      descontoEl.classList.remove('visivel');
+      return;
+    }
+
+    let final = desconto.final_price;
+    if (typeof final !== 'number') {
+      // calcular localmente como fallback
+      if (desconto.discount_type === 'percentage') {
+        final = valorBase * (1 - desconto.discount_value / 100);
+      } else {
+        final = Math.max(0, valorBase - desconto.discount_value);
+      }
+    }
+    final = Math.max(0, final);
+
+    if (final === 0) {
+      exibido.innerHTML = '<span style="color:#27ae60;font-size:14px">Gratuito</span>';
+    } else {
+      exibido.innerHTML = 'R ' + final.toFixed(2).replace('.', ',') + ' <span>/mês</span>';
+    }
+
+    original.textContent = 'R ' + valorBase.toFixed(2).replace('.', ',') + '/mês';
+    original.style.display = 'block';
+
+    let textoDesc = '';
+    if (desconto.discount_type === 'percentage') {
+      textoDesc = desconto.discount_value + '% de desconto aplicado';
+    } else {
+      textoDesc = 'R ' + desconto.discount_value.toFixed(2).replace('.', ',') + ' de desconto aplicado';
+    }
+    if (final === 0) textoDesc = 'Acesso gratuito aplicado via cupom';
+    descontoTexto.textContent = textoDesc;
+    descontoEl.classList.add('visivel');
+  }
+
+  window.iniciarCheckout = async function() {
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const cpf = document.getElementById('cpf').value.replace(/\D/g, '');
+    const telefone = document.getElementById('telefone').value.replace(/\D/g, '');
+    const msgEl = document.getElementById('msgGlobal');
+
+    // Validar campos
+    msgEl.className = 'msg-global';
+    document.querySelectorAll('.campo input').forEach(i => i.classList.remove('erro-campo'));
+
+    if (!nome) {
+      document.getElementById('nome').classList.add('erro-campo');
+      mostrarErro('Informe seu nome completo.');
+      return;
+    }
+    if (!email || !email.includes('@')) {
+      document.getElementById('email').classList.add('erro-campo');
+      mostrarErro('Informe um e-mail valido.');
+      return;
+    }
+    if (cpf.length !== 11) {
+      document.getElementById('cpf').classList.add('erro-campo');
+      mostrarErro('Informe um CPF valido com 11 digitos.');
+      return;
+    }
+
+    setLoading(true);
+
+    const payload = {
+      name: nome,
+      email,
+      cpf,
+      phone: telefone || undefined,
+      coupon_code: cupomAplicado ? cupomAplicado.code : undefined,
+      is_vip: isVip
+    };
+
+    try {
+      const res = await fetch(WORKER_URL + '/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        mostrarErro(data.error || 'Erro ao processar. Tente novamente.');
+        setLoading(false);
+        return;
+      }
+
+      // Sucesso
+      if (data.payment_url) {
+        // Redirecionar para pagamento Asaas
+        document.getElementById('sucessoTexto').textContent =
+          'Redireccionando para o pagamento...';
+        exibirSucesso();
+        setTimeout(() => { window.location.href = data.payment_url; }, 1200);
+      } else if (data.free_access) {
+        // Cupom 100% — acesso direto
+        document.getElementById('sucessoTexto').textContent =
+          'Seu acesso foi ativado! Verifique seu e-mail para definir a senha.';
+        exibirSucesso();
+      } else {
+        document.getElementById('sucessoTexto').textContent =
+          'Assinatura criada! Verifique seu e-mail para ativar o acesso.';
+        exibirSucesso();
+      }
+    } catch (err) {
+      mostrarErro('Erro de conexao. Verifique sua internet e tente novamente.');
+      setLoading(false);
+    }
+  };
+
+  function mostrarErro(msg) {
+    const el = document.getElementById('msgGlobal');
+    el.textContent = msg;
+    el.className = 'msg-global erro';
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function setLoading(on) {
+    const btn = document.getElementById('btnAssinar');
+    const spinner = document.getElementById('spinner');
+    const texto = document.getElementById('btnTexto');
+    btn.disabled = on;
+    spinner.style.display = on ? 'block' : 'none';
+    texto.textContent = on ? 'Processando...' : 'Assinar agora';
+  }
+
+  function exibirSucesso() {
+    document.getElementById('cardPlano').style.display = 'none';
+    document.getElementById('descontoAplicado').style.display = 'none';
+    document.getElementById('cardForm').style.display = 'none';
+    document.getElementById('telaSucesso').classList.add('ativa');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Focar no primeiro campo ao carregar
+  window.addEventListener('load', function() {
+    document.getElementById('nome').focus();
+  });
+
+})();
+</script>
+
+</body>
+</html>
