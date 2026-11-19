@@ -1106,7 +1106,7 @@
       // Sucesso
       if (data.qr_code) {
         // PIX com QR Code embutido — exibe inline sem sair da pagina
-        exibirQrCode(data.qr_code);
+        exibirQrCode(data.qr_code, email);
       } else if (data.checkout_url) {
         // Fallback: redirecionar para pagamento Asaas
         document.getElementById('sucessoTitulo').textContent = 'Quase lá!';
@@ -1148,7 +1148,7 @@
     texto.textContent = on ? 'Processando...' : 'Assinar agora';
   }
 
-  function exibirQrCode(qr) {
+  function exibirQrCode(qr, emailUsuario) {
     document.getElementById('cardPlano').style.display = 'none';
     document.getElementById('descontoAplicado').style.display = 'none';
     document.getElementById('cardForm').style.display = 'none';
@@ -1171,6 +1171,39 @@
 
     document.getElementById('telaPix').classList.add('ativa');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Polling: verifica a cada 5s se o pagamento foi confirmado (membro ativo no Supabase)
+    if (emailUsuario) {
+      const sb = supabase.createClient(
+        'https://olgkcfwnbhnngpqqkppm.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sZ2tjZnduYmhubmdwcXFrcHBtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNzc5MDUsImV4cCI6MjEwNzc1MzkwNX0.HstBNULsu6PvvJWWF4FG0-lBeJ1OR6QrJoJs-Gyp3-M'
+      );
+      let tentativas = 0;
+      const maxTentativas = 36; // 3 minutos (36 x 5s)
+      const intervalo = setInterval(async () => {
+        tentativas++;
+        if (tentativas > maxTentativas) {
+          clearInterval(intervalo);
+          return;
+        }
+        try {
+          const { data: membro } = await sb
+            .from('members')
+            .select('status')
+            .eq('email', emailUsuario)
+            .single();
+          if (membro && membro.status === 'active') {
+            clearInterval(intervalo);
+            document.getElementById('telaPix').classList.remove('ativa');
+            document.getElementById('sucessoTitulo').textContent = 'Pagamento confirmado!';
+            document.getElementById('sucessoTexto').textContent =
+              'Seu acesso foi ativado! Verifique seu e-mail para definir a senha e acessar a comunidade.';
+            document.getElementById('btnAcessar').style.display = 'none';
+            exibirSucesso();
+          }
+        } catch (e) { /* ignora erros pontuais */ }
+      }, 5000);
+    }
   }
 
   window.copiarPayload = function() {
