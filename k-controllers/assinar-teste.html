@@ -244,6 +244,72 @@
     border-color: var(--erro);
   }
 
+  /* ── MÉTODO DE PAGAMENTO ── */
+  .metodo-titulo {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--texto);
+    letter-spacing: 0.01em;
+    margin-bottom: 10px;
+  }
+
+  .metodo-opcoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .metodo-opcao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 10px;
+    border: 1.5px solid var(--borda);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: var(--claro);
+    user-select: none;
+  }
+
+  .metodo-opcao:hover {
+    border-color: var(--cobre);
+  }
+
+  .metodo-opcao.selecionado {
+    border-color: var(--cobre);
+    background: rgba(184,115,51,0.06);
+  }
+
+  .metodo-opcao.erro-campo {
+    border-color: var(--erro);
+  }
+
+  .metodo-opcao input[type="radio"] {
+    display: none;
+  }
+
+  .metodo-icone {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .metodo-label {
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.04em;
+    color: var(--texto);
+  }
+
+  .metodo-desc {
+    font-size: 10px;
+    color: var(--texto-suave);
+    text-align: center;
+    line-height: 1.4;
+  }
+
   /* ── CUPOM ── */
   .cupom-row {
     display: flex;
@@ -589,6 +655,24 @@
     </div>
 
     <div>
+      <div class="metodo-titulo">Forma de pagamento</div>
+      <div class="metodo-opcoes" id="metodoOpcoes">
+        <label class="metodo-opcao" id="opcaoCartao" onclick="selecionarMetodo('CREDIT_CARD')">
+          <input type="radio" name="metodo" value="CREDIT_CARD">
+          <span class="metodo-icone">💳</span>
+          <span class="metodo-label">Cartão</span>
+          <span class="metodo-desc">Crédito ou débito</span>
+        </label>
+        <label class="metodo-opcao" id="opcaoPix" onclick="selecionarMetodo('PIX')">
+          <input type="radio" name="metodo" value="PIX">
+          <span class="metodo-icone">⚡</span>
+          <span class="metodo-label">Pix Automático</span>
+          <span class="metodo-desc">Autorize uma vez, renova sozinho</span>
+        </label>
+      </div>
+    </div>
+
+    <div>
       <div class="form-titulo" style="margin-bottom:12px">Cupom de desconto</div>
       <div class="cupom-row">
         <div class="campo">
@@ -650,6 +734,16 @@
   if (isVip) {
     document.getElementById('valorExibido').innerHTML = 'R 29,90 <span>/mês</span>';
   }
+
+  let metodoPagamento = null;
+
+  window.selecionarMetodo = function(metodo) {
+    metodoPagamento = metodo;
+    document.getElementById('opcaoCartao').classList.toggle('selecionado', metodo === 'CREDIT_CARD');
+    document.getElementById('opcaoPix').classList.toggle('selecionado', metodo === 'PIX');
+    document.getElementById('opcaoCartao').classList.remove('erro-campo');
+    document.getElementById('opcaoPix').classList.remove('erro-campo');
+  };
 
   // Mascara CPF
   document.getElementById('cpf').addEventListener('input', function(e) {
@@ -789,6 +883,12 @@
       mostrarErro('Informe um CPF valido.');
       return;
     }
+    if (!metodoPagamento) {
+      document.getElementById('opcaoCartao').classList.add('erro-campo');
+      document.getElementById('opcaoPix').classList.add('erro-campo');
+      mostrarErro('Selecione uma forma de pagamento.');
+      return;
+    }
     if (!document.getElementById('chkTermos').checked) {
       mostrarErro('Aceite os Termos de Uso e a Politica de Privacidade para continuar.');
       return;
@@ -801,6 +901,7 @@
       email,
       telefone,
       cpf,
+      metodo_pagamento: metodoPagamento,
       coupon_code: cupomAplicado ? cupomAplicado.code : undefined,
       is_vip: isVip
     };
