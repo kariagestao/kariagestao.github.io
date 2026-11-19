@@ -583,6 +583,11 @@
       <input type="tel" id="telefone" placeholder="(51) 99999-9999" autocomplete="tel">
     </div>
 
+    <div class="campo">
+      <label for="cpf">CPF</label>
+      <input type="text" id="cpf" placeholder="000.000.000-00" autocomplete="off" inputmode="numeric" maxlength="14">
+    </div>
+
     <div>
       <div class="form-titulo" style="margin-bottom:12px">Cupom de desconto</div>
       <div class="cupom-row">
@@ -645,6 +650,15 @@
   if (isVip) {
     document.getElementById('valorExibido').innerHTML = 'R 29,90 <span>/mês</span>';
   }
+
+  // Mascara CPF
+  document.getElementById('cpf').addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length > 9) v = v.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2})/, '$1.$2.$3-$4');
+    else if (v.length > 6) v = v.replace(/^(\d{3})(\d{3})(\d{0,3})/, '$1.$2.$3');
+    else if (v.length > 3) v = v.replace(/^(\d{3})(\d{0,3})/, '$1.$2');
+    e.target.value = v;
+  });
 
   // Mascara telefone
   document.getElementById('telefone').addEventListener('input', function(e) {
@@ -769,6 +783,12 @@
       mostrarErro('Informe seu telefone.');
       return;
     }
+    const cpf = document.getElementById('cpf').value.replace(/\D/g, '');
+    if (!cpf || cpf.length !== 11) {
+      document.getElementById('cpf').classList.add('erro-campo');
+      mostrarErro('Informe um CPF valido.');
+      return;
+    }
     if (!document.getElementById('chkTermos').checked) {
       mostrarErro('Aceite os Termos de Uso e a Politica de Privacidade para continuar.');
       return;
@@ -780,6 +800,7 @@
       nome,
       email,
       telefone,
+      cpf,
       coupon_code: cupomAplicado ? cupomAplicado.code : undefined,
       is_vip: isVip
     };
