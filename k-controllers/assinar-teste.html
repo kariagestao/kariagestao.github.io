@@ -799,12 +799,12 @@
       }
 
       // Sucesso
-      if (data.payment_url) {
+      if (data.checkout_url) {
         // Redirecionar para pagamento Asaas
         document.getElementById('sucessoTexto').textContent =
-          'Redireccionando para o pagamento...';
+          'Redirecionando para o pagamento...';
         exibirSucesso();
-        setTimeout(() => { window.location.href = data.payment_url; }, 1200);
+        setTimeout(() => { window.location.href = data.checkout_url; }, 1200);
       } else if (data.free_access) {
         // Cupom 100% — acesso direto
         document.getElementById('sucessoTexto').textContent =
