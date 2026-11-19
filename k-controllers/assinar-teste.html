@@ -778,6 +778,7 @@
         cupomAplicado = { code, ...data };
         msgEl.textContent = 'Cupom aplicado!';
         msgEl.className = 'cupom-msg ok';
+        console.log('[cupom] data do worker:', JSON.stringify(data));
         atualizarPreco(data);
       }
     } catch (err) {
