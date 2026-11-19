@@ -886,10 +886,12 @@
       cpf,
       metodo_pagamento: metodoPagamento,
       cupom: cupomAplicado ? cupomAplicado.code : undefined,
+      _debug_cupom: JSON.stringify(cupomAplicado),
       is_vip: isVip
     };
 
     try {
+      console.log('[checkout] payload:', JSON.stringify(payload));
       const res = await fetch(WORKER_URL + '/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
