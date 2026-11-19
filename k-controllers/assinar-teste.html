@@ -745,6 +745,16 @@
     e.target.value = v;
   });
 
+  document.getElementById('cupom').addEventListener('input', function() {
+    if (!this.value.trim()) {
+      cupomAplicado = null;
+      atualizarPreco(null);
+      const msgEl = document.getElementById('cupomMsg');
+      msgEl.textContent = '';
+      msgEl.className = 'cupom-msg';
+    }
+  });
+
   window.validarCupom = async function() {
     const code = document.getElementById('cupom').value.trim().toUpperCase();
     const msgEl = document.getElementById('cupomMsg');
