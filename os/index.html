@@ -3471,7 +3471,7 @@ function cliOpenModal(id, fromPip){
   document.getElementById('cli-inicio').value=r?.data_inicio||'';
   document.getElementById('cli-fim').value=r?.data_fim_contrato||'';
   document.getElementById('cli-renovacao').value=r?.data_renovacao||'';
-  document.getElementById('cli-obs').value=r?.obs||'';
+  document.getElementById('cli-obs').value=r?.observacoes||'';
   document.getElementById('cli-del-btn').style.display=r?'inline-block':'none';
   document.getElementById('cli-modal').classList.add('open');
 }
@@ -3489,7 +3489,7 @@ async function cliSave(){
     data_inicio:document.getElementById('cli-inicio').value||null,
     data_fim_contrato:document.getElementById('cli-fim').value||null,
     data_renovacao:document.getElementById('cli-renovacao').value||null,
-    obs:document.getElementById('cli-obs').value,
+    observacoes:document.getElementById('cli-obs').value,
     user_id:currentUser.id
   };
   try{
