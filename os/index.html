@@ -489,6 +489,35 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       <button class="login-btn" onclick="login()">Entrar</button>
     </div>
     <div class="login-err" id="loginErr">E-mail ou senha incorretos.</div>
+    <div style="margin-top:14px">
+      <span onclick="mostrarReset()" style="font-size:11px;color:var(--gray);cursor:pointer;text-decoration:underline">Esqueci minha senha</span>
+    </div>
+  </div>
+  <!-- PAINEL RESET SENHA -->
+  <div id="reset-box" style="display:none;background:var(--white);border-radius:14px;padding:36px 32px;width:340px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25)">
+    <div class="login-logo">K</div>
+    <div class="login-title" style="margin-bottom:8px">Redefinir senha</div>
+    <div class="login-sub" style="margin-bottom:20px">Enviaremos um link para o seu e-mail</div>
+    <input class="login-input" type="email" id="resetEmail" placeholder="Seu e-mail" autocomplete="email">
+    <div style="margin-top:12px">
+      <button class="login-btn" onclick="enviarReset()">Enviar link</button>
+    </div>
+    <div id="resetMsg" style="font-size:12px;margin-top:10px;display:none"></div>
+    <div style="margin-top:14px">
+      <span onclick="voltarLogin()" style="font-size:11px;color:var(--gray);cursor:pointer;text-decoration:underline">← Voltar ao login</span>
+    </div>
+  </div>
+  <!-- PAINEL NOVA SENHA (após clicar no link do e-mail) -->
+  <div id="nova-senha-box" style="display:none;background:var(--white);border-radius:14px;padding:36px 32px;width:340px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25)">
+    <div class="login-logo">K</div>
+    <div class="login-title" style="margin-bottom:8px">Nova senha</div>
+    <div class="login-sub" style="margin-bottom:20px">Digite e confirme sua nova senha</div>
+    <input class="login-input" type="password" id="novaSenha1" placeholder="Nova senha">
+    <input class="login-input" type="password" id="novaSenha2" placeholder="Confirmar nova senha" style="margin-top:4px">
+    <div style="margin-top:12px">
+      <button class="login-btn" onclick="salvarNovaSenha()">Salvar nova senha</button>
+    </div>
+    <div id="novaSenhaMsg" style="font-size:12px;margin-top:10px;display:none"></div>
   </div>
 </div>
 
@@ -1773,13 +1802,57 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('loginPass').addEventListener('keydown',e=>{ if(e.key==='Enter') login(); });
   document.getElementById('loginEmail').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('loginPass').focus(); });
   try{ if(localStorage.getItem('kariaSidebarCollapsed')==='1'){ document.body.classList.add('sidebar-collapsed'); const btn=document.querySelector('.sidebar-toggle'); if(btn) btn.textContent='›'; } }catch(e){}
-  // Auto-login via sessão persistida
   SB = supabase.createClient(SB_URL, SB_KEY);
+  // Detecta se o usuário chegou via link de redefinição de senha
+  SB.auth.onAuthStateChange((event, session)=>{
+    if(event === 'PASSWORD_RECOVERY'){
+      document.querySelector('.login-box').style.display='none';
+      document.getElementById('reset-box').style.display='none';
+      document.getElementById('nova-senha-box').style.display='block';
+    }
+  });
+  // Auto-login via sessão persistida
   SB.auth.getSession().then(({data})=>{ if(data.session) showApp(data.session.user); });
 });
 async function logout(){
   if(SB) await SB.auth.signOut();
   location.reload();
+}
+function mostrarReset(){
+  document.querySelector('.login-box').style.display='none';
+  document.getElementById('reset-box').style.display='block';
+  document.getElementById('nova-senha-box').style.display='none';
+}
+function voltarLogin(){
+  document.querySelector('.login-box').style.display='block';
+  document.getElementById('reset-box').style.display='none';
+  document.getElementById('nova-senha-box').style.display='none';
+}
+async function enviarReset(){
+  const email = document.getElementById('resetEmail').value.trim();
+  const msg = document.getElementById('resetMsg');
+  msg.style.display='none';
+  if(!email){ msg.style.display='block'; msg.style.color='var(--red)'; msg.textContent='Digite seu e-mail.'; return; }
+  if(!SB) SB = supabase.createClient(SB_URL, SB_KEY);
+  const {error} = await SB.auth.resetPasswordForEmail(email, {
+    redirectTo: 'https://kariagestao.com/os/'
+  });
+  msg.style.display='block';
+  if(error){ msg.style.color='var(--red)'; msg.textContent='Erro: '+error.message; }
+  else { msg.style.color='var(--green)'; msg.textContent='Link enviado! Verifique seu e-mail.'; }
+}
+async function salvarNovaSenha(){
+  const s1 = document.getElementById('novaSenha1').value;
+  const s2 = document.getElementById('novaSenha2').value;
+  const msg = document.getElementById('novaSenhaMsg');
+  msg.style.display='none';
+  if(!s1||s1.length<6){ msg.style.display='block'; msg.style.color='var(--red)'; msg.textContent='Senha deve ter ao menos 6 caracteres.'; return; }
+  if(s1!==s2){ msg.style.display='block'; msg.style.color='var(--red)'; msg.textContent='As senhas não coincidem.'; return; }
+  if(!SB) SB = supabase.createClient(SB_URL, SB_KEY);
+  const {error} = await SB.auth.updateUser({password: s1});
+  msg.style.display='block';
+  if(error){ msg.style.color='var(--red)'; msg.textContent='Erro: '+error.message; }
+  else { msg.style.color='var(--green)'; msg.textContent='Senha atualizada! Entrando...'; setTimeout(()=>location.href='https://kariagestao.com/os/', 1500); }
 }
 function showApp(user){
   currentUser=user;
