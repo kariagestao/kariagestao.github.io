@@ -738,7 +738,7 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
     <div class="module" id="mod-crm">
       <div class="tabs-bar" style="margin-bottom:0;border-bottom:2px solid var(--cinza-claro)">
         <button class="tab-btn active" id="crm-tab-btn-pipeline" onclick="crmShowTab('pipeline',this)">Pipeline</button>
-        <button class="tab-btn" id="crm-tab-btn-clientes" onclick="crmShowTab('clientes',this)">Clientes Ativos</button>
+        <button class="tab-btn" id="crm-tab-btn-clientes" onclick="crmShowTab('clientes',this)">Clientes Ativos e Ex-Clientes</button>
       </div>
 
       <!-- ABA PIPELINE -->
@@ -1665,7 +1665,7 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
           <option>Acompanhamento Estratégico — Essencial</option>
           <option>Acompanhamento Estratégico — Evolução</option>
           <option>Acompanhamento Estratégico — Estratégico</option>
-          <option>Terceirização de Controladoria</option>
+          <option>Controladoria Terceirizada</option>
           <option>Mentoria Individual</option>
         </select>
       </div>
@@ -1740,7 +1740,18 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
         <option>Diagnóstico Estruturado</option><option>Diagnóstico Estratégico</option>
         <option>Consultoria de Implantação</option><option>Acompanhamento Essencial</option>
         <option>Acompanhamento Evolução</option><option>Acompanhamento Estratégico</option>
+        <option>Controladoria Terceirizada</option>
       </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Início do contrato</label>
+        <input class="form-control" type="date" id="cli-inicio">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Fim do contrato (ex-clientes)</label>
+        <input class="form-control" type="date" id="cli-fim">
+      </div>
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -1752,15 +1763,9 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
         <input class="form-control" type="number" id="cli-dia" min="1" max="31" value="5" style="max-width:80px">
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Início do contrato</label>
-        <input class="form-control" type="date" id="cli-inicio">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Renovação / Reajuste</label>
-        <input class="form-control" type="date" id="cli-renovacao">
-      </div>
+    <div class="form-group">
+      <label class="form-label">Renovação / Reajuste</label>
+      <input class="form-control" type="date" id="cli-renovacao">
     </div>
     <div class="form-group">
       <label class="form-label">Observações</label>
@@ -3404,14 +3409,14 @@ function cliRender(){
       <td>${r.valor_mensal?fmtBRL(r.valor_mensal):'—'}</td>
       <td>${r.dia_vencimento||'—'}</td>
       <td>${r.data_renovacao?fmtDate(r.data_renovacao):'—'}</td>
-      <td><span class="badge ${r.status==='Ativo'?'badge-green':r.status==='Pausado'?'badge-yellow':'badge-red'}">${r.status||'Ativo'}</span></td>
+      <td><span class="badge ${r.data_fim_contrato?'badge-red':r.status==='Ativo'?'badge-green':r.status==='Pausado'?'badge-yellow':'badge-red'}">${r.data_fim_contrato?'Ex-cliente':r.status||'Ativo'}</span></td>
       <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cliOpenModal('${r.id}')">✎</button></td>
     </tr>`).join('')
   :'<tr><td colspan="8" style="text-align:center;color:#888;padding:32px">Nenhum cliente encontrado.</td></tr>';
   if(cards) cards.innerHTML=rows.map(r=>`
     <div class="tx-card" onclick="cliOpenModal('${r.id}')">
       <div class="tx-card-top"><strong>${r.contato?.empresa||r.contato?.nome||'—'}</strong>
-        <span class="badge ${r.status==='Ativo'?'badge-green':r.status==='Pausado'?'badge-yellow':'badge-red'}">${r.status||'Ativo'}</span>
+        <span class="badge ${r.data_fim_contrato?'badge-red':r.status==='Ativo'?'badge-green':r.status==='Pausado'?'badge-yellow':'badge-red'}">${r.data_fim_contrato?'Ex-cliente':r.status||'Ativo'}</span>
       </div>
       <div>${r.servico_contratado||''} · ${r.valor_mensal?fmtBRL(r.valor_mensal):''}</div>
       <div style="color:#888;font-size:12px">${r.contato?.nome||''}</div>
@@ -3464,6 +3469,7 @@ function cliOpenModal(id, fromPip){
   document.getElementById('cli-valor').value=r?.valor_mensal||fromPip?.valor||'';
   document.getElementById('cli-dia').value=r?.dia_vencimento||5;
   document.getElementById('cli-inicio').value=r?.data_inicio||'';
+  document.getElementById('cli-fim').value=r?.data_fim_contrato||'';
   document.getElementById('cli-renovacao').value=r?.data_renovacao||'';
   document.getElementById('cli-obs').value=r?.obs||'';
   document.getElementById('cli-del-btn').style.display=r?'inline-block':'none';
@@ -3481,6 +3487,7 @@ async function cliSave(){
     valor_mensal:parseFloat(document.getElementById('cli-valor').value)||null,
     dia_vencimento:parseInt(document.getElementById('cli-dia').value)||5,
     data_inicio:document.getElementById('cli-inicio').value||null,
+    data_fim_contrato:document.getElementById('cli-fim').value||null,
     data_renovacao:document.getElementById('cli-renovacao').value||null,
     obs:document.getElementById('cli-obs').value,
     user_id:currentUser.id
