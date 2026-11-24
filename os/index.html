@@ -818,6 +818,8 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
             <option>Em Andamento</option>
             <option>Finalizado</option>
           </select>
+          <input type="date" class="filtro-select" id="dev-fil-venc-de" onchange="devRender()" title="Vencimento a partir de" style="width:140px;font-size:12px">
+          <input type="date" class="filtro-select" id="dev-fil-venc-ate" onchange="devRender()" title="Vencimento até" style="width:140px;font-size:12px">
           <button class="btn btn-primary btn-sm" onclick="devOpenModal(null)">+ Nova Atividade</button>
         </div>
       </div>
@@ -6762,11 +6764,15 @@ async function devCarregarUsuarios(){
 function devRender(){
   const q = (document.getElementById('dev-search')?.value || '').toLowerCase();
   const fs = document.getElementById('dev-fil-status')?.value || '';
+  const fde = document.getElementById('dev-fil-venc-de')?.value || '';
+  const fate = document.getElementById('dev-fil-venc-ate')?.value || '';
 
   const filtered = devData.filter(d => {
     const matchQ = !q || (d.titulo||'').toLowerCase().includes(q) || (d.numero||'').toLowerCase().includes(q);
     const matchS = !fs || d.status === fs;
-    return matchQ && matchS;
+    const matchDe = !fde || (d.vencimento && d.vencimento >= fde);
+    const matchAte = !fate || (d.vencimento && d.vencimento <= fate);
+    return matchQ && matchS && matchDe && matchAte;
   });
 
   const cols = {
@@ -6798,15 +6804,12 @@ function devRender(){
     card.className = 'kanban-card';
     card.style.cursor = 'pointer';
     card.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
-        <span style="font-size:10px;font-weight:700;color:var(--cobre);letter-spacing:0.08em">${item.numero||''}</span>
-        <span class="td-status-badge dev-badge-${(item.status||'').replace(' ','-').toLowerCase()}">${item.status}</span>
-      </div>
+      <div style="font-size:10px;font-weight:700;color:var(--cobre);letter-spacing:0.08em;margin-bottom:4px">${item.numero||''}</div>
       <div style="font-size:13px;font-weight:600;color:var(--musgo);line-height:1.4;margin-bottom:8px">${item.titulo||''}</div>
       ${item.observacoes ? `<div style="font-size:11px;color:#777;margin-bottom:8px;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${item.observacoes}</div>` : ''}
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
-        ${vencStr ? `<span class="card__tag ${vencClass}" style="font-size:10px">📅 ${vencStr}</span>` : '<span></span>'}
-        ${respNome ? `<span style="font-size:10px;color:#888;background:#f5f5f5;padding:2px 7px;border-radius:10px">${respNome}</span>` : ''}
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+        ${vencStr ? `<span class="${vencClass}" style="font-size:10px;color:#666">📅 ${vencStr}</span>` : '<span></span>'}
+        ${respNome ? `<span style="font-size:10px;color:#888;background:#f0f0f0;padding:2px 7px;border-radius:10px">${respNome}</span>` : ''}
       </div>`;
     card.onclick = () => devOpenModal(item);
     document.getElementById(col.cards).appendChild(card);
