@@ -6742,18 +6742,20 @@ let devData = [];
 let devUsuarios = [];
 
 async function devLoad(){
+  devUsuarios = []; // reseta cache para garantir reload
   const {data, error} = await SB.from('karia_desenvolvimento').select('*').order('vencimento', {ascending:true});
+  if(error) console.error('[DEV] erro ao carregar:', error);
   devData = data || [];
   await devCarregarUsuarios();
   devRender();
 }
 
 async function devCarregarUsuarios(){
-  if(devUsuarios.length > 0) return;
-  const {data} = await SB.from('karia_contatos')
+  const {data, error} = await SB.from('karia_contatos')
     .select('id, nome, user_id_vinculado')
     .eq('pode_ser_responsavel', true)
     .not('user_id_vinculado', 'is', null);
+  if(error) console.error('[DEV] erro ao carregar usuários:', error);
   devUsuarios = data || [];
 }
 
