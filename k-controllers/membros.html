@@ -1471,6 +1471,16 @@
       </div>
     </div>
 
+    <!-- Modal vídeo Aula 01 -->
+    <div id="modal-video-aula01" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:20px;box-sizing:border-box;" onclick="fecharVideoAula01(event)">
+      <div style="width:100%;max-width:800px;position:relative;">
+        <button onclick="fecharVideoAula01()" style="position:absolute;top:-36px;right:0;background:none;border:none;color:#fff;font-size:24px;cursor:pointer;line-height:1;">✕</button>
+        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;">
+          <iframe id="iframe-video-aula01" src="" title="Aula 01 — O que é ser um Controller Jurídico de verdade" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        </div>
+      </div>
+    </div>
+
     <!-- Banner: acesso cancelado mas ainda vigente -->
     <div class="banner-acesso-cancelado" id="banner-cancelado" style="display:none">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -1573,7 +1583,7 @@
       <div class="bib-categoria" id="bib-aulas">
         <div class="bib-grid">
 
-          <div class="bib-card" style="opacity:.5;pointer-events:none;">
+          <div class="bib-card">
             <span class="bib-card-tipo">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>
               Slides de Apoio
@@ -1581,7 +1591,10 @@
             <h4>Aula 01 · O que é ser um Controller Jurídico de verdade</h4>
             <p>Slides com identidade, hierarquia de carreira, escopo de atuação e os pontos-chave da primeira aula. Exportável em PDF.</p>
             <div class="bib-card-acoes">
-              <span class="bib-badge-em-breve">Em breve</span>
+              <a class="bib-btn-ver" href="/k-controllers/biblioteca/aula-01-slides.html">
+                Acessar
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
             </div>
           </div>
 
@@ -1821,14 +1834,17 @@
         <div class="aula-item">
           <div class="aula-num">01</div>
           <div class="aula-info">
-            <h4>O que é ser um Controller Jurídico de verdade</h4>
+            <h4>O que é ser um Controller Jurídico de verdade <span style="display:inline-block;margin-left:7px;background:#B87333;color:#fff;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:2px 7px;border-radius:20px;vertical-align:middle;font-family:'Montserrat',sans-serif;">Novo</span></h4>
             <span>Novembro 2026</span>
-            <a class="aula-material-link" href="#" target="_blank" hidden>
+            <a class="aula-material-link" href="/k-controllers/biblioteca/aula-01-slides.html">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               Acesse o material de apoio
             </a>
           </div>
-          <div class="aula-badge">Em breve</div>
+          <button class="aula-bv-btn" onclick="abrirVideoAula01()" style="flex-shrink:0;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Assistir
+          </button>
         </div>
         <div class="aula-item">
           <div class="aula-num">02</div>
@@ -2973,7 +2989,25 @@ function fecharVideoModal(e) {
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') fecharVideoModal();
+  if (e.key === 'Escape') {
+    fecharVideoModal();
+    fecharVideoAula01();
+  }
 });
+function abrirVideoAula01() {
+  var modal = document.getElementById('modal-video-aula01');
+  var iframe = document.getElementById('iframe-video-aula01');
+  iframe.src = 'https://www.youtube.com/embed/fdW7BtwpIoU?autoplay=1';
+  modal.classList.add('ativo');
+  document.body.style.overflow = 'hidden';
+}
+function fecharVideoAula01(e) {
+  if (e && e.currentTarget === document.getElementById('modal-video-aula01') && e.target !== e.currentTarget) return;
+  var modal = document.getElementById('modal-video-aula01');
+  var iframe = document.getElementById('iframe-video-aula01');
+  iframe.src = '';
+  modal.classList.remove('ativo');
+  document.body.style.overflow = '';
+}
 </script>
 </html>
