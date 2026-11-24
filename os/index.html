@@ -460,6 +460,13 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
   .mobile-topbar{ display:none; }
 }
 
+/* Desenvolvimento badges */
+.dev-badge-backlog{ background:#e8f0fe;color:#1a73e8; }
+.dev-badge-em-andamento{ background:#fff3cd;color:#b45309; }
+.dev-badge-finalizado{ background:#d4edda;color:#155724; }
+.dev-venc-atrasado{ color:#dc3545 !important;font-weight:700; }
+.dev-venc-hoje{ color:#fd7e14 !important;font-weight:700; }
+
 /* karIA painel */
 #karia-fab{display:flex;align-items:center;justify-content:center}
 #karia-fab:hover{transform:scale(1.08)}
@@ -547,6 +554,9 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       </div>
       <div class="nav-item" id="nav-pessoas" onclick="switchModule('pessoas',this)">
         <span class="icon">🧑‍🤝‍🧑</span> <span>Pessoas</span>
+      </div>
+      <div class="nav-item" id="nav-dev" onclick="switchModule('dev',this)">
+        <span class="icon">🚀</span> <span>Desenvolvimento</span>
       </div>
       <div class="nav-item" id="nav-config" onclick="switchModule('config',this)" style="display:none">
         <span class="icon">⚙️</span> <span>Configurações</span>
@@ -792,6 +802,99 @@ tbody td.right{text-align:right;font-family:'Montserrat',sans-serif;font-weight:
       </div>
 
     </div><!-- /mod-crm -->
+
+    <!-- ===== MÓDULO DESENVOLVIMENTO ===== -->
+    <div class="module" id="mod-dev" style="display:none">
+      <div class="crm-toolbar" style="margin-bottom:16px">
+        <div>
+          <div style="font-size:18px;font-weight:700;color:var(--musgo)">Desenvolvimento</div>
+          <div style="font-size:12px;color:#888;margin-top:2px">Pipeline de projetos e melhorias da KARIA Gestão</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <input id="dev-search" class="crm-search" placeholder="Buscar por título..." oninput="devRender()">
+          <select class="filtro-select" id="dev-fil-status" onchange="devRender()">
+            <option value="">Todos os status</option>
+            <option>Backlog</option>
+            <option>Em Andamento</option>
+            <option>Finalizado</option>
+          </select>
+          <button class="btn btn-primary btn-sm" onclick="devOpenModal(null)">+ Nova Atividade</button>
+        </div>
+      </div>
+      <div class="kanban-board" id="dev-kanban">
+        <div class="kanban-col" id="dev-col-backlog">
+          <div class="kanban-col-header">
+            <span>Backlog</span>
+            <span class="kanban-col-count" id="dev-cnt-backlog">0</span>
+          </div>
+          <div class="kanban-cards" id="dev-cards-backlog"></div>
+        </div>
+        <div class="kanban-col" id="dev-col-em-andamento">
+          <div class="kanban-col-header">
+            <span>Em Andamento</span>
+            <span class="kanban-col-count" id="dev-cnt-em-andamento">0</span>
+          </div>
+          <div class="kanban-cards" id="dev-cards-em-andamento"></div>
+        </div>
+        <div class="kanban-col" id="dev-col-finalizado">
+          <div class="kanban-col-header">
+            <span>Finalizado</span>
+            <span class="kanban-col-count" id="dev-cnt-finalizado">0</span>
+          </div>
+          <div class="kanban-cards" id="dev-cards-finalizado"></div>
+        </div>
+      </div>
+    </div><!-- /mod-dev -->
+
+    <!-- Modal Desenvolvimento -->
+    <div class="modal-overlay" id="dev-modal" style="display:none" onclick="if(event.target===this)devCloseModal()">
+      <div class="modal-box" style="max-width:520px;width:95%">
+        <div class="modal-header">
+          <span id="dev-modal-title">Nova Atividade</span>
+          <button class="modal-close" onclick="devCloseModal()">×</button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="dev-modal-id">
+          <div class="form-group">
+            <label class="form-label">Número do Pipe</label>
+            <input class="form-input" id="dev-modal-numero" placeholder="DEV-001" readonly style="background:#f5f5f5;color:#888">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Título *</label>
+            <input class="form-input" id="dev-modal-titulo" placeholder="Descrição da atividade">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="form-input" id="dev-modal-status">
+              <option>Backlog</option>
+              <option>Em Andamento</option>
+              <option>Finalizado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Data de Vencimento</label>
+            <input class="form-input" type="date" id="dev-modal-vencimento">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Responsável</label>
+            <select class="form-input" id="dev-modal-responsavel">
+              <option value="">Selecionar responsável...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Observações</label>
+            <textarea class="form-input" id="dev-modal-obs" rows="4" placeholder="Descreva a atividade a ser realizada..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer" style="display:flex;justify-content:space-between;align-items:center">
+          <button class="btn btn-danger btn-sm" id="dev-btn-delete" onclick="devDelete()" style="display:none">Excluir</button>
+          <div style="display:flex;gap:8px;margin-left:auto">
+            <button class="btn btn-secondary btn-sm" onclick="devCloseModal()">Cancelar</button>
+            <button class="btn btn-primary btn-sm" onclick="devSave()">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- ===== MÓDULO PESSOAS ===== -->
     <div class="module" id="mod-pessoas">
@@ -1896,6 +1999,7 @@ const modTitles={
   financeiro:['Financeiro','Visão geral das finanças'],
   crm:['Comercial CRM','Pipeline de clientes'],
   pessoas:['Pessoas','Colaboradores, fornecedores e usuários do sistema'],
+  dev:['Desenvolvimento','Pipeline de projetos e melhorias da KARIA Gestão'],
   linzmeyer:['Op. Linzmeyer','Controle de prazos e publicações'],
   config:['Configurações','Base de conhecimento da karIA']
 };
@@ -1912,6 +2016,7 @@ function switchModule(mod,el){
   closeSidebar();
   if(mod==='linzmeyer') linzInit();
   if(mod==='pessoas') cntLoad();
+  if(mod==='dev') devLoad();
   if(mod==='config') configCarregar();
 }
 function toggleSidebar(){
@@ -6630,6 +6735,160 @@ function kariaInitDrag(){
   window.addEventListener('touchmove', onMove, {passive:false});
   window.addEventListener('mouseup', onEnd);
   window.addEventListener('touchend', onEnd);
+}
+
+/* ========= MÓDULO DESENVOLVIMENTO ========= */
+let devData = [];
+let devUsuarios = [];
+
+async function devLoad(){
+  const {data, error} = await SB.from('karia_desenvolvimento').select('*').order('vencimento', {ascending:true});
+  devData = data || [];
+  await devCarregarUsuarios();
+  devRender();
+}
+
+async function devCarregarUsuarios(){
+  if(devUsuarios.length > 0) return;
+  const {data} = await SB.from('karia_contatos')
+    .select('id, nome, user_id_vinculado')
+    .eq('pode_ser_responsavel', true)
+    .not('user_id_vinculado', 'is', null);
+  devUsuarios = data || [];
+}
+
+function devRender(){
+  const q = (document.getElementById('dev-search')?.value || '').toLowerCase();
+  const fs = document.getElementById('dev-fil-status')?.value || '';
+
+  const filtered = devData.filter(d => {
+    const matchQ = !q || (d.titulo||'').toLowerCase().includes(q) || (d.numero||'').toLowerCase().includes(q);
+    const matchS = !fs || d.status === fs;
+    return matchQ && matchS;
+  });
+
+  const cols = {
+    'Backlog': {cards:'dev-cards-backlog', cnt:'dev-cnt-backlog'},
+    'Em Andamento': {cards:'dev-cards-em-andamento', cnt:'dev-cnt-em-andamento'},
+    'Finalizado': {cards:'dev-cards-finalizado', cnt:'dev-cnt-finalizado'}
+  };
+
+  Object.values(cols).forEach(c => {
+    const el = document.getElementById(c.cards);
+    if(el) el.innerHTML = '';
+  });
+
+  const counts = {'Backlog':0,'Em Andamento':0,'Finalizado':0};
+
+  filtered.forEach(item => {
+    const col = cols[item.status];
+    if(!col) return;
+    counts[item.status]++;
+
+    const resp = devUsuarios.find(u => u.user_id_vinculado === item.responsavel_id);
+    const respNome = resp ? resp.nome : '';
+    const venc = item.vencimento ? new Date(item.vencimento + 'T00:00:00') : null;
+    const hoje = new Date(); hoje.setHours(0,0,0,0);
+    const vencStr = venc ? venc.toLocaleDateString('pt-BR') : '';
+    const vencClass = venc ? (venc < hoje && item.status !== 'Finalizado' ? 'dev-venc-atrasado' : venc.getTime() === hoje.getTime() ? 'dev-venc-hoje' : '') : '';
+
+    const card = document.createElement('div');
+    card.className = 'kanban-card';
+    card.style.cursor = 'pointer';
+    card.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+        <span style="font-size:10px;font-weight:700;color:var(--cobre);letter-spacing:0.08em">${item.numero||''}</span>
+        <span class="td-status-badge dev-badge-${(item.status||'').replace(' ','-').toLowerCase()}">${item.status}</span>
+      </div>
+      <div style="font-size:13px;font-weight:600;color:var(--musgo);line-height:1.4;margin-bottom:8px">${item.titulo||''}</div>
+      ${item.observacoes ? `<div style="font-size:11px;color:#777;margin-bottom:8px;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${item.observacoes}</div>` : ''}
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+        ${vencStr ? `<span class="card__tag ${vencClass}" style="font-size:10px">📅 ${vencStr}</span>` : '<span></span>'}
+        ${respNome ? `<span style="font-size:10px;color:#888;background:#f5f5f5;padding:2px 7px;border-radius:10px">${respNome}</span>` : ''}
+      </div>`;
+    card.onclick = () => devOpenModal(item);
+    document.getElementById(col.cards).appendChild(card);
+  });
+
+  Object.entries(counts).forEach(([status, cnt]) => {
+    const c = cols[status];
+    if(c) { const el = document.getElementById(c.cnt); if(el) el.textContent = cnt; }
+  });
+}
+
+async function devOpenModal(item){
+  await devCarregarUsuarios();
+  const isNew = !item;
+
+  document.getElementById('dev-modal-title').textContent = isNew ? 'Nova Atividade' : 'Editar Atividade';
+  document.getElementById('dev-modal-id').value = item?.id || '';
+  document.getElementById('dev-modal-numero').value = item?.numero || (await devProximoNumero());
+  document.getElementById('dev-modal-titulo').value = item?.titulo || '';
+  document.getElementById('dev-modal-status').value = item?.status || 'Backlog';
+  document.getElementById('dev-modal-vencimento').value = item?.vencimento || '';
+  document.getElementById('dev-modal-obs').value = item?.observacoes || '';
+  document.getElementById('dev-btn-delete').style.display = isNew ? 'none' : 'inline-block';
+
+  // Preencher select de responsáveis
+  const sel = document.getElementById('dev-modal-responsavel');
+  sel.innerHTML = '<option value="">Selecionar responsável...</option>';
+  devUsuarios.forEach(u => {
+    const opt = document.createElement('option');
+    opt.value = u.user_id_vinculado;
+    opt.textContent = u.nome;
+    if(u.user_id_vinculado === item?.responsavel_id) opt.selected = true;
+    sel.appendChild(opt);
+  });
+
+  document.getElementById('dev-modal').style.display = 'flex';
+}
+
+function devCloseModal(){
+  document.getElementById('dev-modal').style.display = 'none';
+}
+
+async function devProximoNumero(){
+  if(devData.length === 0) return 'DEV-001';
+  const nums = devData.map(d => parseInt((d.numero||'DEV-000').replace('DEV-',''),10)).filter(n=>!isNaN(n));
+  const max = nums.length > 0 ? Math.max(...nums) : 0;
+  return 'DEV-' + String(max+1).padStart(3,'0');
+}
+
+async function devSave(){
+  const titulo = document.getElementById('dev-modal-titulo').value.trim();
+  if(!titulo){ alert('Título é obrigatório.'); return; }
+
+  const id = document.getElementById('dev-modal-id').value;
+  const payload = {
+    numero: document.getElementById('dev-modal-numero').value,
+    titulo,
+    status: document.getElementById('dev-modal-status').value,
+    vencimento: document.getElementById('dev-modal-vencimento').value || null,
+    responsavel_id: document.getElementById('dev-modal-responsavel').value || null,
+    observacoes: document.getElementById('dev-modal-obs').value.trim() || null,
+    updated_at: new Date().toISOString()
+  };
+
+  let error;
+  if(id){
+    ({error} = await SB.from('karia_desenvolvimento').update(payload).eq('id', id));
+  } else {
+    ({error} = await SB.from('karia_desenvolvimento').insert(payload));
+  }
+
+  if(error){ alert('Erro ao salvar: ' + error.message); return; }
+  devCloseModal();
+  await devLoad();
+}
+
+async function devDelete(){
+  const id = document.getElementById('dev-modal-id').value;
+  if(!id) return;
+  if(!confirm('Tem certeza que deseja excluir esta atividade?')) return;
+  const {error} = await SB.from('karia_desenvolvimento').delete().eq('id', id);
+  if(error){ alert('Erro ao excluir: ' + error.message); return; }
+  devCloseModal();
+  await devLoad();
 }
 
 </script>
