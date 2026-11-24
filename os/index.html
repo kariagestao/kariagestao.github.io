@@ -6550,14 +6550,22 @@ function kariaInitDrag(){
   const fab = document.getElementById('karia-fab');
   if(!fab) return;
 
-  // restaura posição salva
+  // restaura posição salva — só aplica se estiver dentro da viewport atual
   try{
     const saved = JSON.parse(localStorage.getItem('kariaFabPos'));
     if(saved){
-      fab.style.bottom = 'auto';
-      fab.style.right = 'auto';
-      fab.style.top = saved.top + 'px';
-      fab.style.left = saved.left + 'px';
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const fabSize = 52;
+      if(saved.top >= 0 && saved.top <= vh - fabSize && saved.left >= 0 && saved.left <= vw - fabSize){
+        fab.style.bottom = 'auto';
+        fab.style.right = 'auto';
+        fab.style.top = saved.top + 'px';
+        fab.style.left = saved.left + 'px';
+      } else {
+        // posição salva fora da viewport (ex: monitor externo desconectado) — reseta
+        localStorage.removeItem('kariaFabPos');
+      }
     }
   }catch(e){}
 
