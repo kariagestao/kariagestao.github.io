@@ -1592,7 +1592,7 @@
             <h4>Aula 01 · O que é ser um Controller Jurídico de verdade</h4>
             <p>Slides com identidade, hierarquia de carreira, escopo de atuação e os pontos-chave da primeira aula. Exportável em PDF.</p>
             <div class="bib-card-acoes">
-              <a class="bib-btn-ver" href="/k-controllers/biblioteca/aula-01-slides.html">
+              <a class="bib-btn-ver" href="/k-controllers/biblioteca/aula-01-slides.html" data-material-nome="Slides · Aula 01 — O que é ser um Controller Jurídico de verdade" data-material-tipo="Slides de Aula">
                 Acessar
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
@@ -1837,12 +1837,12 @@
           <div class="aula-info">
             <h4>O que é ser um Controller Jurídico de verdade <span style="display:inline-block;margin-left:7px;background:#B87333;color:#fff;font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:2px 7px;border-radius:20px;vertical-align:middle;font-family:'Montserrat',sans-serif;">Novo</span></h4>
             <span>Novembro 2026</span>
-            <a class="aula-material-link" href="/k-controllers/biblioteca/aula-01-slides.html">
+            <a class="aula-material-link" href="/k-controllers/biblioteca/aula-01-slides.html" data-material-nome="Slides · Aula 01 — O que é ser um Controller Jurídico de verdade" data-material-tipo="Slides de Aula">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               Acesse o material de apoio
             </a>
           </div>
-          <button class="aula-bv-btn" onclick="abrirVideoAula01()" style="flex-shrink:0;">
+          <button class="aula-bv-btn" onclick="abrirVideoAula01()" data-aula-num="01" data-aula-titulo="O que é ser um Controller Jurídico de verdade" style="flex-shrink:0;">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             Assistir
           </button>
@@ -3020,6 +3020,14 @@ function abrirVideoAula01() {
   iframe.src = 'https://www.youtube.com/embed/fdW7BtwpIoU?autoplay=1';
   modal.classList.add('ativo');
   document.body.style.overflow = 'hidden';
+  if (typeof gtag === 'function') {
+    gtag('event', 'assistir_aula', {
+      material_nome: 'Aula 01 — O que é ser um Controller Jurídico de verdade',
+      material_tipo: 'Vídeo de Aula',
+      event_category: 'biblioteca_k_controllers',
+      event_label: 'Aula 01'
+    });
+  }
 }
 function fecharVideoAula01(e) {
   if (e && e.currentTarget === document.getElementById('modal-video-aula01') && e.target !== e.currentTarget) return;
