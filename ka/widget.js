@@ -242,7 +242,7 @@
     // Injetar CSS
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/ka/widget.css';
+    link.href = '/ka/widget.css?v=' + Date.now();
     document.head.appendChild(link);
 
     // Injetar HTML
