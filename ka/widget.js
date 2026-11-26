@@ -274,6 +274,33 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && KA.isOpen) closePanel();
     });
+
+    // Pulse + tooltip após 4s
+    let tooltipEl = null;
+    function removeTooltip() {
+      if (!tooltipEl) return;
+      tooltipEl.classList.add('ka-tooltip-out');
+      setTimeout(() => { if (tooltipEl) { tooltipEl.remove(); tooltipEl = null; } }, 300);
+    }
+
+    setTimeout(() => {
+      if (KA.isOpen) return;
+      const bubble = document.getElementById('ka-bubble');
+      if (bubble) bubble.classList.add('ka-pulse');
+
+      tooltipEl = document.createElement('div');
+      tooltipEl.id = 'ka-tooltip';
+      tooltipEl.textContent = 'Tire suas dúvidas com a KA ✨';
+      tooltipEl.addEventListener('click', () => { removeTooltip(); openPanel(); });
+      document.getElementById('ka-widget-root').appendChild(tooltipEl);
+
+      setTimeout(removeTooltip, 8000);
+    }, 4000);
+
+    // Remover tooltip ao abrir o painel manualmente
+    const _origOpen = openPanel;
+    // já capturado via closure acima
+    document.getElementById('ka-bubble').addEventListener('click', removeTooltip, { once: false });
   }
 
   if (document.readyState === 'loading') {

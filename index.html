@@ -1003,6 +1003,16 @@ p { max-width: var(--max-prose); }
   cards.forEach(function(c){ obs.observe(c); });
 })();
 </script>
+<!-- SEÇÃO KA -->
+<section id="ka-section" style="background:#0d1f2d;padding:4rem 0;text-align:center;">
+  <div style="max-width:640px;margin:0 auto;padding:0 1.5rem;">
+    <img src="/ka/avatar.jpeg" alt="KA — Assistente KARIA Gestão" style="width:72px;height:72px;border-radius:50%;border:3px solid #b87333;object-fit:cover;margin-bottom:1.25rem;display:block;margin-left:auto;margin-right:auto;" />
+    <h2 style="color:#f8f6f3;font-size:1.6rem;font-weight:700;margin:0 0 0.75rem;line-height:1.3;">Tem dúvidas sobre gestão do seu escritório?</h2>
+    <p style="color:rgba(248,246,243,0.72);font-size:1rem;line-height:1.65;margin:0 0 1.75rem;">A <strong style="color:#b87333;">KA</strong> é a assistente da KARIA Gestão. Ela responde suas perguntas sobre Controladoria Jurídica, nossos serviços e como a gestão estratégica pode transformar sua advocacia, agora, sem esperar.</p>
+    <button onclick="document.getElementById('ka-bubble')?.click()" style="background:#b87333;color:#f8f6f3;border:none;border-radius:10px;padding:14px 32px;font-size:1rem;font-weight:600;cursor:pointer;letter-spacing:0.3px;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">Falar com a KA</button>
+  </div>
+</section>
+
 </main>
 
 <!-- FOOTER -->
@@ -1223,5 +1233,6 @@ document.addEventListener('DOMContentLoaded', function(){
 })();
 </script>
 <script src="/cal-embed.js"></script>
+<script src="/ka/widget.js"></script>
 </body>
 </html>
