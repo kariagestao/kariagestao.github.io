@@ -27,3 +27,16 @@ Cal.ns.karia("ui", {
     }
   }
 });
+
+// Limitar largura do modal ao abrir
+document.addEventListener("click", function(e) {
+  var el = e.target.closest("[data-cal-link]");
+  if (!el) return;
+  setTimeout(function() {
+    var modal = document.querySelector("cal-modal-box");
+    if (modal) {
+      modal.style.maxWidth = "900px";
+      modal.style.margin = "0 auto";
+    }
+  }, 300);
+});
