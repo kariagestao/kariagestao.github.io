@@ -265,6 +265,71 @@ img { display: block; max-width: 100%; }
 .regra-item__title { font-family: var(--font-title); font-size: 0.9rem; font-weight: 700; color: var(--musgo); margin-bottom: 0.3rem; }
 .regra-item p { font-size: 0.875rem; color: var(--text-mid); line-height: 1.65; }
 
+/* ── FORMULÁRIO ── */
+.form-section { padding: 6rem 2rem; background: var(--off); }
+.form-section__inner { max-width: 720px; margin: 0 auto; }
+.form-card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: 2.5rem;
+  box-shadow: 0 2px 24px rgba(13,31,45,0.07);
+}
+.form-card__header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--off-dim); }
+.form-card__title { font-family: var(--font-title); font-size: 1.3rem; font-weight: 800; color: var(--musgo); margin-bottom: 0.4rem; }
+.form-card__sub { font-size: 0.875rem; color: var(--text-mid); line-height: 1.65; }
+.form-block { margin-bottom: 2rem; }
+.form-block__label {
+  display: block;
+  font-family: var(--font-title);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--musgo);
+  margin-bottom: 1rem;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.form-row:last-child { margin-bottom: 0; }
+.form-group { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
+.form-group:last-child { margin-bottom: 0; }
+.form-group label { font-size: 0.8rem; color: var(--text-mid); font-weight: 500; }
+.form-group input, .form-group select {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  background: var(--off);
+  border: 1.5px solid rgba(13,31,45,0.12);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem;
+  transition: border-color 0.15s;
+  width: 100%;
+  outline: none;
+  appearance: none;
+}
+.form-group input:focus, .form-group select:focus { border-color: var(--cobre); }
+.form-group input::placeholder { color: var(--text-pale); }
+.form-checks { display: flex; flex-direction: column; gap: 0.75rem; }
+.form-check { display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer; }
+.form-check input[type="checkbox"] {
+  width: 16px; height: 16px;
+  min-width: 16px;
+  margin-top: 2px;
+  accent-color: var(--cobre);
+  cursor: pointer;
+  border-radius: 3px;
+}
+.form-check span { font-size: 0.875rem; color: var(--text-mid); line-height: 1.55; }
+.form-divider { border: none; border-top: 1px solid var(--off-dim); margin: 2rem 0; }
+.form-submit { width: 100%; background: var(--cobre); color: #fff; font-family: var(--font-title); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.04em; padding: 1rem 2rem; border-radius: var(--radius-sm); border: none; cursor: pointer; transition: background 0.2s; margin-top: 1.5rem; }
+.form-submit:hover { background: var(--cobre-dark); }
+.form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+.form-note { font-size: 0.78rem; color: var(--text-pale); text-align: center; margin-top: 0.75rem; line-height: 1.6; }
+.form-success { display: none; text-align: center; padding: 2rem 0; }
+.form-success__icon { font-size: 2.5rem; margin-bottom: 1rem; }
+.form-success h3 { font-family: var(--font-title); font-size: 1.1rem; font-weight: 800; color: var(--musgo); margin-bottom: 0.5rem; }
+.form-success p { font-size: 0.875rem; color: var(--text-mid); line-height: 1.65; }
+@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } .form-card { padding: 1.75rem 1.25rem; } }
+
 /* ── CTA FINAL ── */
 .cta-final { padding: 7rem 2rem; background: var(--musgo); text-align: center; position: relative; overflow: hidden; }
 .cta-final::before {
@@ -487,8 +552,128 @@ img { display: block; max-width: 100%; }
   </div>
 </section>
 
+<!-- FORMULÁRIO DE INTERESSE -->
+<section class="form-section" id="contato">
+  <div class="form-section__inner">
+    <span class="section-label">Quero participar</span>
+    <h2 class="section-title" style="margin-bottom:0.5rem;">Solicite sua adesão</h2>
+    <p class="section-sub" style="margin-bottom:2rem;">Preencha os dados abaixo. Após análise do perfil, a KARIA Gestão entrará em contato para o alinhamento inicial e envio do Termo de Adesão.</p>
+
+    <div class="form-card">
+      <form id="kelo-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="1062412a-df27-4597-9e4c-d921a4cdc6d9">
+        <input type="hidden" name="subject" value="Programa de Novos Parceiros — Solicitação de Adesão">
+        <input type="hidden" name="from_name" value="Site KARIA Gestão">
+        <input type="hidden" name="redirect" value="false">
+
+        <!-- 1. DADOS DA EMPRESA -->
+        <div class="form-block">
+          <span class="form-block__label">1. Dados da empresa</span>
+          <div class="form-group">
+            <label for="razao">Razão Social *</label>
+            <input type="text" id="razao" name="Razão Social" required placeholder="Nome jurídico da empresa">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cnpj">CNPJ *</label>
+              <input type="text" id="cnpj" name="CNPJ" required placeholder="00.000.000/0001-00" maxlength="18">
+            </div>
+            <div class="form-group">
+              <label for="fantasia">Nome Fantasia</label>
+              <input type="text" id="fantasia" name="Nome Fantasia" placeholder="Se diferente da razão social">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="site">Site ou Rede Social *</label>
+            <input type="text" id="site" name="Site ou Rede Social" required placeholder="LinkedIn, Instagram ou site da empresa">
+          </div>
+        </div>
+
+        <hr class="form-divider">
+
+        <!-- 2. RESPONSÁVEL -->
+        <div class="form-block">
+          <span class="form-block__label">2. Responsável pelo programa</span>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nome">Nome Completo *</label>
+              <input type="text" id="nome" name="Nome do Responsável" required placeholder="Nome e sobrenome">
+            </div>
+            <div class="form-group">
+              <label for="cargo">Cargo / Função *</label>
+              <input type="text" id="cargo" name="Cargo" required placeholder="Ex: Sócio, Consultor...">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">E-mail Comercial *</label>
+              <input type="email" id="email" name="email" required placeholder="nome@empresa.com.br">
+            </div>
+            <div class="form-group">
+              <label for="tel">Telefone com DDD *</label>
+              <input type="tel" id="tel" name="Telefone" required placeholder="(51) 99999-9999">
+            </div>
+          </div>
+        </div>
+
+        <hr class="form-divider">
+
+        <!-- 3. PERFIL DE ATUAÇÃO -->
+        <div class="form-block">
+          <span class="form-block__label">3. Perfil de atuação</span>
+          <p style="font-size:0.82rem;color:var(--text-mid);margin-bottom:1rem;">Marque todas as opções que se aplicam.</p>
+          <div class="form-checks">
+            <label class="form-check">
+              <input type="checkbox" name="Perfil[]" value="Relacionamento ativo com escritórios de advocacia (cliente, parceiro, fornecedor)">
+              <span>Tenho relacionamento ativo com escritórios de advocacia (cliente, parceiro, fornecedor)</span>
+            </label>
+            <label class="form-check">
+              <input type="checkbox" name="Perfil[]" value="Atuo no mercado jurídico como consultor, mentor ou prestador de serviços">
+              <span>Atuo no mercado jurídico como consultor, mentor ou prestador de serviços</span>
+            </label>
+            <label class="form-check">
+              <input type="checkbox" name="Perfil[]" value="Faço parte de comunidades, grupos ou associações do setor jurídico">
+              <span>Faço parte de comunidades, grupos ou associações do setor jurídico</span>
+            </label>
+            <label class="form-check">
+              <input type="checkbox" name="Perfil[]" value="Minha empresa atende escritórios de advocacia como público principal">
+              <span>Minha empresa atende escritórios de advocacia como público principal</span>
+            </label>
+          </div>
+        </div>
+
+        <hr class="form-divider">
+
+        <!-- 4. COMO CONHECEU -->
+        <div class="form-block" style="margin-bottom:0;">
+          <span class="form-block__label">4. Como conheceu o programa?</span>
+          <div class="form-group" style="margin-bottom:0;">
+            <select id="origem" name="Como conheceu o programa">
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option value="Indicação de outro Parceiro">Indicação de outro Parceiro</option>
+              <option value="Redes sociais da KARIA Gestão">Redes sociais da KARIA Gestão</option>
+              <option value="Contato direto da KARIA">Contato direto da KARIA</option>
+              <option value="Evento ou comunidade do setor jurídico">Evento ou comunidade do setor jurídico</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="form-submit" id="submitBtn">Solicitar adesão ao programa</button>
+        <p class="form-note">Suas informações são tratadas com sigilo e utilizadas apenas para análise de perfil. Responderemos em até 2 dias úteis.</p>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <div class="form-success__icon">✓</div>
+        <h3>Solicitação recebida!</h3>
+        <p>A KARIA Gestão analisará o seu perfil e entrará em contato em até 2 dias úteis para o alinhamento inicial.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA FINAL -->
-<section class="cta-final" id="contato">
+<section class="cta-final" id="contato-alt">
   <div class="cta-final__inner">
     <span class="cta-final__tag">Próximo passo</span>
     <h2>Quer saber se o programa faz sentido para você?</h2>
@@ -529,6 +714,51 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
     if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
   });
 });
+
+// Formulário K.Elo
+(function(){
+  var form = document.getElementById('kelo-form');
+  var btn = document.getElementById('submitBtn');
+  var success = document.getElementById('formSuccess');
+  if (!form) return;
+
+  // Máscara CNPJ
+  var cnpjField = document.getElementById('cnpj');
+  if (cnpjField) {
+    cnpjField.addEventListener('input', function(){
+      var v = this.value.replace(/\D/g,'').slice(0,14);
+      v = v.replace(/^(\d{2})(\d)/,'$1.$2');
+      v = v.replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3');
+      v = v.replace(/\.(\d{3})(\d)/,'.$1/$2');
+      v = v.replace(/(\d{4})(\d)/,'$1-$2');
+      this.value = v;
+    });
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    var data = new FormData(form);
+    fetch('https://api.web3forms.com/submit', { method:'POST', body: data })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if (res.success) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Solicitar adesão ao programa';
+          alert('Ocorreu um erro. Por favor, tente novamente.');
+        }
+      })
+      .catch(function(){
+        btn.disabled = false;
+        btn.textContent = 'Solicitar adesão ao programa';
+        alert('Erro de conexão. Tente novamente ou entre em contato por e-mail.');
+      });
+  });
+})();
 
 // Carrega footer e WA float do site
 (function(){
