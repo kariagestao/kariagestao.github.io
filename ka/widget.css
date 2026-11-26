@@ -363,12 +363,40 @@
     right: 0;
     left: 0;
     width: 100%;
-    height: 100dvh;
-    border-radius: var(--ka-radius) var(--ka-radius) 0 0;
+    height: 92dvh;
+    max-height: 92dvh;
+    border-radius: 20px 20px 0 0;
+    --ka-panel-w: 100%;
   }
 
   #ka-bubble {
     bottom: 90px;
     right: 20px;
+  }
+
+  #ka-tooltip {
+    bottom: 162px;
+    right: 20px;
+    max-width: calc(100vw - 100px);
+    white-space: normal;
+    font-size: 12px;
+  }
+
+  #ka-header {
+    padding: 16px 16px 14px;
+  }
+
+  #ka-messages {
+    padding: 14px 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #ka-input-area {
+    padding: 10px 12px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+
+  #ka-input {
+    font-size: 16px; /* evita zoom automático no iOS */
   }
 }
