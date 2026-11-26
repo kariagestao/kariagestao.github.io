@@ -876,7 +876,7 @@ p { max-width: var(--max-prose); } /* --- Layout helpers --- */
   <div class="servicos-cta__inner">
     <h2 class="servicos-cta__title">Não sabe por onde começar?</h2>
     <p class="servicos-cta__sub">O ponto de entrada mais indicado para a maioria dos escritórios é o Diagnóstico Estruturado. Em uma conversa, a KARIA avalia o momento do seu escritório e indica o caminho mais adequado.</p>
-    <a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="btn btn-primary" target="_blank" rel="noopener">Agendar uma conversa</a>
+    <a href="#" data-cal-link="kariagestao" data-cal-namespace="karia" data-cal-config='{"layout":"month_view"}' class="btn btn-primary">Agendar uma conversa</a>
   </div>
 </section>
 
@@ -893,5 +893,6 @@ document.addEventListener('DOMContentLoaded',function(){
   loadComponent('karia-footer',_base+'footer.html',function(){initFooter();});
 });
 </script>
+<script src="/cal-embed.js"></script>
 </body>
 </html>
