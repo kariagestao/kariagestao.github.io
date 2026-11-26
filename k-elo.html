@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>K.Elo — Programa de Parceiros | KARIA Gestão</title>
+  <meta name="description" content="Faça parte do K.Elo, o programa de indicação da KARIA Gestão. Indique escritórios de advocacia e receba comissão por cada contratação efetivada. Exclusivo para PJ.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.kariagestao.com/k-elo.html">
+  <link rel="icon" type="image/png" href="/images/favicon-karia.png">
+
+  <meta property="og:title" content="K.Elo — Programa de Parceiros | KARIA Gestão">
+  <meta property="og:description" content="Indique escritórios de advocacia à KARIA Gestão e receba comissão. Programa exclusivo para pessoas jurídicas.">
+  <meta property="og:url" content="https://www.kariagestao.com/k-elo.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.kariagestao.com/images/og-cover.jpg">
+  <meta property="og:site_name" content="KARIA Gestão">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "K.Elo — Programa de Parceiros",
+    "description": "Programa de indicação da KARIA Gestão para pessoas jurídicas que desejam receber comissão ao indicar escritórios de advocacia.",
+    "url": "https://www.kariagestao.com/k-elo.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "KARIA Gestão",
+      "url": "https://www.kariagestao.com"
+    }
+  }
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YE6CYRG627"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YE6CYRG627');</script>
+
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600&display=swap');
+
+:root {
+  --musgo: #0D1F2D;
+  --musgo-mid: #162C3E;
+  --musgo-soft: #1E3A50;
+  --cobre: #B87333;
+  --cobre-dark: #9A5F28;
+  --off: #F8F6F3;
+  --off-dim: #EDE9E3;
+  --text-dark: #0D1F2D;
+  --text-mid: #4A5568;
+  --text-light: #C8D4DC;
+  --text-pale: #8FA3B0;
+  --font-title: 'Montserrat', system-ui, sans-serif;
+  --font-cinzel: 'Cinzel', serif;
+  --font-body: 'Poppins', system-ui, sans-serif;
+  --radius-sm: 3px;
+  --radius-md: 12px;
+  --max-wide: 1100px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; color: var(--text-dark); background: var(--off); }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* NAV */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--musgo); border-bottom: 1px solid rgba(184,115,51,0.15); }
+.nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.35); }
+.nav__inner { max-width: var(--max-wide); margin: 0 auto; padding: 0 2rem; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+.nav__logo { display: flex; align-items: center; flex-shrink: 0; gap: 10px; }
+.nav__logo img { height: 44px; width: auto; object-fit: contain; }
+.nav__logo-label { font-family: var(--font-title); font-size: 1.1rem; font-weight: 800; color: var(--off); letter-spacing: 0.06em; }
+.nav__logo-label span { color: var(--cobre); }
+.nav__links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+.nav__links a { font-family: var(--font-body); font-size: 0.875rem; color: var(--text-light); padding: 0.4rem 0.75rem; border-radius: var(--radius-sm); transition: color 0.15s; }
+.nav__links a:hover { color: var(--off); }
+.nav__cta { flex-shrink: 0; }
+.nav__burger { display: none; flex-direction: column; gap: 5px; padding: 4px; cursor: pointer; }
+.nav__burger span { display: block; width: 22px; height: 2px; background: var(--off); border-radius: 2px; }
+.nav__mobile { display: none; flex-direction: column; background: var(--musgo-mid); padding: 1rem 2rem; gap: 0.25rem; border-top: 1px solid rgba(184,115,51,0.15); }
+.nav__mobile a { color: var(--text-light); font-size: 0.95rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); display: block; }
+.nav__mobile.open { display: flex; }
+.btn { display: inline-block; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.03em; padding: 0.85rem 2rem; border-radius: var(--radius-sm); transition: background 0.2s, color 0.2s; }
+.btn-primary { background: var(--cobre); color: #fff; }
+.btn-primary:hover { background: var(--cobre-dark); }
+.btn-outline { background: transparent; color: var(--cobre); border: 1.5px solid var(--cobre); }
+.btn-outline:hover { background: var(--cobre); color: #fff; }
+@media (max-width: 900px) { .nav__links, .nav__cta { display: none; } .nav__burger { display: flex; } }
+
+/* HERO */
+.hero {
+  background: var(--musgo);
+  padding: 130px 2rem 90px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 65% 50%, rgba(184,115,51,0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero__inner {
+  max-width: var(--max-wide);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero__tag {
+  display: inline-block;
+  font-family: var(--font-cinzel);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cobre);
+  border: 1px solid rgba(184,115,51,0.4);
+  border-radius: 100px;
+  padding: 0.3rem 1rem;
+  margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-family: var(--font-cinzel);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: var(--off);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.25rem;
+}
+.hero h1 span { color: var(--cobre); }
+.hero__sub {
+  font-size: 1.05rem;
+  color: var(--text-light);
+  line-height: 1.75;
+  max-width: 480px;
+  margin-bottom: 2.5rem;
+}
+.hero__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 2.5rem;
+}
+.hero__pill {
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--off);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 100px;
+  padding: 0.3rem 0.9rem;
+}
+.hero__cta-group { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+.hero__visual {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.commission-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(184,115,51,0.2);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 2rem;
+  position: relative;
+}
+.commission-card__label {
+  font-family: var(--font-title);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cobre);
+  margin-bottom: 0.5rem;
+}
+.commission-card__service {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+.commission-card__value {
+  font-family: var(--font-cinzel);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--off);
+  line-height: 1;
+}
+.commission-card__value small {
+  font-size: 0.85rem;
+  color: var(--text-pale);
+  font-family: var(--font-body);
+  font-weight: 400;
+  margin-left: 0.4rem;
+}
+@media (max-width: 768px) {
+  .hero__inner { grid-template-columns: 1fr; gap: 3rem; }
+  .hero { padding: 110px 1.25rem 70px; }
+  .hero__visual { order: -1; }
+}
+
+/* COMO FUNCIONA */
+.como { padding: 6rem 2rem; background: var(--off); }
+.como__inner { max-width: 900px; margin: 0 auto; }
+.section-label {
+  font-family: var(--font-title);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cobre);
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: var(--musgo);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+.section-sub {
+  font-size: 1rem;
+  color: var(--text-mid);
+  max-width: 540px;
+  line-height: 1.75;
+  margin-bottom: 3rem;
+}
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.step {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 1.5rem;
+  position: relative;
+  padding-bottom: 2.5rem;
+}
+.step:last-child { padding-bottom: 0; }
+.step::after {
+  content: '';
+  position: absolute;
+  left: 29px;
+  top: 60px;
+  bottom: 0;
+  width: 2px;
+  background: rgba(184,115,51,0.15);
+}
+.step:last-child::after { display: none; }
+.step__num {
+  width: 60px;
+  height: 60px;
+  background: var(--musgo);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-cinzel);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cobre);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.step__content { padding-top: 0.9rem; }
+.step__title {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--musgo);
+  margin-bottom: 0.4rem;
+}
+.step__desc {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  line-height: 1.7;
+}
+
+/* ELEGIBILIDADE */
+.elegib { padding: 5rem 2rem; background: var(--musgo); }
+.elegib__inner { max-width: var(--max-wide); margin: 0 auto; }
+.elegib__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; margin-top: 3rem; }
+.elegib__col h3 {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cobre);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+.check-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+.check-list li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  background: rgba(184,115,51,0.15);
+  border: 1.5px solid var(--cobre);
+  border-radius: 50%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='20 6 9 17 4 12' stroke='%23B87333' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 11px;
+}
+.cross-list li::before {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='18' y1='6' x2='6' y2='18' stroke='%238FA3B0' stroke-width='2.5' stroke-linecap='round'/%3E%3Cline x1='6' y1='6' x2='18' y2='18' stroke='%238FA3B0' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  border-color: rgba(143,163,176,0.4);
+  background-color: rgba(143,163,176,0.08);
+}
+.cross-list li { color: var(--text-pale); }
+.elegib .section-title { color: var(--off); }
+.elegib .section-label { color: var(--cobre); }
+@media (max-width: 640px) { .elegib__grid { grid-template-columns: 1fr; } }
+
+/* REGRAS */
+.regras { padding: 5rem 2rem; background: var(--off-dim); }
+.regras__inner { max-width: 860px; margin: 0 auto; }
+.regras__cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+.regra-card {
+  background: var(--off);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  border-top: 3px solid var(--cobre);
+}
+.regra-card__icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(184,115,51,0.1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.regra-card__icon svg { width: 22px; height: 22px; stroke: var(--cobre); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.regra-card h4 { font-family: var(--font-title); font-size: 0.9rem; font-weight: 700; color: var(--musgo); margin-bottom: 0.5rem; }
+.regra-card p { font-size: 0.85rem; color: var(--text-mid); line-height: 1.65; }
+@media (max-width: 600px) { .regras__cards { grid-template-columns: 1fr; } }
+
+/* FORMULÁRIO */
+.form-section { padding: 6rem 2rem; background: var(--off); }
+.form-section__inner { max-width: 720px; margin: 0 auto; }
+.form-section__header { text-align: center; margin-bottom: 3rem; }
+.form-box {
+  background: var(--off);
+  border: 1px solid rgba(13,31,45,0.1);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 4px 32px rgba(13,31,45,0.06);
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.25rem; }
+.form-group.full { grid-column: 1 / -1; }
+label {
+  font-family: var(--font-title);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--musgo);
+}
+label .req { color: var(--cobre); }
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+  width: 100%;
+  background: var(--off-dim);
+  border: 1.5px solid rgba(13,31,45,0.12);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--cobre);
+  background: #fff;
+}
+input::placeholder, textarea::placeholder { color: var(--text-pale); }
+select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238FA3B0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.9rem center; background-size: 16px; padding-right: 2.5rem; }
+textarea { resize: vertical; min-height: 100px; }
+.checkboxes { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.25rem; }
+.checkbox-item { display: flex; align-items: flex-start; gap: 0.65rem; }
+.checkbox-item input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--cobre); flex-shrink: 0; margin-top: 2px; cursor: pointer; }
+.checkbox-item label { font-size: 0.85rem; font-family: var(--font-body); font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text-mid); cursor: pointer; }
+.form-divider { border: none; border-top: 1px solid rgba(13,31,45,0.08); margin: 1.5rem 0; }
+.form-section-title { font-family: var(--font-title); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-pale); margin-bottom: 1.25rem; }
+.form-submit { text-align: center; margin-top: 2rem; }
+.form-submit .btn { width: 100%; max-width: 320px; font-size: 0.95rem; font-weight: 600; padding: 1rem 2.5rem; }
+.form-note { font-size: 0.78rem; color: var(--text-pale); text-align: center; margin-top: 1rem; line-height: 1.6; }
+#form-success { display: none; text-align: center; padding: 2.5rem; }
+#form-success h3 { font-family: var(--font-cinzel); font-size: 1.5rem; color: var(--musgo); margin-bottom: 0.75rem; }
+#form-success p { color: var(--text-mid); font-size: 0.95rem; line-height: 1.7; }
+@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } .form-box { padding: 2rem 1.5rem; } }
+
+/* FOOTER */
+.footer { background: var(--musgo); color: var(--off); }
+.footer__top { padding: 4rem 0 2.5rem; }
+.footer__top-inner { max-width: var(--max-wide); margin: 0 auto; padding: 0 2rem; display: flex; gap: 3rem; flex-wrap: wrap; justify-content: space-between; }
+.footer__brand { max-width: 280px; }
+.footer__logo-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
+.footer__logo-wrap img { height: 40px; width: auto; }
+.footer__logo-text { font-family: var(--font-title); font-size: 1rem; font-weight: 800; color: var(--off); letter-spacing: 0.06em; }
+.footer__logo-text span { color: var(--cobre); }
+.footer__slogan { font-size: 0.75rem; color: var(--cobre); font-family: var(--font-title); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.6rem; }
+.footer__desc { font-size: 0.82rem; color: var(--text-pale); line-height: 1.65; }
+.footer__col h4 { font-family: var(--font-title); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-pale); margin-bottom: 1rem; }
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.footer__col ul a { font-size: 0.83rem; color: var(--text-light); text-decoration: none; transition: color 0.15s; }
+.footer__col ul a:hover { color: var(--cobre); }
+.footer__bottom { border-top: 1px solid rgba(184,115,51,0.1); padding: 1.25rem 0; }
+.footer__bottom-inner { max-width: var(--max-wide); margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.footer__bottom p { font-size: 0.75rem; color: var(--text-pale); }
+.footer__bottom a { color: var(--text-pale); transition: color 0.15s; }
+.footer__bottom a:hover { color: var(--cobre); }
+
+/* WPP float */
+.wpp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 99; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.35); transition: transform 0.2s; }
+.wpp-float:hover { transform: scale(1.08); }
+.wpp-float svg { width: 26px; height: 26px; fill: #fff; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav__inner">
+    <a href="/" class="nav__logo" aria-label="KARIA Gestão">
+      <img src="/images/logo-karia.png" alt="KARIA Gestão" onerror="this.style.display='none'">
+      <span class="nav__logo-label">KARIA <span>Gestão</span></span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="/">Início</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/faq.html">FAQ</a></li>
+    </ul>
+    <a href="https://cal.com/kariagestao/30min" target="_blank" rel="noopener" class="btn btn-primary nav__cta" style="font-size:0.82rem;padding:0.65rem 1.5rem;">Agendar Conversa</a>
+    <button class="nav__burger" id="burgerBtn" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav__mobile" id="mobileMenu" role="navigation">
+    <a href="/">Início</a>
+    <a href="/blog/">Blog</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="https://cal.com/kariagestao/30min" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:0.5rem;text-align:center;">Agendar Conversa</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__content">
+      <span class="hero__tag">Programa de Parceiros</span>
+      <h1>K.<span>Elo</span></h1>
+      <p class="hero__sub">Você conecta. Nós cuidamos do processo. E quando o escritório fechar, você recebe a comissão.</p>
+      <div class="hero__pills">
+        <span class="hero__pill">Exclusivo para PJ</span>
+        <span class="hero__pill">Janela de 90 dias</span>
+        <span class="hero__pill">Pagamento em até 15 dias úteis</span>
+      </div>
+      <div class="hero__cta-group">
+        <a href="#formulario" class="btn btn-primary">Quero ser parceiro K.Elo</a>
+        <a href="#como-funciona" class="btn btn-outline" style="color:rgba(248,246,243,0.75);border-color:rgba(248,246,243,0.2);">Como funciona</a>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <div class="commission-card">
+        <div class="commission-card__label">Diagnóstico Estruturado</div>
+        <div class="commission-card__service">Diagnóstico em Controladoria Jurídica</div>
+        <div class="commission-card__value">R$375 <small>por contratação</small></div>
+      </div>
+      <div class="commission-card">
+        <div class="commission-card__label">Consultoria de Implantação</div>
+        <div class="commission-card__service">Implantação de Controladoria Jurídica</div>
+        <div class="commission-card__value">R$700 <small>por contratação</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="como" id="como-funciona">
+  <div class="como__inner">
+    <p class="section-label">Passo a passo</p>
+    <h2 class="section-title">Como funciona o K.Elo</h2>
+    <p class="section-sub">O processo é simples e transparente. Você abre a porta, a KARIA Gestão conduz a conversa.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step__num">1</div>
+        <div class="step__content">
+          <p class="step__title">Cadastre-se no programa</p>
+          <p class="step__desc">Preencha o formulário abaixo com os dados da sua empresa. Após análise, você receberá o Termo de Adesão K.Elo para assinar digitalmente.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">2</div>
+        <div class="step__content">
+          <p class="step__title">Identifique um escritório com potencial</p>
+          <p class="step__desc">Percebeu que um escritório de advocacia pode se beneficiar da Controladoria Jurídica? Antes de qualquer contato, registre o lead por e-mail para <strong>contato@kariagestao.com</strong> com nome do escritório, CNPJ, contato e telefone. Quem registra primeiro tem a atribuição.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">3</div>
+        <div class="step__content">
+          <p class="step__title">Faça a conexão por e-mail</p>
+          <p class="step__desc">Envie um e-mail apresentando a KARIA Gestão ao escritório, colocando ambos em cópia. A conexão é feita exclusivamente por e-mail, nunca por WhatsApp.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">4</div>
+        <div class="step__content">
+          <p class="step__title">A KARIA assume o processo comercial</p>
+          <p class="step__desc">A partir daí, o processo é conduzido inteiramente pela KARIA Gestão. Você não negocia valores nem faz promessas em nome da empresa.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">5</div>
+        <div class="step__content">
+          <p class="step__title">Receba sua comissão</p>
+          <p class="step__desc">Se o escritório contratar e efetuar o primeiro pagamento, você recebe a comissão em até 15 dias úteis. O pagamento é feito mediante emissão de nota fiscal de prestação de serviços em favor da KARIA Gestão.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ELEGIBILIDADE -->
+<section class="elegib">
+  <div class="elegib__inner">
+    <p class="section-label">Quem pode participar</p>
+    <h2 class="section-title">Elegibilidade</h2>
+    <div class="elegib__grid">
+      <div class="elegib__col">
+        <h3>Pode participar</h3>
+        <ul class="check-list">
+          <li>Pessoas jurídicas com CNPJ ativo</li>
+          <li>Consultores que atuam junto a escritórios de advocacia</li>
+          <li>Fornecedores de tecnologia jurídica</li>
+          <li>Associações e entidades do setor jurídico</li>
+          <li>Prestadores de serviço com acesso a escritórios</li>
+        </ul>
+      </div>
+      <div class="elegib__col">
+        <h3>Não pode participar</h3>
+        <ul class="check-list cross-list">
+          <li>Pessoas físicas (sem CNPJ)</li>
+          <li>Advogados em nome próprio (sem PJ constituída)</li>
+          <li>Leads já em andamento com a KARIA Gestão</li>
+          <li>Escritórios que já são clientes ativos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGRAS RÁPIDAS -->
+<section class="regras">
+  <div class="regras__inner">
+    <p class="section-label">Regras do programa</p>
+    <h2 class="section-title">O que você precisa saber</h2>
+    <div class="regras__cards">
+      <div class="regra-card">
+        <div class="regra-card__icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h4>Janela de 90 dias</h4>
+        <p>A atribuição do lead é válida por 90 dias a partir do registro por e-mail. Dentro desse prazo, qualquer fechamento gera comissão.</p>
+      </div>
+      <div class="regra-card">
+        <div class="regra-card__icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <h4>Prioridade por ordem</h4>
+        <p>Se dois parceiros indicarem o mesmo escritório, a atribuição pertence a quem registrou o lead por e-mail primeiro.</p>
+      </div>
+      <div class="regra-card">
+        <div class="regra-card__icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h4>Apenas Diagnóstico e Implantação</h4>
+        <p>O K.Elo cobre somente esses dois serviços. Acompanhamento Estratégico e Controladoria Terceirizada não estão no programa.</p>
+      </div>
+      <div class="regra-card">
+        <div class="regra-card__icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h4>Pagamento via nota fiscal</h4>
+        <p>A comissão é paga em até 15 dias úteis após o primeiro pagamento do escritório indicado. O parceiro emite NF de prestação de serviços.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULÁRIO -->
+<section class="form-section" id="formulario">
+  <div class="form-section__inner">
+    <div class="form-section__header">
+      <p class="section-label" style="text-align:center;">Cadastro</p>
+      <h2 class="section-title" style="text-align:center;">Quero ser parceiro K.Elo</h2>
+      <p class="section-sub" style="text-align:center;margin:0 auto;">Preencha os dados abaixo. Após análise, entraremos em contato para envio do Termo de Adesão.</p>
+    </div>
+
+    <div class="form-box">
+      <form id="kelo-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="1062412a-df27-4597-9e4c-d921a4cdc6d9">
+        <input type="hidden" name="subject" value="[K.Elo] Novo cadastro de parceiro">
+        <input type="hidden" name="from_name" value="K.Elo — Programa de Parceiros">
+        <input type="hidden" name="redirect" value="false">
+
+        <p class="form-section-title">Dados da Empresa</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="razao_social">Razão Social <span class="req">*</span></label>
+            <input type="text" id="razao_social" name="razao_social" placeholder="Nome empresarial completo" required>
+          </div>
+          <div class="form-group">
+            <label for="cnpj">CNPJ <span class="req">*</span></label>
+            <input type="text" id="cnpj" name="cnpj" placeholder="00.000.000/0001-00" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="site">Site ou Perfil Social</label>
+            <input type="text" id="site" name="site" placeholder="linkedin.com/in/... ou site.com.br">
+          </div>
+          <div class="form-group">
+            <label for="como_conheceu">Como nos conheceu?</label>
+            <select id="como_conheceu" name="como_conheceu">
+              <option value="" disabled selected>Selecione</option>
+              <option>Instagram</option>
+              <option>LinkedIn</option>
+              <option>Indicação de alguém</option>
+              <option>Blog da KARIA Gestão</option>
+              <option>Pesquisa no Google</option>
+              <option>Outro</option>
+            </select>
+          </div>
+        </div>
+
+        <hr class="form-divider">
+        <p class="form-section-title">Dados do Responsável</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome">Nome completo <span class="req">*</span></label>
+            <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+          </div>
+          <div class="form-group">
+            <label for="cargo">Cargo / Função <span class="req">*</span></label>
+            <input type="text" id="cargo" name="cargo" placeholder="Ex.: Consultor, Sócio, Diretor" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">E-mail <span class="req">*</span></label>
+            <input type="email" id="email" name="email" placeholder="seu@email.com.br" required>
+          </div>
+          <div class="form-group">
+            <label for="telefone">Telefone / WhatsApp <span class="req">*</span></label>
+            <input type="tel" id="telefone" name="telefone" placeholder="(51) 9 0000-0000" required>
+          </div>
+        </div>
+
+        <hr class="form-divider">
+        <p class="form-section-title">Perfil de Atuação</p>
+        <div class="form-group">
+          <label>Seu perfil <span class="req">*</span></label>
+          <div class="checkboxes">
+            <div class="checkbox-item">
+              <input type="checkbox" id="p1" name="perfil[]" value="Consultor independente">
+              <label for="p1">Consultor independente</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="p2" name="perfil[]" value="Fornecedor de tecnologia jurídica">
+              <label for="p2">Fornecedor de tecnologia jurídica (LegalTech)</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="p3" name="perfil[]" value="Associação ou entidade do setor jurídico">
+              <label for="p3">Associação ou entidade do setor jurídico</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="p4" name="perfil[]" value="Prestador de serviços com acesso a escritórios">
+              <label for="p4">Prestador de serviços com acesso a escritórios</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="p5" name="perfil[]" value="Outro">
+              <label for="p5">Outro</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="mensagem">Conta um pouco sobre como você atua e por que quer ser parceiro</label>
+          <textarea id="mensagem" name="mensagem" placeholder="Em que contextos você costuma se relacionar com escritórios de advocacia?"></textarea>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn btn-primary" id="submitBtn">Enviar cadastro</button>
+        </div>
+        <p class="form-note">Ao enviar, você confirma que é pessoa jurídica com CNPJ ativo e que leu as regras do programa K.Elo. Responderemos em até 3 dias úteis.</p>
+      </form>
+
+      <div id="form-success">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" style="margin:0 auto 1.25rem"><circle cx="28" cy="28" r="28" fill="rgba(184,115,51,0.1)"/><polyline points="18 28 24 34 38 20" stroke="#B87333" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Cadastro recebido!</h3>
+        <p>Obrigada pelo interesse no K.Elo. Nossa equipe irá analisar seu cadastro e entrar em contato em até 3 dias úteis com as próximas etapas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__top">
+    <div class="footer__top-inner">
+      <div class="footer__brand">
+        <div class="footer__logo-wrap">
+          <img src="/images/logo-karia.png" alt="KARIA Gestão" height="40" onerror="this.style.display='none'">
+          <span class="footer__logo-text">KARIA <span>Gestão</span></span>
+        </div>
+        <p class="footer__slogan">Gestão que entrega. Estratégia que transforma.</p>
+        <p class="footer__desc">Consultoria em Gestão exclusiva para escritórios de advocacia. Especialização em Controladoria Jurídica.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="/">Início</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/faq.html">FAQ</a></li>
+          <li><a href="/k-elo.html">Programa K.Elo</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="mailto:contato@kariagestao.com">contato@kariagestao.com</a></li>
+          <li><a href="https://www.instagram.com/kariagestao" target="_blank" rel="noopener">@kariagestao</a></li>
+          <li><a href="https://www.linkedin.com/company/kariagestao" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="footer__bottom-inner">
+      <p>&copy; 2026 KARIA Gestão · NATHALYA DA SILVA PEREIRA LTDA · CNPJ 60.942.073/0001-24</p>
+      <p><a href="/politica-privacidade.html">Política de Privacidade</a></p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/555133765996?text=Ol%C3%A1%2C%20vim%20atrav%C3%A9s%20do%20site%20e%20gostaria%20de%20saber%20como%20a%20KARIA%20pode%20ajudar%20meu%20escrit%C3%B3rio." class="wpp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// Nav scroll
+(function(){
+  var nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.scrollY > 40); }, {passive:true});
+})();
+
+// Burger menu
+(function(){
+  var btn = document.getElementById('burgerBtn');
+  var menu = document.getElementById('mobileMenu');
+  if (!btn || !menu) return;
+  btn.addEventListener('click', function(){
+    var open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+})();
+
+// CNPJ mask
+(function(){
+  var cnpj = document.getElementById('cnpj');
+  if (!cnpj) return;
+  cnpj.addEventListener('input', function(){
+    var v = cnpj.value.replace(/\D/g,'').substring(0,14);
+    if (v.length > 12) v = v.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,'$1.$2.$3/$4-$5');
+    else if (v.length > 8) v = v.replace(/^(\d{2})(\d{3})(\d{3})(\d+)$/,'$1.$2.$3/$4');
+    else if (v.length > 5) v = v.replace(/^(\d{2})(\d{3})(\d+)$/,'$1.$2.$3');
+    else if (v.length > 2) v = v.replace(/^(\d{2})(\d+)$/,'$1.$2');
+    cnpj.value = v;
+  });
+})();
+
+// Form submit via fetch (Web3Forms JSON)
+(function(){
+  var form = document.getElementById('kelo-form');
+  var success = document.getElementById('form-success');
+  var submitBtn = document.getElementById('submitBtn');
+  if (!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+    var data = new FormData(form);
+    var obj = {access_key: data.get('access_key')};
+    data.forEach(function(v,k){ if(k !== 'access_key') obj[k] = v; });
+    // Tratar checkboxes múltiplos
+    var perfis = data.getAll('perfil[]');
+    if (perfis.length) obj['perfil'] = perfis.join(', ');
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify(obj)
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res.success) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar cadastro';
+        alert('Ocorreu um erro. Tente novamente ou envie para contato@kariagestao.com');
+      }
+    })
+    .catch(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar cadastro';
+      alert('Ocorreu um erro de conexão. Tente novamente ou envie para contato@kariagestao.com');
+    });
+  });
+})();
+
+// Smooth scroll para âncoras
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    var t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+  });
+});
+</script>
+</body>
+</html>
