@@ -1,0 +1,8 @@
+{
+  "_info": {
+    "descricao": "Índice de posts do blog da KARIA Gestão para RAG da KA Site",
+    "regra": "Adicionar cada novo post publicado. Campo 'content' deve ter o texto completo do post (sem HTML), máximo 1500 caracteres.",
+    "manutencao": "Atualizar manualmente a cada novo post publicado no blog"
+  },
+  "posts": []
+}
