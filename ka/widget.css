@@ -20,7 +20,7 @@
 /* ── Bubble ─────────────────────────────────────────────────────────────── */
 #ka-bubble {
   position: fixed;
-  bottom: 220px;
+  bottom: 140px;
   right: 24px;
   width: var(--ka-bubble-size);
   height: var(--ka-bubble-size);
@@ -51,7 +51,7 @@
 /* ── Painel ─────────────────────────────────────────────────────────────── */
 #ka-panel {
   position: fixed;
-  bottom: 292px;
+  bottom: 212px;
   right: 24px;
   width: var(--ka-panel-w);
   height: var(--ka-panel-h);
@@ -315,7 +315,7 @@
 
 #ka-tooltip {
   position: fixed;
-  bottom: 288px;
+  bottom: 208px;
   right: 24px;
   background: var(--ka-brand);
   color: var(--ka-light);
@@ -370,12 +370,12 @@
   }
 
   #ka-bubble {
-    bottom: 214px;
+    bottom: 134px;
     right: 20px;
   }
 
   #ka-tooltip {
-    bottom: 286px;
+    bottom: 206px;
     right: 20px;
     max-width: calc(100vw - 100px);
     white-space: normal;
