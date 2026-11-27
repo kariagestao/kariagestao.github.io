@@ -93,6 +93,24 @@
 
   // ─── MENSAGENS ─────────────────────────────────────────────────────────────
 
+  function formatMessage(text) {
+    // Escapa HTML para segurança
+    const escaped = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+
+    // Converte URLs em links clicáveis + botão especial para cal.com
+    return escaped.replace(/(https?:\/\/[^\s]+)/g, function (url) {
+      const isCal = url.includes('cal.com/kariagestao');
+      if (isCal) {
+        return `<a href="${url}" target="_blank" rel="noopener" class="ka-link-btn">📅 Agendar conversa gratuita</a>`;
+      }
+      return `<a href="${url}" target="_blank" rel="noopener" class="ka-link">${url}</a>`;
+    });
+  }
+
   function appendMessage(role, text) {
     const container = document.getElementById('ka-messages');
     const wrap = document.createElement('div');
@@ -108,7 +126,7 @@
 
     const bubble = document.createElement('div');
     bubble.className = 'ka-bubble-text';
-    bubble.textContent = text;
+    bubble.innerHTML = formatMessage(text);
     wrap.appendChild(bubble);
 
     container.appendChild(wrap);

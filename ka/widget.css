@@ -400,3 +400,27 @@
     font-size: 16px; /* evita zoom automático no iOS */
   }
 }
+
+/* ── Links e botão de agendamento ───────────────────────────────────────── */
+.ka-bubble-text .ka-link {
+  color: var(--ka-accent);
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.ka-bubble-text .ka-link-btn {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 14px;
+  background: var(--ka-accent);
+  color: var(--ka-white) !important;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.ka-bubble-text .ka-link-btn:hover {
+  opacity: 0.85;
+}
