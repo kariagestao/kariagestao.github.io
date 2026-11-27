@@ -7,6 +7,31 @@
 (function () {
   'use strict';
 
+  // Gera UUID v4 sem dependências
+  function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0;
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  }
+
+  // Sessão por aba: zera quando o visitante fecha e reabre o navegador
+  function getSessionId() {
+    var sid = sessionStorage.getItem('ka_session_id');
+    if (!sid) {
+      sid = uuidv4();
+      sessionStorage.setItem('ka_session_id', sid);
+      sessionStorage.setItem('ka_turn', '0');
+    }
+    return sid;
+  }
+
+  function nextTurn() {
+    var t = parseInt(sessionStorage.getItem('ka_turn') || '0', 10) + 1;
+    sessionStorage.setItem('ka_turn', String(t));
+    return t;
+  }
+
   const KA = {
     workerUrl: 'https://ka-site.kariagestao25.workers.dev',
     avatarUrl: '/ka/avatar.jpeg',
@@ -165,7 +190,12 @@
       const res = await fetch(KA.workerUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, history: KA.history.slice(-6) }),
+        body: JSON.stringify({
+          message:     text,
+          history:     KA.history.slice(-6),
+          session_id:  getSessionId(),
+          turn_number: nextTurn(),
+        }),
       });
 
       const data = await res.json();
