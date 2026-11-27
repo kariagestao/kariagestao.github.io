@@ -101,14 +101,21 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
 
+    // Converte markdown básico
+    let formatted = escaped
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')  // **negrito**
+      .replace(/\*(.+?)\*/g, '<em>$1</em>');              // *itálico*
+
     // Converte URLs em links clicáveis + botão especial para cal.com
-    return escaped.replace(/(https?:\/\/[^\s]+)/g, function (url) {
+    formatted = formatted.replace(/(https?:\/\/[^\s<]+)/g, function (url) {
       const isCal = url.includes('cal.com/kariagestao');
       if (isCal) {
         return `<a href="${url}" target="_blank" rel="noopener" class="ka-link-btn">📅 Agendar conversa gratuita</a>`;
       }
       return `<a href="${url}" target="_blank" rel="noopener" class="ka-link">${url}</a>`;
     });
+
+    return formatted;
   }
 
   function appendMessage(role, text) {
