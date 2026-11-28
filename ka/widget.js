@@ -80,7 +80,7 @@
       </svg>
     </button>
   </div>
-  <p id="ka-lgpd">Assistente virtual. Não informe dados pessoais, processos ou informações sigilosas. Interações analisadas de forma anônima.</p>
+  <p id="ka-lgpd">Assistente virtual. Não compartilhe dados pessoais, senhas, processos ou informações sigilosas. Suas perguntas podem ser registradas de forma anônima, para melhorar nosso atendimento. Ao enviar, você concorda com nossa Política de Privacidade.</p>
 </div>`;
   }
 
@@ -89,7 +89,7 @@
   function getWelcomeMessage() {
     const hour = new Date().getHours();
     const greeting = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite';
-    return `${greeting}! Sou a KA, assistente da KARIA Gestão. Posso tirar dúvidas sobre Controladoria Jurídica, nossos serviços e como a gestão estratégica pode transformar o seu escritório. Como posso ajudar?`;
+    return `${greeting}! Sou a KA, assistente da KARIA Gestão. Posso tirar dúvidas sobre Controladoria Jurídica, nossos serviços e como a gestão estratégica pode transformar o seu escritório. Como posso ajudar? Lembre-se: para sua segurança, não envie dados pessoais (como CPF, telefone, endereço ou senhas) nesta conversa. As mensagens são armazenadas apenas para aprimorar nossas respostas.`;
   }
 
   // ─── MENSAGENS ─────────────────────────────────────────────────────────────
