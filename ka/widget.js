@@ -80,6 +80,7 @@
       </svg>
     </button>
   </div>
+  <p id="ka-lgpd">Assistente virtual. Não informe dados pessoais, processos ou informações sigilosas. Interações analisadas de forma anônima.</p>
 </div>`;
   }
 

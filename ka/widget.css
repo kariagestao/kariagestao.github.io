@@ -401,6 +401,18 @@
   }
 }
 
+/* ── Aviso LGPD ─────────────────────────────────────────────────────────── */
+#ka-lgpd {
+  margin: 0;
+  padding: 6px 16px 10px;
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--ka-text-light);
+  text-align: center;
+  background: var(--ka-white);
+  border-top: 1px solid var(--ka-gray);
+}
+
 /* ── Links e botão de agendamento ───────────────────────────────────────── */
 .ka-bubble-text .ka-link {
   color: var(--ka-accent);
