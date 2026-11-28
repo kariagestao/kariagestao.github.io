@@ -368,6 +368,6 @@ document.addEventListener('DOMContentLoaded',function(){
   if(form){form.addEventListener('submit',function(e){e.preventDefault();var btn=form.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Enviando...';fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({access_key:'1062412a-df27-4597-9e4c-d921a4cdc6d9',subject:'Agendamento de Mentoria Individual',name:form.name.value,email:form.email.value,phone:form.phone.value,message:form.message.value})}).then(function(r){return r.json();}).then(function(data){if(data.success){form.style.display='none';document.getElementById('formSuccess').classList.add('show');}else{btn.disabled=false;btn.textContent='Quero agendar minha sessão';alert('Algo deu errado. Tente novamente.');}}).catch(function(){btn.disabled=false;btn.textContent='Quero agendar minha sessão';alert('Erro de conexão. Tente novamente.');});})}
 });
 </script>
-<script src="/ka/widget.js?v=20261126"></script>
+<script src="/ka/widget.js?v=20261128"></script>
 </body>
 </html>
